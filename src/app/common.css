@@ -1,0 +1,44 @@
+:root {
+    font-size: 0.95rem;
+    font-family: "Lato", sans-serif !important;
+    font-family: "Open Sans", sans-serif !important;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+div,
+p,
+span,
+small,
+section,
+li,
+td,
+th {
+    font-family: "Lato", sans-serif !important;
+    font-family: "Open Sans", sans-serif !important;
+}
+
+div,
+p,
+span,
+section,
+.form-control {
+    font-size: 0.95rem !important;
+}
+
+body {
+    display: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+.text-primary {
+    color: #045868 !important;
+}

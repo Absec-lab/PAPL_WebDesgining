@@ -1,0 +1,62 @@
+#login-component {
+  background-image: url("../../../assets/images/login-banner.webp");
+  min-height: 100dvh;
+  background-size: cover;
+  background-position: center;
+  background-color: transparent;
+  padding: 1.5rem 0;
+}
+
+#login-component #login-box {
+  min-height: 90dvh;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+#login-component::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, #1cd1f4 0%, #22c9fe 100%);
+  z-index: -1;
+}
+
+.login-card {
+  border-radius: 10px !important;
+}
+
+.login-card .card-body {
+  border-radius: 10px !important;
+  background: linear-gradient(180deg, #015464 0%, rgba(247, 253, 255, 0.56) 100%), linear-gradient(0deg, #ffffff, #ffffff);
+}
+
+.login-card .card-footer {
+  background: #065868;
+  height: 60px;
+  border-bottom-left-radius: 10px !important;
+  border-bottom-right-radius: 10px !important;
+}
+
+.login-btn {
+  background-color: #288a9d;
+  font-size: 1.2rem !important;
+  font-weight: 600;
+  padding: 0.75rem 0;
+}
+
+.login-btn:hover {
+  background: #065868;
+}
+
+.custom-login-input {
+  border-left: 0;
+  box-shadow: none;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}

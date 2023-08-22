@@ -42,3 +42,47 @@ a {
 .text-primary {
     color: #045868 !important;
 }
+
+.bg-primary {
+    background: #045868 !important;
+}
+
+a.primary-link {
+    color: #045868 !important;
+}
+
+#secondary-header {
+    background: #D7DBE3 !important;
+    padding: 0.7rem 0;
+}
+
+#page-content {
+    padding: 2rem 0;
+    padding-bottom: 8rem;
+}
+
+.form-label {
+    font-weight: 600;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.btn-primary {
+    background: #278A9D !important;
+    border-color: #278A9D !important;
+}
+
+.text-secondary {
+    color: #278A9D !important;
+}
+
+.btn-primary:hover {
+    background: #045868 !important;
+    border-color: #045868 !important;
+}
+
+.form-save-btn {
+    padding: 0.75rem 4rem;
+}

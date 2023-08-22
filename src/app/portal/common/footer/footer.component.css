@@ -1,0 +1,17 @@
+footer {
+    background: #D7DBE3;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 0.5rem 0;
+    font-size: 0.9rem !important;
+}
+#pre-footer {
+    background: #278A9D;
+    min-height: 50px;
+    position: fixed;
+    bottom: 35px;
+    left: 0;
+    width: 100%;
+}  

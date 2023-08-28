@@ -1,0 +1,114 @@
+<app-header></app-header>
+<section id="secondary-header">
+    <div class="container d-flex align-items-center gap-2">
+        <a href="" class="primary-link fw-bold">Home</a>
+        <span>/</span>
+        <span>Unit Booking</span>
+    </div>
+</section>
+<section id="page-content">
+    <div class="container">
+        <div class="row " style="background-color: rgba(226, 242, 246, 1); padding: 5%; margin-bottom: 0.5cm;">
+            <div class="col-sm-6 col-md-4  ">
+                <div class="form-group">
+                    <label for="state" class="form-label">State <span class="text-danger">*</span></label>
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Choose State... </option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="col-sm-6 col-md-4  ">
+                <div class="form-group">
+                    <label for="state" class="form-label">SBU <span class="text-danger">*</span></label>
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Choose SBU... </option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="col-sm-6 col-md-4  ">
+                <div class="form-group">
+                    <label for="state" class="form-label">Plant <span class="text-danger">*</span></label>
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Choose Plant... </option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="col-sm-6 col-md-4  ">
+                <div class="form-group">
+                    <label for="state" class="form-label">Select House <span class="text-danger">*</span></label>
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected> </option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="col-sm-6 col-md-4  ">
+                <div class="form-group">
+                    <label for="state" class="form-label">Unit Name/ID <span class="text-danger">*</span></label>
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected> </option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <div class="mt-4 d-flex justify-content-end">
+            <button class="btn btn-primary form-save-btn">
+                Save
+            </button>
+        </div>
+
+        <!-- dynamic-table.component.html -->
+        <div class="w-100" style="overflow-x: auto; padding-top: 30px;">
+            <table class="table table-bordered table-striped">
+                <thead class="">
+                    <tr>
+                        <th style="background-color: rgba(0, 133, 159, 1); color: #faf7f7;">SL.NO</th>
+                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Unit No</th>
+                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Occupied</th>
+                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Available</th>
+                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of tableData">
+                        <td>{{ item.SL_NO }}</td>
+                        <td>{{ item.Unit_No }}</td>
+                        <td>{{ item.Occupied }}</td>
+                        <td>{{ item.Available}}</td>
+                        <td>
+                           
+                            <button type="button" style="background-color: rgb(22, 133, 236);color: #faf7f7;"class="btn ">Book</button>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</section>
+<app-footer></app-footer>

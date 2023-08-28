@@ -1,0 +1,13 @@
+/* dynamic-table.component.css */
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .table th, .table td {
+    border: 1px solid #278A9D;
+    padding: 8px;
+    text-align: center;
+  }
+  

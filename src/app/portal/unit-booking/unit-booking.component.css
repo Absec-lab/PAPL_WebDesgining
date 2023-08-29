@@ -10,4 +10,18 @@
     padding: 8px;
     text-align: center;
   }
-  
+  .modal-title{
+    font-weight: bold;
+    color: white;
+    
+  }
+  .modal-header{
+    
+    background-color: #278A9D;
+  }
+  .date{
+    width: 200px;
+  }
+  .name{
+    width: 160px;
+  }

@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeOwnerMasterComponent } from './home-owner-master/home-owner-master.component';
+import { HouseOwnerRegistrationComponent} from './house-owner-registration/house-owner-registration.component';
 import{AgreementTypeMasterComponent} from './agreement-type-master/agreement-type-master.component';
 import{AgreementMasterComponent} from './agreement-master/agreement-master.component';
 import { UnitRegistrationComponent } from './unit-registration/unit-registration.component';
-import { HomeRegistrationComponent } from './home-registration/home-registration.component';
+import { HouseRegistrationComponent } from './house-registration/house-registration.component';
 import {  UtilityCalculationComponent } from './utility-calculation/utility-calculation.component';
 import { UnitBookingComponent } from './unit-booking/unit-booking.component';
 
 
 const routes: Routes = [
   {
-    path: 'portal/home-owner-master',
-    component: HomeOwnerMasterComponent
+    path: 'portal/house-owner-registration',
+    component: HouseOwnerRegistrationComponent
   },
   {
     path: 'portal/agreement-type-master',
@@ -23,8 +23,8 @@ const routes: Routes = [
     component: UnitRegistrationComponent
   },
   {
-    path: 'portal/home-registration',
-    component: HomeRegistrationComponent
+    path: 'portal/house-registration',
+    component: HouseRegistrationComponent
   },
   {
     path: 'portal/agreement-master',

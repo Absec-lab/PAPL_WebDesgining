@@ -142,15 +142,16 @@
             </button>
         </div>
 
-        <div class="w-100" style="overflow-x: auto; padding-top: 30px;">
-            <table class="table table-bordered table-striped">
+        <div class="" style=" position: relative; overflow-x: auto; overflow-y: auto; padding-top: 30px;">
+            <table class="table w-full table-bordered table-striped">
                 <thead class="">
-                    <tr>
+                    <tr >
                         <th style="background-color: rgba(0, 133, 159, 1); color: #faf7f7;">SL.NO</th>
-                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Unit No</th>
+                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">Unit.No</th>
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Occupied</th>
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Available</th>
-                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Action</th>
+                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">Action</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
@@ -160,13 +161,16 @@
                         <td>{{ item.Occupied }}</td>
                         <td>{{ item.Available}}</td>
                         <td >
-                            <button class="btn  btn-sm mx-2" style="background-color: rgb(22, 133, 236);color: #faf7f7;" >
-                                <i class="fa-solid fa-edit"></i>
-                            </button>
-                            <!-- <button  (click)="removeZone(zone.zoneId)"class="btn btn-danger btn-sm"> -->
-                            <button class="btn btn-danger btn-sm mx-2 " >
-                                <i class="fa-solid fa-trash-alt"></i>
-                            </button>
+                            <div  style="display: inline-flex; ">
+                                <button class="btn  btn-sm mx-2" style="background-color: rgb(22, 133, 236);color: #faf7f7;" >
+                                    <i class="fa-solid fa-edit"></i>
+                                </button>
+                                
+                                <button class="btn btn-danger btn-sm mx-2 " >
+                                    <i class="fa-solid fa-trash-alt"></i>
+                                </button>
+                            </div>
+                            
                         </td>
                     </tr>
                 </tbody>

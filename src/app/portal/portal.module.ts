@@ -11,6 +11,7 @@ import { HouseRegistrationComponent } from './house-registration/house-registrat
 import { AgreementMasterComponent } from './agreement-master/agreement-master.component';
 import { UtilityCalculationComponent } from './utility-calculation/utility-calculation.component';
 import { UnitBookingComponent } from './unit-booking/unit-booking.component';
+import { AddLegalHeirComponent } from './add-legal-heir/add-legal-heir.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { UnitBookingComponent } from './unit-booking/unit-booking.component';
     HouseRegistrationComponent,
     AgreementMasterComponent,
     UtilityCalculationComponent,
-    UnitBookingComponent
+    UnitBookingComponent,
+    AddLegalHeirComponent
   ],
   imports: [
     CommonModule,

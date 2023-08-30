@@ -8,3 +8,9 @@
     padding: 8px;
     text-align: center;
   }
+  .box{
+    width: 200px;
+  }
+  .name{
+    width: 160px;
+  }

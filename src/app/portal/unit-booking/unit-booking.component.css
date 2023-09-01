@@ -20,7 +20,12 @@
     background-color: #278A9D;
   }
   .date{
-    width: 200px;
+    width: auto;
+  }
+  @media (min-width: 500px) {
+    .date{
+      width: 200px;
+    }
   }
   .name{
     width: 160px;

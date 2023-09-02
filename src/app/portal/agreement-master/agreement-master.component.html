@@ -85,8 +85,8 @@
             <div class="col-sm-6 col-md-4  ">
                 <div class="form-group">
                     <label for="state" class="form-label">Agreement Upload<span class="text-danger">*</span></label>
-                    <input type="file" name="" id=""class="form-control" accept="image/*">
-                    
+                    <input type="file" name="" id="" class="form-control" accept="image/*">
+
                 </div>
 
             </div>
@@ -117,20 +117,23 @@
             <div class="col-sm-6 col-md-4">
                 <div class="form-group  d-flex align-baseline gap-5 ">
                     <div class="col-sm-6 col-md-4">
-                        <label for="state" class="form-label">Electric Bill</label>
+                        <label for="state" class="form-label">Electric_Bill</label>
                         <label class="switch">
-                            <input type="checkbox">
-                            <span class="slider"></span>
+                            <input class="switch-input" type="checkbox" />
+                            <span class="switch-label" data-yes="YES" data-no="NO"></span> 
+                            <span class="switch-handle"></span> 
                         </label>
                     </div>
                     <div class="col-sm-6 col-md-4">
-                        <label for="state" class="form-label">Water Bill</label>
+                        <label for="state" class="form-label">Water_Bill</label>
                         <label class="switch">
-                            <input type="checkbox">
-                            <span class="slider"></span>
+                            <input class="switch-input" type="checkbox" />
+                            <span class="switch-label" data-yes="YES" data-no="NO"></span> 
+                            <span class="switch-handle"></span> 
                         </label>
+                        
                     </div>
-                    
+
                 </div>
             </div>
 
@@ -149,13 +152,23 @@
         <div class="" style=" position: relative; overflow-x: auto; overflow-y: auto; margin-top: 30px;">
             <table class="table w-full table-bordered table-striped">
                 <thead class="">
-                    <tr >
-                        <th style="background-color: rgba(0, 133, 159, 1); color: #faf7f7;">SL.NO</th>
-                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">Unit.No</th>
-                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Occupied</th>
-                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Available</th>
+                    <tr>
+                        <th style="background-color: rgba(0, 133, 159, 1); color:#faf7f7;">SL.NO</th>
+                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">State</th>
+                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">SBU</th>
+                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Plant</th>
+                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">Owner_Name</th>
+                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">House_Name</th>
+                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Agreement_Type</th>
+                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">Monthly_Rent</th>
+                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Agreement_Period</th>
+                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Start_Date</th>
+                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">End_Date</th>
+                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Electric_Bill</th>
+                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Water_Bill</th>
+                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">Created_Date</th>
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">Action</th>
-                        
+
                     </tr>
                 </thead>
                 <tbody>
@@ -164,17 +177,29 @@
                         <td>{{ item.Unit_No }}</td>
                         <td>{{ item.Occupied }}</td>
                         <td>{{ item.Available}}</td>
-                        <td >
-                            <div  style="display: inline-flex; ">
-                                <button class="btn  btn-sm mx-2" style="background-color: rgb(22, 133, 236);color: #faf7f7;" >
+                        <td>{{ item.Unit_No }}</td>
+                        <td>{{ item.Occupied }}</td>
+                        <td>{{ item.Available}}</td>
+                        <td>{{ item.Unit_No }}</td>
+                        <td>{{ item.Occupied }}</td>
+                        <td>{{ item.Available}}</td>
+                        <td>{{ item.Unit_No }}</td>
+                        <td>{{ item.Occupied }}</td>
+                        <td>{{ item.Available}}</td>
+                        <td>{{ item.Unit_No }}</td>
+                        
+                        <td>
+                            <div style="display: inline-flex; ">
+                                <button class="btn  btn-sm mx-2"
+                                    style="background-color: rgb(22, 133, 236);color: #faf7f7;">
                                     <i class="fa-solid fa-edit"></i>
                                 </button>
-                                
-                                <button class="btn btn-danger btn-sm mx-2 " >
+
+                                <button class="btn btn-danger btn-sm mx-2 ">
                                     <i class="fa-solid fa-trash-alt"></i>
                                 </button>
                             </div>
-                            
+
                         </td>
                     </tr>
                 </tbody>

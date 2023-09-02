@@ -12,4 +12,5 @@ export class AgreementMasterComponent {
     
     // Add more data items as needed
   ];
+  
 }

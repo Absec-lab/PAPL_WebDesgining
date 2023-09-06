@@ -6,5 +6,12 @@ import { Component } from '@angular/core';
   styleUrls: ['../../common.css', './login.component.css']
 })
 export class LoginComponent {
+  
+  showPassword: boolean = false;
+  // Add your form group and form control if needed.
+  // Example: formGroup: FormGroup = new FormGroup({ password: new FormControl('') });
 
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
 }

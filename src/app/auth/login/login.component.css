@@ -60,3 +60,26 @@
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
 }
+.hide {
+  display: none;
+}
+.inner-addon { 
+    position: relative; 
+}
+.inner-addon .far, .inner-addon .fas {
+  position: absolute;
+  padding: 17px 20px ;
+  color: #000;
+  z-index: 100;
+  cursor: pointer;
+}
+.left-addon .far, .left-addon .fas  { left:  0px; }
+.right-addon .far, .right-addon .fas { right: 0px; }
+
+
+
+  * {
+  margin:  0px;
+  padding:  0px;
+  box-sizing:  border-box;
+}

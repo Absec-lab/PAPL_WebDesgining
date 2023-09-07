@@ -14,4 +14,9 @@ export class AgreementTypeMasterComponent {
     // Add more data items as needed
   ];
 
+  onClick() {
+    // Your button click logic here
+    alert('Deleted Successfully!!');
+  }
+
 }

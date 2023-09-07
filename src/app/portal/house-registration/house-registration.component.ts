@@ -13,4 +13,8 @@ export class HouseRegistrationComponent {
     
     // Add more data items as needed
   ];
+  onClick() {
+    // Your button click logic here
+    alert('Deleted Successfully!!');
+  }
 }

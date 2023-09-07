@@ -7,12 +7,7 @@
           <div class="card shadow-lg login-card border-0 text-white">
             <div class="card-body p-5">
               <div class="text-center">
-                <img
-                  src="/assets/images/papl.png"
-                  alt=""
-                  class="mx-auto"
-                  style="width: 70px"
-                />
+                <img src="/assets/images/papl.png" alt="" class="mx-auto" style="width: 70px" />
               </div>
               <div class="mt-1">
                 <img src="/assets/images/divider.svg" alt="" />
@@ -26,61 +21,34 @@
               </div>
               <form action="" class="mt-4 pt-2">
                 <div class="input-group mb-3">
-                  <span
-                    class="input-group-text bg-white ps-3 px-3 border-white"
-                    id="basic-addon1"
-                  >
+                  <span class="input-group-text bg-white ps-3 px-3 border-white" id="basic-addon1">
                     <i class="fa-solid fa-user"></i>
                   </span>
-                  <input
-                    type="text"
-                    class="form-control pe-3 ps-1 border-white custom-login-input"
-                    placeholder="Username"
-                    aria-label="Username"
-                    aria-describedby="basic-addon1"
-                    autocomplete="new-username"
-                  />
+                  <input type="text" class="form-control pe-3 ps-1 border-white custom-login-input"
+                    placeholder="Username" aria-label="Username" aria-describedby="basic-addon1"
+                    autocomplete="new-username" />
                 </div>
-                
+
 
                 <div class="wrap-input validate-input m-b-16">
                   <div class="form-group inner-addon right-addon">
                     <div class="input-group col-6 mx-auto">
-                      <span
-                        class="input-group-text bg-white ps-3 px-3 border-white"
-                        id="basic-addon1"
-                      >
+                      <span class="input-group-text bg-white ps-3 px-3 border-white" id="basic-addon1">
                         <i class="fa-solid fa-key"></i>
                       </span>
-                      <input
-                        name="password"
-                        [type]="showPassword ? 'text' : 'password'"
+                      <input name="password" [type]="showPassword ? 'text' : 'password'"
                         class="form-control pe-3 ps-1  border-white custom-login-input"
-                        style="border-radius: 0 5px 5px 0;"
-                        placeholder="Password"
-                        aria-label="Password"
-                        aria-describedby="basic-addon1"
-                        autocomplete="new-password"
-                      />
+                        style="border-radius: 0 5px 5px 0;" placeholder="Password" aria-label="Password"
+                        aria-describedby="basic-addon1" autocomplete="new-password" />
                       <div>
-                        <i
-                          alt="show"
-                          class="far fa-eye eye-show"
-                          (click)="showPassword = !showPassword"
-                          [class.hide]="showPassword"
-                        ></i>
-                        <i
-                          alt="hide"
-                          class="far fa-eye-slash eye-hide"
-                          (click)="showPassword = !showPassword"
-                          [class.hide]="!showPassword"
-                        ></i>
+                        <i alt="show" class="far fa-eye eye-show" (click)="showPassword = !showPassword"
+                          [class.hide]="showPassword"></i>
+                        <i alt="hide" class="far fa-eye-slash eye-hide" (click)="showPassword = !showPassword"
+                          [class.hide]="!showPassword"></i>
                       </div>
                     </div>
                   </div>
-                  <!-- <input class="input" [type]="showPassword ? 'text' : 'password'" placeholder="Password" value="" class="form-control" formControlName="password" autocomplete="new-password" id="password-field"/>  -->
 
-                  <!-- <span class="symbol-input"> <span class="glyphicon glyphicon-lock"></span> </span> -->
                 </div>
                 <div class="row mt-4">
                   <div class="col-md-6">
@@ -89,8 +57,7 @@
                     </button>
                   </div>
                   <div
-                    class="col-md-6 text-end d-flex align-items-center justify-content-center mt-3 mt-md-0 justify-content-md-end"
-                  >
+                    class="col-md-6 text-end d-flex align-items-center justify-content-center mt-3 mt-md-0 justify-content-md-end">
                     <a href="" class="fw-bold text-primary">Forgot Password?</a>
                   </div>
                 </div>

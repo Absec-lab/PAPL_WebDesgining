@@ -1,0 +1,13 @@
+.bottom:hover {
+  background-color: #7796B3;
+}
+.bottom {
+  background-color: #278A9D;
+  color: #faf7f7;
+  border-bottom: solid 3px #b5cdd2;
+  height: 43px;
+}
+.input{
+    padding: auto;
+  
+}

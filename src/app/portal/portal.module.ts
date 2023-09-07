@@ -12,6 +12,7 @@ import { AgreementMasterComponent } from './agreement-master/agreement-master.co
 import { UtilityCalculationComponent } from './utility-calculation/utility-calculation.component';
 import { UnitBookingComponent } from './unit-booking/unit-booking.component';
 import { AddLegalHeirComponent } from './add-legal-heir/add-legal-heir.component';
+import { PaymentModeComponent } from './payment-mode/payment-mode.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { AddLegalHeirComponent } from './add-legal-heir/add-legal-heir.component
     AgreementMasterComponent,
     UtilityCalculationComponent,
     UnitBookingComponent,
-    AddLegalHeirComponent
+    AddLegalHeirComponent,
+    PaymentModeComponent
   ],
   imports: [
     CommonModule,

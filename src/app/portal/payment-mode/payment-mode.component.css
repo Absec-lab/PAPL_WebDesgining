@@ -1,13 +1,34 @@
 .bottom:hover {
-  background-color: #7796B3;
+  background-color: #7796b3;
 }
 .bottom {
-  background-color: #278A9D;
+  background-color: #278a9d;
   color: #faf7f7;
   border-bottom: solid 3px #b5cdd2;
   height: 43px;
 }
-.input{
-    padding: auto;
-  
+.form-group-1 {
+  height: 250px;
+  background-color: rgba(181, 205, 210, 1);
+  padding: 8px;
+}
+.contener-1 {
+  background-color: rgba(226, 242, 246, 1);
+  padding: 2% 1% 2% 1%;
+  margin-bottom: 7px;
+}
+@media (min-width: 576px) {
+  .contener-1 {
+    background-color: rgba(226, 242, 246, 1);
+    padding: 2% 5% 2% 1%;
+    margin-bottom: 7px;
+  }
+  .form-group-1 {
+    height: 500px;
+    background-color: rgba(181, 205, 210, 1);
+    padding: 8px;
+  }
+}
+.input {
+  padding: auto;
 }

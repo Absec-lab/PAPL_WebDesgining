@@ -1,6 +1,12 @@
 .bottom:hover {
   background-color: #7796b3;
 }
+.bottom-1 {
+  background-color: #7796b3;
+  color: #faf7f7;
+  border-bottom: solid 3px #b5cdd2;
+  height: 43px;
+}
 .bottom {
   background-color: #278a9d;
   color: #faf7f7;

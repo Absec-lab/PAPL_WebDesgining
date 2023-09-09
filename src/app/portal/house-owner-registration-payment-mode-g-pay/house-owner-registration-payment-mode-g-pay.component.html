@@ -3,7 +3,7 @@
     <div class="container d-flex align-items-center gap-2">
         <a href="" class="primary-link fw-bold">Home</a>
         <span>/</span>
-        <span>House Owner Registration</span>
+        <span>House Owner Registration/Payment mode/G-pay Payment</span>
     </div>
 </section>
 <section id="page-content" class="px-2 px-sm-0">
@@ -111,10 +111,33 @@
                 </div>
             </div>
             <h5 class="mt-4 text-secondary">
-                Bank Account Details of House Owner
+                Google Pay UPI Payment
             </h5>
             <hr class="my-1" />
-           
+            <div class="row pt-4">
+                <div class="col-sm-6 col-md-4">
+                    <div class="form-group">
+                        <label for="state" class="form-label">Google Pay UPI ID<span class="text-danger">*</span></label>
+                        <input type="text" name="" id="" class="form-control">
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4">
+                    <div class="form-group">
+                        <label for="state" class="form-label">G-Pay Linked Mob._No<span class="text-danger">*</span></label>
+                        <input type="number" name="" id="" class="form-control">
+                    </div>
+                </div>
+                
+                
+                <div class="col-sm-6 col-md-4">
+                    <div class="form-group">
+                        <label for="state" class="form-label">Upload QR Code<span
+                                class="text-danger">*</span></label>
+                        <input type="file" name="" id=""class="form-control" accept="image/*">
+                    </div>
+                </div>
+               
+            </div>
         </div>
         <div class="mt-4 d-flex justify-content-end">
             <button class="btn btn-primary form-save-btn">
@@ -130,9 +153,8 @@
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Phone_no</th>
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Address</th>
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">Govt_ID</th>
-                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Account_Number</th>
-                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">IFSC_Code</th>
-                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">PAN_Card</th>
+                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">G-Pay_Id/G-pay_linked_Mob._No.</th>
+                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">QR_Code</th>                      
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Start_Date</th>
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">End_Date</th>
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">Action</th>
@@ -148,7 +170,7 @@
                         <td>{{ item.Govt_ID }}</td>
                         <td>{{ item.Account_Number }}</td>
                         <td>{{ item.IFSC_Code}}</td>
-                        <td>{{ item.PAN_Card }}</td>
+                        
                         <td>{{ item.Start_Date }}</td>
                         <td>{{ item.End_Date}}</td>
                         <td>

@@ -9,6 +9,9 @@ import {  UtilityCalculationComponent } from './utility-calculation/utility-calc
 import { UnitBookingComponent } from './unit-booking/unit-booking.component';
 import { AddLegalHeirComponent } from './add-legal-heir/add-legal-heir.component';
 import { PaymentModeComponent } from './payment-mode/payment-mode.component';
+import { HouseOwnerRegistrationPaymentModeBankAcComponent } from './house-owner-registration-payment-mode-bank-ac/house-owner-registration-payment-mode-bank-ac.component';
+import { HouseOwnerRegistrationPaymentModeGPayComponent } from './house-owner-registration-payment-mode-g-pay/house-owner-registration-payment-mode-g-pay.component';
+import { HouseOwnerRegistrationPaymentModePaytmComponent } from './house-owner-registration-payment-mode-paytm/house-owner-registration-payment-mode-paytm.component';
 
 const routes: Routes = [
   {
@@ -46,6 +49,18 @@ const routes: Routes = [
   {
     path: 'portal/payment-mode',
     component: PaymentModeComponent
+  },
+  {
+    path: 'portal/house-owner-registration-payment-mode-bank-ac',
+    component: HouseOwnerRegistrationPaymentModeBankAcComponent
+  },
+  {
+    path: 'portal/house-owner-registration-payment-mode-g-pay',
+    component: HouseOwnerRegistrationPaymentModeGPayComponent
+  },
+  {
+    path: 'portal/house-owner-registration-payment-mode-paytm',
+    component: HouseOwnerRegistrationPaymentModePaytmComponent
   },
 ];
 

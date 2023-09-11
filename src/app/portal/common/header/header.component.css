@@ -1,3 +1,6 @@
 nav.bg-secondary {
     background: #278A9D !important;
 }
+.nav-link{
+    font-size:small;
+}

@@ -10,8 +10,8 @@ import { UnitBookingComponent } from './unit-booking/unit-booking.component';
 import { AddLegalHeirComponent } from './add-legal-heir/add-legal-heir.component';
 import { PaymentModeComponent } from './payment-mode/payment-mode.component';
 import { HouseOwnerRegistrationPaymentModeBankAcComponent } from './house-owner-registration-payment-mode-bank-ac/house-owner-registration-payment-mode-bank-ac.component';
-import { HouseOwnerRegistrationPaymentModeGPayComponent } from './house-owner-registration-payment-mode-g-pay/house-owner-registration-payment-mode-g-pay.component';
-import { HouseOwnerRegistrationPaymentModePaytmComponent } from './house-owner-registration-payment-mode-paytm/house-owner-registration-payment-mode-paytm.component';
+import { HouseOwnerRegistrationPaymentModeUPIComponent } from './house-owner-registration-payment-mode-upi/house-owner-registration-payment-mode-upi.component';
+import { AddLegalHeirPaymentModeUPIComponent } from './add-legal-heir-payment-mode-upi/add-legal-heir-payment-mode-upi.component';
 
 const routes: Routes = [
   {
@@ -55,12 +55,12 @@ const routes: Routes = [
     component: HouseOwnerRegistrationPaymentModeBankAcComponent
   },
   {
-    path: 'portal/house-owner-registration-payment-mode-g-pay',
-    component: HouseOwnerRegistrationPaymentModeGPayComponent
+    path: 'portal/house-owner-registration-payment-mode-upi',
+    component: HouseOwnerRegistrationPaymentModeUPIComponent
   },
   {
-    path: 'portal/house-owner-registration-payment-mode-paytm',
-    component: HouseOwnerRegistrationPaymentModePaytmComponent
+    path: 'portal/add-legal-heir-payment-mode-upi',
+    component: AddLegalHeirPaymentModeUPIComponent
   },
 ];
 

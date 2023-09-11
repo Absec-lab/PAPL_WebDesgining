@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-add-legal-heir',
   templateUrl: './add-legal-heir.component.html',
@@ -16,5 +16,33 @@ export class AddLegalHeirComponent {
   onClick() {
     // Your button click logic here
     alert('Deleted Successfully!!');
+  }
+  constructor(private router: Router) {}
+
+  onPaymentModeChange(event: Event) {
+    const selectedValue = (event.target as HTMLSelectElement).value;
+
+    switch (selectedValue) {
+      case '1':
+        this.router.navigate(['/portal/add-legal-heir-payment-mode-bank-ac']);
+        break;
+        case '2':
+        this.router.navigate(['/portal/add-legal-heir']);
+        break;
+        case '3':
+        this.router.navigate(['/portal/add-legal-heir-payment-mode-upi']);
+        break;
+        case '4':
+        this.router.navigate(['/portal/add-legal-heir-payment-mode-upi']);
+        break;
+      case '5':
+        this.router.navigate(['/portal/add-legal-heir-payment-mode-upi']);
+        break;
+        case '6':
+        this.router.navigate(['/portal/add-legal-heir-payment-mode-upi']);
+        break;
+      // Add more cases for other payment modes if needed
+      
+    }
   }
 }

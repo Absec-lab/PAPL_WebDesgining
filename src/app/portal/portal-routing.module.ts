@@ -12,6 +12,7 @@ import { PaymentModeComponent } from './payment-mode/payment-mode.component';
 import { HouseOwnerRegistrationPaymentModeBankAcComponent } from './house-owner-registration-payment-mode-bank-ac/house-owner-registration-payment-mode-bank-ac.component';
 import { HouseOwnerRegistrationPaymentModeUPIComponent } from './house-owner-registration-payment-mode-upi/house-owner-registration-payment-mode-upi.component';
 import { AddLegalHeirPaymentModeUPIComponent } from './add-legal-heir-payment-mode-upi/add-legal-heir-payment-mode-upi.component';
+import { AddLegalHeirPaymentModeBankAcComponent } from './add-legal-heir-payment-mode-bank-ac/add-legal-heir-payment-mode-bank-ac.component';
 
 const routes: Routes = [
   {
@@ -61,6 +62,10 @@ const routes: Routes = [
   {
     path: 'portal/add-legal-heir-payment-mode-upi',
     component: AddLegalHeirPaymentModeUPIComponent
+  },
+  {
+    path: 'portal/add-legal-heir-payment-mode-bank-ac',
+    component: AddLegalHeirPaymentModeBankAcComponent
   },
 ];
 

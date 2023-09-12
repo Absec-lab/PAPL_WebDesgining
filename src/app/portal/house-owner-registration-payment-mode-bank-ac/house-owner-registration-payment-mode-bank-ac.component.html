@@ -7,7 +7,7 @@
     </div>
 </section>
 <section id="page-content" class="px-2 px-sm-0">
-    <div class="container">
+    <form class="container">
         <ul class="nav  " id="" role="">
             <li class="nav-item w-50" role="">
                 <button class="nav-link active w-100 text-uppercase text-white" id=""
@@ -29,68 +29,68 @@
                 <div class="col-sm-6 col-md-4">
                     <div class="form-group">
                         <label for="state" class="form-label">House Owner Name<span class="text-danger">*</span></label>
-                        <input type="text" name="" id="" class="form-control">
+                        <input type="text" name="name" id="" class="form-control" required>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
                     <div class="form-group">
                         <label for="state" class="form-label">Phone Number<span class="text-danger">*</span></label>
-                        <input type="number" name="" id="" class="form-control">
+                        <input type="number" name="" id="" class="form-control" required>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
                     <div class="form-group">
                         <label for="state" class="form-label">Email ID<span class="text-danger">*</span></label>
-                        <input type="email" name="" id="" class="form-control">
+                        <input type="email" name="" id="" class="form-control" required>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
                     <div class="form-group">
                         <label for="state" class="form-label">Upload Govt ID Proof<span
                                 class="text-danger">*</span></label>
-                        <input type="file" name="" id=""class="form-control" accept="image/*">
+                        <input type="file" name="" id=""class="form-control" accept="image/*" required>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
                     <div class="form-group">
                         <label for="state" class="form-label">Govt ID Proof<span class="text-danger">*</span></label>
-                        <input type="text" name="" id="" class="form-control">
+                        <input type="text" name="" id="" class="form-control" required>
                     </div>
                 </div>
                 
                 <div class="col-sm-6 col-md-4">
                     <div class="form-group">
                         <label for="state" class="form-label">Address 1<span class="text-danger">*</span></label>
-                        <input type="text" name="" id="" class="form-control">
+                        <input type="text" name="" id="" class="form-control" required>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
                     <div class="form-group">
                         <label for="state" class="form-label">Address 2<span class="text-danger">*</span></label>
-                        <input type="text" name="" id="" class="form-control">
+                        <input type="text" name="" id="" class="form-control"required>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
                     <div class="form-group">
                         <label for="state" class="form-label">State<span class="text-danger">*</span></label>
-                        <input type="text" name="" id="" class="form-control">
+                        <input type="text" name="" id="" class="form-control"required>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
                     <div class="form-group">
                         <label for="state" class="form-label">District<span class="text-danger">*</span></label>
-                        <input type="text" name="" id="" class="form-control">
+                        <input type="text" name="" id="" class="form-control"required>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
                     <div class="form-group">
                         <label for="state" class="form-label">PIN<span class="text-danger">*</span></label>
-                        <input type="text" name="" id="" class="form-control">
+                        <input type="text" name="" id="" class="form-control"required>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
                     <label for="state" class="form-label">Payment Mode<span class="text-danger">*</span></label>
-                    <select class="form-select" aria-label="Default select example" (change)="onPaymentModeChange($event)">
+                    <select class="form-select" aria-label="Default select example" (change)="onPaymentModeChange($event)"required>
                       <option selected>Choose Payment Mode...</option>
                       <option value="1" routerLink="/portal/house-owner-registration-payment-mode-bank-ac">Bank AC</option>
                       <option value="2">Cash</option>
@@ -118,44 +118,44 @@
                 <div class="col-sm-6 col-md-4">
                     <div class="form-group">
                         <label for="state" class="form-label">Account Holder Name<span class="text-danger">*</span></label>
-                        <input type="text" name="" id="" class="form-control">
+                        <input type="text" name="" id="" class="form-control"required>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
                     <div class="form-group">
                         <label for="state" class="form-label">Account Number<span class="text-danger">*</span></label>
-                        <input type="number" name="" id="" class="form-control">
+                        <input type="number" name="" id="" class="form-control"required>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
                     <div class="form-group">
                         <label for="state" class="form-label">IFSC<span class="text-danger">*</span></label>
-                        <input type="text" name="" id="" class="form-control">
+                        <input type="text" name="" id="" class="form-control"required>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
                     <div class="form-group">
                         <label for="state" class="form-label">PAN  Card <span class="text-danger">*</span></label>
-                        <input type="text" name="" id="" class="form-control">
+                        <input type="text" name="" id="" class="form-control"required>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
                     <div class="form-group">
                         <label for="state" class="form-label">Upload PAN  Card<span
                                 class="text-danger">*</span></label>
-                        <input type="file" name="" id=""class="form-control" accept="image/*">
+                        <input type="file" name="" id=""class="form-control" accept="image/*"required>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
                     <div class="form-group">
                         <label for="state" class="form-label">Description<span class="text-danger">*</span></label>
-                        <input type="text" name="" id="" class="form-control">
+                        <input type="text" name="" id="" class="form-control"required>
                     </div>
                 </div>
             </div>
         </div>
         <div class="mt-4 d-flex justify-content-end">
-            <button class="btn btn-primary form-save-btn">
+            <button class="btn btn-primary form-save-btn" (click)="onClick1()">
                 Save
             </button>
         </div>
@@ -206,6 +206,6 @@
                 </tbody>
             </table>
         </div>
-    </div>
+    </form>
 </section>
 <app-footer></app-footer>

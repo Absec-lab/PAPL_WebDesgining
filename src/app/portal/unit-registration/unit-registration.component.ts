@@ -16,5 +16,13 @@ export class UnitRegistrationComponent {
     // Your button click logic here
     alert('Deleted Successfully!!');
   }
+  onClick1() {
+    // Your button click logic here
+    alert('Add Successfully!!');
+  }
+  onClick2() {
+    // Your button click logic here
+    alert('Update Successfully!!');
+  }
 }
 

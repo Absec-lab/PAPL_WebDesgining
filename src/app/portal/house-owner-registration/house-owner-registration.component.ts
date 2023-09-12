@@ -18,6 +18,17 @@ export class HouseOwnerRegistrationComponent {
     // Your button click logic here
     alert('Deleted Successfully!!');
   }
+  onClick1() {
+    // Your button click logic here
+    alert('Save Successfully!!');
+  }
+
+
+
+  onSubmit() {
+    // Handle form submission and validation here
+  }
+
   constructor(private router: Router) {}
 
   onPaymentModeChange(event: Event) {

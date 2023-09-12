@@ -18,6 +18,10 @@ export class UnitBookingComponent {
     // Your button click logic here
     alert('Booking Successfully!!');
   }
+  onClick1() {
+    // Your button click logic here
+    alert('Update Successfully!!');
+  }
 }
 
   

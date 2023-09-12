@@ -16,4 +16,8 @@ export class UtilityCalculationComponent {
     // Your button click logic here
     alert('Deleted Successfully!!');
   }
+  onClick1() {
+    // Your button click logic here
+    alert('Save Successfully!!');
+  }
 }

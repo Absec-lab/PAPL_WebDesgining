@@ -17,6 +17,10 @@ export class HouseOwnerRegistrationPaymentModeBankAcComponent {
     // Your button click logic here
     alert('Deleted Successfully!!');
   }
+  onClick1() {
+    // Your button click logic here
+    alert('Save Successfully!!');
+  }
   constructor(private router: Router) {}
 
   onPaymentModeChange(event: Event) {

@@ -26,7 +26,7 @@
                   </span>
                   <input type="text" class="form-control pe-3 ps-1 border-white custom-login-input"
                     placeholder="Username" aria-label="Username" aria-describedby="basic-addon1"
-                    autocomplete="new-username" />
+                    autocomplete="new-username" required/>
                 </div>
 
 
@@ -39,7 +39,7 @@
                       <input name="password" [type]="showPassword ? 'text' : 'password'"
                         class="form-control pe-3 ps-1  border-white custom-login-input"
                         style="border-radius: 0 5px 5px 0;" placeholder="Password" aria-label="Password"
-                        aria-describedby="basic-addon1" autocomplete="new-password" />
+                        aria-describedby="basic-addon1" autocomplete="new-password" required />
                       <div>
                         <i alt="show" class="far fa-eye eye-show" (click)="showPassword = !showPassword"
                           [class.hide]="showPassword"></i>

@@ -17,6 +17,18 @@ export class AddLegalHeirPaymentModeUPIComponent  {
     // Your button click logic here
     alert('Deleted Successfully!!');
   }
+  onClick1() {
+    // Your button click logic here
+    alert('Add Successfully!!');
+  }
+  isClicked = false;
+
+  onClick2() {
+    this.isClicked = true;
+    // Your button click logic here
+    alert('Save Successfully!!');
+  }
+  
   constructor(private router: Router) {}
 
   onPaymentModeChange(event: Event) {

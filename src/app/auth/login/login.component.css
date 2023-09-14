@@ -53,7 +53,15 @@
 .login-btn:hover {
   background: #065868;
 }
-
+.devider{
+  width:  100%;
+  min-height:  10px;
+  position:  relative;    
+  background-size:  auto;
+  background-position:  center;
+background: url(../../../assets/images/devider.png) no-repeat;
+background-position: center;
+}
 .custom-login-input {
   border-left: 0;
   box-shadow: none;

@@ -1,6 +1,8 @@
-nav.bg-secondary {
+nav.navbar-light{
     background: #278A9D !important;
+    
 }
 .nav-link{
-    font-size:small;
+    font-size:medium;
+    color:white;
 }

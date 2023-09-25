@@ -6,3 +6,16 @@ nav.navbar-light{
     font-size:medium;
     color:white;
 }
+
+.navbar-toggler {
+    border-color: white;
+    background-color: rgb(4, 160, 172);
+}
+
+.navbar-toggler:focus {
+    text-decoration: none;
+    outline: 0;
+    box-shadow: 0 0 0 var(--bs-navbar-toggler-focus-width);
+    color: rgb(7, 186, 199); 
+    
+}

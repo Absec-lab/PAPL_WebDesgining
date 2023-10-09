@@ -11,8 +11,10 @@ import { AgreementMasterComponent } from './agreement-master/agreement-master.co
 import { UtilityCalculationComponent } from './utility-calculation/utility-calculation.component';
 import { UnitBookingComponent } from './unit-booking/unit-booking.component';
 import { AddLegalHeirComponent } from './add-legal-heir/add-legal-heir.component';
-
-
+// mrutunjay pani || created service
+import {PortalServiceService} from './serviceapi/portal-service.service';
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -30,9 +32,12 @@ import { AddLegalHeirComponent } from './add-legal-heir/add-legal-heir.component
     
     
   ],
+  providers: [PortalServiceService],
   imports: [
     CommonModule,
-    PortalRoutingModule
+    PortalRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class PortalModule { }

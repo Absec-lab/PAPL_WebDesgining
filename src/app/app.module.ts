@@ -4,8 +4,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
 import { PortalModule } from './portal/portal.module';
-
-
+import { HttpClientModule } from '@angular/common/http';
+import { NgxUiLoaderModule } from 'ngx-ui-loader';
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -15,7 +17,11 @@ import { PortalModule } from './portal/portal.module';
     BrowserModule,
     AppRoutingModule,
     AuthModule,
-    PortalModule
+    PortalModule,
+    HttpClientModule,
+    NgxUiLoaderModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -118,7 +118,7 @@
             <div class="button-success col-sm-6 col-md-1   ">
 
 
-                <button type="button" class="button btn btn-primary py-0 px-2.5">+</button>
+                <button type="button" class="button btn btn-primary py-0 px-4 m-1">+</button>
             </div>
 
             <div class="col-sm-6 col-md-4 py-2">
@@ -134,7 +134,16 @@
                 <input type="text" name="" id="" class="form-control">
             </div>
             <div class="col-sm-6 col-md-1  py-2">
-                <button type="button" class="button btn btn-danger py-0 px-3">-</button>
+                <div class="m-1" style="display: inline-flex; ">
+                    <button class="btn  btn-sm "
+                        style="background-color: rgb(22, 133, 236);color: #faf7f7; margin-right: 3px;">
+                        <i class="fa-solid fa-edit"></i>
+                    </button>
+
+                    <button class="btn btn-danger btn-sm  " (click)="onClick()">
+                        <i class="fa-solid fa-trash-alt"></i>
+                    </button>
+                </div>
             </div>
 
             <div class="col-sm-6 col-md-4 py-2">
@@ -150,7 +159,16 @@
                 <input type="text" name="" id="" class="form-control">
             </div>
             <div class="col-sm-6 col-md-1 py-2 ">
-                <button type="button" class="button btn btn-danger py-0 px-3 ">-</button>
+                <div class="m-1"  style="display: inline-flex; ">
+                    <button class="btn  btn-sm "
+                        style="background-color: rgb(22, 133, 236);color: #faf7f7; margin-right: 3px;">
+                        <i class="fa-solid fa-edit"></i>
+                    </button>
+
+                    <button class="btn btn-danger btn-sm  " (click)="onClick()">
+                        <i class="fa-solid fa-trash-alt"></i>
+                    </button>
+                </div>
             </div>
 
 

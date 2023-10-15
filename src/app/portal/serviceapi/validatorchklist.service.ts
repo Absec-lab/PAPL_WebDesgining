@@ -738,16 +738,7 @@ blockspecialchar(event:any) {
           return false;
       return true;
   }
-  /*
-	---------------
-	---------------
-	ChangesBy : Mrutunjay Pani
-	ModifiedDate : 29/03/2022
-	Purpose : Prevent Decimal Number in textbox
-	Position : start
-	---------------
-	---------------
-  */
+
  isDecimalKey(evt:any)
  {
      var charCode = (evt.which) ? evt.which : evt.keyCode;
@@ -760,16 +751,6 @@ blockspecialchar(event:any) {
      }
      return false;
  }
-   /*
- ---------------
- ---------------
- ChangesBy : Mrutunjay Pani
- ModifiedDate : 29/03/2022
- Purpose : Prevent Decimal Number in textbox
- Position : End
- ---------------
- ---------------
- */
   isAlphaNumeric(event:any){
     // var numPattern = new RegExp(/^[0-9a-zA-Z]*$/);
     // var txtVal = event.target.value;

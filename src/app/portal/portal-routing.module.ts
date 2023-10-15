@@ -7,7 +7,7 @@ import { UnitRegistrationComponent } from './unit-registration/unit-registration
 import { HouseRegistrationComponent } from './house-registration/house-registration.component';
 import {  UtilityCalculationComponent } from './utility-calculation/utility-calculation.component';
 import { UnitBookingComponent } from './unit-booking/unit-booking.component';
-import { AddLegalHeirComponent } from './add-legal-heir/add-legal-heir.component';
+
 
 
 const routes: Routes = [
@@ -39,10 +39,7 @@ const routes: Routes = [
     path: 'portal/unit-booking',
     component: UnitBookingComponent
   },
-  {
-    path: 'portal/add-legal-heir',
-    component: AddLegalHeirComponent
-  },
+  
   
   
 ];

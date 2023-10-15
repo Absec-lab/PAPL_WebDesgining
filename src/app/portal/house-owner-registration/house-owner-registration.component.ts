@@ -23,7 +23,10 @@ export class HouseOwnerRegistrationComponent {
     // Your button click logic here
     alert('Save Successfully!!');
   }
-
+  onClick2() {
+    // Your button click logic here
+    alert('Add Successfully!!');
+  }
 
 
   onSubmit() {

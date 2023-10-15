@@ -1,37 +1,185 @@
 import { Component } from '@angular/core';
+import { PortalServiceService } from './../serviceapi/portal-service.service';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
-
+import { HttpClient } from "@angular/common/http";
+import { ValidatorchklistService } from './../serviceapi/validatorchklist.service';
 @Component({
   selector: 'app-home-owner-registration',
   templateUrl: './house-owner-registration.component.html',
   styleUrls: ['../../common.css', './house-owner-registration.component.css']
 })
 export class HouseOwnerRegistrationComponent {
-  tableData = [
-    { SL_NO: 1, House_Owner_Name: 'Rajesh Das', Phone_no: '9988776654', Address: 'Balianta,bhadrak', Govt_ID: '2345_6754_6754', Account_Number: '3317065432', IFSC_Code: 'PNB004456', PAN_Card: 'MJHG00786', Payment_Mode: '3317065432', UPI_Id_linked_Mob: 'PNB004456', QR_Code: 'MJHG00786', Start_Date: '08/08/2023', End_Date: '18/07/2025', Action: '' },
-    { SL_NO: 1, House_Owner_Name: 'Rajesh Das', Phone_no: '9988776654', Address: 'Balianta,bhadrak', Govt_ID: '2345_6754_6754', Account_Number: '3317065432', IFSC_Code: 'PNB004456', PAN_Card: 'MJHG00786', Payment_Mode: '3317065432', UPI_Id_linked_Mob: 'PNB004456', QR_Code: 'MJHG00786', Start_Date: '08/08/2023', End_Date: '18/07/2025', Action: '' },
-    { SL_NO: 1, House_Owner_Name: 'Rajesh Das', Phone_no: '9988776654', Address: 'Balianta,bhadrak', Govt_ID: '2345_6754_6754', Account_Number: '3317065432', IFSC_Code: 'PNB004456', PAN_Card: 'MJHG00786', Payment_Mode: '3317065432', UPI_Id_linked_Mob: 'PNB004456', QR_Code: 'MJHG00786', Start_Date: '08/08/2023', End_Date: '18/07/2025', Action: '' },
-
-    // Add more data items as needed
-  ];
+  allOwner:any=[];
+  constructor(private ngxLoader: NgxUiLoaderService, private formBuilder: FormBuilder, private route: Router, public portalServ: PortalServiceService, private httpClient: HttpClient, public vldChkLst: ValidatorchklistService) { }
+  ngOnInit(): void {
+    this.getAllOwner();
+  }
+  sowner:any=[{
+    "accountHolderName": "",
+    "address1": "",
+    "address2": "",
+    "bankAccountNo": '',
+    "district": "",
+    "emailId": "",
+    "idProof": "",
+    "idProofAddress": "",
+    "ifscCode": "",
+    "ownerId": null,
+    "ownerName": "",
+    "panCardAddress": "",
+    "panNo": "",
+    "paymtMode": "",
+    "phoneNo": '',
+    "pinCode": 1,
+    "state": {     
+      "stateId": 2  
+    }
+  }];
   bankStatusChk: any = 0;
-  onClick() {
-    // Your button click logic here
-    alert('Deleted Successfully!!');
+  validateData() {
+    let vSts = true;
+    if (!this.vldChkLst.blankCheck(this.sowner[0].ownerName, "Owner Name ")) {
+      vSts = false;
+    }
+    else if (!this.vldChkLst.blankCheck(this.sowner[0].phoneNo, "Phone No ")) {
+      vSts = false;
+    }
+    else if (!this.vldChkLst.blankCheck(this.sowner[0].emailId, "Email Id ")) {
+      vSts = false;
+    }
+    else if (!this.vldChkLst.blankCheck(this.sowner[0].idProof, "Id Proof ")) {
+      vSts = false;
+    }
+    else if (!this.vldChkLst.blankCheck(this.sowner[0].address1, "Address 1 ")) {
+      vSts = false;
+    }
+    else if (!this.vldChkLst.blankCheck(this.sowner[0].address2, "Address 2")) {
+      vSts = false;
+    }
+    else if (!this.vldChkLst.blankCheck(this.sowner[0].state.stateId, "State")) {
+      vSts = false;
+    }
+    else if (!this.vldChkLst.blankCheck(this.sowner[0].district, "District")) {
+      vSts = false;
+    }
+    else if (!this.vldChkLst.blankCheck(this.sowner[0].pinCode, "Pin Code")) {
+      vSts = false;
+    }
+    else if (!this.vldChkLst.blankCheck(this.sowner[0].paymtMode, "Paymt Mode")) {
+      vSts = false;
+    }
+    else {
+      vSts = true;
+    }
+    return vSts;
   }
-  onClick1() {
-    // Your button click logic here
-    alert('Save Successfully!!');
+  saveOwner(){
+    let vSts = this.validateData();
+    if (vSts) {
+      let param = this.sowner;
+      this.ngxLoader.start();
+      this.portalServ.addOwners(param).subscribe(res => {
+        this.ngxLoader.stop();
+        if (res.length>0) {
+          
+          this.sowner = [{
+            "accountHolderName": "",
+            "address1": "",
+            "address2": "",
+            "bankAccountNo": '',
+            "district": "",
+            "emailId": "",
+            "idProof": "",
+            "idProofAddress": "",
+            "ifscCode": "",
+            "ownerId": null,
+            "ownerName": "",
+            "panCardAddress": "",
+            "panNo": "",
+            "paymtMode": "",
+            "phoneNo": '',
+            "pinCode": 1,
+            "state": {     
+              "stateId": 2
+            }
+          }];
+          Swal.fire({
+            icon: 'success',
+            text: 'Record Saved Successfully'
+          });
+          this.getAllOwner();
+        } else {
+          Swal.fire({
+            icon: 'error',
+            text: res.message
+          });
+        }
+
+      }, error => {
+        this.ngxLoader.stop();
+        Swal.fire({
+          icon: 'error',
+          text: 'Error in Data Insertion'
+        });
+      });
+    }
   }
-
-
-
-  onSubmit() {
-    // Handle form submission and validation here
+  getAllOwner() {
+    let param = {};
+    this.ngxLoader.start();
+    this.portalServ.getAllOwner(param).subscribe(res => {
+      this.ngxLoader.stop();
+      if (res.length > 0) {
+        this.allOwner = res;
+      } else {
+        this.allOwner = [];
+      }
+    }, error => {
+      this.ngxLoader.stop();
+    });
   }
+  deleteOwner(id: any = 0) {
+    Swal.fire({
+			//icon: 'warning',
+			text: "Are you sure you want to Delete the details?",
+			showCancelButton: true,
+			confirmButtonText: 'Yes',
+			cancelButtonText: 'No',
+			cancelButtonColor: '#df1141'
+		}).then((result) => {
+			if (result.isConfirmed) {
+        let param = {
+          "id": id
+        };
+        this.ngxLoader.start();
+        this.portalServ.deleteOwner(param).subscribe(res => {
+          this.ngxLoader.stop();
+          if (res.responseCode == 200) {
+            Swal.fire({
+              icon: 'success',
+              text: 'Record Deleted Successfully'
+            });
+            this.getAllOwner();
+          } else {
+            Swal.fire({
+              icon: 'error',
+              text: res.message
+            });
+          }
+        },error => {
+          this.ngxLoader.stop();
+          Swal.fire({
+            icon: 'error',
+            text: 'Error'
+          });
+        });
+			}
+		});
 
-  constructor(private router: Router) { }
-
+  }
   onPaymentModeChange(event: Event) {
     const selectedValue = (event.target as HTMLSelectElement).value;
     this.bankStatusChk = selectedValue;

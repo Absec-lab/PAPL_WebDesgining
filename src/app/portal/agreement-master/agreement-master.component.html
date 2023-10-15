@@ -13,106 +13,99 @@
                 <div class="col-sm-6 col-md-4  ">
                     <div class="form-group">
                         <label for="state" class="form-label">State<span class="text-danger">*</span></label>
-                        <select class="form-select" aria-label="Default select example"required>
-                            <option selected>Choose State... </option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                        <input type="hidden" name="aggreId" id="aggreId" [(ngModel)]="aggreId">
+                        <select class="form-select" aria-label="Default select example" [(ngModel)]="aggreState" name="aggreState">
+                            <option value="">Choose State... </option>
+                            <option value={{item.stateId}} *ngFor="let item of allState; let i = index">{{item.stateName}}</option>
                         </select>
                     </div>
-    
+
                 </div>
                 <div class="col-sm-6 col-md-4 ">
                     <div class="form-group">
                         <label for="state" class="form-label">SBU<span class="text-danger">*</span></label>
-                        <select class="form-select" aria-label="Default select example"required>
-                            <option selected>Choose SBU... </option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                        <select class="form-select" aria-label="Default select example" [(ngModel)]="aggreSbu" name="aggreSbu">
+                            <option value="">Choose SBU... </option>
+                            <option value={{item.locationId}} *ngFor="let item of allSbu; let i = index">{{item.locationName}} ({{item.shortCode}})</option>
                         </select>
                     </div>
-    
+
                 </div>
                 <div class="col-sm-6 col-md-4  ">
                     <div class="form-group">
                         <label for="state" class="form-label">Plant<span class="text-danger">*</span></label>
-                        <select class="form-select" aria-label="Default select example"required>
-                            <option selected>Choose Plant... </option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                        <select class="form-select" aria-label="Default select example" [(ngModel)]="aggrePlant" name="aggrePlant">
+                            <option value="">Choose Plant... </option>
+                            <option value={{item.plantId}} *ngFor="let item of allPlant; let i = index">{{item.plantName}} ({{item.shortCode}})</option>
                         </select>
                     </div>
-    
+
                 </div>
                 <div class="col-sm-6 col-md-4  ">
                     <div class="form-group">
                         <label for="state" class="form-label">Owner Name<span class="text-danger">*</span></label>
-                        <select class="form-select" aria-label="Default select example"required>
-                            <option selected>Choose Owner... </option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                        <select class="form-select" aria-label="Default select example" [(ngModel)]="aggreOwner" name="aggreOwner">
+                            <option value="">Choose Owner... </option>
+                            <option value={{item.ownerId}} *ngFor="let item of allOwner; let i = index">{{item.ownerName}}</option>
                         </select>
                     </div>
-    
+
                 </div>
                 <div class="col-sm-6 col-md-4  ">
                     <div class="form-group">
                         <label for="state" class="form-label">House Name<span class="text-danger">*</span></label>
-                        <select class="form-select" aria-label="Default select example"required>
-                            <option selected>House State...</option>
+                        <select class="form-select" aria-label="Default select example" [(ngModel)]="aggreHouse" name="aggreHouse">
+                            <option value="">House State...</option>
                             <option value="1">One</option>
                             <option value="2">Two</option>
                             <option value="3">Three</option>
                         </select>
                     </div>
-    
-    
+
+
                 </div>
                 <div class="col-sm-6 col-md-4  ">
                     <div class="form-group">
                         <label for="state" class="form-label">Agreement Type <span class="text-danger">*</span></label>
-                        <select class="form-select" aria-label="Default select example"required>
-                            <option selected>Choose Agreement... </option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                        <select class="form-select" aria-label="Default select example" [(ngModel)]="aggreAggrementType" name="aggreAggrementType">
+                            <option value="">Choose Agreement... </option>
+                            <option value={{item.aggreTypeId}} *ngFor="let item of getAllAgreementTypeData; let i = index">{{item.aggreTypeName}}
+                            </option>
                         </select>
                     </div>
-    
+
                 </div>
                 <div class="col-sm-6 col-md-4  ">
                     <div class="form-group">
                         <label for="state" class="form-label">Agreement Upload<span class="text-danger">*</span></label>
-                        <input type="file" name="" id="" class="form-control" accept="image/*"required>
-    
+                        <input type="file" name="aggreUpload" id="aggreUpload" class="form-control" accept="image/*" (change)="selectFiles($event)">
+
                     </div>
-    
+
                 </div>
                 <div class="col-sm-6 col-md-4">
                     <div class="form-group">
                         <label for="state" class="form-label">Monthly Rent<span class="text-danger">*</span></label>
-                        <input type="text" name="" id="" class="form-control"required>
+                        <input type="text" name="aggreMonthlyRent" id="aggreMonthlyRent" class="form-control" [(ngModel)]="aggreMonthlyRent">
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
                     <div class="form-group">
                         <label for="state" class="form-label">Agreement Period<span class="text-danger">*</span></label>
-                        <input type="text" name="" id="" class="form-control"required>
+                        <input type="text" name="aggrePeriod" id="aggrePeriod" class="form-control"
+                            [(ngModel)]="aggrePeriod">
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
                     <div class="form-group">
                         <label for="state" class="form-label">Start Date<span class="text-danger">*</span></label>
-                        <input type="date" name="" id="" class="form-control" formControlName="itemPurchaseDate"required>
+                        <input type="date" name="aggreStartDate" id="aggreStartDate" class="form-control" [(ngModel)]="aggreStartDate" class="form-control">
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
                     <div class="form-group">
                         <label for="state" class="form-label">End Date<span class="text-danger">*</span></label>
-                        <input type="date" name="" id="" class="form-control" formControlName="itemPurchaseDate"required>
+                        <input type="date" name="aggreEndDate" id="aggreEndDate" [(ngModel)]="aggreEndDate" class="form-control">
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
@@ -120,38 +113,42 @@
                         <div class="col-sm-6 col-md-4">
                             <label for="state" class="form-label">Electric_Bill</label>
                             <label class="switch">
-                                <input class="switch-input" type="checkbox" />
-                                <span class="switch-label" data-yes="YES" data-no="NO"></span> 
-                                <span class="switch-handle"></span> 
+                                <input class="switch-input" type="checkbox" name="aggreElectricBill" [(ngModel)]="aggreElectricBill" (click)="getVal($event.target)" />
+                                <span class="switch-label" data-yes="YES" data-no="NO"></span>
+                                <span class="switch-handle"></span>
+
                             </label>
                         </div>
                         <div class="col-sm-6 col-md-4">
                             <label for="state" class="form-label">Water_Bill</label>
                             <label class="switch">
-                                <input class="switch-input" type="checkbox" />
-                                <span class="switch-label" data-yes="YES" data-no="NO"></span> 
-                                <span class="switch-handle"></span> 
+                                <input class="switch-input" type="checkbox" name="aggreWaterBill" [(ngModel)]="aggreWaterBill" (click)="getValaggreWaterBill($event.target)" />
+                                <span class="switch-label" data-yes="YES" data-no="NO"></span>
+                                <span class="switch-handle"></span>
                             </label>
-                            
+
                         </div>
-    
+
                     </div>
                 </div>
-    
-    
-    
-    
+
+
+
+
             </div>
-    
-    
-    
+
+
+
             <div class="mt-4 d-flex justify-content-end">
-                <button class="btn btn-primary form-save-btn">
+                <button class="btn btn-primary form-save-btn" (click)="saveAggreement()" *ngIf="aggreId==''">
                     Save
+                </button>
+                <button class="btn btn-primary form-save-btn" (click)="updateAgreement()" *ngIf="aggreId!==''">
+                    Update
                 </button>
             </div>
         </form>
-        
+
         <div class="" style=" position: relative; overflow-x: auto; overflow-y: auto; margin-top: 30px;">
             <table class="table w-full table-bordered table-striped">
                 <thead class="">
@@ -175,37 +172,36 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let item of tableData">
-                        <td>{{ item.SL_NO }}</td>
-                        <td>{{ item.Unit_No }}</td>
-                        <td>{{ item.Occupied }}</td>
-                        <td>{{ item.Available}}</td>
-                        <td>{{ item.Unit_No }}</td>
-                        <td>{{ item.Occupied }}</td>
-                        <td>{{ item.Available}}</td>
-                        <td>{{ item.Unit_No }}</td>
-                        <td>{{ item.Occupied }}</td>
-                        <td>{{ item.Available}}</td>
-                        <td>{{ item.Unit_No }}</td>
-                        <td>{{ item.Occupied }}</td>
-                        <td>{{ item.Available}}</td>
-                        <td>{{ item.Unit_No }}</td>
-                        
+                    <tr *ngFor="let item of tableData; let i = index">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ item.state.stateName }}</td>
+                        <td>{{ item.house.sbu?.locationName }}</td>
+                        <td>{{ item.house.plant.plantName }}</td>
+                        <td>{{ item.house.owner.ownerName }}</td>
+                        <td>house Name</td>
+                        <td>{{ item.agreementType.aggreTypeName }}</td>
+                        <td>{{ item.rent }}</td>
+                        <td>{{ item.rentPeriod }}</td>
+                        <td>{{ item.rentStartDt | date: 'MM/dd/yyyy'}}</td>
+                        <td>{{ item.rentEndDt | date: 'MM/dd/yyyy'}}</td>
+                        <td>{{ item.withElectricBill }}</td>
+                        <td>{{ item.withWaterBill }}</td>
+                        <td>{{ item.createdDate }}</td>
                         <td>
-                            <div style="display: inline-flex; ">
-                                <button class="btn  btn-sm mx-2"
+                            <div style="display: inline-flex;">
+                                <button class="btn btn-sm mx-2" (click)="editAgreement(item.aggreId,item.state.stateId,item.sbu.locationId,item.plant.plantId,item.owner.ownerId,1,item.agreementType.aggreTypeId,item.rent,item.rentPeriod,item.rentStartDt,item.rentEndDt,item.withElectricBill,item.withWaterBill)"
                                     style="background-color: rgb(22, 133, 236);color: #faf7f7;">
                                     <i class="fa-solid fa-edit"></i>
                                 </button>
 
-                                <button class="btn btn-danger btn-sm mx-2 " (click)="onClick()">
+                                <button class="btn btn-danger btn-sm mx-2" (click)="deleteAgreement(item.aggreTypeId)">
                                     <i class="fa-solid fa-trash-alt"></i>
                                 </button>
                             </div>
-
                         </td>
                     </tr>
                 </tbody>
+
             </table>
         </div>
     </div>

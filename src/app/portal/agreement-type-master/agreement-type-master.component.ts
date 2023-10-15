@@ -24,7 +24,10 @@ export class AgreementTypeMasterComponent {
   aggrementTypeDesc: any = '';
   aggreTypeId: any = '';
 
-  
+  onClick() {
+    // Your button click logic here
+    alert('Deleted Successfully!!');
+  }
   validateData() {
     let vSts = true;
     if (!this.vldChkLst.blankCheck(this.aggrementType, "Aggrement Type ")) {
@@ -75,7 +78,7 @@ export class AgreementTypeMasterComponent {
         this.ngxLoader.stop();
         Swal.fire({
           icon: 'error',
-          text: 'Error in Data Insertion'
+          text: 'Error in Data Update'
         });
       });
     }
@@ -95,43 +98,31 @@ export class AgreementTypeMasterComponent {
     });
   }
   deleteAgreementType(aggreTypeId: any = 0) {
-    Swal.fire({
-			//icon: 'warning',
-			text: "Are you sure you want to Delete the details?",
-			showCancelButton: true,
-			confirmButtonText: 'Yes',
-			cancelButtonText: 'No',
-			cancelButtonColor: '#df1141'
-		}).then((result) => {
-			if (result.isConfirmed) {
-        let param = {
-          "id": aggreTypeId
-        };
-        this.ngxLoader.start();
-        this.portalServ.deleteAgreementType(param).subscribe(res => {
-          this.ngxLoader.stop();
-          if (res.responseCode == 200) {
-            Swal.fire({
-              icon: 'success',
-              text: 'Record Deleted Successfully'
-            });
-            this.getAllAgreementType();
-          } else {
-            Swal.fire({
-              icon: 'error',
-              text: res.message
-            });
-          }
-        },error => {
-          this.ngxLoader.stop();
-          Swal.fire({
-            icon: 'error',
-            text: 'Error'
-          });
+    let param = {
+      "id": aggreTypeId
+    };
+    this.ngxLoader.start();
+    this.portalServ.deleteAgreementType(param).subscribe(res => {
+      this.ngxLoader.stop();
+      if (res.responseCode == 200) {
+        Swal.fire({
+          icon: 'success',
+          text: 'Record Deleted Successfully'
         });
-			}
-		});
-
+        this.getAllAgreementType();
+      } else {
+        Swal.fire({
+          icon: 'error',
+          text: res.message
+        });
+      }
+    },error => {
+      this.ngxLoader.stop();
+      Swal.fire({
+        icon: 'error',
+        text: 'Error'
+      });
+    });
   }
   editAgreementType(aggreTypeId:any,aggreTypeName:any,aggreStDate:any,description:any,aggreEdDate:any){
     this.aggreTypeId = aggreTypeId;

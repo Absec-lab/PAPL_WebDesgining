@@ -10,12 +10,6 @@ import { HouseRegistrationComponent } from './house-registration/house-registrat
 import { AgreementMasterComponent } from './agreement-master/agreement-master.component';
 import { UtilityCalculationComponent } from './utility-calculation/utility-calculation.component';
 import { UnitBookingComponent } from './unit-booking/unit-booking.component';
-<<<<<<< HEAD
-
-// mrutunjay pani || created service
-=======
-import { AddLegalHeirComponent } from './add-legal-heir/add-legal-heir.component';
->>>>>>> d58b13466c8cb8d2327ec11ba84f4164a0cdb372
 import {PortalServiceService} from './serviceapi/portal-service.service';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';

@@ -127,16 +127,6 @@ export class HouseOwnerRegistrationComponent {
       });
     }
   }
-<<<<<<< HEAD
-  onClick2() {
-    // Your button click logic here
-    alert('Add Successfully!!');
-  }
-
-
-  onSubmit() {
-    // Handle form submission and validation here
-=======
   getAllOwner() {
     let param = {};
     this.ngxLoader.start();
@@ -150,7 +140,6 @@ export class HouseOwnerRegistrationComponent {
     }, error => {
       this.ngxLoader.stop();
     });
->>>>>>> d58b13466c8cb8d2327ec11ba84f4164a0cdb372
   }
   deleteOwner(id: any = 0) {
     Swal.fire({

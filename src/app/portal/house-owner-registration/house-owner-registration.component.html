@@ -30,19 +30,19 @@
                         <div class="form-group">
                             <label for="state" class="form-label">House Owner Name<span
                                     class="text-danger">*</span></label>
-                            <input type="text" name="name" required id="text" class="form-control" required />
+                            <input type="text" name="ownerName" id="ownerName" class="form-control" [(ngModel)]="sowner[0].ownerName" />
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             <label for="state" class="form-label">Phone Number<span class="text-danger">*</span></label>
-                            <input type="number" name="" id="" class="form-control" required />
+                            <input type="number" name="phoneNo" id="phoneNo" class="form-control" [(ngModel)]="sowner[0].phoneNo" />
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             <label for="state" class="form-label">Email ID<span class="text-danger">*</span></label>
-                            <input type="email" name="" id="" class="form-control" required />
+                            <input type="email" name="emailId" id="emailId" class="form-control" [(ngModel)]="sowner[0].emailId" />
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
@@ -56,44 +56,44 @@
                         <div class="form-group">
                             <label for="state" class="form-label">Govt ID Proof<span
                                     class="text-danger">*</span></label>
-                            <input type="text" name="" id="" class="form-control" required />
+                            <input type="text" name="idProof" id="idProof" class="form-control" [(ngModel)]="sowner[0].idProof" />
                         </div>
                     </div>
 
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             <label for="state" class="form-label">Address 1<span class="text-danger">*</span></label>
-                            <input type="text" name="" id="" class="form-control" required />
+                            <input type="text" name="address1" id="address1" class="form-control" [(ngModel)]="sowner[0].address1" />
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             <label for="state" class="form-label">Address 2<span class="text-danger">*</span></label>
-                            <input type="text" name="" id="" class="form-control" required />
+                            <input type="text" name="address2" id="address2" class="form-control" [(ngModel)]="sowner[0].address2" />
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             <label for="state" class="form-label">State<span class="text-danger">*</span></label>
-                            <input type="text" name="" id="" class="form-control" required />
+                            <input type="text" name="state" id="state" class="form-control" [(ngModel)]="sowner[0].state.stateId" />
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             <label for="state" class="form-label">District<span class="text-danger">*</span></label>
-                            <input type="text" name="" id="" class="form-control" required />
+                            <input type="text" name="emailId" id="emailId" class="form-control" [(ngModel)]="sowner[0].emailId" />
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             <label for="state" class="form-label">PIN<span class="text-danger">*</span></label>
-                            <input type="text" name="" id="" class="form-control" required />
+                            <input type="number" name="pinCode" id="pinCode" class="form-control" [(ngModel)]="sowner[0].pinCode" />
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
                         <label for="state" class="form-label">Payment Mode<span class="text-danger">*</span></label>
                         <select class="form-select" aria-label="Default select example"
-                            (change)="onPaymentModeChange($event)" required>
+                            (change)="onPaymentModeChange($event)" name="paymtMode" id="paymtMode" [(ngModel)]="sowner[0].paymtMode">
                             <option selected>Choose Payment Mode...</option>
                             <option value="1" routerLink="">
                                 Bank AC
@@ -115,8 +115,13 @@
                     </div>
 
                     <div class="col-sm-6 col-md-4">
+<<<<<<< HEAD
                         <label for="state" class="form-label">Status (Legal heir)</label>
                         <select class="form-select" aria-label="Default select example">
+=======
+                        <label for="state" class="form-label">Status<span class="text-danger">*</span></label>
+                        <select class="form-select" aria-label="Default select example" >
+>>>>>>> d58b13466c8cb8d2327ec11ba84f4164a0cdb372
                             <option selected>Active</option>
                             <option value="1">InActive</option>
                         </select>
@@ -247,27 +252,27 @@
                             <div class="form-group">
                                 <label for="state" class="form-label">Account Holder Name<span
                                         class="text-danger">*</span></label>
-                                <input type="text" name="" id="" class="form-control" required>
+                                <input type="text" name="accountHolderName" id="accountHolderName" class="form-control" [(ngModel)]="sowner[0].accountHolderName">
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-4">
                             <div class="form-group">
                                 <label for="state" class="form-label">Account Number<span
                                         class="text-danger">*</span></label>
-                                <input type="number" name="" id="" class="form-control" required>
+                                <input type="number" name="bankAccountNo" id="bankAccountNo" class="form-control" [(ngModel)]="sowner[0].bankAccountNo">
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-4">
                             <div class="form-group">
                                 <label for="state" class="form-label">IFSC<span class="text-danger">*</span></label>
-                                <input type="text" name="" id="" class="form-control" required>
+                                <input type="text" name="ifscCode" id="ifscCode" class="form-control" [(ngModel)]="sowner[0].ifscCode">
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-4">
                             <div class="form-group">
                                 <label for="state" class="form-label">PAN Card <span
                                         class="text-danger">*</span></label>
-                                <input type="text" name="" id="" class="form-control" required>
+                                <input type="text" name="panNo" id="panNo" class="form-control" [(ngModel)]="sowner[0].panNo">
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-4">
@@ -281,7 +286,7 @@
                             <div class="form-group">
                                 <label for="state" class="form-label">Description<span
                                         class="text-danger">*</span></label>
-                                <input type="text" name="" id="" class="form-control" required>
+                                <input type="text" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -290,14 +295,14 @@
                         <div class="col-sm-6 col-md-4">
                             <div class="form-group">
                                 <label for="state" class="form-label">UPI ID<span class="text-danger">*</span></label>
-                                <input type="text" name="" id="" class="form-control" required>
+                                <input type="text">
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-4">
                             <div class="form-group">
                                 <label for="state" class="form-label">Linked Mob._No<span
                                         class="text-danger">*</span></label>
-                                <input type="number" name="" id="" class="form-control" required>
+                                <input type="number">
                             </div>
                         </div>
 
@@ -319,7 +324,7 @@
             </div>
 
             <div class="mt-4 d-flex justify-content-end">
-                <button class="btn btn-primary form-save-btn" (click)="onClick1()">
+                <button class="btn btn-primary form-save-btn" (click)="saveOwner()">
                     Save
                 </button>
             </div>
@@ -354,28 +359,28 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let item of tableData">
-                        <td>{{ item.SL_NO }}</td>
-                        <td>{{ item.House_Owner_Name }}</td>
-                        <td>{{ item.Phone_no }}</td>
-                        <td>{{ item.Address}}</td>
-                        <td>{{ item.Govt_ID }}</td>
-                        <td>{{ item.Account_Number }}</td>
-                        <td>{{ item.IFSC_Code}}</td>
-                        <td>{{ item.PAN_Card }}</td>
-                        <td>{{ item.Payment_Mode }}</td>
-                        <td>{{ item.UPI_Id_linked_Mob}}</td>
-                        <td>{{ item.QR_Code }}</td>
-                        <td>{{ item.Start_Date }}</td>
-                        <td>{{ item.End_Date}}</td>
+                    <tr *ngFor="let item of allOwner; let i = index">
+                        <td>{{ i+1 }}</td>
+                        <td>{{ item.ownerName }}</td>
+                        <td>{{ item.phoneNo }}</td>
+                        <td>{{ item.address1}}</td>
+                        <td>{{ item.idProof }}</td>
+                        <td>{{ item.bankAccountNo }}</td>
+                        <td>{{ item.ifscCode}}</td>
+                        <td>{{ item.panNo }}</td>
+                        <td>{{ item.paymtMode }}</td>
+                        <td>{{ item.upiPhoneNo}}</td>
+                        <td>{{ item.uploadQuarCodeAdds }}</td>
+                        <td>{{ item.createdDate }}</td>
+                        <td>{{ item.updatedDate}}</td>
                         <td>
                             <div style="display: inline-flex; ">
-                                <button class="btn  btn-sm mx-2"
+                                <!-- <button class="btn  btn-sm mx-2"
                                     style="background-color: rgb(22, 133, 236);color: #faf7f7;">
                                     <i class="fa-solid fa-edit"></i>
-                                </button>
+                                </button> -->
 
-                                <button class="btn btn-danger btn-sm mx-2 " (click)="onClick()">
+                                <button class="btn btn-danger btn-sm mx-2 " (click)="deleteOwner(item.ownerId)">
                                     <i class="fa-solid fa-trash-alt"></i>
                                 </button>
                             </div>

@@ -162,6 +162,7 @@ export class AgreementMasterComponent {
     let param = {};
     this.ngxLoader.start();
     this.portalServ.getAllAgreement(param).subscribe(res => {
+      //console.log(res);
       this.ngxLoader.stop();
       if (res.length > 0) {
         this.tableData = res;
@@ -229,8 +230,8 @@ export class AgreementMasterComponent {
         this.aggreWaterBill = withWaterBill;
         this.aggreMonthlyRent = rent;
         this.aggrePeriod = rentPeriod;
-        this.aggreStartDate = rentStartDt.split('T')[0];;
-        this.aggreEndDate = rentEndDt.split('T')[0];;
+        this.aggreStartDate = rentStartDt.split('T')[0];
+        this.aggreEndDate = rentEndDt.split('T')[0];
         this.aggreId = aggreId;
       }
     });

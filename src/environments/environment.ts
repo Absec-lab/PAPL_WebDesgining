@@ -1,5 +1,5 @@
 export const environment = {
-  production: false,
+  production: true,
   url: '',
   
   serviceURL: 'http://206.189.142.35:9090/',

@@ -60,10 +60,18 @@ export class LoginComponent {
           console.log(res);
         }else{
           this.ngxLoader.stop();
+          Swal.fire({
+            icon: 'error',
+            text: res.message
+          });
           sessionStorage.setItem('isLoggedIn', 'false');
         }
       }, error => {
         this.ngxLoader.stop();
+        Swal.fire({
+          icon: 'error',
+          text: 'Server error happened!'
+        });
       });
     }
   }

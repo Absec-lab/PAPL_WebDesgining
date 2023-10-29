@@ -22,12 +22,10 @@
                   <span class="input-group-text bg-white ps-3 px-3 border-white" id="basic-addon1">
                     <i class="fa-solid fa-user"></i>
                   </span>
-                  <input type="text" class="form-control pe-3 ps-1 border-white custom-login-input"
+                  <input type="text" name="username" class="form-control pe-3 ps-1 border-white custom-login-input"
                     placeholder="Username" aria-label="Username" aria-describedby="basic-addon1"
-                    autocomplete="new-username" required/>
+                    autocomplete="new-username" [(ngModel)]="username" required/>
                 </div>
-
-
                 <div class="wrap-input validate-input m-b-16">
                   <div class="form-group inner-addon right-addon">
                     <div class="input-group col-6 mx-auto">
@@ -37,7 +35,7 @@
                       <input name="password" [type]="showPassword ? 'text' : 'password'"
                         class="form-control pe-3 ps-1  border-white custom-login-input"
                         style="border-radius: 0 5px 5px 0;" placeholder="Password" aria-label="Password"
-                        aria-describedby="basic-addon1" autocomplete="new-password" required />
+                        aria-describedby="basic-addon1" autocomplete="new-password" [(ngModel)]="password" required />
                       <div>
                         <i alt="show" class="far fa-eye eye-show" (click)="showPassword = !showPassword"
                           [class.hide]="showPassword"></i>
@@ -46,11 +44,10 @@
                       </div>
                     </div>
                   </div>
-
                 </div>
                 <div class="row mt-4">
                   <div class="col-md-6">
-                    <button class="btn btn-primary w-100 px-4 login-btn">
+                    <button class="btn btn-primary w-100 px-4 login-btn" (click)="login();">
                       Log In
                     </button>
                   </div>

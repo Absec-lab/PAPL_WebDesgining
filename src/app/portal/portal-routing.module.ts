@@ -7,41 +7,18 @@ import { UnitRegistrationComponent } from './unit-registration/unit-registration
 import { HouseRegistrationComponent } from './house-registration/house-registration.component';
 import {  UtilityCalculationComponent } from './utility-calculation/utility-calculation.component';
 import { UnitBookingComponent } from './unit-booking/unit-booking.component';
+import { AuthGuard } from '../auth.guard';
 
 
 
 const routes: Routes = [
-  {
-    path: 'portal/house-owner-registration',
-    component: HouseOwnerRegistrationComponent
-  },
-  {
-    path: 'portal/agreement-type-master',
-    component: AgreementTypeMasterComponent
-  },
-  {
-    path: 'portal/unit-registration',
-    component: UnitRegistrationComponent
-  },
-  {
-    path: 'portal/house-registration',
-    component: HouseRegistrationComponent
-  },
-  {
-    path: 'portal/agreement-master',
-    component: AgreementMasterComponent
-  },
-  {
-    path: 'portal/utility-calculation',
-    component: UtilityCalculationComponent
-  },
-  {
-    path: 'portal/unit-booking',
-    component: UnitBookingComponent
-  },
-  
-  
-  
+  { path: 'portal/house-owner-registration',component: HouseOwnerRegistrationComponent, canActivate: [AuthGuard] },
+  { path: 'portal/agreement-type-master', component: AgreementTypeMasterComponent, canActivate: [AuthGuard]},
+  { path: 'portal/unit-registration', component: UnitRegistrationComponent, canActivate: [AuthGuard] },
+  { path: 'portal/house-registration', component: HouseRegistrationComponent, canActivate: [AuthGuard] },
+  { path: 'portal/agreement-master', component: AgreementMasterComponent, canActivate: [AuthGuard] },
+  { path: 'portal/utility-calculation', component: UtilityCalculationComponent, canActivate: [AuthGuard]},
+  { path: 'portal/unit-booking', component: UnitBookingComponent, canActivate: [AuthGuard] } 
 ];
 
 @NgModule({

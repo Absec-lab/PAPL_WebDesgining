@@ -12,11 +12,9 @@
             <div class="col-sm-6 col-md-4  ">
                 <div class="form-group">
                     <label for="state" class="form-label">State <span class="text-danger">*</span></label>
-                    <select class="form-select" aria-label="Default select example" required>
+                    <select class="form-select" aria-label="Default select example" required (change)="getSubonStateChange($event)">
                         <option selected>Choose State... </option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                        <option *ngFor="let state of stateDtails" [value]="state.stateId">{{ state.stateName }}</option>
                     </select>
                 </div>
 
@@ -24,11 +22,9 @@
             <div class="col-sm-6 col-md-4  ">
                 <div class="form-group">
                     <label for="state" class="form-label">SBU <span class="text-danger">*</span></label>
-                    <select class="form-select" aria-label="Default select example" required>
+                    <select class="form-select" aria-label="Default select example" required (change)="getPlantOnSubChange($event)">
                         <option selected>Choose SBU... </option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                        <option *ngFor="let sbu of activeSBU" [value]="sbu.locationId">{{sbu.locationName}}</option>
                     </select>
                 </div>
 
@@ -36,11 +32,9 @@
             <div class="col-sm-6 col-md-4  ">
                 <div class="form-group">
                     <label for="state" class="form-label">Plant <span class="text-danger">*</span></label>
-                    <select class="form-select" aria-label="Default select example" required>
+                    <select class="form-select" aria-label="Default select example" required (change)="getHouseByPlantId($event)">
                         <option selected>Choose Plant... </option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                        <option [value]="plant.plantId" *ngFor="let plant of activePlant">{{plant.plantName}}</option>
                     </select>
                 </div>
 
@@ -49,10 +43,8 @@
                 <div class="form-group">
                     <label for="state" class="form-label">Select House <span class="text-danger">*</span></label>
                     <select class="form-select" aria-label="Default select example" required>
-                        <option selected> </option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                        <option selected>Choose House... </option>
+                        <option *ngFor="let house of activeHouse" [value]="house.houseId">{{house.owner.ownerName}}</option>
                     </select>
                 </div>
 

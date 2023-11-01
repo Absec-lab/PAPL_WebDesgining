@@ -118,5 +118,12 @@ export class PortalServiceService {
 		let serviceRes = this.Http.post(serviceUrl, params);
 		return serviceRes;
 	}
+
+	//get api global method 
+
+	get(url:any):Observable<any> {
+		let res = this.Http.get(environment.serviceURL+url)
+		return res
+	}
 	
 }

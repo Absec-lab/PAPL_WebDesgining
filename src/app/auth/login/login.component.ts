@@ -56,7 +56,7 @@ export class LoginComponent {
           sessionStorage.setItem('loggedUsername', res.data.userId);
           sessionStorage.setItem('LoggedName', res.data.name);
           this.isLoggedIn = true;
-          this.route.navigate(['/portal/agreement-type-master']);
+          this.route.navigate(['/']);
           console.log(res);
         }else{
           this.ngxLoader.stop();

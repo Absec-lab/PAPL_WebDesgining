@@ -22,11 +22,28 @@
   .date{
     width: auto;
   }
+  @media (min-width: 300px) {
+    .date{
+      width: 155px;
+    }
+  }
+  @media (min-width: 350px) {
+    .date{
+      width: 160px;
+    }
+  }
+  
+  @media (min-width: 400px) {
+    .date{
+      width: 176px;
+    }
+  }
   @media (min-width: 500px) {
     .date{
       width: 200px;
     }
   }
+  
   .name{
     width: 160px;
   }

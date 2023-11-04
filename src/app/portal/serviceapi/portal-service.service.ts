@@ -125,5 +125,19 @@ export class PortalServiceService {
 		let res = this.Http.get(environment.serviceURL+url)
 		return res
 	}
+
+	// post api global method
+
+	post(url: string, data: any) {
+		let res = this.Http.post(environment.serviceURL+url,data)
+		return res
+	}
+
+	// put api global method
+
+	put(url: string, data: any) {
+		let res = this.Http.put(environment.serviceURL+url,data)
+		return res
+	}
 	
 }

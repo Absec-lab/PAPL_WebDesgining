@@ -13,6 +13,7 @@ import { UnitBookingComponent } from './unit-booking/unit-booking.component';
 import {PortalServiceService} from './serviceapi/portal-service.service';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     AgreementMasterComponent,
     UtilityCalculationComponent,
     UnitBookingComponent,
+    DashboardComponent,
     
     
     

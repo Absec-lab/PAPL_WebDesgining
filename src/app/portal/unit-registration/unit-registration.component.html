@@ -9,7 +9,7 @@
 <section id="page-content">
     <div class="container">
         <form action="">
-            <div class="row " style="background-color: rgba(226, 242, 246, 1); padding: 5%; margin-bottom: 0.5cm;"
+            <div class="row " style="background-color: rgba(226, 242, 246, 1); padding:1% 5%; margin-bottom: 0.5cm;"
                 *ngFor="let details of fullArr; let ii=index;let first = first; let last = last">
                 <div class="col-sm-6 col-md-4  ">
                     <div class="form-group">
@@ -50,6 +50,16 @@
                     </div>
 
                 </div>
+                              
+                                    
+            </div>
+            
+            
+        </form>
+        <form action="">
+            <div class="row " style="background-color: rgba(226, 242, 246, 1); padding: 5%; margin-bottom: 0.5cm;"
+                *ngFor="let details of fullArr; let ii=index;let first = first; let last = last">
+               
                 <div class="col-sm-6 col-md-4">
                     <div class="form-group">
                         <label for="fullArr[ii].houseRegistration.houseId" class="form-label">House Name<span

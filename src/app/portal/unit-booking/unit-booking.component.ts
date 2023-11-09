@@ -1,7 +1,7 @@
 import {  Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { PortalServiceService } from '../serviceapi/portal-service.service';
 import { Subject, takeUntil } from 'rxjs';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -153,13 +153,13 @@ postBooking() {
     "stateId":this.stateId,
     "plantId":this.plantId,
     "sbuId":this.sbuId,
-    "so":this.employeeForm.controls['serviceOrder'].value,
-    "empId":this.employeeForm.controls['empId'].value,
-    "empName":this.employeeForm.controls['empName'].value,
-    "emailId":this.employeeForm.controls['emailId'].value,
-    "mobileNo":this.employeeForm.controls['mobileNo'].value,
-    "bkStartDate":this.employeeForm.controls['bookStartDate'].value,
-    "bkEndDate":this.employeeForm.controls['bkEndDate'].value,
+    "so": this.employeeForm.get('serviceOrder')?.value,
+    "empId": this.employeeForm.get('empId')?.value,
+    "empName": this.employeeForm.get('empName')?.value,
+    "emailId": this.employeeForm.get('emailId')?.value,
+    "mobileNo": this.employeeForm.get('mobileNo')?.value,
+    "bkStartDate": this.employeeForm.get('bookStartDate')?.value,
+    "bkEndDate": this.employeeForm.get('bkEndDate')?.value,
 
 }
   console.log(data);

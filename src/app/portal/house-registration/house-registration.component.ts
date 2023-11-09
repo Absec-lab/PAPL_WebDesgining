@@ -124,16 +124,16 @@ getSubonStateChange(event: any, index: number) {
 
   registerHouse(){
     let data =  {
-      "ownerId":  this.houseRegistrationForm.controls['ownerName'].value,
-      "address": this.houseRegistrationForm.controls['address'].value,
-      "address2": this.houseRegistrationForm.controls['address2'].value,
-      "district":this.houseRegistrationForm.controls['district'].value,
-      "pinCode": this.houseRegistrationForm.controls['pin'].value,
-      "noOfRooms": this.houseRegistrationForm.controls['noOfRooms'].value,
-      "noOfEleBills": this.houseRegistrationForm.controls['electricBill'].value,
-      "noOfWtrBills": this.houseRegistrationForm.controls['waterBill'].value,
-      "startDate": this.houseRegistrationForm.controls['startDate'].value,
-      "endDate": this.houseRegistrationForm.controls['endDate'].value,
+      "ownerId":  this.houseRegistrationForm.value.ownerName,
+       "address": this.houseRegistrationForm.value.address,
+       "address2": this.houseRegistrationForm.value.address2,
+       "district":this.houseRegistrationForm.value.district,
+      "pinCode": this.houseRegistrationForm.value.pin,
+      "noOfRooms": this.houseRegistrationForm.value.noOfRooms,
+      "noOfEleBills": this.houseRegistrationForm.value.electricBill,
+      "noOfWtrBills": this.houseRegistrationForm.value.waterBill,
+      "startDate": this.houseRegistrationForm.value.startDate,
+      "endDate": this.houseRegistrationForm.value.endDate,
       "houseRegistrationDto": this.stateArray.value,
     }
     console.log(data);

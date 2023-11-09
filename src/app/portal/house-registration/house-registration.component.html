@@ -85,9 +85,9 @@
             <!-- <div class="button-success col-sm-6 col-md-1">
                 <button type="button" (click)="addstate()" class="button btn btn-primary py-0 px-4 m-1">+</button>
               </div> -->
-            <form action="" [formGroup]="stateForm">
+              <form action="" [formGroup]="stateForm">
                 <div formArrayName="stateSub">
-                  <div *ngFor="let stateGroup of stateArray.controls; let i = index" [formGroupName]="i">
+                  <div *ngFor="let stateGroup of stateArray.controls; let i = index" [formGroupName]="i" class="row">
                     <div class="col-sm-6 col-md-4 py-2">
                       <label for="state" class="form-label">State<span class="text-danger">*</span></label>
                       <select class="form-select" formControlName="state" aria-label="Default select example" required (change)="getSubonStateChange($event,i)">
@@ -109,17 +109,18 @@
                         <option [value]="plant.plantId" *ngFor="let plant of activePlant[i]">{{ plant.plantName }}</option>
                       </select>
                     </div>
-
-                    <button class="btn btn-danger btn-sm  " (click)=" removeState(i)">
+                    <div class="col-2 py-2">
+                      <button class="btn btn-danger btn-sm" (click)="removeState(i)">
                         <i class="fa-solid fa-trash-alt"></i>
-                    </button>
-                    <div class="button-success col-sm-6 col-md-1">
+                      </button>
                       <button type="button" (click)="addstate()" class="button btn btn-primary py-0 px-4 m-1">+</button>
                     </div>
                   </div>
                 </div>
               </form>
               
+                          
+            
 
             
         </div>

@@ -22,7 +22,7 @@
             </li>
             
         </ul>
-        <form action="">
+        <form action=""  [formGroup]="houseRegistrationForm">
             <div style="background-color: rgba(226, 242, 246, 1); padding: 5%">
                 <!-- house-owner-registration -->
                 <div class="row">
@@ -30,85 +30,90 @@
                         <div class="form-group">
                             <label for="state" class="form-label">House Owner Name<span
                                     class="text-danger">*</span></label>
-                            <input type="text" name="ownerName" id="ownerName" class="form-control" [(ngModel)]="sowner[0].ownerName" />
+                            <input type="text" name="ownerName" id="ownerName" formControlName="ownerName" class="form-control"  />
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             <label for="state" class="form-label">Phone Number<span class="text-danger">*</span></label>
-                            <input type="text" name="phoneNo" id="phoneNo" class="form-control" [(ngModel)]="sowner[0].phoneNo" />
+                            <input type="text" name="phoneNo" id="phoneNo" class="form-control" formControlName="phone" />
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             <label for="state" class="form-label">Email ID<span class="text-danger">*</span></label>
-                            <input type="email" name="emailId" id="emailId" class="form-control" [(ngModel)]="sowner[0].emailId" />
+                            <input type="email" name="emailId" id="emailId" class="form-control" formControlName="email" />
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             <label for="state" class="form-label">Upload Govt ID Proof<span
                                     class="text-danger">*</span></label>
-                            <input type="file" name="" id="" class="form-control" accept="image/*" required />
+                            <input type="file" name="" id="" class="form-control" accept="image/*" required  formControlName="idProof" />
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             <label for="state" class="form-label">Govt ID Proof<span
                                     class="text-danger">*</span></label>
-                            <input type="text" name="idProof" id="idProof" class="form-control" [(ngModel)]="sowner[0].idProof" />
+                            <input type="text" name="idProof" id="idProof" class="form-control" formControlName="gIdproof" />
                         </div>
                     </div>
 
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             <label for="state" class="form-label">Address 1<span class="text-danger">*</span></label>
-                            <input type="text" name="address1" id="address1" class="form-control" [(ngModel)]="sowner[0].address1" />
+                            <input type="text" name="address1" id="address1" class="form-control"formControlName="add1" />
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             <label for="state" class="form-label">Address 2<span class="text-danger">*</span></label>
-                            <input type="text" name="address2" id="address2" class="form-control" [(ngModel)]="sowner[0].address2" />
+                            <input type="text" name="address2" id="address2" class="form-control" formControlName="add2" />
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
-                            <label for="state" class="form-label">State<span class="text-danger">*</span></label>
-                            <input type="text" name="state" id="state" class="form-control" [(ngModel)]="sowner[0].state.stateId" />
+                            <label  class="form-label">State<span
+                                    class="text-danger">*</span></label>
+                            <select class="form-select" aria-label="Default select example" formControlName="state" >
+                                <option selected>Choose State... </option>
+                                <option *ngFor="let state of stateDtails" [value]="state.stateId">{{ state.stateName }}</option>
+                            
+                            </select>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             <label for="state" class="form-label">District<span class="text-danger">*</span></label>
-                            <input type="text" name="emailId" id="emailId" class="form-control" [(ngModel)]="sowner[0].emailId" />
+                            <input type="text" name="emailId" id="emailId" class="form-control" formControlName="dist" />
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             <label for="state" class="form-label">PIN<span class="text-danger">*</span></label>
-                            <input type="number" name="pinCode" id="pinCode" class="form-control" [(ngModel)]="sowner[0].pinCode" />
+                            <input type="number" name="pinCode" id="pinCode" class="form-control" formControlName="pin" />
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
                         <label for="state" class="form-label">Payment Mode<span class="text-danger">*</span></label>
-                        <select class="form-select" aria-label="Default select example"
-                            (change)="onPaymentModeChange($event)" name="paymtMode" id="paymtMode" [(ngModel)]="sowner[0].paymtMode">
+                        <select class="form-select" (change)="paymentmode($event)" aria-label="Default select example" formControlName="paymode"
+                            name="paymtMode" id="paymtMode" >
                             <option selected>Choose Payment Mode...</option>
-                            <option value="1" routerLink="">
+                            <option [value]="1" routerLink="">
                                 Bank AC
                             </option>
-                            <option value="2">Cash</option>
-                            <option value="3" routerLink="">
+                            <option [value]="2">Cash</option>
+                            <option [value]="3" routerLink="">
                                 BHIM UPI
                             </option>
-                            <option value="4" routerLink="">
+                            <option [value]="4" routerLink="">
                                 Phone Pe
                             </option>
-                            <option value="5" routerLink="">
+                            <option [value]="5" routerLink="">
                                 Paytm
                             </option>
-                            <option value="6" routerLink="">
+                            <option [value]="6" routerLink="">
                                 Google Pay
                             </option>
                         </select>
@@ -116,14 +121,14 @@
 
                     <div class="col-sm-6 col-md-4">
                         <label for="state" class="form-label">Status<span class="text-danger">*</span></label>
-                        <select class="form-select" aria-label="Default select example" >
-                            <option selected>Active</option>
+                        <select class="form-select" aria-label="Default select example" formControlName="status" >
+                            <option value="2">Active</option>
                             <option value="1">InActive</option>
                         </select>
                     </div>
                 </div>
                 <!-- add-legal-heir -->
-                <div class="row">
+                <div class="row" *ngIf="legalheir">
                     
                         <div class="col-sm-6 col-md-4">
                             <div class="form-group">
@@ -214,7 +219,7 @@
                     <div class="col-sm-6 col-md-4">
                         <label for="state" class="form-label">Payment Mode<span class="text-danger">*</span></label>
                         <select class="form-select" aria-label="Default select example"
-                            (change)="onPaymentModeChange($event)" required>
+                            required>
                             <option selected>Choose Payment Mode...</option>
                             <option value="1" routerLink="">Bank AC</option>
                             <option value="2">Cash</option>
@@ -234,7 +239,8 @@
                         </select>
                     </div>
                 </div>
-                <ng-container *ngIf="bankStatusChk!=2 && bankStatusChk!=0">
+                
+                <ng-container *ngIf="heading">
                     <h5 class="mt-4 text-secondary">Bank Account Details of House Owner</h5>
                     <hr class="my-1" />
                     <!-- cash -->
@@ -242,62 +248,62 @@
 
                     </div>
                     <!-- bank-ac -->
-                    <div class=" bank-ac row pt-4" *ngIf="bankStatusChk==1">
+                    <div class=" bank-ac row pt-4" *ngIf="bank" >
                         <div class="col-sm-6 col-md-4">
                             <div class="form-group">
                                 <label for="state" class="form-label">Account Holder Name<span
                                         class="text-danger">*</span></label>
-                                <input type="text" name="accountHolderName" id="accountHolderName" class="form-control" [(ngModel)]="sowner[0].accountHolderName">
+                                <input type="text" name="accountHolderName" id="accountHolderName" formControlName="accHolName" class="form-control" >
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-4">
                             <div class="form-group">
                                 <label for="state" class="form-label">Account Number<span
                                         class="text-danger">*</span></label>
-                                <input type="text" name="bankAccountNo" id="bankAccountNo" class="form-control" [(ngModel)]="sowner[0].bankAccountNo">
+                                <input type="text" name="bankAccountNo" id="bankAccountNo" class="form-control" formControlName="accounNum" >
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-4">
                             <div class="form-group">
                                 <label for="state" class="form-label">IFSC<span class="text-danger">*</span></label>
-                                <input type="text" name="ifscCode" id="ifscCode" class="form-control" [(ngModel)]="sowner[0].ifscCode">
+                                <input type="text" name="ifscCode" id="ifscCode" class="form-control" formControlName="ifsc" >
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-4">
                             <div class="form-group">
                                 <label for="state" class="form-label">PAN Card <span
                                         class="text-danger">*</span></label>
-                                <input type="text" name="panNo" id="panNo" class="form-control" [(ngModel)]="sowner[0].panNo">
+                                <input type="text" name="panNo" id="panNo" class="form-control" formControlName="pan" >
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-4">
                             <div class="form-group">
                                 <label for="state" class="form-label">Upload PAN Card<span
                                         class="text-danger">*</span></label>
-                                <input type="file" name="" id="" class="form-control" accept="image/*" required>
+                                <input type="file" name="" id="" class="form-control" accept="image/*" formControlName="panPic">
                             </div>
                         </div>
-                        <div class="col-sm-6 col-md-4">
+                        <div class="col-sm-6 col-md-4" *ngIf="legalheir">
                             <div class="form-group">
                                 <label for="state" class="form-label">Description<span
                                         class="text-danger">*</span></label>
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" formControlName="desc">
                             </div>
                         </div>
                     </div>
                     <!-- upi -->
-                    <div class="row pt-4" *ngIf="bankStatusChk > 2">
+                    <div class="row pt-4" *ngIf="upi">
                         <div class="col-sm-6 col-md-4">
                             <div class="form-group">
                                 <label for="state" class="form-label">UPI ID<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" formControlName="upiId">
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-4">
                             <div class="form-group">
                                 <label for="state" class="form-label">Linked Mob._No<span
                                         class="text-danger">*</span></label>
-                                <input type="text" class="form-control">
+                                <input type="text" class="form-control" formControlName="linkMobile">
                             </div>
                         </div>
 
@@ -306,20 +312,20 @@
                             <div class="form-group">
                                 <label for="state" class="form-label">Upload QR Code<span
                                         class="text-danger">*</span></label>
-                                <input type="file" name="" id="" class="form-control" accept="image/*" required>
+                                <input type="file" name="" id="" class="form-control" accept="image/*" formControlName="qrCode">
                             </div>
                         </div>
                     </div>
                 </ng-container>
-                <div class="mt-4 d-flex justify-content-end">
-                    <button class="btn button btn-primary form-save-btn" (click)="saveOwner()">
+                <div class="mt-4 d-flex justify-content-end" *ngIf="legalheir">
+                    <button class="btn button btn-primary form-save-btn">
                         +
                     </button>
                 </div>
             </div>
 
             <div class="mt-4 d-flex justify-content-end">
-                <button class="btn btn-primary form-save-btn" (click)="saveOwner()">
+                <button class="btn btn-primary form-save-btn" (click)=" ownerRegistration()" >
                     Save
                 </button>
             </div>

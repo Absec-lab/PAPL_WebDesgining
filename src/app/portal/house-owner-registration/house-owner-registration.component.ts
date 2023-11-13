@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { HttpClient } from "@angular/common/http";
 import { ValidatorchklistService } from './../serviceapi/validatorchklist.service';
+import { takeUntil } from 'rxjs';
 @Component({
   selector: 'app-home-owner-registration',
   templateUrl: './house-owner-registration.component.html',
@@ -21,12 +22,14 @@ export class HouseOwnerRegistrationComponent {
   legalheir:boolean = false;
   stateDtails:any = []
   houseRegistrationForm!: FormGroup<any>;
+  updatebtn:boolean = false;
   constructor(private ngxLoader: NgxUiLoaderService, private formBuilder: FormBuilder, private route: Router, public portalServ: PortalServiceService, private httpClient: HttpClient, public vldChkLst: ValidatorchklistService) { }
   ngOnInit(): void {
     this.getAllOwner();
     this.getAllStateList()
 
     this.houseRegistrationForm = this.formBuilder.group({
+      ownerId:[''],
       ownerName: [''],
       phone: [''],
       email: [''],
@@ -76,6 +79,25 @@ export class HouseOwnerRegistrationComponent {
    }); 
   }
 
+  onImageChange(event: any): void {
+		const inputElement = event.target as HTMLInputElement;
+    if (inputElement.files && inputElement.files.length > 0) {
+		const file = inputElement.files[0];
+	  
+		if (file) {
+		  // You can optionally display a preview of the selected image
+		  // For example, you can use FileReader to read the file and set it as a preview.
+	  
+		  const reader = new FileReader();
+		  reader.onload = (e) => {
+			// Set the image form control's value to the file
+			this.houseRegistrationForm.value.gIdproof.setValue(file);
+		  };
+		  reader.readAsDataURL(file);
+		}
+    }
+	  }
+
   ownerRegistration() {
     let data:any =[
       {
@@ -114,10 +136,88 @@ export class HouseOwnerRegistrationComponent {
     .subscribe((res)=>{
     console.log(res)
     alert("House Owner Registation succcesfull")
+    this.getAllOwner();
+    this.houseRegistrationForm.reset()
   })
   }
   
- 
+  editOwner(item:any){
+    console.log(item)
+    this.updatebtn = true;
+    this.houseRegistrationForm.patchValue({
+      ownerId:item.ownerId,
+      ownerName: item.ownerName,
+      phone: item.phoneNo,
+      email: item.emailId,
+      idProof: '',
+      gIdproof: item.idProofAddress,
+      add1: item.address1,
+      add2: item.address2,
+      state: item.state.stateId,
+      dist: item.district,
+      pin: item.pinCode,
+      paymode: item.paymtMode,
+      status: '',
+      accHolName: item.accountHolderName,
+      accounNum: item.bankAccountNo,
+      ifsc: item.ifscCode,
+      pan: item.panNo,
+      panPic: item.panCardAddress,
+      desc:item.description,
+      upiId: item.upiId,
+      linkMobile: item.upiPhoneNo,
+      qrCode:item.uploadQuarCodeAdds,
+    })
+  }
+  
+  updateowner() {
+    let data = {
+      "accountHolderName": this.houseRegistrationForm.value.accHolName,
+      "address1": this.houseRegistrationForm.value.add1,
+      "address2": this.houseRegistrationForm.value.add2,
+      "bankAccountNo":  this.houseRegistrationForm.value.accounNum,
+      "description": this.houseRegistrationForm.value.desc,
+      "district": this.houseRegistrationForm.value.dist,
+      "emailId": this.houseRegistrationForm.value.email,
+      "idProof": this.houseRegistrationForm.value.gIdproof,
+      "idProofAddress":this.houseRegistrationForm.value.idProof,
+      "ifscCode":this.houseRegistrationForm.value.ifsc,
+      "legalIdProof": "",
+      "legalIdProofAddr": "",
+      "noofLegalParties": 0,
+      "ownerId": this.houseRegistrationForm.value.ownerId,
+      "ownerName":this.houseRegistrationForm.value.ownerName,
+      "panCardAddress": this.houseRegistrationForm.value.panPic,
+      "panNo":  this.houseRegistrationForm.value.pan,
+      "paymtMode": this.houseRegistrationForm.value.paymode,
+      "phoneNo":this.houseRegistrationForm.value.phone,
+      "pinCode":this.houseRegistrationForm.value.pin,
+      "prevOwonerId": '',
+      "state": {
+        "stateId": this.houseRegistrationForm.value.state,
+      }
+    
+    }
+    
+    this.portalServ.put("PAPL/updateOwner",data)
+    .subscribe(res => {
+      console.log(res)
+      this.getAllOwner();
+      this.houseRegistrationForm.reset()
+      alert("House Owner Registration succesfull")
+      this.updatebtn = false;
+    })
+  }
+
+  showLegal(event:any) {
+    const value = event.target.value;
+    console.log(value)
+    if(value ==1){
+      this.legalheir = true;
+    } else {
+      this.legalheir = false;
+    }
+  }
 
   paymentmode(event:any) {
     console.log(event.target.value)

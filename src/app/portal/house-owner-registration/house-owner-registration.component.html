@@ -121,9 +121,10 @@
 
                     <div class="col-sm-6 col-md-4">
                         <label for="state" class="form-label">Status<span class="text-danger">*</span></label>
-                        <select class="form-select" aria-label="Default select example" formControlName="status" >
-                            <option value="2">Active</option>
-                            <option value="1">InActive</option>
+                        <select class="form-select" aria-label="Default select example" formControlName="status" (change)="showLegal($event)">
+                            <option selected>Choose Status...</option>
+                            <option value="1">Active</option>
+                            <option value="0">InActive</option>
                         </select>
                     </div>
                 </div>
@@ -175,7 +176,7 @@
                         <div class="form-group">
                             <label for="state" class="form-label">Upload Govt ID Proof<span
                                     class="text-danger">*</span></label>
-                            <input type="file" name="" id="" class="form-control" accept="image/*" required>
+                            <input (change)="onImageChange($event)" type="file" name="" id="" class="form-control" accept="image/*" required>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
@@ -231,12 +232,22 @@
                     </div>
                     <div class="col-sm-6 col-md-4  ">
                         <label for="state" class="form-label">Status (Legal heir)<span class="text-danger">*</span></label>
-                        <select class="form-select" aria-label="Default select example" required>
-                            <option selected>Active</option>
-                            <option value="1">InActive</option>
+                        <select class="form-select" aria-label="Default select example" required >
+                            <option selected>Choose Status...</option>
+                            <option value="1">Active</option>
+                            <option value="0">InActive</option>
 
 
                         </select>
+                    </div>
+
+                    
+                </div>
+                <div class="col-sm-6 col-md-4" *ngIf="updatebtn">
+                    <div class="form-group">
+                        <label for="state" class="form-label">Description<span
+                                class="text-danger">*</span></label>
+                        <input type="text" class="form-control" formControlName="desc">
                     </div>
                 </div>
                 
@@ -283,13 +294,7 @@
                                 <input type="file" name="" id="" class="form-control" accept="image/*" formControlName="panPic">
                             </div>
                         </div>
-                        <div class="col-sm-6 col-md-4" *ngIf="legalheir">
-                            <div class="form-group">
-                                <label for="state" class="form-label">Description<span
-                                        class="text-danger">*</span></label>
-                                <input type="text" class="form-control" formControlName="desc">
-                            </div>
-                        </div>
+                        
                     </div>
                     <!-- upi -->
                     <div class="row pt-4" *ngIf="upi">
@@ -325,8 +330,11 @@
             </div>
 
             <div class="mt-4 d-flex justify-content-end">
-                <button class="btn btn-primary form-save-btn" (click)=" ownerRegistration()" >
+                <button *ngIf="!updatebtn" class="btn btn-primary form-save-btn" (click)=" ownerRegistration()" >
                     Save
+                </button>
+                <button *ngIf="updatebtn" class="btn btn-primary form-save-btn" (click)=" updateowner()" >
+                   Update
                 </button>
             </div>
 
@@ -376,10 +384,10 @@
                         <td>{{ item.updatedDate}}</td>
                         <td>
                             <div style="display: inline-flex; ">
-                                <!-- <button class="btn  btn-sm mx-2"
+                                <button class="btn  btn-sm mx-2" (click)="editOwner(item)"
                                     style="background-color: rgb(22, 133, 236);color: #faf7f7;">
                                     <i class="fa-solid fa-edit"></i>
-                                </button> -->
+                                </button>
 
                                 <button class="btn btn-danger btn-sm mx-2 " (click)="deleteOwner(item.ownerId)">
                                     <i class="fa-solid fa-trash-alt"></i>

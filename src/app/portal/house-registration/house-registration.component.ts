@@ -63,7 +63,7 @@ export class HouseRegistrationComponent implements OnInit {
       // Add more form controls as needed
     });
 
-    this.stateArray.push(stateGroup);
+    this.stateArray.insert(0, stateGroup);
     console.log("ku6 nahi ho raha", this.stateArray);
 
     

@@ -139,7 +139,7 @@
                     <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">SBU</th>
                     <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Plant</th>
                     <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">Owner  Name</th>
-                    <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Plant Name</th>
+                    <!-- <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Plant Name</th> -->
                     <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">No of Units</th>
                     <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">No of Electric Bills</th>
                     <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">No of Water Bills</th>
@@ -152,15 +152,15 @@
             <tbody>
                 <tr *ngFor="let item of allHouseDetails; let i=index ">
                     <td>{{ i+1 }}</td>
-                    <td>{{ item.state.stateName }}</td>
-                    <td>{{ item.sbu.locationName }}</td>
-                    <td>{{ item.plant.plantName}}</td>
-                    <td>{{ item.owner.ownerName }}</td>
-                    <td>{{ item.plant.plantName }}</td>
+                    <td>{{ item.stateId }}</td>
+                    <td>{{ item.sbuId }}</td>
+                    <td>{{ item.plantId}}</td>
+                    <td>{{ item.ownerName }}</td>
+                    <!-- <td>{{ item.plantName }}</td> -->
                     <td>{{ item.noOfUnits}}</td>
                     <td>{{ item.noOfEleBills }}</td>
                     <td>{{ item.noOfWtrBills }}</td>
-                    <td>{{ item.address1}}</td>
+                    <td>{{ item.address}}</td>
                     <td>{{item.createdDate }}</td>
 
                     <td>

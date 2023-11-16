@@ -134,7 +134,7 @@ getSubonStateChange(event: any, index: number) {
       "noOfWtrBills": this.houseRegistrationForm.value.waterBill,
       "startDate": this.houseRegistrationForm.value.startDate,
       "endDate": this.houseRegistrationForm.value.endDate,
-      "houseRegistrationDto": this.stateArray.value,
+      "houseRegistrationMapDto": this.stateArray.value,
     }
     console.log(data);
     console.log(this.stateArray.value)
@@ -152,6 +152,32 @@ getSubonStateChange(event: any, index: number) {
 
   updateHouse(item:any) {
     console.log(item)
+    this.houseRegistrationForm.patchValue({
+      ownerName: [''],
+      noOfRooms: item.noOfUnits,
+      electricBill: item.noOfEleBills,
+      waterBill: item.noOfWtrBills,
+      address: item.address,
+      address2: item.address2,
+      district: item.district,
+      pin: item.pinCode,
+      startDate: item.startDate,
+      endDate: item.endDate
+    })
+    this.getSubonStateChange(item.stateId,0)
+    this.getPlantOnSubChange( item.sbuId,0)
+
+    const dataToPatch = {
+      state:item.stateId,
+      sbu: item.sbuId,
+      plant: item.plantId,
+      // Add more properties as needed
+    };
+  
+    // Check if the index is valid
+    
+      this.stateArray.at(0).patchValue(dataToPatch);
+    
   }
 
   removeHouse(id:any) {

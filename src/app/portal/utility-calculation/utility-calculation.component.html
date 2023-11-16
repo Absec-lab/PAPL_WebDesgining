@@ -8,17 +8,15 @@
 </section>
 <section id="page-content">
     <div class="container">
-        <form action="">
+        <form action="" [formGroup]="utilityCalculation">
             <div class="row " style="background-color: rgba(226, 242, 246, 1); padding: 5%; margin-bottom: 0.5cm;">
                 <div class="col-sm-6 col-md-4">
                     <div class="form-group">
                         <label for="state" class="form-label">State<span class="text-danger">*</span></label>
 
-                        <select class="form-select" aria-label="Default select example" required>
+                        <select class="form-select" aria-label="Default select example" required formControlName="state"  (change)="getSubonStateChange($event)">
                             <option selected>Choose State... </option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                            <option *ngFor="let state of stateDtails" [value]="state.stateId">{{ state.stateName }}</option>
                         </select>
 
                     </div>
@@ -26,11 +24,10 @@
                 <div class="col-sm-6 col-md-4">
                     <div class="form-group">
                         <label for="state" class="form-label">SBU<span class="text-danger">*</span></label>
-                        <select class="form-select" aria-label="Default select example" required>
+                        <select class="form-select" aria-label="Default select example" required formControlName="sbu" (change)="getPlantOnSubChange($event)" >
                             <option selected>Choose SBU... </option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                            <option [value]="sbu.locationId" *ngFor="let sbu of activeSBU" >{{sbu.locationName}}</option>
+                    
                         </select>
                     </div>
                 </div>
@@ -38,36 +35,33 @@
                 <div class="col-sm-6 col-md-4">
                     <div class="form-group">
                         <label for="state" class="form-label">Plant<span class="text-danger">*</span></label>
-                        <select class="form-select" aria-label="Default select example" required>
+                        <select class="form-select" aria-label="Default select example" required formControlName="plant" (change)="getHouseByPlantId($event)">
                             <option selected>Choose Plant... </option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                            <option [value]="plant.plantId" *ngFor="let plant of activePlant">{{plant.plantName}}</option>
                         </select>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
                     <div class="form-group">
                         <label for="state" class="form-label">House Id <span class="text-danger">*</span></label>
-                        <select class="form-select" aria-label="Default select example" required>
-                            <option selected> </option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                        <select class="form-select" aria-label="Default select example" required formControlName="houseId">
+                            <option selected >Choose HouseId... </option>
+                            <option *ngFor="let house of activeHouse" [value]="house.houseId">{{house.houseId}}</option>
+                           
                         </select>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
                     <div class="form-group">
                         <label for="state" class="form-label">Start Date<span class="text-danger">*</span></label>
-                        <input type="date" name="" id="" class="form-control" formControlName="itemPurchaseDate"
+                        <input type="date" name="" id="" class="form-control" formControlName="startDate"
                             required>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
                     <div class="form-group">
                         <label for="state" class="form-label">End Date<span class="text-danger">*</span></label>
-                        <input type="date" name="" id="" class="form-control" formControlName="itemPurchaseDate"
+                        <input type="date" name="" id="" class="form-control" formControlName="endDate"
                             required>
                     </div>
                 </div>
@@ -84,13 +78,13 @@
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             <label for="state" class="form-label">Misc Expense<span class="text-danger">*</span></label>
-                            <input type="text" name="" id="" class="form-control" required>
+                            <input type="text" name="" id="" class="form-control" required formControlName="miscExp">
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4  ">
                         <div class="form-group">
                             <label for="state" class="form-label">Bill Upload<span class="text-danger">*</span></label>
-                            <input type="file" name="" id="" class="form-control" accept="image/*" required>
+                            <input type="file" #file name="" id="" class="form-control" accept="image/*" required formControlName="miscBill" (change)="onImageChange($event, 'miscBill')">
     
                         </div>
     
@@ -98,76 +92,102 @@
                     <div class="col-sm-6 col-md-4  ">
                         <div class="form-group">
                             <label for="state" class="form-label">Receipt Upload<span class="text-danger">*</span></label>
-                            <input type="file" name="" id="" class="form-control" accept="image/*" required>
+                            <input type="file" #file name="" id="" class="form-control" accept="image/*" required formControlName="miscrecept" (change)="onImageChange($event, 'miscrecept')">
     
                         </div>
     
                     </div>
+              
                     <hr class="my-3">
                     <div class="col-sm-6 col-md-4 ">
                         <div class="form-group">
                             <label for="state" class="form-label">HR Expense<span class="text-danger">*</span></label>
-                            <input type="text" name="" id="" class="form-control" required>
+                            <input type="text" name="" id="" class="form-control" required formControlName="hrexp">
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4  ">
                         <div class="form-group">
                             <label for="state" class="form-label">Bill Upload<span class="text-danger">*</span></label>
-                            <input type="file" name="" id="" class="form-control" accept="image/*" required>
+                            <input type="file" #file name="" id="" class="form-control" accept="image/*" required formControlName="hrbill" (change)="onImageChange($event, 'hrbill')">
     
                         </div>
     
                     </div>
     
-                    <div class="col-sm-6 col-md-4  ">
+                    <div class="col-sm-6 col-md-4">
                         <div class="form-group">
-                            <label for="state" class="form-label">Receipt Upload<span class="text-danger">*</span></label>
-                            <input type="file" name="" id="" class="form-control" accept="image/*" required>
-    
+                          <label for="state" class="form-label">Receipt Upload<span class="text-danger">*</span></label>
+                          <input type="file" #file name="" id="" class="form-control" accept="image/*" required formControlName="hrrecept" (change)="onImageChange($event, 'hrrecept')">
                         </div>
-    
-                    </div>
+                        <!-- <div *ngIf="utilityCalculation.get('hrrecept')?.value">
+                          <img [src]="utilityCalculation.get('hrrecept')?.value" alt="Receipt Preview" class="img-thumbnail">
+                        </div> -->
+                      </div>
+                      <!-- <div class="col-sm-6 col-md-4">
+                        <div class="form-group">
+                          <label for="state" class="form-label">Receipt Upload<span class="text-danger">*</span></label>
+                          
+                           Hidden input to store file value 
+                          <input type="file" #fileInput style="display: none" accept="image/*" (change)="onImageChange($event, 'hrrecept')">
+                          
+                           Visible input to display file name 
+                          <input type="text" readonly class="form-control" (click)="fileInput.click()" formControlName="hrrecept" >
+                        </div>
+                        
+                        Image preview 
+                         <div *ngIf="utilityCalculation.get('hrrecept')?.value">
+                          <img [src]="utilityCalculation.get('hrrecept')?   .value" alt="Receipt Preview" class="img-thumbnail">
+                        </div> 
+                      </div> -->
+                      
+                      
                     <hr class="my-3">
-                    <div class="row">
+                    <div class="row" formArrayName="electricbill">
+                        <div class="row" *ngFor="let stateGroup of electric.controls; let i = index" [formGroupName]="i"> 
                         <div class=" col-md-3">
                           <div class="form-group">
                             <label for="electricBill" class="form-label">Electric Bill Expense<span class="text-danger">*</span></label>
-                            <input type="text" id="electricBill" class="form-control" required>
+                            <input type="text" id="electricBill" class="form-control" required formControlName="elebillexpn">
                           </div>
                         </div>
                         <div class=" col-md-4">
                           <div class="form-group">
                             <label for="billUpload" class="form-label">Bill Upload<span class="text-danger">*</span></label>
-                            <input type="file" id="billUpload" class="form-control" accept="image/*" required>
+                            <input type="file" #file id="billUpload" class="form-control" accept="image/*" required formControlName="billupload" (change)="onImageChange($event, 'billupload','electricbill', i)">
                           </div>
                         </div>
                         <div class=" col-md-4">
                           <div class="form-group">
                             <label for="receiptUpload" class="form-label">Receipt Upload<span class="text-danger">*</span></label>
-                            <input type="file" id="receiptUpload" class="form-control" accept="image/*" required>
+                            <input type="file" #file id="receiptUpload" class="form-control" accept="image/*" required formControlName="receiptupload" (change)="onImageChange($event, 'receiptupload','electricbill', i)">
+                          </div>
+                          <div *ngIf="utilityCalculation.get('receiptupload')?.value">
+                            <img [src]="utilityCalculation.get('receiptupload')?.value" alt="Receipt Preview" class="img-thumbnail">
                           </div>
                         </div>
                         <div class="col-md-1 btn-icon">
-                          <button class="btn btn-danger btn-sm">
+                          <button class="btn btn-danger btn-sm" (click)=" removeelectric(i)">
                             <i class="fa-solid fa-trash-alt"></i>
                           </button>
-                          <button type="button" class="btn btn-primary m-1 btn-sm"> <i class="fa-solid fa-plus"></i></button>
+                          <button (click)=" addelectric()" type="button" class="btn btn-primary m-1 btn-sm"> <i class="fa-solid fa-plus"></i></button>
                         </div>
                       </div>
+                    </div>
                       
                     <hr class="my-3">
-                    <div class="row"> 
+                    <div class="row" formArrayName="waterbill"> 
+                        <div class="row" *ngFor="let stateGroup of water.controls; let i = index" [formGroupName]="i">
                     <div class="col-sm-6 col-md-3">
                         <div class="form-group">
                             <label for="state" class="form-label">Water Bill Expense<span
                                     class="text-danger">*</span></label>
-                            <input type="text" name="" id="" class="form-control" required>
+                            <input type="text" name="" id="" class="form-control" required formControlName="waterbillexpn">
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4  ">
                         <div class="form-group">
                             <label for="state" class="form-label">Bill Upload<span class="text-danger">*</span></label>
-                            <input type="file" name="" id="" class="form-control" accept="image/*" required>
+                            <input type="file" #file name="" id="" class="form-control" accept="image/*" required formControlName="waterbillupload" (change)="onImageChange($event, 'waterbillupload','waterbill', i)">
     
                         </div>
     
@@ -176,18 +196,19 @@
                     <div class="col-sm-6 col-md-4  ">
                         <div class="form-group">
                             <label for="state" class="form-label">Receipt Upload<span class="text-danger">*</span></label>
-                            <input type="file" name="" id="" class="form-control" accept="image/*" required>
+                            <input type="file" #file name="" id="" class="form-control" accept="image/*" required formControlName="waterreceiptupload" (change)="onImageChange($event, 'waterreceiptupload','waterbill', i)">
     
                         </div>
     
                     </div>
                     <div class="col-md-1 btn-icon" >
                         <button class="btn btn-danger btn-sm">
-                          <i class="fa-solid fa-trash-alt"></i>
+                          <i class="fa-solid fa-trash-alt" (click)="removewater(i)"></i>
                         </button>
-                        <button type="button" class="btn btn-primary m-1 btn-sm"> <i class="fa-solid fa-plus"></i></button>
+                        <button type="button" class="btn btn-primary m-1 btn-sm" (click)="addwater()"> <i class="fa-solid fa-plus" ></i></button>
                     </div>
                 </div>
+              </div>
                  
                     
                 </div>
@@ -199,7 +220,7 @@
 
             </div>
             <div class="mt-4 d-flex justify-content-end">
-                <button class="btn btn-primary form-save-btn" (click)="onClick1()">
+                <button class="btn btn-primary form-save-btn" (click)=" postUtilityCalc()">
                     Save
                 </button>
             </div>
@@ -221,15 +242,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let item of tableData">
-                        <td>{{ item.SL_NO }}</td>
-                        <td>{{ item.Unit_No }}</td>
-                        <td>{{ item.Occupied }}</td>
-                        <td>{{ item.Available}}</td>
-                        <td>{{ item.Unit_No }}</td>
-                        <td>{{ item.Occupied }}</td>
-                        <td>{{ item.Available}}</td>
-                        <td>{{ item.Unit_No }}</td>
+                    <tr *ngFor="let item of tableData; let i = index">
+                        <td>{{ i+1 }}</td>
+                        <td>{{ item.fkStateId }}</td>
+                        <td>{{ item.fkSbuId}}</td>
+                        <td>{{ item.fkPlantId}}</td>
+                        <td>{{ item.fkHouseId }}</td>
+                        <td>{{ item.startDate}}</td>
+                        <td>{{ item.endDate }}</td>
+                        <td>{{ item.createdDate}}</td>
 
                         <td>
                             <div style="display: inline-flex; ">

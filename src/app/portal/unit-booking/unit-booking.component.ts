@@ -168,6 +168,8 @@ postBooking() {
   .subscribe((res)=>{
     console.log(res)
     alert("booking succcesfull")
+    this.employeeForm.reset();
+    this.ngOnInit()
   })
 }
 

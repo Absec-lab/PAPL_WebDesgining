@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PortalServiceService } from '../serviceapi/portal-service.service';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 
 @Component({
@@ -18,12 +18,12 @@ export class UtilityCalculationComponent implements OnInit {
   ngOnInit(): void {
     this.getAllStateList()
     this.utilityCalculation = this.formBuilder.group({
-     state: [''],
-      sbu: [''],
-      plant: [''],
-      houseId: [''],
-      startDate: [''],
-      endDate: [''],
+     state: ['',Validators.required],
+      sbu: ['',Validators.required],
+      plant: ['',Validators.required],
+      houseId: ['',Validators.required],
+      startDate: ['',Validators.required],
+      endDate: ['',Validators.required],
       miscExp:[''],
       miscBill:[''],
       miscrecept:[''],
@@ -215,6 +215,7 @@ export class UtilityCalculationComponent implements OnInit {
 
 
     postUtilityCalc() {
+     if(this.utilityCalculation.valid) {
       let data = {
         "utilityCalculationData": {
           "fkStateId": this.utilityCalculation.value.state,
@@ -245,8 +246,12 @@ export class UtilityCalculationComponent implements OnInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe(res=> {
         console.log(res);
+        this. getAllUtilityCalc()
         alert("calculation saved successfully")
       })
+     } else {
+      alert("Please Enter Required fields !")
+     }
     }
 
 

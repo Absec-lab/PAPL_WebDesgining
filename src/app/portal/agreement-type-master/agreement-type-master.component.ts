@@ -85,14 +85,13 @@ export class AgreementTypeMasterComponent {
     this.ngxLoader.start();
     this.portalServ.getAllAgreementType(param).subscribe(res => {
       this.ngxLoader.stop();
-      if (res.length > 0) {
-        this.tableData = res;
-      } else {
-        this.tableData = [];
-      }
+      console.log("tabledata",res)
+      this.tableData = res.data
+      
     },error => {
       this.ngxLoader.stop();
     });
+   
   }
   deleteAgreementType(aggreTypeId: any = 0) {
     Swal.fire({

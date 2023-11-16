@@ -108,7 +108,7 @@ export class PortalServiceService {
 	}
 	// delete Owner
 	deleteOwner(params: any): Observable<any> {
-		let serviceUrl = environment.serviceURL + 'deactivate/Owner';
+		let serviceUrl = environment.serviceURL + 'deactivate/Owner?id='+params;
 		let serviceRes = this.Http.get(serviceUrl, {params});
 		return serviceRes;
 	}

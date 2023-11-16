@@ -31,15 +31,15 @@ export class HouseRegistrationComponent implements OnInit {
     this. getAllHouseDetailList()
 
     this.houseRegistrationForm = this.formBuilder.group({
-      ownerName: [''],
-      noOfRooms: [''],
-      electricBill: [''],
-      waterBill: [''],
-      address: [''],
+      ownerName: ['',Validators.required],
+      noOfRooms: ['',Validators.required],
+      electricBill: ['',Validators.required],
+      waterBill: ['',Validators.required],
+      address: ['',Validators.required],
       address2: [''],
-      district: [''],
+      district: ['',Validators.required],
       pin: [''],
-      startDate: [''],
+      startDate: ['',Validators.required],
       endDate: ['']
     });
 
@@ -123,31 +123,35 @@ getSubonStateChange(event: any, index: number) {
   }
 
   registerHouse(){
-    let data =  {
-      "ownerId":  this.houseRegistrationForm.value.ownerName,
-       "address": this.houseRegistrationForm.value.address,
-       "address2": this.houseRegistrationForm.value.address2,
-       "district":this.houseRegistrationForm.value.district,
-      "pinCode": this.houseRegistrationForm.value.pin,
-      "noOfRooms": this.houseRegistrationForm.value.noOfRooms,
-      "noOfEleBills": this.houseRegistrationForm.value.electricBill,
-      "noOfWtrBills": this.houseRegistrationForm.value.waterBill,
-      "startDate": this.houseRegistrationForm.value.startDate,
-      "endDate": this.houseRegistrationForm.value.endDate,
-      "houseRegistrationMapDto": this.stateArray.value,
+    if(this.houseRegistrationForm.valid) {
+      let data =  {
+        "ownerId":  this.houseRegistrationForm.value.ownerName,
+         "address": this.houseRegistrationForm.value.address,
+         "address2": this.houseRegistrationForm.value.address2,
+         "district":this.houseRegistrationForm.value.district,
+        "pinCode": this.houseRegistrationForm.value.pin,
+        "noOfRooms": this.houseRegistrationForm.value.noOfRooms,
+        "noOfEleBills": this.houseRegistrationForm.value.electricBill,
+        "noOfWtrBills": this.houseRegistrationForm.value.waterBill,
+        "startDate": this.houseRegistrationForm.value.startDate,
+        "endDate": this.houseRegistrationForm.value.endDate,
+        "houseRegistrationMapDto": this.stateArray.value,
+      }
+      console.log(data);
+      console.log(this.stateArray.value)
+      
+      this.portalService.post("PAPL/addHouses",data)
+      .subscribe((res)=>{
+        console.log(res)
+        this. getAllHouseDetailList()
+        this.houseRegistrationForm.reset()
+        this.stateArray.clear()
+        this.addstate()
+        alert("House Registration succcesfull")
+      })
+    } else {
+      alert("Please Enter Mandatory fields.")
     }
-    console.log(data);
-    console.log(this.stateArray.value)
-    
-    this.portalService.post("PAPL/addHouses",data)
-    .subscribe((res)=>{
-      console.log(res)
-      this. getAllHouseDetailList()
-      this.houseRegistrationForm.reset()
-      this.stateArray.clear()
-      this.addstate()
-      alert("House Registration succcesfull")
-    })
   }
 
   updateHouse(item:any) {

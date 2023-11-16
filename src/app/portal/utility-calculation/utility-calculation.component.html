@@ -146,27 +146,25 @@
                         <div class="row" *ngFor="let stateGroup of electric.controls; let i = index" [formGroupName]="i"> 
                         <div class=" col-md-3">
                           <div class="form-group">
-                            <label for="electricBill" class="form-label">Electric Bill Expense<span class="text-danger">*</span></label>
+                            <label for="electricBill" class="form-label">Electric Bill Expense<span class="text-danger"></span></label>
                             <input type="text" id="electricBill" class="form-control" required formControlName="elebillexpn">
                           </div>
                         </div>
                         <div class=" col-md-4">
                           <div class="form-group">
-                            <label for="billUpload" class="form-label">Bill Upload<span class="text-danger">*</span></label>
+                            <label for="billUpload" class="form-label">Bill Upload<span class="text-danger"></span></label>
                             <input type="file" #file id="billUpload" class="form-control" accept="image/*" required formControlName="billupload" (change)="onImageChange($event, 'billupload','electricbill', i)">
                           </div>
                         </div>
-                        <div class=" col-md-4">
+                        <div class=" col-md-3">
                           <div class="form-group">
-                            <label for="receiptUpload" class="form-label">Receipt Upload<span class="text-danger">*</span></label>
+                            <label for="receiptUpload" class="form-label">Receipt Upload<span class="text-danger"></span></label>
                             <input type="file" #file id="receiptUpload" class="form-control" accept="image/*" required formControlName="receiptupload" (change)="onImageChange($event, 'receiptupload','electricbill', i)">
                           </div>
-                          <div *ngIf="utilityCalculation.get('receiptupload')?.value">
-                            <img [src]="utilityCalculation.get('receiptupload')?.value" alt="Receipt Preview" class="img-thumbnail">
-                          </div>
+                          
                         </div>
-                        <div class="col-md-1 btn-icon">
-                          <button class="btn btn-danger btn-sm" (click)=" removeelectric(i)">
+                        <div class="col-md-2 btn-icon">
+                          <button class="btn btn-danger btn-sm" *ngIf="i>0" (click)=" removeelectric(i)">
                             <i class="fa-solid fa-trash-alt"></i>
                           </button>
                           <button (click)=" addelectric()" type="button" class="btn btn-primary m-1 btn-sm"> <i class="fa-solid fa-plus"></i></button>
@@ -180,30 +178,30 @@
                     <div class="col-sm-6 col-md-3">
                         <div class="form-group">
                             <label for="state" class="form-label">Water Bill Expense<span
-                                    class="text-danger">*</span></label>
+                                    class="text-danger"></span></label>
                             <input type="text" name="" id="" class="form-control" required formControlName="waterbillexpn">
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4  ">
                         <div class="form-group">
-                            <label for="state" class="form-label">Bill Upload<span class="text-danger">*</span></label>
+                            <label for="state" class="form-label">Bill Upload<span class="text-danger"></span></label>
                             <input type="file" #file name="" id="" class="form-control" accept="image/*" required formControlName="waterbillupload" (change)="onImageChange($event, 'waterbillupload','waterbill', i)">
     
                         </div>
     
                     </div>
     
-                    <div class="col-sm-6 col-md-4  ">
+                    <div class="col-sm-6 col-md-3  ">
                         <div class="form-group">
-                            <label for="state" class="form-label">Receipt Upload<span class="text-danger">*</span></label>
+                            <label for="state" class="form-label">Receipt Upload<span class="text-danger"></span></label>
                             <input type="file" #file name="" id="" class="form-control" accept="image/*" required formControlName="waterreceiptupload" (change)="onImageChange($event, 'waterreceiptupload','waterbill', i)">
     
                         </div>
     
                     </div>
-                    <div class="col-md-1 btn-icon" >
-                        <button class="btn btn-danger btn-sm">
-                          <i class="fa-solid fa-trash-alt" (click)="removewater(i)"></i>
+                    <div class="col-md-2 btn-icon" >
+                        <button class="btn btn-danger btn-sm" *ngIf="i>0" (click)="removewater(i)">
+                          <i class="fa-solid fa-trash-alt" ></i>
                         </button>
                         <button type="button" class="btn btn-primary m-1 btn-sm" (click)="addwater()"> <i class="fa-solid fa-plus" ></i></button>
                     </div>

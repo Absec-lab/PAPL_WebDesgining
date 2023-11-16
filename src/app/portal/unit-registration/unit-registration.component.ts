@@ -48,12 +48,12 @@ export class UnitRegistrationComponent {
 
   addunit() {
     const unitGroup = this.formBuilder.group({
-      houseId: [''],
-      unitNo: [''],
+      houseId: ['',Validators.required],
+      unitNo: ['',Validators.required],
       unitCapacity: [''],
       electBillPercent: [''],
       waterBillPercent: [''],
-      startDate: [''],
+      startDate: ['',Validators.required],
       endDate: [''],
       // Add more form controls as needed
     },);
@@ -151,25 +151,36 @@ export class UnitRegistrationComponent {
   }
  
   postUnit() {
-    let data = {
-      "stateId": this.stateId,
-      "sbuId":this.sbuId,
-      "plantId":this.plantId,
-      "unitDTO": this.unitArray.value,
+
+   if(this.sbuId !== undefined && this.plantId !== undefined) {
+    console.log(this.sbuId, this.plantId);
+    if (this.unitArray.at(0)?.valid) {
+      let data = {
+        "stateId": this.stateId,
+        "sbuId":this.sbuId,
+        "plantId":this.plantId,
+        "unitDTO": this.unitArray.value,
+      }
+  
+      this.portalServ.post("PAPL/addUnits",data)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res)=>{
+        console.log(res)
+        this.getAllUnit()
+        this.stateId = null;
+        this.sbuId = null;
+        this.plantId = null;
+        this.unitArray.clear()
+        this.addunit()
+  
+      })
+    } else {
+      alert("Please Enter Requuired Fields !")
     }
-
-    this.portalServ.post("PAPL/addUnits",data)
-    .pipe(takeUntil(this.destroy$))
-    .subscribe((res)=>{
-      console.log(res)
-      this.getAllUnit()
-      this.stateId = null;
-      this.sbuId = null;
-      this.plantId = null;
-      this.unitArray.clear()
-      this.addunit()
-
-    })
+   
+   } else {
+    alert("Please Enter Mandatory Fields !")
+   }
   }
 
   

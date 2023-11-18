@@ -25,7 +25,7 @@
         <form action=""  [formGroup]="houseRegistrationForm">
             <div style="background-color: rgba(226, 242, 246, 1); padding: 5%">
                 <!-- house-owner-registration -->
-                <div class="row">
+                <div class="row" *ngIf="!legalbtnh">
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             <label for="state" class="form-label">House Owner Name<span
@@ -123,17 +123,17 @@
                         <label for="state" class="form-label">Status<span class="text-danger">*</span></label>
                         <select class="form-select" aria-label="Default select example" formControlName="status" (change)="showLegal($event)">
                             <option value="1">Active</option>
-                            <option value="0">InActive</option>
+                            <option value="0" *ngIf="updatebtn">InActive</option>
                         </select>
                     </div>
                 </div>
                 <!-- add-legal-heir -->
-                <div class="row" *ngIf="legalheir">
+                <div class="row" *ngIf="legalbtnh">
                     
                         <div class="col-sm-6 col-md-4">
                             <div class="form-group">
                                 <label for="state" class="form-label">Owner Name<span class="text-danger"></span></label>
-                                <input type="text" name="name" id="" class="form-control" disabled required>
+                                <input type="text" name="name" id="" formControlName="ownerName" class="form-control" readonly required>
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-4">
@@ -242,13 +242,19 @@
 
                     
                 </div>
-                <div class="col-sm-6 col-md-4" *ngIf="updatebtn">
-                    <div class="form-group">
-                        <label for="state" class="form-label">Description<span
-                                class="text-danger"></span></label>
+                <div class="row">
+                    <div class="col-sm-6 col-md-4" *ngIf="descripinput">
+                      <div class="form-group">
+                        <label for="state" class="form-label">Description<span class="text-danger"></span></label>
                         <input type="text" class="form-control" formControlName="desc">
+                      </div>
                     </div>
-                </div>
+                  
+                    <div class="col-sm-6 col-md-8" *ngIf="legalheir" style="margin-top: 28px">
+                      <button class="btn btn-primary float-end" (click)="togglelegal()">Add Legal Heir</button>
+                    </div>
+                  </div>
+                  
                 
                 <ng-container *ngIf="heading">
                     <h5 class="mt-4 text-secondary">Bank Account Details of House Owner</h5>
@@ -321,7 +327,7 @@
                         </div>
                     </div>
                 </ng-container>
-                <div class="mt-4 d-flex justify-content-end" *ngIf="legalheir">
+                <div class="mt-4 d-flex justify-content-end" *ngIf="legalbtnh">
                     <button class="btn button btn-primary form-save-btn">
                         +
                     </button>

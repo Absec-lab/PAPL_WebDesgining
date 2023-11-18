@@ -23,6 +23,7 @@ export class HouseOwnerRegistrationComponent {
   stateDtails:any = []
   houseRegistrationForm!: FormGroup<any>;
   updatebtn:boolean = false;
+  descripinput:boolean = false;
   constructor(private ngxLoader: NgxUiLoaderService, private formBuilder: FormBuilder, private route: Router, public portalServ: PortalServiceService, private httpClient: HttpClient, public vldChkLst: ValidatorchklistService) { }
   ngOnInit(): void {
     this.getAllOwner();
@@ -151,6 +152,7 @@ export class HouseOwnerRegistrationComponent {
   editOwner(item:any){
     console.log(item)
     this.updatebtn = true;
+    this.descripinput = true;
     this.houseRegistrationForm.patchValue({
       ownerId:item.ownerId,
       ownerName: item.ownerName,
@@ -215,7 +217,7 @@ export class HouseOwnerRegistrationComponent {
       this.updatebtn = false;
     })
   }
-
+  legalbtnh:boolean = false
   showLegal(event:any) {
     const value = event.target.value;
     console.log(value)
@@ -224,6 +226,12 @@ export class HouseOwnerRegistrationComponent {
     } else {
       this.legalheir = false;
     }
+  }
+
+  togglelegal() {
+    this.legalbtnh = !this.legalbtnh
+    this.legalheir = false;
+    this.descripinput= false
   }
 
   paymentmode(event:any) {

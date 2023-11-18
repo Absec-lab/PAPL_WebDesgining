@@ -25,7 +25,7 @@
         <form action=""  [formGroup]="houseRegistrationForm">
             <div style="background-color: rgba(226, 242, 246, 1); padding: 5%">
                 <!-- house-owner-registration -->
-                <div class="row" *ngIf="!legalbtnh">
+                <div class="row">
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             <label for="state" class="form-label">House Owner Name<span
@@ -49,7 +49,7 @@
                         <div class="form-group">
                             <label for="state" class="form-label">Upload Govt ID Proof<span
                                     class="text-danger"></span></label>
-                            <input type="file" name="" id="" class="form-control" accept="image/*" required  formControlName="idProof" />
+                            <input type="file" name="" id="" class="form-control" accept="image/*" required  (change)="onImageChange($event, 'idProof')"  />
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
@@ -126,205 +126,20 @@
                             <option value="0" *ngIf="updatebtn">InActive</option>
                         </select>
                     </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-4" *ngIf="descripinput">
+                            <div class="form-group">
+                              <label for="state" class="form-label">Description<span class="text-danger"></span></label>
+                              <input type="text" class="form-control" formControlName="desc">
+                            </div>
+                          </div>
+                          <div class="col-sm-6 col-md-8" *ngIf="legalheir" style="margin-top: 28px">
+                            <button class="btn btn-primary float-end" (click)="togglelegal()">Add Legal Heir</button>
+                          </div>
+                    </div>
                 </div>
-                <!-- add-legal-heir -->
-                <div class="row" *ngIf="legalbtnh">
-                    
-                        <div class="col-sm-6 col-md-4">
-                            <div class="form-group">
-                                <label for="state" class="form-label">Owner Name<span class="text-danger"></span></label>
-                                <input type="text" name="name" id="" formControlName="ownerName" class="form-control" readonly required>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-                            <div class="form-group">
-                                <label for="state" class="form-label">Upload L.H. Certificate<span
-                                        class="text-danger"></span></label>
-                                <input type="file" name="" id="" class="form-control" accept="image/*" required>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-                            <div class="form-group">
-                                <label for="state" class="form-label">No of Legal Parties<span
-                                        class="text-danger"></span></label>
-                                <input type="text" name="" id="" class="form-control" required>
-                            </div>
-                        </div>
-                    
-
-                    <div class="col-sm-6 col-md-4">
-                        <div class="form-group">
-                            <label for="state" class="form-label">House Owner Name<span
-                                    class="text-danger"></span></label>
-                            <input type="text" name="name" id="" class="form-control" required>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4">
-                        <div class="form-group">
-                            <label for="state" class="form-label">Phone Number<span class="text-danger"></span></label>
-                            <input type="text" name="" id="" class="form-control" required>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4">
-                        <div class="form-group">
-                            <label for="state" class="form-label">Email ID<span class="text-danger"></span></label>
-                            <input type="email" name="" id="" class="form-control" required>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4">
-                        <div class="form-group">
-                            <label for="state" class="form-label">Upload Govt ID Proof<span
-                                    class="text-danger"></span></label>
-                            <input (change)="onImageChange($event)" type="file" name="" id="" class="form-control" accept="image/*" required>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4">
-                        <div class="form-group">
-                            <label for="state" class="form-label">Govt ID Proof<span
-                                    class="text-danger"></span></label>
-                            <input type="text" name="" id="" class="form-control" required>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 col-md-4">
-                        <div class="form-group">
-                            <label for="state" class="form-label">Address 1<span class="text-danger"></span></label>
-                            <input type="text" name="" id="" class="form-control" required>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4">
-                        <div class="form-group">
-                            <label for="state" class="form-label">Address 2<span class="text-danger"></span></label>
-                            <input type="text" name="" id="" class="form-control" required>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4">
-                        <div class="form-group">
-                            <label for="state" class="form-label">State<span class="text-danger"></span></label>
-                            <input type="text" name="" id="" class="form-control" required>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4">
-                        <div class="form-group">
-                            <label for="state" class="form-label">District<span class="text-danger"></span></label>
-                            <input type="text" name="" id="" class="form-control" required>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4">
-                        <div class="form-group">
-                            <label for="state" class="form-label">PIN<span class="text-danger"></span></label>
-                            <input type="text" name="" id="" class="form-control" required>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4">
-                        <label for="state" class="form-label">Payment Mode<span class="text-danger"></span></label>
-                        <select class="form-select" aria-label="Default select example"
-                            required (change)="paymentmode($event, 'legal')">
-                            <option selected>Choose Payment Mode...</option>
-                            <option value="1" routerLink="">Bank AC</option>
-                            <option value="2">Cash</option>
-                            <option value="3" routerLink="">BHIM UPI</option>
-                            <option value="4" routerLink="">Phone Pe</option>
-                            <option value="5" routerLink="">Paytm</option>
-                            <option value="6" routerLink="">Google Pay</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-6 col-md-4  ">
-                        <label for="state" class="form-label">Status (Legal heir)<span class="text-danger">*</span></label>
-                        <select class="form-select" aria-label="Default select example" required >
-                            <option selected>Choose Status...</option>
-                            <option value="1">Active</option>
-                            <option value="0">InActive</option>
-
-
-                        </select>
-                    </div>
-
-                    
-                </div>
-                <div class="row">
-                    <div class="col-sm-6 col-md-4" *ngIf="descripinput">
-                      <div class="form-group">
-                        <label for="state" class="form-label">Description<span class="text-danger"></span></label>
-                        <input type="text" class="form-control" formControlName="desc">
-                      </div>
-                    </div>
-                  
-                    <div class="col-sm-6 col-md-8" *ngIf="legalheir" style="margin-top: 28px">
-                      <button class="btn btn-primary float-end" (click)="togglelegal()">Add Legal Heir</button>
-                    </div>
-                  </div>
-                <ng-container *ngIf="legalheading">
-                    <h5 class="mt-4 text-secondary">Bank Account Details of Legaal Heir</h5>
-                    <hr class="my-1" />
-                    <!-- cash -->
-                    <div class="cash row pt-4 ">
-
-                    </div>
-                    <!-- bank-ac -->
-                    <div class=" bank-ac row pt-4" *ngIf="legalbank" >
-                        <div class="col-sm-6 col-md-4">
-                            <div class="form-group">
-                                <label for="state" class="form-label">Account Holder Name<span
-                                        class="text-danger"></span></label>
-                                <input type="text" name="accountHolderName" id="accountHolderName" class="form-control" >
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-                            <div class="form-group">
-                                <label for="state" class="form-label">Account Number<span
-                                        class="text-danger"></span></label>
-                                <input type="text" name="bankAccountNo" id="bankAccountNo" class="form-control" >
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-                            <div class="form-group">
-                                <label for="state" class="form-label">IFSC<span class="text-danger"></span></label>
-                                <input type="text" name="ifscCode" id="ifscCode" class="form-control" >
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-                            <div class="form-group">
-                                <label for="state" class="form-label">PAN Card <span
-                                        class="text-danger"></span></label>
-                                <input type="text" name="panNo" id="panNo" class="form-control" >
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-                            <div class="form-group">
-                                <label for="state" class="form-label">Upload PAN Card<span
-                                        class="text-danger"></span></label>
-                                <input type="file" name="" id="" class="form-control" accept="image/*" >
-                            </div>
-                        </div>
-                        
-                    </div>
-                    <!-- upi -->
-                    <div class="row pt-4" *ngIf="legalupi">
-                        <div class="col-sm-6 col-md-4">
-                            <div class="form-group">
-                                <label for="state" class="form-label">UPI ID<span class="text-danger"></span></label>
-                                <input type="text" class="form-control" >
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-                            <div class="form-group">
-                                <label for="state" class="form-label">Linked Mob._No<span
-                                        class="text-danger"></span></label>
-                                <input type="text" class="form-control" >
-                            </div>
-                        </div>
-
-
-                        <div class="col-sm-6 col-md-4">
-                            <div class="form-group">
-                                <label for="state" class="form-label">Upload QR Code<span
-                                        class="text-danger"></span></label>
-                                <input type="file" name="" id="" class="form-control" accept="image/*" >
-                            </div>
-                        </div>
-                    </div>
-                </ng-container>
+              
+               
                 
                 <ng-container *ngIf="heading">
                     <h5 class="mt-4 text-secondary">Bank Account Details of House Owner</h5>
@@ -366,7 +181,7 @@
                             <div class="form-group">
                                 <label for="state" class="form-label">Upload PAN Card<span
                                         class="text-danger"></span></label>
-                                <input type="file" name="" id="" class="form-control" accept="image/*" formControlName="panPic">
+                                <input type="file" name="" id="" class="form-control" accept="image/*"  (change)="onImageChange($event, 'panPic')" formControlName="panPic">
                             </div>
                         </div>
                         
@@ -392,16 +207,242 @@
                             <div class="form-group">
                                 <label for="state" class="form-label">Upload QR Code<span
                                         class="text-danger"></span></label>
-                                <input type="file" name="" id="" class="form-control" accept="image/*" formControlName="qrCode">
+                                <input type="file" name="" id="" class="form-control" accept="image/*" (change)="onImageChange($event, 'qrCode')" >
                             </div>
                         </div>
                     </div>
                 </ng-container>
-                <div class="mt-4 d-flex justify-content-end" *ngIf="legalbtnh">
-                    <button class="btn button btn-primary form-save-btn">
-                        +
-                    </button>
+                  <!-- add-legal-heir -->
+                <div class="row" *ngIf="legalbtnh">
+                    <div class="container" style="padding: 20px 0;">
+                        <ul class="nav" id="" role="">
+                            <li class="nav-item w-100" role="">
+                                <button class="nav-link active w-100 text-uppercase text-white" id="" style="
+                                background-color: rgba(0, 133, 159, 1);
+                                color: #faf7f7;
+                                font-weight: bold;
+                                text-align: left;
+                              " aria-controls="trip-tab-pane" aria-selected="true">
+                                     Legal Heir Details
+                                </button>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                        <div class="col-sm-6 col-md-4">
+                            <div class="form-group">
+                                <label for="state" class="form-label">Owner Name<span class="text-danger"></span></label>
+                                <input type="text" name="name" id="" formControlName="ownerName" class="form-control" readonly required>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-4">
+                            <div class="form-group">
+                                <label for="state" class="form-label">Upload L.H. Certificate<span
+                                        class="text-danger"></span></label>
+                                <input type="file" name="" id="" class="form-control" accept="image/*" (change)="onImageChange($event, 'uploadlegalheir')" required>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-4">
+                            <div class="form-group">
+                                <label for="state" class="form-label">No of Legal Parties<span
+                                        class="text-danger"></span></label>
+                                <input type="text" name="noOfLegalParties" id="" class="form-control"  [ngModelOptions]="{standalone: true}" [(ngModel)]="noOfLegalParties" >
+                            </div>
+                        </div>
+                    <form action="" [formGroup]="legalheirForm">
+                        <div class="container"  formArrayName="legal">
+                            <div class="container" *ngFor="let stateGroup of legalheirarray.controls; let i = index" [formGroupName]="i">
+                               <div class="row">
+                                <div class="col-sm-6 col-md-4">
+                                    <div class="form-group">
+                                        <label for="state" class="form-label">House Owner Name<span
+                                                class="text-danger"></span></label>
+                                        <input type="text" formControlName="ownerName" name="name" id="" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-4">
+                                    <div class="form-group">
+                                        <label for="state" class="form-label">Phone Number<span class="text-danger"></span></label>
+                                        <input type="text" formControlName="phoneNo" name="" id="" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-4">
+                                    <div class="form-group">
+                                        <label for="state" class="form-label">Email ID<span class="text-danger"></span></label>
+                                        <input type="email" formControlName="emailId" name="" id="" class="form-control" required>
+                                    </div>
+                                </div>
+                               </div>
+                               <div class="row">
+                                <div class="col-sm-6 col-md-4">
+                                    <div class="form-group">
+                                        <label for="state" class="form-label">Upload Govt ID Proof<span
+                                                class="text-danger"></span></label>
+                                        <input  type="file" name="" id="" class="form-control" accept="image/*" (change)="onImageChange($event, 'idProofDoc', 'legal',1)" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-4">
+                                    <div class="form-group">
+                                        <label for="state" class="form-label">Govt ID Proof<span
+                                                class="text-danger"></span></label>
+                                        <input type="text" formControlName="idProof" name="" id="" class="form-control" required>
+                                    </div>
+                                </div>
+            
+                                <div class="col-sm-6 col-md-4">
+                                    <div class="form-group">
+                                        <label for="state" class="form-label">Address 1<span class="text-danger"></span></label>
+                                        <input type="text" formControlName="address1" name="" id="" class="form-control" required>
+                                    </div>
+                                </div>
+                               </div>
+
+                               <div class="row">
+                                <div class="col-sm-6 col-md-4">
+                                    <div class="form-group">
+                                        <label for="state" class="form-label">Address 2<span class="text-danger"></span></label>
+                                        <input type="text" name="" formControlName="address2" id="" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-4">
+                                    <div class="form-group">
+                                        <label for="state" class="form-label">State<span class="text-danger"></span></label>
+                                        <select class="form-select" aria-label="Default select example"  >
+                                            <option selected formControlName="state">Choose State... </option>
+                                            <option *ngFor="let state of stateDtails" [value]="state.stateId">{{ state.stateName }}</option>
+                                        
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-4">
+                                    <div class="form-group">
+                                        <label for="state" class="form-label">District<span class="text-danger"></span></label>
+                                        <input type="text" formControlName="district" name="" id="" class="form-control" required>
+                                    </div>
+                                </div>
+                               </div>
+
+                               <div class="row"> 
+                                <div class="col-sm-6 col-md-4">
+                                    <div class="form-group">
+                                        <label for="state" class="form-label">PIN<span class="text-danger"></span></label>
+                                        <input type="text" formControlName="pinCode" name="" id="" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-4">
+                                    <label for="state" class="form-label">Payment Mode<span class="text-danger"></span></label>
+                                    <select formControlName="paymtMode" class="form-select" aria-label="Default select example"
+                                        required (change)="paymentmode($event, 'legal',i)">
+                                        <option selected>Choose Payment Mode...</option>
+                                        <option value="1" routerLink="">Bank AC</option>
+                                        <option value="2">Cash</option>
+                                        <option value="3" routerLink="">BHIM UPI</option>
+                                        <option value="4" routerLink="">Phone Pe</option>
+                                        <option value="5" routerLink="">Paytm</option>
+                                        <option value="6" routerLink="">Google Pay</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-6 col-md-4  ">
+                                    <label for="state" class="form-label">Status (Legal heir)<span class="text-danger">*</span></label>
+                                    <select formControlName="isActive" class="form-select" aria-label="Default select example" required >
+                                        <option selected>Choose Status...</option>
+                                        <option value="1">Active</option>
+                                        <option value="0">InActive</option>
+            
+            
+                                    </select>
+                                </div>
+                               </div>
+                               
+            
+                                <ng-container *ngIf=" showhidebankdetails(i) == 'Bank' ||  showhidebankdetails(i) == 'upi'">
+                                    <h5 class="mt-4 text-secondary">Bank Account Details of Legaal Heir</h5>
+                                    <hr class="my-1" />
+                                    <!-- cash -->
+                                    <div class="cash row pt-4 ">
+                
+                                    </div>
+                                    <!-- bank-ac -->
+                                    <div class=" bank-ac row pt-4" *ngIf=" showhidebankdetails(i) == 'Bank'" >
+                                        <div class="col-sm-6 col-md-4">
+                                            <div class="form-group">
+                                                <label for="state" class="form-label">Account Holder Name<span
+                                                        class="text-danger"></span></label>
+                                                <input type="text" formControlName="accountHolderName" name="accountHolderName" id="accountHolderName" class="form-control" >
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-4">
+                                            <div class="form-group">
+                                                <label for="state" class="form-label">Account Number<span
+                                                        class="text-danger"></span></label>
+                                                <input type="text" formControlName="bankAccountNo" name="bankAccountNo" id="bankAccountNo" class="form-control" >
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-4">
+                                            <div class="form-group">
+                                                <label for="state" class="form-label">IFSC<span class="text-danger"></span></label>
+                                                <input type="text" formControlName="ifscCode" name="ifscCode" id="ifscCode" class="form-control" >
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-4">
+                                            <div class="form-group">
+                                                <label for="state" class="form-label">PAN Card <span
+                                                        class="text-danger"></span></label>
+                                                <input type="text" formControlName="panNo" name="panNo" id="panNo" class="form-control" >
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-4">
+                                            <div class="form-group">
+                                                <label for="state" class="form-label">Upload PAN Card<span
+                                                        class="text-danger"></span></label>
+                                                <input type="file" name="" id="" class="form-control" accept="image/*" (change)="onImageChange($event, 'panCardAddress', 'legal',1)" >
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <!-- upi -->
+                                    <div class="row pt-4" *ngIf="showhidebankdetails(i) == 'upi'" >
+                                        <div class="col-sm-6 col-md-4">
+                                            <div class="form-group">
+                                                <label for="state" class="form-label">UPI ID<span class="text-danger"></span></label>
+                                                <input formControlName="upiId" type="text" class="form-control" >
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6 col-md-4">
+                                            <div class="form-group">
+                                                <label for="state" class="form-label">Linked Mob._No<span
+                                                        class="text-danger"></span></label>
+                                                <input  type="number"  formControlName="upiPhoneNo" class="form-control" >
+                                            </div>
+                                        </div>
+                
+                
+                                        <div class="col-sm-6 col-md-4">
+                                            <div class="form-group">
+                                                <label for="state" class="form-label">Upload QR Code<span
+                                                        class="text-danger"></span></label>
+                                                <input type="file" name="" id="" class="form-control" accept="image/*" (change)="onImageChange($event, 'uploadQuarCodeAdds', 'legal',1)">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                                <div class="mt-4 d-flex justify-content-end" *ngIf="legalbtnh">
+                                    <button class="btn btn-danger " style="margin-right: 10px;" *ngIf="i>0" (click)="removelegalform(i)">
+                                        <i class="fa-solid fa-trash-alt"></i>
+                                      </button>
+                                    <button class="btn button btn-primary form-save-btn" (click)=" addlegaleirform()">
+                                        +
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    
+                    
                 </div>
+                
+                
             </div>
 
             <div class="mt-4 d-flex justify-content-end">

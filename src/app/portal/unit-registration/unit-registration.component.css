@@ -39,3 +39,9 @@
     padding: 8px;
     text-align: center;
   }
+
+  .button-container {
+    display: flex;
+    align-items: center;
+    margin-top: 10px; /* Adjust the margin as needed */
+  }

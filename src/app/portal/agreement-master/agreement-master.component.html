@@ -56,9 +56,8 @@
                         <label for="state" class="form-label">House Name<span class="text-danger">*</span></label>
                         <select class="form-select" aria-label="Default select example" [(ngModel)]="aggreHouse" name="aggreHouse">
                             <option value="">House State...</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                            <option value="{{list.houseId}}" *ngFor="let list of getallhouseList; let i = index">{{list.plantName}} {{list.houseId}}</option>
+                           
                         </select>
                     </div>
 
@@ -91,7 +90,7 @@
                 </div>
                 <div class="col-sm-6 col-md-4">
                     <div class="form-group">
-                        <label for="state" class="form-label">Agreement Period<span class="text-danger">*</span></label>
+                        <label for="state" class="form-label">Agreement Period (Months)<span class="text-danger">*</span></label>
                         <input type="text" name="aggrePeriod" id="aggrePeriod" class="form-control"
                             [(ngModel)]="aggrePeriod">
                     </div>

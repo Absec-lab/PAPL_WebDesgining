@@ -7,74 +7,72 @@
     </div>
 </section>
 <section id="page-content">
-    <form class="container">
+    <form [formGroup]="houseRegistrationForm" class="container">
         <div class="row " style="background-color: rgba(226, 242, 246, 1); padding: 5%; margin-bottom: 0.5cm;">
             <div class="col-sm-6 col-md-4">
                 <div class="form-group">
                     <label for="state" class="form-label">Owner Name<span class="text-danger">*</span></label>
-                    <select class="form-select" aria-label="Default select example" required>
-                        <option selected>Choose State...</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                    </select>
+                    <input type="text" name="" id="" class="form-control" required formControlName="ownerName">
+                    <!-- <select formControlName="ownerName" class="form-select" aria-label="Default select example" required>
+                        <option *ngFor="let state of stateDtails" [value]="state.stateId">{{ state.stateName }}</option>
+                    </select> -->
                 </div>
             </div>
             <div class="col-sm-6 col-md-4">
                 <div class="form-group">
                     <label for="state" class="form-label">No Of Rooms<span class="text-danger">*</span></label>
-                    <input type="text" name="" id="" class="form-control" required>
+                    <input type="text" name="" id="" class="form-control" required formControlName="noOfRooms">
                 </div>
             </div>
 
             <div class="col-sm-6 col-md-4">
                 <div class="form-group">
                     <label for="state" class="form-label">No Of Electric Bills<span class="text-danger">*</span></label>
-                    <input type="text" name="" id="" class="form-control" required>
+                    <input type="text" name="" id="" class="form-control" required formControlName="electricBill">
                 </div>
             </div>
             <div class="col-sm-6 col-md-4">
                 <div class="form-group">
                     <label for="state" class="form-label">No of water Bills<span class="text-danger">*</span></label>
-                    <input type="text" name="" id="" class="form-control" required>
+                    <input type="text" name="" id="" class="form-control" required formControlName="waterBill">
                 </div>
             </div>
             <div class="col-sm-6 col-md-4">
                 <div class="form-group">
                     <label for="state" class="form-label">Address<span class="text-danger">*</span></label>
-                    <input type="text" name="" id="" class="form-control" required>
+                    <input type="text" name="" id="" class="form-control" required formControlName="address">
                 </div>
             </div>
 
 
             <div class="col-sm-6 col-md-4">
                 <div class="form-group">
-                    <label for="state" class="form-label">Address 2<span class="text-danger">*</span></label>
-                    <input type="text" name="" id="" class="form-control" required>
+                    <label for="state" class="form-label">Address 2<span class="text-danger"></span></label>
+                    <input type="text" name="" id="" class="form-control" required formControlName="address2">
                 </div>
             </div>
             <div class="col-sm-6 col-md-4">
                 <div class="form-group">
                     <label for="state" class="form-label">District<span class="text-danger">*</span></label>
-                    <input type="text" name="" id="" class="form-control" required>
+                    <input type="text" name="" id="" class="form-control" required formControlName="district">
                 </div>
             </div>
             <div class="col-sm-6 col-md-4">
                 <div class="form-group">
-                    <label for="state" class="form-label">PIN<span class="text-danger">*</span></label>
-                    <input type="text" name="" id="" class="form-control" required>
+                    <label for="state" class="form-label">PIN</label>
+                    <input type="text" name="" id="" class="form-control" required formControlName="pin">
                 </div>
             </div>
             <div class="col-sm-6 col-md-4">
                 <div class="form-group">
                     <label for="state" class="form-label">Start Date<span class="text-danger">*</span></label>
-                    <input type="date" class="form-control box" name="filter_date" id="filter_date" required />
+                    <input type="date" class="form-control box" name="filter_date" id="filter_date" required formControlName="startDate" />
                 </div>
             </div>
             <div class="col-sm-6 col-md-4">
                 <div class="form-group">
-                    <label for="state" class="form-label">End Date<span class="text-danger">*</span></label>
-                    <input type="date" class="form-control box" name="filter_date" id="filter_date" required />
+                    <label for="state" class="form-label">End Date</label>
+                    <input type="date" class="form-control box" name="filter_date" id="filter_date" required formControlName="endDate" />
                 </div>
             </div>
 
@@ -85,95 +83,50 @@
             <h5 class="mt-4  text-black">
                 House Mapping
             </h5>
-            <div class="col-sm-6 col-md-4  py-2">
-
-                <label for="state" class="form-label">State<span class="text-danger">*</span></label>
-                <select class="form-select" aria-label="Default select example" required>
-                    <option selected>Choose State...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                </select>
-
-            </div>
-            <div class="col-sm-6 col-md-4  py-2">
-                <label for="state" class="form-label">SBU<span class="text-danger">*</span></label>
-                <select class="form-select" aria-label="Default select example" required>
-                    <option selected>Choose SBU... </option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                </select>
-            </div>
-            <div class="col-sm-6 col-md-3  py-2">
-                <label for="state" class="form-label">Plant<span class="text-danger">*</span></label>
-                <select class="form-select" aria-label="Default select example" required>
-                    <option selected>Choose Plant...</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                </select>
-            </div>
-            <div class="button-success col-sm-6 col-md-1   ">
-
-
-                <button type="button" class="button btn btn-primary py-0 px-4 m-1">+</button>
-            </div>
-
-            <!-- <div class="col-sm-6 col-md-4 py-2">
-
-                <input type="text" name="" id="" class="form-control">
-            </div>
-            <div class="col-sm-6 col-md-4 py-2">
-
-                <input type="text" name="" id="" class="form-control">
-            </div>
-            <div class="col-sm-6 col-md-3 py-2">
-
-                <input type="text" name="" id="" class="form-control">
-            </div>
-            <div class="col-sm-6 col-md-1  py-2">
-                <div class="m-1" style="display: inline-flex; ">
-                    <button class="btn  btn-sm "
-                        style="background-color: rgb(22, 133, 236);color: #faf7f7; margin-right: 3px;">
-                        <i class="fa-solid fa-edit"></i>
-                    </button>
-
-                    <button class="btn btn-danger btn-sm  " (click)="onClick()">
+            <!-- <div class="button-success col-sm-6 col-md-1">
+                <button type="button" (click)="addstate()" class="button btn btn-primary py-0 px-4 m-1">+</button>
+              </div> -->
+              <form action="" [formGroup]="stateForm">
+                <div formArrayName="stateSub">
+                  <div *ngFor="let stateGroup of stateArray.controls; let i = index" [formGroupName]="i" class="row">
+                    <div class="col-sm-6 col-md-4 py-2">
+                      <label for="state" class="form-label">State<span class="text-danger">*</span></label>
+                      <select class="form-select" formControlName="state" aria-label="Default select example" required (change)="getSubonStateChange($event,i)">
+                        <option selected>Choose State...</option>
+                        <option *ngFor="let state of stateDtails" [value]="state.stateId">{{ state.stateName }}</option>
+                      </select>
+                    </div>
+                    <div class="col-sm-6 col-md-4 py-2">
+                      <label for="state" class="form-label">SBU<span class="text-danger">*</span></label>
+                      <select formControlName="sbu" class="form-select" aria-label="Default select example" required (change)="getPlantOnSubChange($event,i)">
+                        <option selected>Choose SBU...</option>
+                        <option *ngFor="let sbu of activeSBU[i]" [value]="sbu.locationId">{{ sbu.locationName }}</option>
+                      </select>
+                    </div>
+                    <div class="col-sm-6 col-md-3 py-2">
+                      <label for="state" class="form-label">Plant<span class="text-danger">*</span></label>
+                      <select formControlName="plant" class="form-select" aria-label="Default select example" required>
+                        <option selected>Choose Plant...</option>
+                        <option [value]="plant.plantId" *ngFor="let plant of activePlant[i]">{{ plant.plantName }}</option>
+                      </select>
+                    </div>
+                    <div class="col-2 py-2">
+                      <button class="btn btn-danger btn-sm" *ngIf="i>0" (click)="removeState(i)">
                         <i class="fa-solid fa-trash-alt"></i>
-                    </button>
+                      </button>
+                      <button type="button" (click)="addstate()" class="btn btn-primary m-1 btn-sm"> <i class="fa-solid fa-plus"></i></button>
+                    </div>
+                  </div>
                 </div>
-            </div>
+              </form>
+              
+                          
+            
 
-            <div class="col-sm-6 col-md-4 py-2">
-
-                <input type="text" name="" id="" class="form-control">
-            </div>
-            <div class="col-sm-6 col-md-4 py-2">
-
-                <input type="text" name="" id="" class="form-control">
-            </div>
-            <div class="col-sm-6 col-md-3 py-2 ">
-
-                <input type="text" name="" id="" class="form-control">
-            </div>
-            <div class="col-sm-6 col-md-1 py-2 ">
-                <div class="m-1"  style="display: inline-flex; ">
-                    <button class="btn  btn-sm "
-                        style="background-color: rgb(22, 133, 236);color: #faf7f7; margin-right: 3px;">
-                        <i class="fa-solid fa-edit"></i>
-                    </button>
-
-                    <button class="btn btn-danger btn-sm  " (click)="onClick()">
-                        <i class="fa-solid fa-trash-alt"></i>
-                    </button>
-                </div>
-            </div> -->
-
-
+            
         </div>
         <div class="mt-4 d-flex justify-content-end">
-            <button class="btn btn-primary form-save-btn">
+            <button class="btn btn-primary form-save-btn" (click)=" registerHouse()">
                 Save
             </button>
         </div>
@@ -187,7 +140,7 @@
                     <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">SBU</th>
                     <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Plant</th>
                     <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">Owner  Name</th>
-                    <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Plant Name</th>
+                    <!-- <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Plant Name</th> -->
                     <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">No of Units</th>
                     <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">No of Electric Bills</th>
                     <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">No of Water Bills</th>
@@ -198,27 +151,27 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let item of tableData">
-                    <td>{{ item.SL_NO }}</td>
-                    <td>{{ item.Unit_No }}</td>
-                    <td>{{ item.Occupied }}</td>
-                    <td>{{ item.Available}}</td>
-                    <td>{{ item.Unit_No }}</td>
-                    <td>{{ item.Occupied }}</td>
-                    <td>{{ item.Available}}</td>
-                    <td>{{ item.Unit_No }}</td>
-                    <td>{{ item.Occupied }}</td>
-                    <td>{{ item.Available}}</td>
-                    <td>{{ item.Unit_No }}</td>
+                <tr *ngFor="let item of allHouseDetails; let i=index ">
+                    <td>{{ i+1 }}</td>
+                    <td>{{ item.stateId }}</td>
+                    <td>{{ item.sbuId }}</td>
+                    <td>{{ item.plantId}}</td>
+                    <td>{{ item.ownerName }}</td>
+                    <!-- <td>{{ item.plantName }}</td> -->
+                    <td>{{ item.noOfUnits}}</td>
+                    <td>{{ item.noOfEleBills }}</td>
+                    <td>{{ item.noOfWtrBills }}</td>
+                    <td>{{ item.address}}</td>
+                    <td>{{item.createdDate }}</td>
 
                     <td>
                         <div style="display: inline-flex; ">
                             <button class="btn  btn-sm mx-2"
-                                style="background-color: rgb(22, 133, 236);color: #faf7f7;">
+                                style="background-color: rgb(22, 133, 236);color: #faf7f7;" (click)="updateHouse(item)">
                                 <i class="fa-solid fa-edit"></i>
                             </button>
 
-                            <button class="btn btn-danger btn-sm mx-2 " (click)="onClick()">
+                            <button class="btn btn-danger btn-sm mx-2 " (click)=" removeHouse(item.houseId)">
                                 <i class="fa-solid fa-trash-alt"></i>
                             </button>
                         </div>

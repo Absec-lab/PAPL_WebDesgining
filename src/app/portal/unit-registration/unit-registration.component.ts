@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { PortalServiceService } from './../serviceapi/portal-service.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { HttpClient } from "@angular/common/http";
 import { ValidatorchklistService } from './../serviceapi/validatorchklist.service';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-unit-registration',
@@ -13,279 +14,176 @@ import { ValidatorchklistService } from './../serviceapi/validatorchklist.servic
   styleUrls: ['../../common.css', './unit-registration.component.css']
 })
 export class UnitRegistrationComponent {
+
+  private destroy$ = new Subject<void>();
   constructor(private ngxLoader: NgxUiLoaderService, private formBuilder: FormBuilder, private route: Router, public portalServ: PortalServiceService, private httpClient: HttpClient, public vldChkLst: ValidatorchklistService) { }
-  allState: any = [];
+  stateDtails: any = [];
   allSbu: any = [];
   allPlant: any = [];
   allHouses: any = [];
   allUnits: any = [];
+  activeSBU:any = [];
+  stateId:any;
+  activePlant:any;
+  sbuId:any;
+  activeHouse:any = [];
+  plantId:any;
+  unitRegisterForm!:FormGroup;
 
   fullArr: any = [];
   ngOnInit(): void {
     this.getAllState();
     this.getAllUnit();
+
+    this.unitRegisterForm = this.formBuilder.group({
+      homereigster: this.formBuilder.array([]),
+    });
+
+    this.addunit()
+  }
+
+  get unitArray() {
+    return this.unitRegisterForm.get('homereigster') as FormArray
+  }
+
+  addunit() {
+    const unitGroup = this.formBuilder.group({
+      houseId: ['',Validators.required],
+      unitNo: ['',Validators.required],
+      unitCapacity: [''],
+      electBillPercent: [''],
+      waterBillPercent: [''],
+      startDate: ['',Validators.required],
+      endDate: [''],
+      // Add more form controls as needed
+    },);
+
+    this.unitArray.push(unitGroup);
+    console.log("ku6 nahi ho raha", this.unitArray);
+  }
+
+  removeUnit(index:number) {
+    this.unitArray.removeAt(index)
   }
   getAllHouses() {
     let param = {};
-    this.ngxLoader.start();
+   
     this.portalServ.getAllHousesByPlantId(param).subscribe(res => {
-      this.ngxLoader.stop();
-      if (res.length > 0) {
-        this.allHouses = res;
-        this.moreplot();
-      } else {
-        this.allHouses = [];
-        this.moreplot();
-      }
-    }, error => {
-      this.ngxLoader.stop();
+      this.allHouses = res;
     });
   }
   getAllState() {
     let param = {};
-    this.ngxLoader.start();
+   
     this.portalServ.getAllState(param).subscribe(res => {
-      this.ngxLoader.stop();
-      if (res.length > 0) {
-        this.allState = res;
-        this.getAllSbu();
-      } else {
-        this.allState = [];
-        this.getAllSbu();
-      }
-    }, error => {
-      this.ngxLoader.stop();
+      this.stateDtails = res;
     });
   }
   getAllPlant() {
     let param = {};
-    this.ngxLoader.start();
+    
     this.portalServ.getAllPlant(param).subscribe(res => {
-      this.ngxLoader.stop();
-      if (res.length > 0) {
-        this.allPlant = res;
-        this.getAllHouses();
-      } else {
-        this.allPlant = [];
-        this.getAllHouses();
-      }
-    }, error => {
-      this.ngxLoader.stop();
+      
+      this.allPlant = res;
     });
   }
-  getAllSbu() {
-    let param = {};
-    this.ngxLoader.start();
-    this.portalServ.getAllSbu(param).subscribe(res => {
-      this.ngxLoader.stop();
-      if (res.length > 0) {
-        this.allSbu = res;
-        this.getAllPlant();
-      } else {
-        this.allSbu = [];
-        this.getAllPlant();
-      }
-    }, error => {
-      this.ngxLoader.stop();
+  getSubonStateChange(event: any) {
+    this.activeSBU = [];
+    const selectedStateId = event.target.value;
+    this.stateId = selectedStateId;
+  
+    this.portalServ.get(`PAPL/get/sbu/by/${selectedStateId}`)
+    .pipe(takeUntil(this.destroy$)) 
+    .subscribe((res) => {
+      this.activeSBU = res;
+      //console.log(res);
     });
   }
-  addMoreObj(i: any = 0) {
-    let vSts = this.validateDetails();
-    if (!vSts) {
-    	return vSts;
-    }
-    else {
-    this.moreplot();
-    this.getMasterList(i + 1);
-    }
-    return 
-  }
-  moreplot() {
-    // Add a new object to the array
-    this.fullArr.push({
-      "available": 3,
-      "booked": 4,
-      "electBillPercent": "",
-      "endDate": "",
-      "houseRegistration": {
-        "houseId": ''
-      },
-      "plant": {
-        "plantId": ''
-      },
-      "sbu": {
-        "locationId": ''
-      },
-      "startDate": "",
-      "state": {
-        "stateId": ''
-      },
-      "unitCapacity": '',
-      "unitId": null,
-      "unitNo": "",
-      "waterBillPercent": "",
-      "allstate": this.allState,
-      "allsbu": this.allSbu,
-      "allplant": this.allPlant,
-      "allhouses": this.allHouses,
-    });
-  }
-  validateDetails() {
-    let vSts = true;
-    for (let countStart = 0; countStart < this.fullArr.length; countStart++) {
-      if (!this.vldChkLst.selectDropdown(this.fullArr[countStart].state.stateId, "State ")) {
-        vSts = false;
-      }
-      else if (!this.vldChkLst.selectDropdown(this.fullArr[countStart].sbu.locationId, "SBU ")) {
-        vSts = false;
-      }
-      else if (!this.vldChkLst.selectDropdown(this.fullArr[countStart].plant.plantId, "Plant ")) {
-        vSts = false;
-      }
-      else if (!this.vldChkLst.selectDropdown(this.fullArr[countStart].houseRegistration.houseId, "House ")) {
-        vSts = false;
-      }
-      else if (!this.vldChkLst.blankCheck(this.fullArr[countStart].unitNo, "Room no ")) {
-        vSts = false;
-      }
-      else if (!this.vldChkLst.blankCheck(this.fullArr[countStart].unitCapacity, "Unit Capacity ")) {
-        vSts = false;
-      }
-      else if (!this.vldChkLst.blankCheck(this.fullArr[countStart].electBillPercent, "Electric Bill Percent ")) {
-        vSts = false;
-      }
-      else if (!this.vldChkLst.blankCheck(this.fullArr[countStart].waterBillPercent, "Water Bill Percent")) {
-        vSts = false;
-      }
-      else if (!this.vldChkLst.blankCheck(this.fullArr[countStart].startDate, "Start Date")) {
-        vSts = false;
-      }
-      else if (!this.vldChkLst.blankCheck(this.fullArr[countStart].endDate, "End Date")) {
-        vSts = false;
-      }
-      if (!vSts) {
-        return vSts;
-      }
-    }
 
-    return vSts;
+  getPlantOnSubChange(event:any) {
+
+    this.activePlant = [];
+    const selectedSublocation = event.target.value;
+    this.sbuId = selectedSublocation;
+
+    this.portalServ.get(`PAPL/get/plant/by/${selectedSublocation}`)
+    .pipe(takeUntil(this.destroy$))
+    .subscribe((res)=>{
+      this.activePlant = res;
+     // console.log("active plan", this.activePlant)
+    })
+
   }
-  getMasterList(pos: any = 0) {
-    this.fullArr[pos].allstate = this.allState;
-    this.fullArr[pos].allsbu = this.allSbu;
-    this.fullArr[pos].allplant = this.allPlant;
-    this.fullArr[pos].allhouses = this.allHouses;
+
+  getHouseByPlantId(event:any) {
+    this.activeHouse = [];
+    const selectedPlantId = event.target.value;
+    this.plantId = selectedPlantId;
+
+    this.portalServ.get(`PAPL/get/house/by/${selectedPlantId}`)
+    .pipe(takeUntil(this.destroy$))
+    .subscribe((res)=>{
+      this.activeHouse = res;
+     // console.log("active plan", this.activeHouse)
+    })
   }
-  loopFunctionCallSelectData() {
-    for (let i = 0; i < this.fullArr.length; i++) {
-      this.getMasterList(i);
-    }
-  }
-  moreObjRemove(countI: any, plotId: any) {
-    Swal.fire({
-      //icon: 'warning',
-      text: "Are you sure you want to Delete the details?",
-      showCancelButton: true,
-      confirmButtonText: 'Yes',
-      cancelButtonText: 'No',
-      cancelButtonColor: '#df1141'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        if (plotId == '') {
-          this.fullArr.splice(countI, 1);
-        } else {
-          this.fullArr.splice(countI, 1);
-          // this.removePlotDataBase(plotId);
-        }
-      }
-    });
-  }
+  
+  
+ 
+  
+  
   getAllUnit() {
-    let param = {};
-    this.ngxLoader.start();
-    this.portalServ.getAllUnit(param).subscribe(res => {
-      this.ngxLoader.stop();
-      if (res.length > 0) {
-        this.allUnits = res;
-      } else {
-        this.allUnits = [];
-      }
-    }, error => {
-      this.ngxLoader.stop();
-    });
+    this.portalServ.get('PAPL/getAllUnit')
+    .subscribe((res)=>{
+      this.allUnits = res
+      console.log(this.allUnits)
+    })
   }
-  deleteUnit(id: any = 0) {
-    Swal.fire({
-      //icon: 'warning',
-      text: "Are you sure you want to Delete the details?",
-      showCancelButton: true,
-      confirmButtonText: 'Yes',
-      cancelButtonText: 'No',
-      cancelButtonColor: '#df1141'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        let param = {
-          "id": id
-        };
-        this.ngxLoader.start();
-        this.portalServ.deleteUnit(param).subscribe(res => {
-          this.ngxLoader.stop();
-          if (res.responseCode == 200) {
-            Swal.fire({
-              icon: 'success',
-              text: 'Record Deleted Successfully'
-            });
-            this.getAllUnit();
-          } else {
-            Swal.fire({
-              icon: 'error',
-              text: res.message
-            });
-          }
-        }, error => {
-          this.ngxLoader.stop();
-          Swal.fire({
-            icon: 'error',
-            text: 'Error'
-          });
-        });
-      }
-    });
+  deleteUnit(id:any) {
+    this.portalServ.get(`deactivate/Unit?id=${id}`)
+    .pipe(takeUntil(this.destroy$))
+    .subscribe((res)=>{
+      console.log(res);
+      this.getAllUnit()
+      
+    })
 
   }
-  saveUnits() {
-    let vSts = this.validateDetails();
-    if (vSts) {
-      this.ngxLoader.start();
-      const param = this.fullArr.map((item: any) => {
-        const { allstate, allsbu, allplant, allhouses, ...rest } = item;
-        return rest;
-      });
-      this.portalServ.addUnits(param).subscribe(res => {
-        this.ngxLoader.stop();
-        if (res.length>0) {
-          this.fullArr = [];
-          Swal.fire({
-            icon: 'success',
-            text: 'Record Saved Successfully'
-          });
-          this.getAllUnit();
-        } else {
-          Swal.fire({
-            icon: 'error',
-            text: res.message
-          });
-        }
+ 
+  postUnit() {
 
-      }, error => {
-        this.ngxLoader.stop();
-        Swal.fire({
-          icon: 'error',
-          text: 'Error in Data Insertion'
-        });
-      });
+   if(this.sbuId !== undefined && this.plantId !== undefined) {
+    console.log(this.sbuId, this.plantId);
+    if (this.unitArray.at(0)?.valid) {
+      let data = {
+        "stateId": this.stateId,
+        "sbuId":this.sbuId,
+        "plantId":this.plantId,
+        "unitDTO": this.unitArray.value,
+      }
+  
+      this.portalServ.post("PAPL/addUnits",data)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res)=>{
+        console.log(res)
+        this.getAllUnit()
+        this.stateId = null;
+        this.sbuId = null;
+        this.plantId = null;
+        this.unitArray.clear()
+        this.addunit()
+  
+      })
+    } else {
+      alert("Please Enter Requuired Fields !")
     }
+   
+   } else {
+    alert("Please Enter Mandatory Fields !")
+   }
   }
+
+  
 
 }
 

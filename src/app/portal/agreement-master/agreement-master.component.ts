@@ -21,6 +21,7 @@ export class AgreementMasterComponent {
     this.getAllOwner();
     this.getAllAgreementType();
     this.getAllAgreement();
+    this.getallhouse()
   }
   tableData: any = [];
   allState: any = [];
@@ -44,6 +45,7 @@ export class AgreementMasterComponent {
   selectedCropFileNames:any='';
   selectedCropFiles:any=[];
   cropPreviews:any=[];
+  getallhouseList:any;
   getVal(val: any) {
     this.aggreElectricBill = val.checked;
   }
@@ -149,11 +151,15 @@ export class AgreementMasterComponent {
     this.ngxLoader.start();
     this.portalServ.getAllAgreementType(param).subscribe(res => {
       this.ngxLoader.stop();
-      if (res.length > 0) {
-        this.getAllAgreementTypeData = res;
-      } else {
-        this.getAllAgreementTypeData = [];
-      }
+      console.log(res);
+      this.getAllAgreementTypeData = res.data;
+      // if (res.length > 0) {
+      //   this.getAllAgreementTypeData = res;
+      //   console.log(res);
+        
+      // } else {
+      //   this.getAllAgreementTypeData = [];
+      // }
     }, error => {
       this.ngxLoader.stop();
     });
@@ -172,6 +178,14 @@ export class AgreementMasterComponent {
     }, error => {
       this.ngxLoader.stop();
     });
+  }
+
+  getallhouse(){
+    this.portalServ.get("PAPL/getAllHouse")
+    .subscribe(res=>{
+      console.log(res);
+      this.getallhouseList = res
+    })
   }
   validateData() {
     let vSts = true;
@@ -387,14 +401,14 @@ export class AgreementMasterComponent {
       });
       return ;
     }
-    if (fileSize>500000) {
-      // invalid file size code goes here.
-      Swal.fire({
-       icon: 'error',
-        text: 'Selected file must be in between 500kb'
-      });
-      return ;
-    }
+    // if (fileSize>500000) {
+    //   // invalid file size code goes here.
+    //   Swal.fire({
+    //    icon: 'error',
+    //     text: 'Selected file must be in between 500kb'
+    //   });
+    //   return ;
+    // }
 
     if (this.selectedCropFiles && this.selectedCropFiles[0]) {
       const numberOfFiles = this.selectedCropFiles.length;

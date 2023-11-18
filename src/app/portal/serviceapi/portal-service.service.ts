@@ -108,7 +108,7 @@ export class PortalServiceService {
 	}
 	// delete Owner
 	deleteOwner(params: any): Observable<any> {
-		let serviceUrl = environment.serviceURL + 'deactivate/Owner';
+		let serviceUrl = environment.serviceURL + 'deactivate/Owner?id='+params;
 		let serviceRes = this.Http.get(serviceUrl, {params});
 		return serviceRes;
 	}
@@ -117,6 +117,27 @@ export class PortalServiceService {
 		let serviceUrl = environment.serviceURL + 'PAPL/addOwners';
 		let serviceRes = this.Http.post(serviceUrl, params);
 		return serviceRes;
+	}
+
+	//get api global method 
+
+	get(url:any):Observable<any> {
+		let res = this.Http.get(environment.serviceURL+url)
+		return res
+	}
+
+	// post api global method
+
+	post(url: string, data: any) {
+		let res = this.Http.post(environment.serviceURL+url,data)
+		return res
+	}
+
+	// put api global method
+
+	put(url: string, data: any) {
+		let res = this.Http.put(environment.serviceURL+url,data)
+		return res
 	}
 	
 }

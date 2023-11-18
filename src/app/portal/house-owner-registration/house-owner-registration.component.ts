@@ -233,23 +233,41 @@ export class HouseOwnerRegistrationComponent {
     this.legalheir = false;
     this.descripinput= false
   }
-
-  paymentmode(event:any) {
-    console.log(event.target.value)
+  legalheading= false;
+  legalbank = false;
+  legalupi = false;
+  paymentmode(event:any,userType:string) {
+    console.log(event.target.value, userType)
     let value = event.target.value;
 
-    if(value == '2') {
+    if(userType=='owner') {
+      if(value == '2') {
         this.heading = false 
-    } else {
+      } else {
       this.heading = true 
-    }
+      }
 
-    if(value=='1') {
-      this.bank = true
-      this.upi = false
-    } else {
-      this.bank = false;
-      this.upi = true;
+      if(value=='1') {
+        this.bank = true
+        this.upi = false
+      } else {
+        this.bank = false;
+        this.upi = true;
+      }
+    } else if(userType=='legal' ) {
+      if(value == '2') {
+        this.legalheading = false 
+      } else {
+      this.legalheading = true 
+      }
+
+      if(value=='1') {
+        this.legalbank = true
+        this.legalupi = false
+      } else {
+        this.legalbank = false;
+        this.legalupi = true;
+      }
     }
   }
 		

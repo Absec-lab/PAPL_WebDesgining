@@ -84,16 +84,22 @@
                     <div class="col-sm-6 col-md-4  ">
                         <div class="form-group">
                             <label for="state" class="form-label">Bill Upload<span class="text-danger">*</span></label>
-                            <input type="file" #file name="" id="" class="form-control" accept="image/*" required formControlName="miscBill" (change)="onImageChange($event, 'miscBill')">
-    
+                            <!-- <input type="file" #file name="" id="" class="form-control" accept="image/*" required formControlName="miscBill" (change)="onImageChange($event, 'miscBill')"> -->
+                             <!-- Hidden input to store file value  -->
+                          <input type="file" class="form-control"  accept="image/*" (change)="onImageChange($event, 'miscBill')">
+                          <!-- Visible input to display file name  -->
+                         <!-- <input type="text" readonly class="form-control" (click)="fileInputmiscBill.click()" formControlName="miscBill" > -->
                         </div>
     
                     </div>
                     <div class="col-sm-6 col-md-4  ">
                         <div class="form-group">
                             <label for="state" class="form-label">Receipt Upload<span class="text-danger">*</span></label>
-                            <input type="file" #file name="" id="" class="form-control" accept="image/*" required formControlName="miscrecept" (change)="onImageChange($event, 'miscrecept')">
-    
+                            <!-- <input type="file" #file name="" id="" class="form-control" accept="image/*" required formControlName="miscrecept" (change)="onImageChange($event, 'miscrecept')"> -->
+                             <!-- Hidden input to store file value  -->
+                          <input type="file" class="form-control"  accept="image/*" (change)="onImageChange($event, 'miscrecept')">
+                          <!-- Visible input to display file name  -->
+                         <!-- <input type="text" readonly class="form-control" (click)="fileInputmiscrecept.click()" formControlName="miscrecept" > -->
                         </div>
     
                     </div>
@@ -108,37 +114,30 @@
                     <div class="col-sm-6 col-md-4  ">
                         <div class="form-group">
                             <label for="state" class="form-label">Bill Upload<span class="text-danger">*</span></label>
-                            <input type="file" #file name="" id="" class="form-control" accept="image/*" required formControlName="hrbill" (change)="onImageChange($event, 'hrbill')">
-    
+                            <!-- <input type="file" #file name="" id="" class="form-control" accept="image/*" required formControlName="hrbill" (change)="onImageChange($event, 'hrbill')"> -->
+                             <!-- Hidden input to store file value  -->
+                          <input type="file" class="form-control"  accept="image/*" (change)="onImageChange($event, 'hrbill')">
+                          <!-- Visible input to display file name  -->
+                         <!-- <input type="text" readonly class="form-control" (click)="fileInputhrbill.click()" formControlName="hrbill" > -->
                         </div>
     
                     </div>
     
-                    <div class="col-sm-6 col-md-4">
+                    <!-- <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                           <label for="state" class="form-label">Receipt Upload<span class="text-danger">*</span></label>
                           <input type="file" #file name="" id="" class="form-control" accept="image/*" required formControlName="hrrecept" (change)="onImageChange($event, 'hrrecept')">
                         </div>
-                        <!-- <div *ngIf="utilityCalculation.get('hrrecept')?.value">
-                          <img [src]="utilityCalculation.get('hrrecept')?.value" alt="Receipt Preview" class="img-thumbnail">
-                        </div> -->
-                      </div>
-                      <!-- <div class="col-sm-6 col-md-4">
+                      </div> -->
+                      <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                           <label for="state" class="form-label">Receipt Upload<span class="text-danger">*</span></label>
-                          
-                           Hidden input to store file value 
-                          <input type="file" #fileInput style="display: none" accept="image/*" (change)="onImageChange($event, 'hrrecept')">
-                          
-                           Visible input to display file name 
-                          <input type="text" readonly class="form-control" (click)="fileInput.click()" formControlName="hrrecept" >
+                           <!-- Hidden input to store file value  -->
+                          <input type="file"  class="form-control" accept="image/*" (change)="onImageChange($event, 'hrrecept')">
+                           <!-- Visible input to display file name  -->
+                          <!-- <input type="text" readonly class="form-control" (click)="fileInputhrrecept.click()" formControlName="hrrecept" > -->
                         </div>
-                        
-                        Image preview 
-                         <div *ngIf="utilityCalculation.get('hrrecept')?.value">
-                          <img [src]="utilityCalculation.get('hrrecept')?   .value" alt="Receipt Preview" class="img-thumbnail">
-                        </div> 
-                      </div> -->
+                      </div>
                       
                       
                     <hr class="my-3">
@@ -153,13 +152,21 @@
                         <div class=" col-md-4">
                           <div class="form-group">
                             <label for="billUpload" class="form-label">Bill Upload<span class="text-danger"></span></label>
-                            <input type="file" #file id="billUpload" class="form-control" accept="image/*" required formControlName="billupload" (change)="onImageChange($event, 'billupload','electricbill', i)">
+                            <!-- <input type="file" #file id="billUpload" class="form-control" accept="image/*" required formControlName="billupload" (change)="onImageChange($event, 'billupload','electricbill', i)"> -->
+                             <!-- Hidden input to store file value  -->
+                          <input type="file"  class="form-control" accept="image/*" (change)="onImageChange($event, 'billupload','electricbill', i)">
+                          <!-- Visible input to display file name  -->
+                         <!-- <input type="text" readonly class="form-control" (click)="fileInputbillupload.click()" formControlName="billupload" > -->
                           </div>
                         </div>
                         <div class=" col-md-3">
                           <div class="form-group">
                             <label for="receiptUpload" class="form-label">Receipt Upload<span class="text-danger"></span></label>
-                            <input type="file" #file id="receiptUpload" class="form-control" accept="image/*" required formControlName="receiptupload" (change)="onImageChange($event, 'receiptupload','electricbill', i)">
+                            <!-- <input type="file" #file id="receiptUpload" class="form-control" accept="image/*" required formControlName="receiptupload" (change)="onImageChange($event, 'receiptupload','electricbill', i)"> -->
+                             <!-- Hidden input to store file value  -->
+                          <input type="file" class="form-control"  accept="image/*" (change)="onImageChange($event, 'receiptupload','electricbill', i)">
+                          <!-- Visible input to display file name  -->
+                         <!-- <input type="text" readonly class="form-control" (click)="fileInputreceiptupload.click()" formControlName="receiptupload" > -->
                           </div>
                           
                         </div>
@@ -177,16 +184,19 @@
                         <div class="row" *ngFor="let stateGroup of water.controls; let i = index" [formGroupName]="i">
                     <div class="col-sm-6 col-md-3">
                         <div class="form-group">
-                            <label for="state" class="form-label">Water Bill Expense<span
-                                    class="text-danger"></span></label>
+                            <label for="state" class="form-label">Water Bill Expense<span class="text-danger"></span></label>
                             <input type="text" name="" id="" class="form-control" required formControlName="waterbillexpn">
+                            
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4  ">
                         <div class="form-group">
                             <label for="state" class="form-label">Bill Upload<span class="text-danger"></span></label>
-                            <input type="file" #file name="" id="" class="form-control" accept="image/*" required formControlName="waterbillupload" (change)="onImageChange($event, 'waterbillupload','waterbill', i)">
-    
+                            <!-- <input type="file" #file name="" id="" class="form-control" accept="image/*" required formControlName="waterbillupload" (change)="onImageChange($event, 'waterbillupload','waterbill', i)"> -->
+                             <!-- Hidden input to store file value  -->
+                          <input type="file" class="form-control"  accept="image/*" (change)="onImageChange($event, 'waterbillupload','waterbill',i)">
+                          <!-- Visible input to display file name  -->
+                         <!-- <input type="text" readonly class="form-control" (click)="fileInputwaterbillupload.click()" formControlName="waterbillupload" > -->
                         </div>
     
                     </div>
@@ -194,8 +204,11 @@
                     <div class="col-sm-6 col-md-3  ">
                         <div class="form-group">
                             <label for="state" class="form-label">Receipt Upload<span class="text-danger"></span></label>
-                            <input type="file" #file name="" id="" class="form-control" accept="image/*" required formControlName="waterreceiptupload" (change)="onImageChange($event, 'waterreceiptupload','waterbill', i)">
-    
+                            <!-- <input type="file" #file name="" id="" class="form-control" accept="image/*" required formControlName="waterreceiptupload" (change)="onImageChange($event, 'waterreceiptupload','waterbill', i)"> -->
+                              <!-- Hidden input to store file value  -->
+                          <input type="file" class="form-control"  accept="image/*" (change)="onImageChange($event, 'waterreceiptupload','waterbill', i)">
+                          <!-- Visible input to display file name  -->
+                         <!-- <input type="text" readonly class="form-control" (click)="waterreceiptupload.click()" formControlName="waterreceiptupload" > -->
                         </div>
     
                     </div>

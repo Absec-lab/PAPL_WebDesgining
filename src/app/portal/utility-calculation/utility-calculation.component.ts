@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { PortalServiceService } from '../serviceapi/portal-service.service';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
@@ -175,18 +175,22 @@ export class UtilityCalculationComponent implements OnInit {
     
 	}
 
+
   onImageChange(event: any, formControlName: string, formArrName?: string, index?: number): void {
+    console.log("formControlName",formControlName);
+    
     const inputElement = event.target as HTMLInputElement;
   
     if (inputElement.files && inputElement.files.length > 0) {
       const file = inputElement.files[0];
-  
+     
       if (file) {
         const reader = new FileReader();
   
         reader.onload = (e) => {
           const imageDataUrl = e.target?.result as string;
-  
+          console.log(imageDataUrl);
+          
           if (formArrName && index !== undefined) {
             // Update image value in a FormArray at a specific index
             const formArray = this.utilityCalculation.get(formArrName) as FormArray;
@@ -230,13 +234,13 @@ export class UtilityCalculationComponent implements OnInit {
           "hrExpenseAmt":  this.utilityCalculation.value.hrexp,
           "hrBillDoc":  this.utilityCalculation.value.hrbill,
           "hrrecDoc":  this.utilityCalculation.value.hrrecept,
-          "fileExt": ".pdf"
+          "fileExt": "jpg"
         },
         "utilityCalculationMiscDto": {
           "miscExpenseAmt":  this.utilityCalculation.value.miscExp,
           "miscBillDoc": this.utilityCalculation.value.miscBill,
           "miscRecDoc":  this.utilityCalculation.value.miscrecept,
-          "fileExt": "string"
+          "fileExt": "jpg"
         },
         "utilityCalculationElectricDto": this.electric.value,
         "utilityCalculationWaterDto":this.water.value,

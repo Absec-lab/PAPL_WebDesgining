@@ -2,6 +2,9 @@ import { Component,OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PortalServiceService } from '../serviceapi/portal-service.service';
 import { Subject, takeUntil } from 'rxjs';
+import { ValidatorchklistService } from '../serviceapi/validatorchklist.service';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-home-registration',
@@ -21,7 +24,7 @@ export class HouseRegistrationComponent implements OnInit {
 
   private destroy$ = new Subject<void>();
   
-  constructor(private portalService:PortalServiceService,private formBuilder: FormBuilder) {
+  constructor(private portalService:PortalServiceService,private formBuilder: FormBuilder , public vldChkLst: ValidatorchklistService,private ngxLoader: NgxUiLoaderService,) {
    
   }
  
@@ -57,9 +60,9 @@ export class HouseRegistrationComponent implements OnInit {
 
   addstate() {
     const stateGroup = this.formBuilder.group({
-      state: [''],
-      sbu: [''],
-      plant: [''],
+      state: ['',Validators.required],
+      sbu: ['',Validators.required],
+      plant: ['',Validators.required],
       // Add more form controls as needed
     });
 
@@ -122,8 +125,51 @@ getSubonStateChange(event: any, index: number) {
 
   }
 
+  validateData() {
+    const formControls = [
+      { control: this.houseRegistrationForm.get('ownerName'), name: "Owner Name" },
+      { control: this.houseRegistrationForm.get('noOfRooms'), name: "Number of Rooms" },
+      { control: this.houseRegistrationForm.get('electricBill'), name: "Electric Bill" },
+      { control: this.houseRegistrationForm.get('waterBill'), name: "Water Bill" },
+      { control: this.houseRegistrationForm.get('address'), name: "Address" },
+      { control: this.houseRegistrationForm.get('district'), name: "District" },
+      { control: this.houseRegistrationForm.get('startDate'), name: "Start Date" },
+     
+    ];
+     
+    let vSts = true;
+  
+    for (const formControl of formControls) {
+      if(formControl.control?.valid) {
+        vSts = true;
+      } else {
+        Swal.fire({
+          // icon: 'error',
+          text: `Please select ${formControl.name}`
+        });
+        vSts = false
+        break;
+      }
+      
+    }
+    if (!this.stateArray.valid) {
+      Swal.fire({
+        text: "Please fill in all details in State Array",
+      });
+      vSts = false;
+    }
+   
+    
+    return vSts;
+  }
+  
+
   registerHouse(){
-    if(this.houseRegistrationForm.valid) {
+    let vSts = this.validateData();
+    console.log(vSts);
+    console.log(this.houseRegistrationForm.valid);
+   // console.log(this.stateArray.valid);
+    if(vSts) {
       let data =  {
         "ownerId":  this.houseRegistrationForm.value.ownerName,
          "address": this.houseRegistrationForm.value.address,
@@ -139,18 +185,21 @@ getSubonStateChange(event: any, index: number) {
       }
       console.log(data);
       console.log(this.stateArray.value)
-      
+      this.ngxLoader.start();
       this.portalService.post("PAPL/addHouses",data)
       .subscribe((res)=>{
+        this.ngxLoader.stop();
         console.log(res)
         this. getAllHouseDetailList()
         this.houseRegistrationForm.reset()
         this.stateArray.clear()
         this.addstate()
-        alert("House Registration succcesfull")
+        Swal.fire({
+          icon: 'success',
+          text: 'Record Saved Successfully'
+        });
+       // alert("House Registration succcesfull")
       })
-    } else {
-      alert("Please Enter Mandatory fields.")
     }
   }
 

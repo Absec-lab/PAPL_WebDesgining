@@ -297,7 +297,7 @@ export class HouseOwnerRegistrationComponent {
         "pinCode":this.houseRegistrationForm.value.pin,
         "idProof":  this.houseRegistrationForm.value.gIdproof,
         "idProofDoc": this.houseRegistrationForm.value.idProof,
-        "isActive": false,
+        "isActive":this.houseRegistrationForm.value.status,
         "accountHolderName":this.houseRegistrationForm.value.accHolName,
         "bankAccountNo": this.houseRegistrationForm.value.accounNum,
         "ifscCode": this.houseRegistrationForm.value.ifsc,

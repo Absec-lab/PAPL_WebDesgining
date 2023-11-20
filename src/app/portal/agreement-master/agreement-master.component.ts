@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { HttpClient } from "@angular/common/http";
 import { ValidatorchklistService } from './../serviceapi/validatorchklist.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-agreement-master',
@@ -16,8 +17,8 @@ export class AgreementMasterComponent {
   constructor(private ngxLoader: NgxUiLoaderService, private formBuilder: FormBuilder, private route: Router, public portalServ: PortalServiceService, private httpClient: HttpClient, public vldChkLst: ValidatorchklistService) { }
   ngOnInit(): void {
     this.getAllState();
-    this.getAllSbu();
-    this.getAllPlant();
+   // this.getAllSbu();
+   // this.getAllPlant();
     this.getAllOwner();
     this.getAllAgreementType();
     this.getAllAgreement();
@@ -104,6 +105,30 @@ export class AgreementMasterComponent {
       this.ngxLoader.stop();
     });
   }
+
+  getSbu(aggreState:any) {
+    console.log(aggreState);
+    this.ngxLoader.start();
+    this.portalServ.get('PAPL/get/sbu/by/'+aggreState)
+    .subscribe(res=>{
+      console.log(res);
+      this.allSbu = res
+      this.ngxLoader.stop();
+      
+    })
+    
+  }
+
+  getplant(aggreSbu:any) {
+    this.ngxLoader.start();
+    this.portalServ.get('PAPL/get/plant/by/'+aggreSbu)
+    .subscribe(res=>{
+      console.log(res);
+      this.allPlant = res
+      this.ngxLoader.stop();
+      
+    })
+  }
   getAllOwner() {
     let param = {};
     this.ngxLoader.start();
@@ -168,7 +193,7 @@ export class AgreementMasterComponent {
     let param = {};
     this.ngxLoader.start();
     this.portalServ.getAllAgreement(param).subscribe(res => {
-      //console.log(res);
+      console.log(res);
       this.ngxLoader.stop();
       if (res.length > 0) {
         this.tableData = res;
@@ -281,7 +306,7 @@ export class AgreementMasterComponent {
         "withElectricBill": this.aggreElectricBill,
         "withWaterBill": this.aggreWaterBill
       };
-      this.ngxLoader.start();
+     // this.ngxLoader.start();
       this.portalServ.addAgreement(param).subscribe(res => {
         this.ngxLoader.stop();
         // if (res.responseCode == 200 || res.responseCode == 201) {
@@ -423,4 +448,38 @@ export class AgreementMasterComponent {
 
     }
   }
+
+  addMonthToDate(selectedDate:any, selectedMonth?:any) {
+    // Parse the input date string to a JavaScript Date object
+    const dateObject = new Date(selectedDate);
+    selectedMonth = this.aggrePeriod;
+    // Add the selected month to the current month
+    dateObject.setMonth(dateObject.getMonth() + selectedMonth);
+
+    // Format the resulting date to your preferred format (e.g., "MM/DD/YYYY")
+    const formattedDate = `${dateObject.getMonth() + 1}/${dateObject.getDate()}/${dateObject.getFullYear()}`;
+    console.log("formattedDate",formattedDate);
+    
+   // return formattedDate;
+}
+captureDate(): void {
+  // const selectedMonth = this.aggrePeriod;
+  // const date = new Date(this.aggreStartDate);
+  // console.log(date);
+  // const newDate = moment(date).add(selectedMonth, 'months').format('yyyy-MM-dd'); // Include day name in formatted date
+  // this.aggreEndDate = newDate;
+  // console.log(newDate);
+
+
+  console.log('Date captured:', this.aggreStartDate);
+
+    const newDate = moment(this.aggreStartDate).add(this.aggrePeriod, 'months');
+
+    // Format the resulting date to your preferred format (e.g., "MM/DD/YYYY")
+    const formattedDate = newDate.format('yyyy-MM-DD');
+    console.log('formattedDate', formattedDate);
+    this.aggreEndDate = formattedDate
+}
+
+
 }

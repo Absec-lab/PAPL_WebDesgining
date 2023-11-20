@@ -14,7 +14,7 @@
                     <div class="form-group">
                         <label for="state" class="form-label">State<span class="text-danger">*</span></label>
                         <input type="hidden" name="aggreId" id="aggreId" [(ngModel)]="aggreId">
-                        <select class="form-select" aria-label="Default select example" [(ngModel)]="aggreState" name="aggreState">
+                        <select class="form-select" aria-label="Default select example" [(ngModel)]="aggreState" name="aggreState" (change)="getSbu(aggreState)">
                             <option value="">Choose State... </option>
                             <option value={{item.stateId}} *ngFor="let item of allState; let i = index">{{item.stateName}}</option>
                         </select>
@@ -24,7 +24,7 @@
                 <div class="col-sm-6 col-md-4 ">
                     <div class="form-group">
                         <label for="state" class="form-label">SBU<span class="text-danger">*</span></label>
-                        <select class="form-select" aria-label="Default select example" [(ngModel)]="aggreSbu" name="aggreSbu">
+                        <select class="form-select" aria-label="Default select example" [(ngModel)]="aggreSbu" name="aggreSbu" (change)="getplant(aggreSbu)">
                             <option value="">Choose SBU... </option>
                             <option value={{item.locationId}} *ngFor="let item of allSbu; let i = index">{{item.locationName}} ({{item.shortCode}})</option>
                         </select>
@@ -98,7 +98,7 @@
                 <div class="col-sm-6 col-md-4">
                     <div class="form-group">
                         <label for="state" class="form-label">Start Date<span class="text-danger">*</span></label>
-                        <input type="date" name="aggreStartDate" id="aggreStartDate" class="form-control" [(ngModel)]="aggreStartDate" class="form-control">
+                        <input type="date" name="aggreStartDate" id="aggreStartDate" class="form-control" [(ngModel)]="aggreStartDate" class="form-control" (input)="captureDate()">
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
@@ -173,12 +173,12 @@
                 <tbody>
                     <tr *ngFor="let item of tableData; let i = index">
                         <td>{{ i + 1 }}</td>
-                        <td>{{ item.state.stateName }}</td>
+                        <td>{{ item.state?.stateName }}</td>
                         <td>{{ item.house.sbu?.locationName }}</td>
-                        <td>{{ item.house.plant.plantName }}</td>
-                        <td>{{ item.house.owner.ownerName }}</td>
+                        <td>{{ item.house.plant?.plantName }}</td>
+                        <td>{{ item.house.owner?.ownerName }}</td>
                         <td>house Name</td>
-                        <td>{{ item.agreementType.aggreTypeName }}</td>
+                        <td>{{ item.agreementType?.aggreTypeName }}</td>
                         <td>{{ item.rent }}</td>
                         <td>{{ item.rentPeriod }}</td>
                         <td>{{ item.rentStartDt | date: 'MM/dd/yyyy'}}</td>

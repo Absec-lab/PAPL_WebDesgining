@@ -17,7 +17,7 @@
                         </div>
                         <div class="ms-3  d-flex-2  ">
                             <input type="hidden" name="aggreTypeId" id="aggreTypeId" [(ngModel)]="aggreTypeId">
-                            <input type="text" name="aggrementType" id="aggrementType" [(ngModel)]="aggrementType" class="form-control box">
+                            <input type="text" name="aggrementType" id="aggrementType" [(ngModel)]="aggrementType" class="form-control box" (input)="handleAlphanumericInput($event)">
                         </div>
                     </div>
                 </div>
@@ -27,7 +27,7 @@
                             Start Date<span class="text-danger">*</span>
                         </div>
                         <div class="ms-3 d-flex-2">
-                            <input type="date" class="form-control box" name="filter_sdate" id="filter_date" [(ngModel)]="aggreStDate"/>
+                            <input type="date" class="form-control box" name="filter_sdate" id="filter_date" [(ngModel)]="aggreStDate" (input)="updateMinEndDate()"/>
                         </div>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
                             End Date<span class="text-danger">*</span>
                         </div>
                         <div class=" ms-3 flex-1 ">
-                            <input type="date" class="form-control box" name="filter_edate" id="filter_date" [(ngModel)]="aggreEdDate" />
+                            <input type="date" class="form-control box" name="filter_edate" id="filter_date" [(ngModel)]="aggreEdDate" [min]="aggreStDate"/>
                         </div>
                     </div>
                 </div>

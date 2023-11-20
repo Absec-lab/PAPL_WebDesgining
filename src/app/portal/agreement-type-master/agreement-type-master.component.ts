@@ -41,6 +41,26 @@ export class AgreementTypeMasterComponent {
     }
     return vSts;
   }
+
+  handleAlphanumericInput(event: any): void {
+    const inputElement = event.target as HTMLInputElement;
+    inputElement.value = inputElement.value.replace(/[^a-zA-Z0-9]/g, '');
+    this.aggrementType = inputElement.value;
+  }
+
+  updateMinEndDate(): void {
+    const startDateInput = document.getElementById('filter_sdate') as HTMLInputElement;
+    if (startDateInput) {
+      const startDateValue = startDateInput.value;
+      // Set the minimum allowed value for the end date to the selected start date
+      document.getElementById('filter_edate')?.setAttribute('min', startDateValue);
+      // Ensure the end date is always greater than or equal to the start date
+      if (this.aggreEdDate < startDateValue) {
+        this.aggreEdDate = startDateValue;
+      }
+    }
+  }
+  
   saveAgreementType() {
     let vSts = this.validateData();
     if (vSts) {

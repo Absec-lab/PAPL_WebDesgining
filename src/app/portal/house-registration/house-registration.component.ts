@@ -21,7 +21,7 @@ export class HouseRegistrationComponent implements OnInit {
   activePlant:any = [];
   sbuId:any;
   allHouseDetails:any=[];
-
+  allOwner:any;
   private destroy$ = new Subject<void>();
   
   constructor(private portalService:PortalServiceService,private formBuilder: FormBuilder , public vldChkLst: ValidatorchklistService,private ngxLoader: NgxUiLoaderService,) {
@@ -35,7 +35,7 @@ export class HouseRegistrationComponent implements OnInit {
 
     this.houseRegistrationForm = this.formBuilder.group({
       ownerName: ['',Validators.required],
-      noOfRooms: ['',Validators.required],
+      noOfRooms: ['', [Validators.required, Validators.pattern('^[0-9]{1,2}$')]],
       electricBill: ['',Validators.required],
       waterBill: ['',Validators.required],
       address: ['',Validators.required],
@@ -51,7 +51,40 @@ export class HouseRegistrationComponent implements OnInit {
     });
 
     this.addstate()
-   
+    this.getAllOwner()
+  }
+
+  updateMinEndDate(): void {
+    const startDateInput = document.getElementById('startDate') as HTMLInputElement;
+    if (startDateInput) {
+      const startDateValue = startDateInput.value;
+      // Set the minimum allowed value for the end date to the selected start date
+      document.getElementById('endDate')?.setAttribute('min', startDateValue);
+      // Ensure the end date is always greater than or equal to the start date
+      if (this.houseRegistrationForm.value.startDate < startDateValue) {
+        this.houseRegistrationForm.value.endDate = startDateValue;
+      }
+    }
+  }
+
+  handleNumericInput(): void {
+    const control = this.houseRegistrationForm.get('noOfRooms');
+    if (control && control.value) {
+      // Keep only the first two digits
+      control.setValue(control.value.toString().slice(0, 2), { emitEvent: false });
+    }
+  
+}
+  
+  getAllOwner() {
+    this.ngxLoader.start();
+    this.portalService.get("PAPL/getAllOwner")
+    .pipe((takeUntil(this.destroy$)))
+    .subscribe(res=>{
+      console.log(res);
+      this.allOwner = res;
+      this.ngxLoader.stop();
+    })
   }
 
   get stateArray() : any {
@@ -60,13 +93,13 @@ export class HouseRegistrationComponent implements OnInit {
 
   addstate() {
     const stateGroup = this.formBuilder.group({
-      state: ['',Validators.required],
-      sbu: ['',Validators.required],
-      plant: ['',Validators.required],
+      stateId: ['',Validators.required],
+      sbuId: ['',Validators.required],
+      plantId: ['',Validators.required],
       // Add more form controls as needed
     });
 
-    this.stateArray.insert(0, stateGroup);
+    this.stateArray.push( stateGroup);
     console.log("ku6 nahi ho raha", this.stateArray);
 
     
@@ -77,17 +110,21 @@ export class HouseRegistrationComponent implements OnInit {
   }
 
   getAllStateList() {
+    this.ngxLoader.start();
     this.portalService.get('PAPL/getAllState')
     .subscribe((res)=>{
       this.stateDtails = res
+      this.ngxLoader.stop();
       //console.log(res)
     })
   }
 
   getAllHouseDetailList() {
+    this.ngxLoader.start();
     this.portalService.get('PAPL/getAllHouse')
     .subscribe((res)=>{
       this.allHouseDetails = res
+      this.ngxLoader.stop();
       console.log(this.allHouseDetails)
     })
   }
@@ -101,11 +138,12 @@ getSubonStateChange(event: any, index: number) {
   // Use the index to target the specific form control
   const stateGroup = this.stateArray.at(index);
   this.stateArray
-
+  this.ngxLoader.start();
   this.portalService.get(`PAPL/get/sbu/by/${selectedStateId}`)
     .pipe(takeUntil(this.destroy$)) 
     .subscribe((res) => {
       this.activeSBU[index] = res;
+      this.ngxLoader.stop();
     });
 }
 
@@ -115,11 +153,12 @@ getSubonStateChange(event: any, index: number) {
    // this.activePlant = [];
     const selectedSublocation = event.target.value;
     this.sbuId = selectedSublocation;
-
+    this.ngxLoader.start();
     this.portalService.get(`PAPL/get/plant/by/${selectedSublocation}`)
     .pipe(takeUntil(this.destroy$))
     .subscribe((res)=>{
       this.activePlant[index] = res;
+      this.ngxLoader.stop();
      // console.log("active plan", this.activePlant)
     })
 
@@ -154,7 +193,7 @@ getSubonStateChange(event: any, index: number) {
     }
     if (!this.stateArray.valid) {
       Swal.fire({
-        text: "Please fill in all details in State Array",
+        text: "Please fill in all details in House Mapping",
       });
       vSts = false;
     }
@@ -234,10 +273,12 @@ getSubonStateChange(event: any, index: number) {
   }
 
   removeHouse(id:any) {
+    this.ngxLoader.start();
     this.portalService.get(`PAPL/get/sbu/by/${id}`)
     .pipe(takeUntil(this.destroy$)) 
     .subscribe((res) => {
       this.getAllHouseDetailList()
+      this.ngxLoader.stop();
     });
   }
 

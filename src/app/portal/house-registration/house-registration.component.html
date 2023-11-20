@@ -12,29 +12,30 @@
             <div class="col-sm-6 col-md-4">
                 <div class="form-group">
                     <label for="state" class="form-label">Owner Name<span class="text-danger">*</span></label>
-                    <input type="text" name="" id="" class="form-control" required formControlName="ownerName">
-                    <!-- <select formControlName="ownerName" class="form-select" aria-label="Default select example" required>
-                        <option *ngFor="let state of stateDtails" [value]="state.stateId">{{ state.stateName }}</option>
-                    </select> -->
+                    <!-- <input type="text" name="" id="" class="form-control" required formControlName="ownerName"> -->
+                    <select formControlName="ownerName" class="form-select" aria-label="Default select example" required>
+                        <option *ngFor="let owner of allOwner" [value]="owner.ownerId">{{ owner.ownerName }}</option>
+                    </select>
                 </div>
             </div>
             <div class="col-sm-6 col-md-4">
                 <div class="form-group">
                     <label for="state" class="form-label">No Of Rooms<span class="text-danger">*</span></label>
-                    <input type="text" name="" id="" class="form-control" required formControlName="noOfRooms">
+                    <input type="text" name="" id=""  
+                     class="form-control" required formControlName="noOfRooms" (input)="handleNumericInput()">
                 </div>
             </div>
 
             <div class="col-sm-6 col-md-4">
                 <div class="form-group">
                     <label for="state" class="form-label">No Of Electric Bills<span class="text-danger">*</span></label>
-                    <input type="text" name="" id="" class="form-control" required formControlName="electricBill">
+                    <input type="number" name="" id="" class="form-control" required formControlName="electricBill">
                 </div>
             </div>
             <div class="col-sm-6 col-md-4">
                 <div class="form-group">
                     <label for="state" class="form-label">No of water Bills<span class="text-danger">*</span></label>
-                    <input type="text" name="" id="" class="form-control" required formControlName="waterBill">
+                    <input type="number" name="" id="" class="form-control" required formControlName="waterBill">
                 </div>
             </div>
             <div class="col-sm-6 col-md-4">
@@ -60,19 +61,19 @@
             <div class="col-sm-6 col-md-4">
                 <div class="form-group">
                     <label for="state" class="form-label">PIN</label>
-                    <input type="text" name="" id="" class="form-control" required formControlName="pin">
+                    <input type="number" name="" id="" class="form-control" required formControlName="pin">
                 </div>
             </div>
             <div class="col-sm-6 col-md-4">
                 <div class="form-group">
                     <label for="state" class="form-label">Start Date<span class="text-danger">*</span></label>
-                    <input type="date" class="form-control box" name="filter_date" id="filter_date" required formControlName="startDate" />
+                    <input type="date" class="form-control box" name="filter_date" id="startDate" required formControlName="startDate" (input)="updateMinEndDate()" />
                 </div>
             </div>
             <div class="col-sm-6 col-md-4">
                 <div class="form-group">
                     <label for="state" class="form-label">End Date</label>
-                    <input type="date" class="form-control box" name="filter_date" id="filter_date" required formControlName="endDate" />
+                    <input type="date" class="form-control box" name="filter_date" id="endDate" required formControlName="endDate"  [min]="houseRegistrationForm.get('startDate')?.value" />
                 </div>
             </div>
 
@@ -88,35 +89,36 @@
               </div> -->
               <form action="" [formGroup]="stateForm">
                 <div formArrayName="stateSub">
-                  <div *ngFor="let stateGroup of stateArray.controls; let i = index" [formGroupName]="i" class="row">
-                    <div class="col-sm-6 col-md-4 py-2">
-                      <label for="state" class="form-label">State<span class="text-danger">*</span></label>
-                      <select class="form-select" formControlName="state" aria-label="Default select example" required (change)="getSubonStateChange($event,i)">
-                        <option selected>Choose State...</option>
-                        <option *ngFor="let state of stateDtails" [value]="state.stateId">{{ state.stateName }}</option>
-                      </select>
-                    </div>
-                    <div class="col-sm-6 col-md-4 py-2">
-                      <label for="state" class="form-label">SBU<span class="text-danger">*</span></label>
-                      <select formControlName="sbu" class="form-select" aria-label="Default select example" required (change)="getPlantOnSubChange($event,i)">
-                        <option selected>Choose SBU...</option>
-                        <option *ngFor="let sbu of activeSBU[i]" [value]="sbu.locationId">{{ sbu.locationName }}</option>
-                      </select>
-                    </div>
-                    <div class="col-sm-6 col-md-3 py-2">
-                      <label for="state" class="form-label">Plant<span class="text-danger">*</span></label>
-                      <select formControlName="plant" class="form-select" aria-label="Default select example" required>
-                        <option selected>Choose Plant...</option>
-                        <option [value]="plant.plantId" *ngFor="let plant of activePlant[i]">{{ plant.plantName }}</option>
-                      </select>
-                    </div>
-                    <div class="col-2 py-2">
-                      <button class="btn btn-danger btn-sm" *ngIf="i>0" (click)="removeState(i)">
-                        <i class="fa-solid fa-trash-alt"></i>
-                      </button>
-                      <button type="button" (click)="addstate()" class="btn btn-primary m-1 btn-sm"> <i class="fa-solid fa-plus"></i></button>
-                    </div>
-                  </div>
+                    <div *ngFor="let stateGroup of stateArray.controls; let i = index" [formGroupName]="i" class="row">
+                        <div class="col-sm-6 col-md-4 py-2">
+                          <label for="state" class="form-label">State<span class="text-danger">*</span></label>
+                          <select class="form-select" formControlName="stateId" aria-label="Default select example" required (change)="getSubonStateChange($event,i)">
+                            <option selected>Choose State...</option>
+                            <option *ngFor="let state of stateDtails" [value]="state.stateId">{{ state.stateName }}</option>
+                          </select>
+                        </div>
+                        <div class="col-sm-6 col-md-4 py-2">
+                          <label for="state" class="form-label">SBU<span class="text-danger">*</span></label>
+                          <select formControlName="sbuId" class="form-select" aria-label="Default select example" required (change)="getPlantOnSubChange($event,i)">
+                            <option selected>Choose SBU...</option>
+                            <option *ngFor="let sbu of activeSBU[i]" [value]="sbu.locationId">{{ sbu.locationName }}</option>
+                          </select>
+                        </div>
+                        <div class="col-sm-6 col-md-2 py-2">
+                          <label for="state" class="form-label">Plant<span class="text-danger">*</span></label>
+                          <select formControlName="plantId" class="form-select" aria-label="Default select example" required>
+                            <option selected>Choose Plant...</option>
+                            <option [value]="plant.plantId" *ngFor="let plant of activePlant[i]">{{ plant.plantName }}</option>
+                          </select>
+                        </div>
+                        <div class="col-1 py-2" style="    margin-top: 31px;">
+                          <button class="btn btn-danger btn-sm" *ngIf="i>0" (click)="removeState(i)">
+                            <i class="fa-solid fa-trash-alt"></i>
+                          </button>
+                          <button type="button" (click)="addstate()" class="btn btn-primary m-1 btn-sm"><i class="fa-solid fa-plus"></i></button>
+                        </div>
+                      </div>
+                      
                 </div>
               </form>
               

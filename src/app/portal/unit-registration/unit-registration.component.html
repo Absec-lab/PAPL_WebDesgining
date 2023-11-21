@@ -100,14 +100,14 @@
                     <div class="form-group">
                         <label  class="form-label">Start Date<span
                                 class="text-danger">*</span></label>
-                        <input type="date"  class="form-control" formControlName="startDate" >
+                        <input type="date" (input)=" updateMinEndDate(i)"  class="form-control" id="startDate" formControlName="startDate" >
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
                     <div class="form-group">
                         <label  class="form-label">End Date<span
                                 class="text-danger"></span></label>
-                        <input type="date"  class="form-control" formControlName="endDate" >
+                        <input type="date"  class="form-control" id="endDate" formControlName="endDate" >
                     </div>
                 </div>
           

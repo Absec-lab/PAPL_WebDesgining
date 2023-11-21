@@ -88,6 +88,7 @@ export class UnitRegistrationComponent {
     });
   }
   getSubonStateChange(event: any) {
+    this.ngxLoader.start()
     this.activeSBU = [];
     const selectedStateId = event.target.value;
     this.stateId = selectedStateId;
@@ -96,12 +97,13 @@ export class UnitRegistrationComponent {
     .pipe(takeUntil(this.destroy$)) 
     .subscribe((res) => {
       this.activeSBU = res;
+      this.ngxLoader.stop()
       //console.log(res);
     });
   }
 
   getPlantOnSubChange(event:any) {
-
+    this.ngxLoader.start()
     this.activePlant = [];
     const selectedSublocation = event.target.value;
     this.sbuId = selectedSublocation;
@@ -110,12 +112,14 @@ export class UnitRegistrationComponent {
     .pipe(takeUntil(this.destroy$))
     .subscribe((res)=>{
       this.activePlant = res;
+      this.ngxLoader.stop()
      // console.log("active plan", this.activePlant)
     })
 
   }
 
   getHouseByPlantId(event:any) {
+    this.ngxLoader.start()
     this.activeHouse = [];
     const selectedPlantId = event.target.value;
     this.plantId = selectedPlantId;
@@ -124,6 +128,7 @@ export class UnitRegistrationComponent {
     .pipe(takeUntil(this.destroy$))
     .subscribe((res)=>{
       this.activeHouse = res;
+      this.ngxLoader.stop()
      // console.log("active plan", this.activeHouse)
     })
   }
@@ -140,12 +145,14 @@ export class UnitRegistrationComponent {
     })
   }
   deleteUnit(id:any) {
+    this.ngxLoader.start()
     this.portalServ.get(`deactivate/Unit?id=${id}`)
     .pipe(takeUntil(this.destroy$))
     .subscribe((res)=>{
+
       console.log(res);
       this.getAllUnit()
-      
+      this.ngxLoader.stop()
     })
 
   }
@@ -161,7 +168,7 @@ export class UnitRegistrationComponent {
         "plantId":this.plantId,
         "unitDTO": this.unitArray.value,
       }
-  
+      this.ngxLoader.start()
       this.portalServ.post("PAPL/addUnits",data)
       .pipe(takeUntil(this.destroy$))
       .subscribe((res)=>{
@@ -172,15 +179,43 @@ export class UnitRegistrationComponent {
         this.plantId = null;
         this.unitArray.clear()
         this.addunit()
+        this.ngxLoader.stop()
+        Swal.fire({
+          icon: 'success',
+          text: 'Unit Registration Successfull'
+        });
   
       })
     } else {
-      alert("Please Enter Requuired Fields !")
+      Swal.fire({
+        // icon: 'error',
+        text: `Please Enter Unit Registration Details `
+      });
+     
     }
    
    } else {
-    alert("Please Enter Mandatory Fields !")
+   // alert("Please Enter Mandatory Fields !")
+    Swal.fire({
+      // icon: 'error',
+      text: `Please Select State, Sbu and Plant `
+    });
    }
+  }
+
+  updateMinEndDate(index:any): void {
+    const startDateInput = document.getElementById('startDate') as HTMLInputElement;
+    if (startDateInput) {
+      const startDateValue = startDateInput.value;
+      // Set the minimum allowed value for the end date to the selected start date
+      document.getElementById('endDate')?.setAttribute('min', startDateValue);
+      // Ensure the end date is always greater than or equal to the start date
+      if (this.unitArray.at(index).value.startDate < startDateValue) {
+        this.unitArray.at(index).value.endDate = startDateValue;
+      }
+      console.log(this.unitArray.at(index).value.startDate);
+      
+    }
   }
 
   

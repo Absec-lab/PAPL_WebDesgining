@@ -57,7 +57,8 @@ export class HouseOwnerRegistrationComponent {
       upiId: [''],
       linkMobile: [''],
       qrCode: [''],
-      uploadlegalheir:['']
+      uploadlegalheir:[''],
+      legalprifix:['']
      
     });
 
@@ -77,6 +78,7 @@ export class HouseOwnerRegistrationComponent {
       phoneNo:[''],
       emailId:[''],
       idProofDoc:[''],
+      idProofDocPrifix:[''],
       idProof:[''],
       address1:[''],
       address2:[''],
@@ -90,10 +92,13 @@ export class HouseOwnerRegistrationComponent {
       ifscCode:[''],
       panNo:[''],
       panCardAddress:[''],
+      panNoDoc:[''],
+      panNoPrifix:[''],
       upiId:[''],
       upiPhoneNo:[''],
       uploadQuarCodeAdds:[''],
-      quarCodePrifix:['']
+      quarCodePrifix:[''],
+      quarCodeDoc:['']
       
     })
     console.log(typeof this.noOfLegalParties);
@@ -158,6 +163,8 @@ export class HouseOwnerRegistrationComponent {
             this.houseRegistrationForm.get('panNoPrifix')?.setValue(extn)
           } else if(formControlName == 'qrCode' ) {
             this.houseRegistrationForm.get('quarCodePrifix')?.setValue(extn)
+          } else if(formControlName == 'uploadlegalheir') {
+            this.houseRegistrationForm.get('legalprifix')?.setValue(extn)
           }
           // Use base64Content and fileExtension as needed
           console.log('Base64 Content:', base64Content);
@@ -169,6 +176,13 @@ export class HouseOwnerRegistrationComponent {
   
             if (formArray && index >= 0 && index < formArray.length) {
               const formGroup = formArray.at(index) as FormGroup;
+              if(formControlName == 'idProofDoc') {
+                formGroup.get('idProofDocPrifix')?.setValue(extn);
+              } else if(formControlName == 'panNoDoc') {
+                formGroup.get('panNoPrifix')?.setValue(extn);
+              } else if(formControlName == 'quarCodeDoc') {
+                formGroup.get('quarCodePrifix')?.setValue(extn);
+              }
               formGroup.get(formControlName)?.setValue(base64Content);
             }
           } else {
@@ -297,15 +311,15 @@ export class HouseOwnerRegistrationComponent {
       ownerName: item.ownerName,
       phone: item.phoneNo,
       email: item.emailId,
-      idProof: '',
-      gIdproof: item.idProofAddress,
+     // idProof: item.idProofAddress,
+      gIdproof: item.idProof,
       add1: item.address1,
       add2: item.address2,
       state: item.state.stateId,
       dist: item.district,
       pin: item.pinCode,
       paymode:item.paymtMode == 'string' ? 2 :item.paymtMode,
-      status: '',
+      status: item.isActive,
       accHolName: item.accountHolderName,
       accounNum: item.bankAccountNo,
       ifsc: item.ifscCode,
@@ -345,18 +359,24 @@ export class HouseOwnerRegistrationComponent {
         "upiPhoneNo": this.houseRegistrationForm.value.linkMobile,
         "uploadQuarCodeDoc": this.houseRegistrationForm.value.qrCode,
         "legalIdProof": "testing",
-        "legalIdProofDoc": "testing",
-        "noofLegalParties": this.noOfLegalParties
+        "legalIdProofDocPrifix":this.houseRegistrationForm.value.legalprifix,
+        "legalIdProofDoc":  this.houseRegistrationForm.value.uploadlegalheir,
+        "noofLegalParties": this.noOfLegalParties,
+        "description":this.houseRegistrationForm.value.desc,
       }
     }
+    console.log(this.legalheirarray.value);
     
     this.portalServ.put("PAPL/updateOwner",data)
     .subscribe(res => {
       console.log(res)
       this.getAllOwner();
       this.houseRegistrationForm.reset()
-      alert("House Owner Registration succesfull")
-      this.updatebtn = false;
+      alert("House Owner Update succesfull")
+      this.legalheirarray.controls.forEach((control:any) => {
+        control.reset();
+      });
+      this.legalbtnh = false;
     })
   }
   legalbtnh:boolean = false
@@ -386,7 +406,7 @@ export class HouseOwnerRegistrationComponent {
     console.log("image");
     let value:any;
     console.log(event, userType, typeof(event))
-    if(typeof(event)=='number') {
+    if(typeof(+event)=='number') {
       value = event
     } else {
 

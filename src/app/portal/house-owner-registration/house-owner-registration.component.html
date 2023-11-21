@@ -278,7 +278,7 @@
                                     <div class="form-group">
                                         <label for="state" class="form-label">Upload Govt ID Proof<span
                                                 class="text-danger"></span></label>
-                                        <input  type="file" name="" id="" class="form-control"  accept="image/*,.pdf" (change)="onImageChange($event, 'idProofDoc', 'legal',1)" required>
+                                        <input  type="file" name="" id="" class="form-control"  accept="image/*,.pdf" (change)="onImageChange($event, 'idProofDoc', 'legal',i)" required>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 col-md-4">
@@ -307,8 +307,8 @@
                                 <div class="col-sm-6 col-md-4">
                                     <div class="form-group">
                                         <label for="state" class="form-label">State<span class="text-danger"></span></label>
-                                        <select class="form-select" aria-label="Default select example"  >
-                                            <option selected formControlName="state">Choose State... </option>
+                                        <select class="form-select" formControlName="stateId" aria-label="Default select example"  >
+                                            <option selected>Choose State... </option>
                                             <option *ngFor="let state of stateDtails" [value]="state.stateId">{{ state.stateName }}</option>
                                         
                                         </select>
@@ -395,7 +395,7 @@
                                             <div class="form-group">
                                                 <label for="state" class="form-label">Upload PAN Card<span
                                                         class="text-danger"></span></label>
-                                                <input type="file" name="" id="" class="form-control"  accept="image/*,.pdf" (change)="onImageChange($event, 'panCardAddress', 'legal',1)" >
+                                                <input type="file" name="" id="" class="form-control"  accept="image/*,.pdf" (change)="onImageChange($event, 'panNoDoc', 'legal',i)" >
                                             </div>
                                         </div>
                                         
@@ -421,7 +421,7 @@
                                             <div class="form-group">
                                                 <label for="state" class="form-label">Upload QR Code<span
                                                         class="text-danger"></span></label>
-                                                <input type="file" name="" id="" class="form-control"  accept="image/*,.pdf" (change)="onImageChange($event, 'uploadQuarCodeAdds', 'legal',1)">
+                                                <input type="file" name="" id="" class="form-control"  accept="image/*,.pdf" (change)="onImageChange($event, 'quarCodeDoc', 'legal',i)">
                                             </div>
                                         </div>
                                     </div>
@@ -471,6 +471,7 @@
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Phone no</th>
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Address</th>
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">Govt ID</th>
+                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">ID Proof</th>
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Account Number</th>
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">IFSC Code</th>
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">PAN Card</th>
@@ -478,7 +479,7 @@
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">UPI Id/linked Mob. No.</th>
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">QR Code</th>
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Start Date</th>
-                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">End Date</th>
+                        <!-- <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Created Date</th> -->
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">Action</th>
 
                     </tr>
@@ -490,13 +491,14 @@
                         <td>{{ item.phoneNo }}</td>
                         <td>{{ item.address1}}</td>
                         <td>{{ item.idProof }}</td>
+                        <td>{{item.idProofAddress }}</td>
                         <td>{{ item.bankAccountNo }}</td>
                         <td>{{ item.ifscCode}}</td>
                         <td>{{ item.panNo }}</td>
                         <td>{{ item.paymtMode }}</td>
                         <td>{{ item.upiPhoneNo}}</td>
                         <td>{{ item.uploadQuarCodeAdds }}</td>
-                        <td>{{ item.createdDate }}</td>
+                        <!-- <td>{{ item.createdDate }}</td> -->
                         <td>{{ item.updatedDate}}</td>
                         <td>
                             <div style="display: inline-flex; ">

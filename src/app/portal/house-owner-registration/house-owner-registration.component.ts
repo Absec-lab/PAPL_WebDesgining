@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { PortalServiceService } from './../serviceapi/portal-service.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { FormBuilder, FormGroup,FormControl , Validators, FormArray } from '@angular/forms';
@@ -26,6 +26,7 @@ export class HouseOwnerRegistrationComponent {
   descripinput:boolean = false;
   legalheirForm!: FormGroup;
   noOfLegalParties:any;
+  @ViewChild('fileInput') fileInput!: ElementRef;
   constructor(private ngxLoader: NgxUiLoaderService, private formBuilder: FormBuilder, private route: Router, public portalServ: PortalServiceService, private httpClient: HttpClient, public vldChkLst: ValidatorchklistService) { }
   ngOnInit(): void {
     this.getAllOwner();
@@ -37,6 +38,7 @@ export class HouseOwnerRegistrationComponent {
       phone: ['', Validators.required],
       email: ['', Validators.required],
       idProofDoc: [''],
+      idProofDocPrifix:[''],
       gIdproof: [''],
       add1: [''],
       add2: [''],
@@ -50,6 +52,7 @@ export class HouseOwnerRegistrationComponent {
       ifsc: [''],
       pan: [''],
       panPic: [''],
+      panNoPrifix:[''],
       desc: [''],
       upiId: [''],
       linkMobile: [''],
@@ -81,7 +84,7 @@ export class HouseOwnerRegistrationComponent {
       district:[''],
       pinCode:[''],
       paymtMode:[''],
-      isActive:[''],
+      isActive:['1'],
       accountHolderName:[''],
       bankAccountNo:[''],
       ifscCode:[''],
@@ -90,6 +93,7 @@ export class HouseOwnerRegistrationComponent {
       upiId:[''],
       upiPhoneNo:[''],
       uploadQuarCodeAdds:[''],
+      quarCodePrifix:['']
       
     })
     console.log(typeof this.noOfLegalParties);
@@ -144,9 +148,20 @@ export class HouseOwnerRegistrationComponent {
         reader.onload = (e) => {
           const imageDataUrl = e.target?.result as string;
           const base64Content = imageDataUrl.split(',')[1];
-           // Use base64Content instead of imageDataUrl
-           console.log(base64Content);
-        //  console.log(imageDataUrl);
+          // Determine file extension based on file type
+          const fileExtension = this.getFileExtension(file.type);
+          const extn = '.'+fileExtension
+
+          if(formControlName == 'idProofDoc') {
+            this.houseRegistrationForm.get('idProofDocPrifix')?.setValue(extn)
+          } else if(formControlName == 'panPic' ) {
+            this.houseRegistrationForm.get('panNoPrifix')?.setValue(extn)
+          } else if(formControlName == 'qrCode' ) {
+            this.houseRegistrationForm.get('quarCodePrifix')?.setValue(extn)
+          }
+          // Use base64Content and fileExtension as needed
+          console.log('Base64 Content:', base64Content);
+          console.log('File Extension:', extn, "form control", this.houseRegistrationForm.value.idProofDocPrifix);
           
           if (formArrName && index !== undefined) {
             // Update image value in a FormArray at a specific index
@@ -166,11 +181,25 @@ export class HouseOwnerRegistrationComponent {
           }
         };
   
-        reader.readAsDataURL(file);
+        if (file.type.startsWith('image/') || file.type === 'application/pdf') {
+          reader.readAsDataURL(file);
+        } else {
+          console.error('Invalid file type. Please select an image or PDF file.');
+        }
       }
     }
     console.log(this.houseRegistrationForm);
-    
+  }
+  
+  getFileExtension(mimeType: string): string {
+    const types: { [key: string]: string } = {
+      'image/jpeg': 'jpg',
+      'image/png': 'png',
+      'application/pdf': 'pdf',
+      // Add more as needed
+    };
+  
+    return types[mimeType] || 'unknown';
   }
 
   validateData() {
@@ -204,7 +233,7 @@ export class HouseOwnerRegistrationComponent {
   ownerRegistration() {
     let valid = this.validateData();
     if(valid) {
-      let data:any =[
+      let data:any =
         {
           "ownerName": this.houseRegistrationForm.value.ownerName,
           "phoneNo":this.houseRegistrationForm.value.phone,
@@ -217,32 +246,42 @@ export class HouseOwnerRegistrationComponent {
           "pinCode":this.houseRegistrationForm.value.pin,
           "idProofDoc":this.houseRegistrationForm.value.idProofDoc,
           "idProof":this.houseRegistrationForm.value.gIdproof,
-          "idProofDocPrifix":'.jpg',
+          "idProofDocPrifix":this.houseRegistrationForm.value.idProofDocPrifix,
           "isActive":this.houseRegistrationForm.value.status,
           "accountHolderName":this.houseRegistrationForm.value.accHolName,
           "bankAccountNo": this.houseRegistrationForm.value.accounNum,
           "ifscCode": this.houseRegistrationForm.value.ifsc,
           "panNo": this.houseRegistrationForm.value.pan,
           "panNoDoc": this.houseRegistrationForm.value.panPic,
-          "panNoPrifix":'.jpg',
+          "panNoPrifix": this.houseRegistrationForm.value.panNoPrifix,
           "panCardAddress":"string",
           "upiId": this.houseRegistrationForm.value.upiId,
           "upiPhoneNo":this.houseRegistrationForm.value.linkMobile,
           "quarCodeDoc":this.houseRegistrationForm.value.qrCode,
-          "quarCodePrifix": ".jpg",
+          "quarCodePrifix": this.houseRegistrationForm.value.quarCodePrifix,
         }
-      ]
+      
       this.ngxLoader.start();
       this.portalServ.post("PAPL/addOwners",data)
       .subscribe((res)=>{
         this.ngxLoader.stop();
       console.log(res)
       this.getAllOwner();
-      this.houseRegistrationForm.reset()
+      this.houseRegistrationForm.reset();
+      this.fileInput.nativeElement.value = '';
+      this.houseRegistrationForm.patchValue({
+        idProofDoc:'',
+        status:'1'
+      });
+      console.log(this.houseRegistrationForm.value);
+      
+     // this.houseRegistrationForm.get('isActive')?.setValue("1")
       Swal.fire({
         icon: 'success',
         text: 'Owner Registation Successfull'
       });
+    //  this.houseRegistrationForm.value.isActive.setValue('1')
+      
       
     })
     } 

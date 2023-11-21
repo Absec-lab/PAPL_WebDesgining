@@ -49,7 +49,7 @@
                         <div class="form-group">
                             <label for="state" class="form-label">Upload Govt ID Proof<span
                                     class="text-danger"></span></label>
-                            <input type="file" name="" id="" class="form-control" accept="image/*" required  (change)="onImageChange($event, 'idProofDoc')"  />
+                            <input type="file" #fileInput name="" id="" class="form-control" accept="image/*,.pdf" required  (change)="onImageChange($event, 'idProofDoc')"  />
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
@@ -181,7 +181,7 @@
                             <div class="form-group">
                                 <label for="state" class="form-label">Upload PAN Card<span
                                         class="text-danger"></span></label>
-                                <input type="file" name="" id="" class="form-control" accept="image/*"  (change)="onImageChange($event, 'panPic')" formControlName="panPic">
+                                <input type="file" name="" id="" class="form-control"  accept="image/*,.pdf"  (change)="onImageChange($event, 'panPic')" formControlName="panPic">
                             </div>
                         </div>
                         
@@ -207,7 +207,7 @@
                             <div class="form-group">
                                 <label for="state" class="form-label">Upload QR Code<span
                                         class="text-danger"></span></label>
-                                <input type="file" name="" id="" class="form-control" accept="image/*" (change)="onImageChange($event, 'qrCode')" >
+                                <input type="file" name="" id="" class="form-control"  accept="image/*,.pdf" (change)="onImageChange($event, 'qrCode')" >
                             </div>
                         </div>
                     </div>
@@ -239,7 +239,7 @@
                             <div class="form-group">
                                 <label for="state" class="form-label">Upload L.H. Certificate<span
                                         class="text-danger"></span></label>
-                                <input type="file" name="" id="" class="form-control" accept="image/*" (change)="onImageChange($event, 'uploadlegalheir')" required>
+                                <input type="file" name="" id="" class="form-control"  accept="image/*,.pdf" (change)="onImageChange($event, 'uploadlegalheir')" required>
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-4">
@@ -278,7 +278,7 @@
                                     <div class="form-group">
                                         <label for="state" class="form-label">Upload Govt ID Proof<span
                                                 class="text-danger"></span></label>
-                                        <input  type="file" name="" id="" class="form-control" accept="image/*" (change)="onImageChange($event, 'idProofDoc', 'legal',1)" required>
+                                        <input  type="file" name="" id="" class="form-control"  accept="image/*,.pdf" (change)="onImageChange($event, 'idProofDoc', 'legal',1)" required>
                                     </div>
                                 </div>
                                 <div class="col-sm-6 col-md-4">
@@ -395,7 +395,7 @@
                                             <div class="form-group">
                                                 <label for="state" class="form-label">Upload PAN Card<span
                                                         class="text-danger"></span></label>
-                                                <input type="file" name="" id="" class="form-control" accept="image/*" (change)="onImageChange($event, 'panCardAddress', 'legal',1)" >
+                                                <input type="file" name="" id="" class="form-control"  accept="image/*,.pdf" (change)="onImageChange($event, 'panCardAddress', 'legal',1)" >
                                             </div>
                                         </div>
                                         
@@ -421,7 +421,7 @@
                                             <div class="form-group">
                                                 <label for="state" class="form-label">Upload QR Code<span
                                                         class="text-danger"></span></label>
-                                                <input type="file" name="" id="" class="form-control" accept="image/*" (change)="onImageChange($event, 'uploadQuarCodeAdds', 'legal',1)">
+                                                <input type="file" name="" id="" class="form-control"  accept="image/*,.pdf" (change)="onImageChange($event, 'uploadQuarCodeAdds', 'legal',1)">
                                             </div>
                                         </div>
                                     </div>

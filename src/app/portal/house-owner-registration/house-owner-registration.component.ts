@@ -36,7 +36,7 @@ export class HouseOwnerRegistrationComponent {
       ownerName: ['', Validators.required],
       phone: ['', Validators.required],
       email: ['', Validators.required],
-      idProof: [''],
+      idProofDoc: [''],
       gIdproof: [''],
       add1: [''],
       add2: [''],
@@ -143,7 +143,10 @@ export class HouseOwnerRegistrationComponent {
   
         reader.onload = (e) => {
           const imageDataUrl = e.target?.result as string;
-          console.log(imageDataUrl);
+          const base64Content = imageDataUrl.split(',')[1];
+           // Use base64Content instead of imageDataUrl
+           console.log(base64Content);
+        //  console.log(imageDataUrl);
           
           if (formArrName && index !== undefined) {
             // Update image value in a FormArray at a specific index
@@ -151,14 +154,14 @@ export class HouseOwnerRegistrationComponent {
   
             if (formArray && index >= 0 && index < formArray.length) {
               const formGroup = formArray.at(index) as FormGroup;
-              formGroup.get(formControlName)?.setValue(imageDataUrl);
+              formGroup.get(formControlName)?.setValue(base64Content);
             }
           } else {
             // Update image value in a regular FormControl
             const formControl = this.houseRegistrationForm.get(formControlName);
   
             if (formControl) {
-              formControl.setValue(imageDataUrl);
+              formControl.setValue(base64Content);
             }
           }
         };
@@ -203,34 +206,30 @@ export class HouseOwnerRegistrationComponent {
     if(valid) {
       let data:any =[
         {
-        
-          "ownerId": null,
           "ownerName": this.houseRegistrationForm.value.ownerName,
-          "prevOwonerId": '',
           "phoneNo":this.houseRegistrationForm.value.phone,
-          "legalIdProof":'',
-          "legalIdProofAddr": '',
           "emailId": this.houseRegistrationForm.value.email,
           "paymtMode": this.houseRegistrationForm.value.paymode,
           "address1":this.houseRegistrationForm.value.add1,
           "address2":this.houseRegistrationForm.value.add2,
-          "state": {
-            "stateId":this.houseRegistrationForm.value.state,
-          },
+          "stateId":this.houseRegistrationForm.value.state,
           "district":this.houseRegistrationForm.value.dist,
           "pinCode":this.houseRegistrationForm.value.pin,
+          "idProofDoc":this.houseRegistrationForm.value.idProofDoc,
           "idProof":this.houseRegistrationForm.value.gIdproof,
-          "idProofAddress": this.houseRegistrationForm.value.idProof,
+          "idProofDocPrifix":'.jpg',
+          "isActive":this.houseRegistrationForm.value.status,
           "accountHolderName":this.houseRegistrationForm.value.accHolName,
           "bankAccountNo": this.houseRegistrationForm.value.accounNum,
           "ifscCode": this.houseRegistrationForm.value.ifsc,
           "panNo": this.houseRegistrationForm.value.pan,
-          "panCardAddress": this.houseRegistrationForm.value.panPic,
-          "description": this.houseRegistrationForm.value.desc,
+          "panNoDoc": this.houseRegistrationForm.value.panPic,
+          "panNoPrifix":'.jpg',
+          "panCardAddress":"string",
           "upiId": this.houseRegistrationForm.value.upiId,
           "upiPhoneNo":this.houseRegistrationForm.value.linkMobile,
-          "uploadQuarCodeAdds":this.houseRegistrationForm.value.qrCode,
-          "noofLegalParties": 0,
+          "quarCodeDoc":this.houseRegistrationForm.value.qrCode,
+          "quarCodePrifix": ".jpg",
         }
       ]
       this.ngxLoader.start();
@@ -242,7 +241,7 @@ export class HouseOwnerRegistrationComponent {
       this.houseRegistrationForm.reset()
       Swal.fire({
         icon: 'success',
-        text: 'Record Saved Successfully'
+        text: 'Owner Registation Successfull'
       });
       
     })

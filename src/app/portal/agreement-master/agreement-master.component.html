@@ -56,7 +56,7 @@
                         <label for="state" class="form-label">House Name<span class="text-danger">*</span></label>
                         <select class="form-select" aria-label="Default select example" [(ngModel)]="aggreHouse" name="aggreHouse">
                             <option value="">House State...</option>
-                            <option value="{{list.houseId}}" *ngFor="let list of getallhouseList; let i = index">{{list.plantName}} {{list.houseId}}</option>
+                            <option value="{{list.houseId}}" *ngFor="let list of getallhouseList; let i = index"> {{list.houseId}}</option>
                            
                         </select>
                     </div>
@@ -173,12 +173,12 @@
                 <tbody>
                     <tr *ngFor="let item of tableData; let i = index">
                         <td>{{ i + 1 }}</td>
-                        <td>{{ item.state?.stateName }}</td>
-                        <td>{{ item.house.sbu?.locationName }}</td>
-                        <td>{{ item.house.plant?.plantName }}</td>
-                        <td>{{ item.house.owner?.ownerName }}</td>
-                        <td>house Name</td>
-                        <td>{{ item.agreementType?.aggreTypeName }}</td>
+                        <td>{{ item.stateName}}</td>
+                        <td>{{ item.locationName }}</td>
+                        <td>{{ item.plantName}}</td>
+                        <td>{{ item.ownerName }}</td>
+                        <td>{{item.houseId}}</td>
+                        <td>{{ item.aggreTypeName }}</td>
                         <td>{{ item.rent }}</td>
                         <td>{{ item.rentPeriod }}</td>
                         <td>{{ item.rentStartDt | date: 'MM/dd/yyyy'}}</td>
@@ -188,7 +188,7 @@
                         <td>{{ item.createdDate }}</td>
                         <td>
                             <div style="display: inline-flex;">
-                                <button class="btn btn-sm mx-2" (click)="editAgreement(item.aggreId,item.state.stateId,item.sbu.locationId,item.plant.plantId,item.owner.ownerId,1,item.agreementType.aggreTypeId,item.rent,item.rentPeriod,item.rentStartDt,item.rentEndDt,item.withElectricBill,item.withWaterBill)"
+                                <button class="btn btn-sm mx-2" (click)="editAgreement(item.aggreId,item.stateId,item.locationId,item.plantId,item.ownerId,1,item.aggreTypeId,item.rent,item.rentPeriod,item.rentStartDt,item.rentEndDt,item.withElectricBill,item.withWaterBill)"
                                     style="background-color: rgb(22, 133, 236);color: #faf7f7;">
                                     <i class="fa-solid fa-edit"></i>
                                 </button>

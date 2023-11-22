@@ -21,8 +21,8 @@ export class UnitRegistrationComponent {
   allSbu: any = [];
   allPlant: any = [];
   allHouses: any = [];
-  allUnits: any = [];
-  activeSBU:any = [];
+  allUnits: any;
+  activeSBU:any;
   stateId:any;
   activePlant:any;
   sbuId:any;
@@ -140,7 +140,7 @@ export class UnitRegistrationComponent {
   getAllUnit() {
     this.portalServ.get('PAPL/getAllUnit')
     .subscribe((res)=>{
-      this.allUnits = res
+      this.allUnits = res.data
       console.log(this.allUnits)
     })
   }

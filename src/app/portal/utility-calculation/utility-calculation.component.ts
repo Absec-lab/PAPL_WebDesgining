@@ -30,6 +30,10 @@ export class UtilityCalculationComponent implements OnInit {
       hrexp:[''],
       hrbill:[''],
       hrrecept:[''],
+      hrrecFileExt:[''],
+      hrbillFileExt:[''],
+      misbillFileExt:[''],
+      misrecFileExt:[''],
       electricbill: this.formBuilder.array([]),
       waterbill: this.formBuilder.array([]),
     });
@@ -44,9 +48,16 @@ export class UtilityCalculationComponent implements OnInit {
 
   addelectric() {
     const stateGroup = this.formBuilder.group({
-      elebillexpn: [''],
-      billupload: [''],
-      receiptupload: [''],
+      eleExpenseAmt:[''],
+      eleBillDoc:[''] ,
+      eleRecDoc:[''] ,
+      billFileExt: [''],
+      recFileExt:['']
+      // "eleExpenseAmt": 0,
+      // "eleBillDoc": "string",
+      // "eleRecDoc": "string",
+      // "billFileExt": "string",
+      // "recFileExt": "string"
       // Add more form controls as needed
     });
 
@@ -63,10 +74,32 @@ export class UtilityCalculationComponent implements OnInit {
 
   addwater() {
     const stateGroup = this.formBuilder.group({
-      waterbillexpn: [''],
-      waterbillupload: [''],
-      waterreceiptupload: [''],
+
+      waterExpenseAmount: [''],
+      waterBilldoc: [''],
+      waterRecDoc: [''],
+      billFileExt: [''],
+      recFileExt:['']
+      // "waterExpenseAmount": 0,
+      // "waterBilldoc": "string",
+      // "waterRecDoc": "string",
+      // "billFileExt": "string",
+      // "recFileExt": "string"
       // Add more form controls as needed
+
+      //----------------------//
+      // "hrExpenseAmt": 0,
+      // "hrBillDoc": "string",
+      // "hrrecDoc": "string",
+      // "billFileExt": "string",
+      // "recFileExt": "string"
+
+      //--------------------//
+    //   "miscExpenseAmt": 0,
+    // "miscBillDoc": "string",
+    // "miscRecDoc": "string",
+    // "billFileExt": "string",
+    // "recFileExt": "string"
     });
 
     this.water.push(stateGroup);
@@ -149,32 +182,6 @@ export class UtilityCalculationComponent implements OnInit {
     })
   }
 
-  onImageChange1  (event: any, formControlName: string, formArrName?: string, index?: number): void {
-		const inputElement = event.target as HTMLInputElement;
-    if (inputElement.files && inputElement.files.length > 0) {
-		const file = inputElement.files[0];
-	  
-		if (file) {
-	  
-		  const reader = new FileReader();
-		  reader.onload = (e) => {
-			// Set the image form control's value to the file
-      
-		  };
-		  reader.readAsDataURL(file);
-      if(formArrName){
-        this.utilityCalculation.value[formControlName].at(index).setValue(file);
-      } else{
-        console.log(this.utilityCalculation);
-        
-        this.utilityCalculation.get(formControlName)?.setValue(file);
-      }
-		  }
-    }
-    console.log(this.utilityCalculation.value);
-    
-	}
-
 
   onImageChange(event: any, formControlName: string, formArrName?: string, index?: number): void {
     console.log("formControlName",formControlName);
@@ -189,7 +196,11 @@ export class UtilityCalculationComponent implements OnInit {
   
         reader.onload = (e) => {
           const imageDataUrl = e.target?.result as string;
-          console.log(imageDataUrl);
+          const base64Content = imageDataUrl.split(',')[1];
+          console.log(base64Content);
+
+          const fileExtension = this.getFileExtension(file.type);
+          const extn = '.'+fileExtension
           
           if (formArrName && index !== undefined) {
             // Update image value in a FormArray at a specific index
@@ -197,14 +208,32 @@ export class UtilityCalculationComponent implements OnInit {
   
             if (formArray && index >= 0 && index < formArray.length) {
               const formGroup = formArray.at(index) as FormGroup;
-              formGroup.get(formControlName)?.setValue(imageDataUrl);
+              formGroup.get(formControlName)?.setValue(base64Content);
+              if(formControlName == 'waterBilldoc') {
+                formGroup.get('billFileExt')?.setValue(extn)
+              } else if(formControlName == 'waterRecDoc') {
+                formGroup.get('recFileExt')?.setValue(extn)
+              } else if(formControlName == 'eleBillDoc') {
+                formGroup.get('billFileExt')?.setValue(extn)
+              } else if(formControlName == 'eleRecDoc') {
+                formGroup.get('recFileExt')?.setValue(extn)
+              }
             }
           } else {
             // Update image value in a regular FormControl
             const formControl = this.utilityCalculation.get(formControlName);
   
             if (formControl) {
-              formControl.setValue(imageDataUrl);
+              formControl.setValue(base64Content);
+              if(formControlName == 'miscBill') {
+                this.utilityCalculation.get('misbillFileExt')?.setValue(extn)
+              } else if(formControlName == 'miscrecept') {
+                this.utilityCalculation.get('misrecFileExt')?.setValue(extn)
+              } else if (formControlName == 'hrbill') {
+                this.utilityCalculation.get('hrbillFileExt')?.setValue(extn)
+              } else if(formControlName == 'hrrecept') {
+                this.utilityCalculation.get('hrrecFileExt')?.setValue(extn)
+              } 
             }
           }
         };
@@ -214,6 +243,17 @@ export class UtilityCalculationComponent implements OnInit {
     }
     console.log(this.utilityCalculation);
     
+  }
+
+  getFileExtension(mimeType: string): string {
+    const types: { [key: string]: string } = {
+      'image/jpeg': 'jpg',
+      'image/png': 'png',
+      'application/pdf': 'pdf',
+      // Add more as needed
+    };
+  
+    return types[mimeType] || 'unknown';
   }
   
 
@@ -227,20 +267,23 @@ export class UtilityCalculationComponent implements OnInit {
           "fkPlantId":  this.utilityCalculation.value.plant,
           "fkHouseId":  this.utilityCalculation.value.houseId,
           "startDate": this.utilityCalculation.value.startDate,
-          "endDate":  this.utilityCalculation.value.endDate
+          "endDate":  this.utilityCalculation.value.endDate,
+          "createdDate":'',
           
         },
         "utilityCalculationHRExpenseDto": {
           "hrExpenseAmt":  this.utilityCalculation.value.hrexp,
           "hrBillDoc":  this.utilityCalculation.value.hrbill,
           "hrrecDoc":  this.utilityCalculation.value.hrrecept,
-          "fileExt": "jpg"
+          "recFileExt":this.utilityCalculation.value.hrrecFileExt ,
+          "billFileExt":this.utilityCalculation.value.hrbillFileExt,
         },
         "utilityCalculationMiscDto": {
           "miscExpenseAmt":  this.utilityCalculation.value.miscExp,
           "miscBillDoc": this.utilityCalculation.value.miscBill,
           "miscRecDoc":  this.utilityCalculation.value.miscrecept,
-          "fileExt": "jpg"
+          "billFileExt": this.utilityCalculation.value.misbillFileExt,
+          "recFileExt":this.utilityCalculation.value.misrecFileExt,
         },
         "utilityCalculationElectricDto": this.electric.value,
         "utilityCalculationWaterDto":this.water.value,

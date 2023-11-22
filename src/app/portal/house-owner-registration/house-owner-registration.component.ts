@@ -373,6 +373,7 @@ export class HouseOwnerRegistrationComponent {
       this.getAllOwner();
       this.houseRegistrationForm.reset()
       alert("House Owner Update succesfull")
+      window.location.reload()
       this.legalheirarray.controls.forEach((control:any) => {
         control.reset();
       });
@@ -405,8 +406,8 @@ export class HouseOwnerRegistrationComponent {
   paymentmode(event:any,userType:string, index?:any) {
     console.log("image");
     let value:any;
-    console.log(event, userType, typeof(event))
-    if(typeof(+event)=='number') {
+    //console.log(event, userType, typeof(event))
+    if(typeof(event)=='string') {
       value = event
     } else {
 

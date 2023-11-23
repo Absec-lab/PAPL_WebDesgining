@@ -272,14 +272,24 @@ getSubonStateChange(event: any, index: number) {
     
   }
 
-  removeHouse(id:any) {
-    this.ngxLoader.start();
-    this.portalService.get(`PAPL/get/sbu/by/${id}`)
-    .pipe(takeUntil(this.destroy$)) 
-    .subscribe((res) => {
-      this.getAllHouseDetailList()
-      this.ngxLoader.stop();
-    });
+  // removeHouse(id:any) {
+  //   this.ngxLoader.start();
+  //   this.portalService.delete(`PAPL/get/sbu/by/${id}`)
+  //   .pipe(takeUntil(this.destroy$)) 
+  //   .subscribe((res) => {
+  //     this.getAllHouseDetailList()
+  //     this.ngxLoader.stop();
+  //   });
+
+  removeHouse(id: any = 0) {
+      this.portalService.removeHouse(id).subscribe(res => {  
+        if(res) {
+          alert("House Deactivated !")
+        }
+        this.getAllHouseDetailList();
+            
+     }); 
+
   }
 
   onClick() {

@@ -139,5 +139,10 @@ export class PortalServiceService {
 		let res = this.Http.put(environment.serviceURL+url,data)
 		return res
 	}
+	removeHouse(params: any): Observable<any> {
+		let serviceUrl = environment.serviceURL + 'deactivate/House?id='+params;
+		let serviceRes = this.Http.delete(serviceUrl, {params});
+		return serviceRes;
+	}
 	
 }

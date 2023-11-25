@@ -54,7 +54,7 @@
                         <div class="form-group">
                             <label for="state" class="form-label">Phone Number<span class="text-danger">*</span></label>
                             <input type="text" name="phoneNo" id="phoneNo" class="form-control" formControlName="phone"
-                                (keyup)="vldChkLst.allowNumericDigits($event)" maxlength="10" autocomplete="off" />
+                                (keyup)="vldChkLst.allowNumericDigits($event)" minlength="10" maxlength="10" autocomplete="off" />
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
@@ -114,7 +114,7 @@
                         <div class="form-group">
                             <label class="form-label">State<span class="text-danger">*</span></label>
                             <select class="form-select" aria-label="Default select example" formControlName="state">
-                                <option selected>Choose State... </option>
+                                <option value="0" selected>Choose State... </option>
                                 <option *ngFor="let state of stateDtails" [value]="state.stateId">{{ state.stateName }}
                                 </option>
 
@@ -140,7 +140,7 @@
                         <select class="form-select" (change)="paymentmode($event, 'owner')"
                             aria-label="Default select example" formControlName="paymode" name="paymtMode"
                             id="paymtMode">
-                            <option selected>Choose Payment Mode...</option>
+                            <option value="0" selected>Choose Payment Mode...</option>
                             <option [value]="1" routerLink="">
                                 Bank AC
                             </option>

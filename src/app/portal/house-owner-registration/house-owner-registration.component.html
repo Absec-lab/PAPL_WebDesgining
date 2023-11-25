@@ -20,9 +20,9 @@
                     House Owner Details/ Legal Heir
                 </button>
             </li>
-            
+
         </ul>
-        <form action=""  [formGroup]="houseRegistrationForm">
+        <form action="" [formGroup]="houseRegistrationForm">
             <div style="background-color: rgba(226, 242, 246, 1); padding: 5%">
                 <!-- house-owner-registration -->
                 <div class="row">
@@ -30,75 +30,116 @@
                         <div class="form-group">
                             <label for="state" class="form-label">House Owner Name<span
                                     class="text-danger">*</span></label>
-                            <input type="text" name="ownerName" id="ownerName" formControlName="ownerName" class="form-control"  />
+                            <input type="text" name="ownerName" id="ownerName" formControlName="ownerName"
+                                maxlength="20" class="form-control" (input)="vldChkLst.allowAlphaWithSpace($event)" />
+
+                            <div class="error-message"
+                                *ngIf="houseRegistrationForm.get('ownerName')?.invalid && houseRegistrationForm.get('ownerName')?.touched">
+                                <div *ngIf="houseRegistrationForm.get('ownerName')?.hasError('required')">Owner name is
+                                    required.</div>
+                                <div
+                                    *ngIf="houseRegistrationForm.get('ownerName')?.hasError('fullNameContainsSpecialChars')">
+                                    Owner name should
+                                    not contain special characters or numbers.</div>
+                                <div *ngIf="houseRegistrationForm.get('ownerName')?.hasError('fullNameTooLong')">Owner
+                                    name should
+                                    contain less than 50 character. </div>
+                                <div *ngIf="houseRegistrationForm.get('ownerName')?.hasError('fullNameTooSmall')">
+                                    Owner name should
+                                    contain more than 3 character. </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             <label for="state" class="form-label">Phone Number<span class="text-danger">*</span></label>
-                            <input type="text" name="phoneNo" id="phoneNo" class="form-control" formControlName="phone" />
+                            <input type="text" name="phoneNo" id="phoneNo" class="form-control" formControlName="phone"
+                                (keyup)="vldChkLst.allowNumericDigits($event)" maxlength="10" autocomplete="off" />
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             <label for="state" class="form-label">Email ID<span class="text-danger">*</span></label>
-                            <input type="email" name="emailId" id="emailId" class="form-control" formControlName="email" />
+                            <input type="email" name="emailId" id="emailId" class="form-control"
+                                (oninput)="vldChkLst.validEmail($event)" formControlName="email" autocomplete="off" />
+                            <div class="error-message"
+                                *ngIf="houseRegistrationForm.get('email')?.invalid && houseRegistrationForm.get('email')?.touched">
+                                <div *ngIf="houseRegistrationForm.get('email')?.hasError('required')">Enter email
+                                    address.
+                                </div>
+                                <div *ngIf="houseRegistrationForm.get('email')?.hasError('emailFormat')">Invalid email
+                                    format.
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             <label for="state" class="form-label">Upload Govt ID Proof<span
                                     class="text-danger"></span></label>
-                            <input type="file" #fileInput name="" id="" class="form-control" accept="image/*,.pdf" required  (change)="onImageChange($event, 'idProofDoc')"  />
+                            <input type="file" #fileInput name="" id="" class="form-control" accept="image/*,.pdf"
+                                required (change)="onImageChange($event, 'idProofDoc')" />
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
-                            <label for="state" class="form-label">Govt ID Proof<span
-                                    class="text-danger"></span></label>
-                            <input type="text" name="idProof" id="idProof" class="form-control" formControlName="gIdproof" />
+                            <label for="state" class="form-label">Govt ID Proof<span class="text-danger"></span></label>
+                            <input type="text" name="idProof" id="idProof" class="form-control"
+                                formControlName="gIdproof" (input)="vldChkLst.allowNumericDigitsWithAlpha($event)"
+                                maxlength="15" />
+                            <div class="error-message"
+                                *ngIf="houseRegistrationForm.get('gIdproof')?.invalid && houseRegistrationForm.get('gIdproof')?.touched">
+                                <div *ngIf="houseRegistrationForm.get('gIdproof')?.hasError('required')">Enter Id proof
+
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
-                            <label for="state" class="form-label">Address 1<span class="text-danger"></span></label>
-                            <input type="text" name="address1" id="address1" class="form-control"formControlName="add1" />
+                            <label for="state" class="form-label">Address 1<span class="text-danger">*</span></label>
+                            <input type="text" name="address1" id="address1" class="form-control"
+                                formControlName="add1" />
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             <label for="state" class="form-label">Address 2<span class="text-danger"></span></label>
-                            <input type="text" name="address2" id="address2" class="form-control" formControlName="add2" />
+                            <input type="text" name="address2" id="address2" class="form-control"
+                                formControlName="add2" />
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
-                            <label  class="form-label">State<span
-                                    class="text-danger">*</span></label>
-                            <select class="form-select" aria-label="Default select example" formControlName="state" >
+                            <label class="form-label">State<span class="text-danger">*</span></label>
+                            <select class="form-select" aria-label="Default select example" formControlName="state">
                                 <option selected>Choose State... </option>
-                                <option *ngFor="let state of stateDtails" [value]="state.stateId">{{ state.stateName }}</option>
-                            
+                                <option *ngFor="let state of stateDtails" [value]="state.stateId">{{ state.stateName }}
+                                </option>
+
                             </select>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
-                            <label for="state" class="form-label">District<span class="text-danger"></span></label>
-                            <input type="text" name="emailId" id="emailId" class="form-control" formControlName="dist" />
+                            <label for="state" class="form-label">District<span class="text-danger">*</span></label>
+                            <input type="text" name="dist" id="dist" class="form-control" formControlName="dist"
+                                (input)="vldChkLst.allowAlpha($event)" />
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
-                            <label for="state" class="form-label">PIN<span class="text-danger"></span></label>
-                            <input type="number" name="pinCode" id="pinCode" class="form-control" formControlName="pin" />
+                            <label for="state" class="form-label">PIN<span class="text-danger">*</span></label>
+                            <input type="text" name="pinCode" id="pinCode" class="form-control" formControlName="pin"
+                                (input)="vldChkLst.allowNumericDigits($event)" maxlength="6" />
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
                         <label for="state" class="form-label">Payment Mode0wn<span class="text-danger">*</span></label>
-                        <select class="form-select" (change)="paymentmode($event, 'owner')" aria-label="Default select example" formControlName="paymode"
-                            name="paymtMode" id="paymtMode" >
+                        <select class="form-select" (change)="paymentmode($event, 'owner')"
+                            aria-label="Default select example" formControlName="paymode" name="paymtMode"
+                            id="paymtMode">
                             <option selected>Choose Payment Mode...</option>
                             <option [value]="1" routerLink="">
                                 Bank AC
@@ -121,7 +162,8 @@
 
                     <div class="col-sm-6 col-md-4">
                         <label for="state" class="form-label">Status<span class="text-danger">*</span></label>
-                        <select class="form-select" aria-label="Default select example" formControlName="status" (change)="showLegal($event)">
+                        <select class="form-select" aria-label="Default select example" formControlName="status"
+                            (change)="showLegal($event)">
                             <option value="1">Active</option>
                             <option value="0" *ngIf="updatebtn">InActive</option>
                         </select>
@@ -129,18 +171,19 @@
                     <div class="row">
                         <div class="col-sm-6 col-md-4" *ngIf="descripinput">
                             <div class="form-group">
-                              <label for="state" class="form-label">Description<span class="text-danger"></span></label>
-                              <input type="text" class="form-control" formControlName="desc">
+                                <label for="state" class="form-label">Description<span
+                                        class="text-danger"></span></label>
+                                <input type="text" class="form-control" formControlName="desc">
                             </div>
-                          </div>
-                          <div class="col-sm-6 col-md-8" *ngIf="legalheir" style="margin-top: 28px">
+                        </div>
+                        <div class="col-sm-6 col-md-8" *ngIf="legalheir" style="margin-top: 28px">
                             <button class="btn btn-primary float-end" (click)="togglelegal()">Add Legal Heir</button>
-                          </div>
+                        </div>
                     </div>
                 </div>
-              
-               
-                
+
+
+
                 <ng-container *ngIf="heading">
                     <h5 class="mt-4 text-secondary">Bank Account Details of House Owner</h5>
                     <hr class="my-1" />
@@ -149,56 +192,61 @@
 
                     </div>
                     <!-- bank-ac -->
-                    <div class=" bank-ac row pt-4" *ngIf="bank" >
+                    <div class=" bank-ac row pt-4" *ngIf="bank">
                         <div class="col-sm-6 col-md-4">
                             <div class="form-group">
                                 <label for="state" class="form-label">Account Holder Name<span
                                         class="text-danger"></span></label>
-                                <input type="text" name="accountHolderName" id="accountHolderName" formControlName="accHolName" class="form-control" >
+                                <input type="text" name="accountHolderName" id="accountHolderName" maxlength="25"
+                                    formControlName="accHolName" class="form-control"
+                                    (input)="vldChkLst.allowAlphaWithSpace($event)">
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-4">
                             <div class="form-group">
                                 <label for="state" class="form-label">Account Number<span
                                         class="text-danger"></span></label>
-                                <input type="text" name="bankAccountNo" id="bankAccountNo" class="form-control" formControlName="accounNum" >
+                                <input type="text" name="bankAccountNo" id="bankAccountNo" class="form-control" maxlength="25"
+                                    formControlName="accounNum" (input)="vldChkLst.allowNumericDigits($event)">
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-4">
                             <div class="form-group">
                                 <label for="state" class="form-label">IFSC<span class="text-danger"></span></label>
-                                <input type="text" name="ifscCode" id="ifscCode" class="form-control" formControlName="ifsc" >
+                                <input type="text" name="ifscCode" id="ifscCode" class="form-control" maxlength="15"
+                                    formControlName="ifsc" (input)="vldChkLst.allowNumericDigitsWithAlpha($event)">
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-4">
                             <div class="form-group">
-                                <label for="state" class="form-label">PAN Card <span
-                                        class="text-danger"></span></label>
-                                <input type="text" name="panNo" id="panNo" class="form-control" formControlName="pan" >
+                                <label for="state" class="form-label">PAN Card <span class="text-danger"></span></label>
+                                <input type="text" name="panNo" id="panNo" class="form-control" formControlName="pan" maxlength="12"
+                                    (input)="vldChkLst.allowNumericDigitsWithAlpha($event)">
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-4">
                             <div class="form-group">
                                 <label for="state" class="form-label">Upload PAN Card<span
                                         class="text-danger"></span></label>
-                                <input type="file" name="" id="" class="form-control"  accept="image/*,.pdf"  (change)="onImageChange($event, 'panPic')" formControlName="panPic">
+                                <input type="file" name="" id="" class="form-control" accept="image/*,.pdf"
+                                    (change)="onImageChange($event, 'panPic')" formControlName="panPic">
                             </div>
                         </div>
-                        
+
                     </div>
                     <!-- upi -->
                     <div class="row pt-4" *ngIf="upi">
                         <div class="col-sm-6 col-md-4">
                             <div class="form-group">
                                 <label for="state" class="form-label">UPI ID<span class="text-danger"></span></label>
-                                <input type="text" class="form-control" formControlName="upiId">
+                                <input type="text" class="form-control" formControlName="upiId" maxlength="20">
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-4">
                             <div class="form-group">
                                 <label for="state" class="form-label">Linked Mob._No<span
                                         class="text-danger"></span></label>
-                                <input type="text" class="form-control" formControlName="linkMobile">
+                                <input type="text" class="form-control" (keyup)="vldChkLst.allowNumericDigits($event)" formControlName="linkMobile" maxlength="10">
                             </div>
                         </div>
 
@@ -207,12 +255,13 @@
                             <div class="form-group">
                                 <label for="state" class="form-label">Upload QR Code<span
                                         class="text-danger"></span></label>
-                                <input type="file" name="" id="" class="form-control"  accept="image/*,.pdf" (change)="onImageChange($event, 'qrCode')" >
+                                <input type="file" name="" id="" class="form-control" accept="image/*,.pdf"
+                                    (change)="onImageChange($event, 'qrCode')">
                             </div>
                         </div>
                     </div>
                 </ng-container>
-                  <!-- add-legal-heir -->
+                <!-- add-legal-heir -->
                 <div class="row" *ngIf="legalbtnh">
                     <div class="container" style="padding: 20px 0;">
                         <ul class="nav" id="" role="">
@@ -223,213 +272,273 @@
                                 font-weight: bold;
                                 text-align: left;
                               " aria-controls="trip-tab-pane" aria-selected="true">
-                                     Legal Heir Details
+                                    Legal Heir Details
                                 </button>
                             </li>
-                            
+
                         </ul>
                     </div>
-                        <div class="col-sm-6 col-md-4">
-                            <div class="form-group">
-                                <label for="state" class="form-label">Owner Name<span class="text-danger"></span></label>
-                                <input type="text" name="name" id="" formControlName="ownerName" class="form-control" readonly required>
-                            </div>
+                    <div class="col-sm-6 col-md-4">
+                        <div class="form-group">
+                            <label for="state" class="form-label">Owner Name<span class="text-danger"></span></label>
+                            <input type="text" name="name" id="" formControlName="ownerName" class="form-control"
+                                readonly required>
                         </div>
-                        <div class="col-sm-6 col-md-4">
-                            <div class="form-group">
-                                <label for="state" class="form-label">Upload L.H. Certificate<span
-                                        class="text-danger"></span></label>
-                                <input type="file" name="" id="" class="form-control"  accept="image/*,.pdf" (change)="onImageChange($event, 'uploadlegalheir')" required>
-                            </div>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                        <div class="form-group">
+                            <label for="state" class="form-label">Upload L.H. Certificate<span
+                                    class="text-danger"></span></label>
+                            <input type="file" name="" id="" class="form-control" accept="image/*,.pdf"
+                                (change)="onImageChange($event, 'uploadlegalheir')" required>
                         </div>
-                        <div class="col-sm-6 col-md-4">
-                            <div class="form-group">
-                                <label for="state" class="form-label">No of Legal Parties<span
-                                        class="text-danger"></span></label>
-                                <input type="text" name="noOfLegalParties" id="" class="form-control"  [ngModelOptions]="{standalone: true}" [(ngModel)]="noOfLegalParties" >
-                            </div>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                        <div class="form-group">
+                            <label for="state" class="form-label">No of Legal Parties<span
+                                    class="text-danger"></span></label>
+                            <input type="text" name="noOfLegalParties" id="" class="form-control"
+                                [ngModelOptions]="{standalone: true}" [(ngModel)]="noOfLegalParties">
                         </div>
+                    </div>
                     <form action="" [formGroup]="legalheirForm">
-                        <div class="container"  formArrayName="legal">
-                            <div class="container" *ngFor="let stateGroup of legalheirarray.controls; let i = index" [formGroupName]="i">
-                               <div class="row">
-                                <div class="col-sm-6 col-md-4">
-                                    <div class="form-group">
-                                        <label for="state" class="form-label">House Owner Name<span
-                                                class="text-danger"></span></label>
-                                        <input type="text" formControlName="ownerName" name="name" id="" class="form-control" required>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-md-4">
-                                    <div class="form-group">
-                                        <label for="state" class="form-label">Phone Number<span class="text-danger"></span></label>
-                                        <input type="text" formControlName="phoneNo" name="" id="" class="form-control" required>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-md-4">
-                                    <div class="form-group">
-                                        <label for="state" class="form-label">Email ID<span class="text-danger"></span></label>
-                                        <input type="email" formControlName="emailId" name="" id="" class="form-control" required>
-                                    </div>
-                                </div>
-                               </div>
-                               <div class="row">
-                                <div class="col-sm-6 col-md-4">
-                                    <div class="form-group">
-                                        <label for="state" class="form-label">Upload Govt ID Proof<span
-                                                class="text-danger"></span></label>
-                                        <input  type="file" name="" id="" class="form-control"  accept="image/*,.pdf" (change)="onImageChange($event, 'idProofDoc', 'legal',i)" required>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-md-4">
-                                    <div class="form-group">
-                                        <label for="state" class="form-label">Govt ID Proof<span
-                                                class="text-danger"></span></label>
-                                        <input type="text" formControlName="idProof" name="" id="" class="form-control" required>
-                                    </div>
-                                </div>
-            
-                                <div class="col-sm-6 col-md-4">
-                                    <div class="form-group">
-                                        <label for="state" class="form-label">Address 1<span class="text-danger"></span></label>
-                                        <input type="text" formControlName="address1" name="" id="" class="form-control" required>
-                                    </div>
-                                </div>
-                               </div>
+                        <div class="container" formArrayName="legal">
+                            <div class="container" *ngFor="let stateGroup of legalheirarray.controls; let i = index"
+                                [formGroupName]="i">
+                                <div class="row">
+                                    <div class="col-sm-6 col-md-4">
+                                        <div class="form-group">
+                                            <label for="state" class="form-label">House Owner Name<span
+                                                    class="text-danger"></span></label>
+                                            <input type="text" formControlName="ownerName" name="name" id="ownerName"
+                                                class="form-control" maxlength="30"
+                                                (keyup)="vldChkLst.blockspecialchar_first($event)" required>
+                                        </div>
 
-                               <div class="row">
-                                <div class="col-sm-6 col-md-4">
-                                    <div class="form-group">
-                                        <label for="state" class="form-label">Address 2<span class="text-danger"></span></label>
-                                        <input type="text" name="" formControlName="address2" id="" class="form-control" required>
+                                        <div *ngIf="legalheirForm.get('ownerName')?.invalid && legalheirForm.get('fullName')?.touched"
+                                            class="reg-error-message">
+                                            <div *ngIf="legalheirForm.get('ownerName')?.hasError('required')">Full name
+                                                is required.</div>
+                                            <!-- <div *ngIf="houseRegistrationForm.get('fullName')?.hasError('fullNameInvalid')">Full name should contain at
+                    least two letters.</div> -->
+                                            <div
+                                                *ngIf="legalheirForm.get('ownerName')?.hasError('fullNameContainsSpecialChars')">
+                                                Full name should
+                                                not contain special characters or numbers.</div>
+                                            <div *ngIf="legalheirForm.get('ownerName')?.hasError('fullNameTooLong')">
+                                                Full
+                                                name should
+                                                contain less than 50 charcter. </div>
+                                            <div *ngIf="legalheirForm.get('ownerName')?.hasError('fullNameTooSmall')">
+                                                Full name should
+                                                contain more than 3 charcter. </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-sm-6 col-md-4">
+                                        <div class="form-group">
+                                            <label for="state" class="form-label">Phone Number<span
+                                                    class="text-danger"></span></label>
+                                            <input type="text" formControlName="phoneNo" name="" id=""
+                                                class="form-control" maxlength="10" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-md-4">
+                                        <div class="form-group">
+                                            <label for="state" class="form-label">Email ID<span
+                                                    class="text-danger"></span></label>
+                                            <input type="email" formControlName="emailId" name="" id=""
+                                                class="form-control" required>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-6 col-md-4">
-                                    <div class="form-group">
-                                        <label for="state" class="form-label">State<span class="text-danger"></span></label>
-                                        <select class="form-select" formControlName="stateId" aria-label="Default select example"  >
-                                            <option selected>Choose State... </option>
-                                            <option *ngFor="let state of stateDtails" [value]="state.stateId">{{ state.stateName }}</option>
-                                        
+                                <div class="row">
+                                    <div class="col-sm-6 col-md-4">
+                                        <div class="form-group">
+                                            <label for="state" class="form-label">Upload Govt ID Proof<span
+                                                    class="text-danger"></span></label>
+                                            <input type="file" name="" id="" class="form-control" accept="image/*,.pdf"
+                                                (change)="onImageChange($event, 'idProofDoc', 'legal',i)" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-md-4">
+                                        <div class="form-group">
+                                            <label for="state" class="form-label">Govt ID Proof<span
+                                                    class="text-danger"></span></label>
+                                            <input type="text" formControlName="idProof" name="" id=""
+                                                class="form-control" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6 col-md-4">
+                                        <div class="form-group">
+                                            <label for="state" class="form-label">Address 1<span
+                                                    class="text-danger"></span></label>
+                                            <input type="text" formControlName="address1" name="" id=""
+                                                class="form-control" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-6 col-md-4">
+                                        <div class="form-group">
+                                            <label for="state" class="form-label">Address 2<span
+                                                    class="text-danger"></span></label>
+                                            <input type="text" name="" formControlName="address2" id=""
+                                                class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-md-4">
+                                        <div class="form-group">
+                                            <label for="state" class="form-label">State<span
+                                                    class="text-danger"></span></label>
+                                            <select class="form-select" formControlName="stateId"
+                                                aria-label="Default select example">
+                                                <option selected>Choose State... </option>
+                                                <option *ngFor="let state of stateDtails" [value]="state.stateId">{{
+                                                    state.stateName }}</option>
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-md-4">
+                                        <div class="form-group">
+                                            <label for="state" class="form-label">District<span
+                                                    class="text-danger"></span></label>
+                                            <input type="text" formControlName="district" name="" id=""
+                                                class="form-control" required>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-6 col-md-4">
+                                        <div class="form-group">
+                                            <label for="state" class="form-label">PIN<span
+                                                    class="text-danger"></span></label>
+                                            <input type="text" formControlName="pinCode" name="" id=""
+                                                class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-md-4">
+                                        <label for="state" class="form-label">Payment Mode<span
+                                                class="text-danger"></span></label>
+                                        <select formControlName="paymtMode" class="form-select"
+                                            aria-label="Default select example" required
+                                            (change)="paymentmode($event, 'legal',i)">
+                                            <option selected>Choose Payment Mode...</option>
+                                            <option value="1" routerLink="">Bank AC</option>
+                                            <option value="2">Cash</option>
+                                            <option value="3" routerLink="">BHIM UPI</option>
+                                            <option value="4" routerLink="">Phone Pe</option>
+                                            <option value="5" routerLink="">Paytm</option>
+                                            <option value="6" routerLink="">Google Pay</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6 col-md-4  ">
+                                        <label for="state" class="form-label">Status (Legal heir)<span
+                                                class="text-danger">*</span></label>
+                                        <select formControlName="isActive" class="form-select"
+                                            aria-label="Default select example" required>
+                                            <option selected>Choose Status...</option>
+                                            <option value="1">Active</option>
+                                            <option value="0">InActive</option>
+
+
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-sm-6 col-md-4">
-                                    <div class="form-group">
-                                        <label for="state" class="form-label">District<span class="text-danger"></span></label>
-                                        <input type="text" formControlName="district" name="" id="" class="form-control" required>
-                                    </div>
-                                </div>
-                               </div>
 
-                               <div class="row"> 
-                                <div class="col-sm-6 col-md-4">
-                                    <div class="form-group">
-                                        <label for="state" class="form-label">PIN<span class="text-danger"></span></label>
-                                        <input type="text" formControlName="pinCode" name="" id="" class="form-control" required>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-md-4">
-                                    <label for="state" class="form-label">Payment Mode<span class="text-danger"></span></label>
-                                    <select formControlName="paymtMode" class="form-select" aria-label="Default select example"
-                                        required (change)="paymentmode($event, 'legal',i)">
-                                        <option selected>Choose Payment Mode...</option>
-                                        <option value="1" routerLink="">Bank AC</option>
-                                        <option value="2">Cash</option>
-                                        <option value="3" routerLink="">BHIM UPI</option>
-                                        <option value="4" routerLink="">Phone Pe</option>
-                                        <option value="5" routerLink="">Paytm</option>
-                                        <option value="6" routerLink="">Google Pay</option>
-                                    </select>
-                                </div>
-                                <div class="col-sm-6 col-md-4  ">
-                                    <label for="state" class="form-label">Status (Legal heir)<span class="text-danger">*</span></label>
-                                    <select formControlName="isActive" class="form-select" aria-label="Default select example" required >
-                                        <option selected>Choose Status...</option>
-                                        <option value="1">Active</option>
-                                        <option value="0">InActive</option>
-            
-            
-                                    </select>
-                                </div>
-                               </div>
-                               
-            
-                                <ng-container *ngIf=" showhidebankdetails(i) == 'Bank' ||  showhidebankdetails(i) == 'upi'">
+
+                                <ng-container
+                                    *ngIf=" showhidebankdetails(i) == 'Bank' ||  showhidebankdetails(i) == 'upi'">
                                     <h5 class="mt-4 text-secondary">Bank Account Details of Legaal Heir</h5>
                                     <hr class="my-1" />
                                     <!-- cash -->
                                     <div class="cash row pt-4 ">
-                
+
                                     </div>
                                     <!-- bank-ac -->
-                                    <div class=" bank-ac row pt-4" *ngIf=" showhidebankdetails(i) == 'Bank'" >
+                                    <div class=" bank-ac row pt-4" *ngIf=" showhidebankdetails(i) == 'Bank'">
                                         <div class="col-sm-6 col-md-4">
                                             <div class="form-group">
                                                 <label for="state" class="form-label">Account Holder Name<span
                                                         class="text-danger"></span></label>
-                                                <input type="text" formControlName="accountHolderName" name="accountHolderName" id="accountHolderName" class="form-control" >
+                                                <input type="text" formControlName="accountHolderName"
+                                                    name="accountHolderName" id="accountHolderName"
+                                                    class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-sm-6 col-md-4">
                                             <div class="form-group">
                                                 <label for="state" class="form-label">Account Number<span
                                                         class="text-danger"></span></label>
-                                                <input type="text" formControlName="bankAccountNo" name="bankAccountNo" id="bankAccountNo" class="form-control" >
+                                                <input type="text" formControlName="bankAccountNo" name="bankAccountNo"
+                                                    id="bankAccountNo" class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-sm-6 col-md-4">
                                             <div class="form-group">
-                                                <label for="state" class="form-label">IFSC<span class="text-danger"></span></label>
-                                                <input type="text" formControlName="ifscCode" name="ifscCode" id="ifscCode" class="form-control" >
+                                                <label for="state" class="form-label">IFSC<span
+                                                        class="text-danger"></span></label>
+                                                <input type="text" formControlName="ifscCode" name="ifscCode"
+                                                    id="ifscCode" class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-sm-6 col-md-4">
                                             <div class="form-group">
                                                 <label for="state" class="form-label">PAN Card <span
                                                         class="text-danger"></span></label>
-                                                <input type="text" formControlName="panNo" name="panNo" id="panNo" class="form-control" >
+                                                <input type="text" formControlName="panNo" name="panNo" id="panNo"
+                                                    class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-sm-6 col-md-4">
                                             <div class="form-group">
                                                 <label for="state" class="form-label">Upload PAN Card<span
                                                         class="text-danger"></span></label>
-                                                <input type="file" name="" id="" class="form-control"  accept="image/*,.pdf" (change)="onImageChange($event, 'panNoDoc', 'legal',i)" >
+                                                <input type="file" name="" id="" class="form-control"
+                                                    accept="image/*,.pdf"
+                                                    (change)="onImageChange($event, 'panNoDoc', 'legal',i)">
                                             </div>
                                         </div>
-                                        
+
                                     </div>
                                     <!-- upi -->
-                                    <div class="row pt-4" *ngIf="showhidebankdetails(i) == 'upi'" >
+                                    <div class="row pt-4" *ngIf="showhidebankdetails(i) == 'upi'">
                                         <div class="col-sm-6 col-md-4">
                                             <div class="form-group">
-                                                <label for="state" class="form-label">UPI ID<span class="text-danger"></span></label>
-                                                <input formControlName="upiId" type="text" class="form-control" >
+                                                <label for="state" class="form-label">UPI ID<span
+                                                        class="text-danger"></span></label>
+                                                <input formControlName="upiId" type="text" class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-sm-6 col-md-4">
                                             <div class="form-group">
                                                 <label for="state" class="form-label">Linked Mob._No<span
                                                         class="text-danger"></span></label>
-                                                <input  type="number"  formControlName="upiPhoneNo" class="form-control" >
+                                                <input type="number" formControlName="upiPhoneNo" class="form-control">
                                             </div>
                                         </div>
-                
-                
+
+
                                         <div class="col-sm-6 col-md-4">
                                             <div class="form-group">
                                                 <label for="state" class="form-label">Upload QR Code<span
                                                         class="text-danger"></span></label>
-                                                <input type="file" name="" id="" class="form-control"  accept="image/*,.pdf" (change)="onImageChange($event, 'quarCodeDoc', 'legal',i)">
+                                                <input type="file" name="" id="" class="form-control"
+                                                    accept="image/*,.pdf"
+                                                    (change)="onImageChange($event, 'quarCodeDoc', 'legal',i)">
                                             </div>
                                         </div>
                                     </div>
                                 </ng-container>
                                 <div class="mt-4 d-flex justify-content-end" *ngIf="legalbtnh">
-                                    <button class="btn btn-danger " style="margin-right: 10px;" *ngIf="i>0" (click)="removelegalform(i)">
+                                    <button class="btn btn-danger " style="margin-right: 10px;" *ngIf="i>0"
+                                        (click)="removelegalform(i)">
                                         <i class="fa-solid fa-trash-alt"></i>
-                                      </button>
+                                    </button>
                                     <button class="btn button btn-primary form-save-btn" (click)=" addlegaleirform()">
                                         +
                                     </button>
@@ -438,19 +547,19 @@
                         </div>
                     </form>
 
-                    
-                    
+
+
                 </div>
-                
-                
+
+
             </div>
 
             <div class="mt-4 d-flex justify-content-end">
-                <button *ngIf="!updatebtn" class="btn btn-primary form-save-btn" (click)=" ownerRegistration()" >
+                <button *ngIf="!updatebtn" class="btn btn-primary form-save-btn" (click)=" ownerRegistration()">
                     Save
                 </button>
-                <button *ngIf="updatebtn" class="btn btn-primary form-save-btn" (click)=" updateowner()" >
-                   Update
+                <button *ngIf="updatebtn" class="btn btn-primary form-save-btn" (click)=" updateowner()">
+                    Update
                 </button>
             </div>
 

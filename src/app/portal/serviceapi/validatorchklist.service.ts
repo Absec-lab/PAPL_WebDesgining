@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { FormControlName } from '@angular/forms';
 import Swal from 'sweetalert2';
 
 @Injectable({
@@ -19,12 +20,34 @@ export class ValidatorchklistService {
       return true;
   }
 
+  isAlphaNumericKey(elmId: any, elmVal: any, msg: any) {
+    if (elmVal != '') {
+      var val = /^[0-9a-zA-Z @.-/,]*$/;
+      if (val.test(elmVal)) {
+        return true;
+      }
+      else {
+        Swal.fire({
+          icon: 'error',
+          text: msg + ' Only Alpha-Numeric Value Allowed!'
+        }).then(function () {
+          if (elmId != "") {
+            setTimeout(() => {
+              const element = <HTMLInputElement>document.getElementById(elmId);
+              element.focus();
+              element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 500);
+          }
+        });
+        return false;
+      }
+    }
+    return true;
+  }
 
   blankFirstCharacter(e: any) {
 	this.blockspecialchar_first(e)
 	//this.blockspecialchar(e)
-
-
 }
 
 //============ Function to block special characters on first place of the field on key press ===============
@@ -489,6 +512,18 @@ blockspecialchar(event:any) {
       return true;
   }
 
+  validateAlphaNumeric(elmVal: any) {
+    const alphaNumericRegex = /^[a-zA-Z0-9]+$/;
+    if (!alphaNumericRegex.test(elmVal)) {
+      Swal.fire({
+        text: `Please enter valid input`,
+      });
+      return false;
+    }
+    return true;
+  }
+  
+
   blankCheckRdo(elmNm:any, msg:any)
   {
       let ele = document.getElementsByName(elmNm);
@@ -501,15 +536,15 @@ blockspecialchar(event:any) {
          }
 
       }
-      if(checkedCtr==0)
-      {
-          Swal.fire({
-            //icon: 'error',
-            text: 'Please Select '+msg
-          });
+      // if(checkedCtr==0)
+      // {
+      //     Swal.fire({
+      //       //icon: 'error',
+      //       text: 'Please Select '+msg
+      //     });
           
-          return false;
-      }
+      //     return false;
+      // }
       return true;
   }
   
@@ -659,6 +694,41 @@ blockspecialchar(event:any) {
       }
       return true;
   }
+
+  allowNumericDigits(e: any) {	
+		if(/\D/g.test(e.target.value)) {
+			e.target.value = e.target.value.replace(/\D/g,'');
+		}
+	}
+
+  allowNumericDigitsWithSlash(e: any) {
+    if (/[^\d/]/g.test(e.target.value)) {
+      e.target.value = e.target.value.replace(/[^\d/]/g, '');
+    }
+  }
+
+  allowNumericDigitsWithAlpha(e: any) {
+    if (/[^a-zA-Z0-9/]/g.test(e.target.value)) {
+      e.target.value = e.target.value.replace(/[^a-zA-Z0-9/]/g, '');
+    }
+  }
+
+  allowAlpha(e: any) {
+    if (/[^a-zA-Z/]/g.test(e.target.value)) {
+      e.target.value = e.target.value.replace(/[^a-zA-Z/]/g, '');
+    }
+  }
+
+  allowAlphaWithSpace(e: any) {
+    if (/[^a-zA-Z\s/]/g.test(e.target.value)) {
+      e.target.value = e.target.value.replace(/[^a-zA-Z\s/]/g, '');
+    }
+  }
+  
+
+  
+  
+  
   /*
   Function Name : validMobileOptinalField
   Desc : validatate optional mobile number field
@@ -752,16 +822,16 @@ blockspecialchar(event:any) {
      return false;
  }
   isAlphaNumeric(event:any){
-    // var numPattern = new RegExp(/^[0-9a-zA-Z]*$/);
-    // var txtVal = event.target.value;
-    // if (txtVal != '')
-    // {
-    //     if (numPattern.test(txtVal) == true)
-    //         return true;
-    //     else
-    //         return false;
-    // }
-    // else
+    var numPattern = new RegExp(/^[0-9a-zA-Z]*$/);
+    var txtVal = event.target.value;
+    if (txtVal != '')
+    {
+        if (numPattern.test(txtVal) == true)
+            return true;
+        else
+            return false;
+    }
+    else
         return true;
   }
   /** This Function Use to only character and space validation :: Added By : Bindurekha Nayak :: On : 25-02-2022 * */

@@ -24,21 +24,35 @@ export class AgreementTypeMasterComponent {
   aggrementTypeDesc: any = '';
   aggreTypeId: any = '';
 
-  
+  errorMessages: any = {
+    aggrementType: '',
+    aggreStDate: '',
+    aggreEdDate: '',
+  };
   validateData() {
     let vSts = true;
-    if (!this.vldChkLst.blankCheck(this.aggrementType, "Aggrement Type ")) {
+
+    if (!this.vldChkLst.blankCheckWithoutAlert(this.aggrementType)) {
       vSts = false;
+      this.errorMessages.aggrementType = 'Agreement Type is required.';
+    } else {
+      this.errorMessages.aggrementType = '';
     }
-    else if (!this.vldChkLst.blankCheck(this.aggreStDate, "Aggrement Start Date ")) {
+
+    if (!this.vldChkLst.blankCheckWithoutAlert(this.aggreStDate)) {
       vSts = false;
+      this.errorMessages.aggreStDate = 'Start Date is required.';
+    } else {
+      this.errorMessages.aggreStDate = '';
     }
-    else if (!this.vldChkLst.blankCheck(this.aggreEdDate, "Aggrement End Date ")) {
+
+    if (!this.vldChkLst.blankCheckWithoutAlert(this.aggreEdDate)) {
       vSts = false;
+      this.errorMessages.aggreEdDate = 'End Date is required.';
+    } else {
+      this.errorMessages.aggreEdDate = '';
     }
-    else {
-      vSts = true;
-    }
+
     return vSts;
   }
 
@@ -60,7 +74,7 @@ export class AgreementTypeMasterComponent {
       }
     }
   }
-  
+
   saveAgreementType() {
     let vSts = this.validateData();
     if (vSts) {
@@ -71,7 +85,8 @@ export class AgreementTypeMasterComponent {
         "aggreTypeName": this.aggrementType,
         "description": this.aggrementTypeDesc
       };
-      this.ngxLoader.start();
+      if (this.aggreStDate < this.aggreEdDate) {
+        this.ngxLoader.start();
       this.portalServ.addAgreementType(param).subscribe(res => {
         this.ngxLoader.stop();
         if (res.responseCode == 200 || res.responseCode == 201) {
@@ -98,6 +113,14 @@ export class AgreementTypeMasterComponent {
           text: 'Error in Data Insertion'
         });
       });
+        
+      }
+
+      else{
+        this.errorMessages.aggreStDate = 'Start date can not be greater than end date.';
+
+      }
+      
     }
   }
   getAllAgreementType() {
@@ -105,24 +128,24 @@ export class AgreementTypeMasterComponent {
     this.ngxLoader.start();
     this.portalServ.getAllAgreementType(param).subscribe(res => {
       this.ngxLoader.stop();
-      console.log("tabledata",res)
+      console.log("tabledata", res)
       this.tableData = res.data
-      
-    },error => {
+
+    }, error => {
       this.ngxLoader.stop();
     });
-   
+
   }
   deleteAgreementType(aggreTypeId: any = 0) {
     Swal.fire({
-			//icon: 'warning',
-			text: "Are you sure you want to Delete the details?",
-			showCancelButton: true,
-			confirmButtonText: 'Yes',
-			cancelButtonText: 'No',
-			cancelButtonColor: '#df1141'
-		}).then((result) => {
-			if (result.isConfirmed) {
+      //icon: 'warning',
+      text: "Are you sure you want to Delete the details?",
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      cancelButtonColor: '#df1141'
+    }).then((result) => {
+      if (result.isConfirmed) {
         let param = {
           "id": aggreTypeId
         };
@@ -141,18 +164,18 @@ export class AgreementTypeMasterComponent {
               text: res.message
             });
           }
-        },error => {
+        }, error => {
           this.ngxLoader.stop();
           Swal.fire({
             icon: 'error',
             text: 'Error'
           });
         });
-			}
-		});
+      }
+    });
 
   }
-  editAgreementType(aggreTypeId:any,aggreTypeName:any,aggreStDate:any,description:any,aggreEdDate:any){
+  editAgreementType(aggreTypeId: any, aggreTypeName: any, aggreStDate: any, description: any, aggreEdDate: any) {
     this.aggreTypeId = aggreTypeId;
     this.aggrementType = aggreTypeName;
     this.aggreStDate = aggreStDate.split('T')[0];
@@ -169,40 +192,50 @@ export class AgreementTypeMasterComponent {
         "aggreTypeName": this.aggrementType,
         "description": this.aggrementTypeDesc
       };
-      
-      this.ngxLoader.start();
-      this.portalServ.updateAgreementType(param).subscribe(res => {
-        this.ngxLoader.stop();
-        if (res.responseCode == 400) {
-          this.aggreEdDate = '';
-          this.aggreStDate = '';
-          this.aggrementType = '';
-          this.aggrementTypeDesc = '';
-          this.aggreTypeId='';
+      if (this.aggreStDate < this.aggreEdDate) {
+        this.ngxLoader.start();
+        this.portalServ.updateAgreementType(param).subscribe(res => {
+
+          this.ngxLoader.stop();
+          if (res.responseCode == 400) {
+            this.aggreEdDate = '';
+            this.aggreStDate = '';
+            this.aggrementType = '';
+            this.aggrementTypeDesc = '';
+            this.aggreTypeId = '';
+            Swal.fire({
+              icon: 'error',
+              text: res.message
+            });
+          } else {
+            this.aggreEdDate = '';
+            this.aggreStDate = '';
+            this.aggrementType = '';
+            this.aggrementTypeDesc = '';
+            this.aggreTypeId = '';
+            Swal.fire({
+              icon: 'success',
+              text: 'Record Updated Successfully'
+            });
+            this.getAllAgreementType();
+
+
+
+          }
+
+        }, error => {
+          this.ngxLoader.stop();
           Swal.fire({
             icon: 'error',
-            text: res.message
+            text: 'Error in Data Update'
           });
-        } else {
-          this.aggreEdDate = '';
-          this.aggreStDate = '';
-          this.aggrementType = '';
-          this.aggrementTypeDesc = '';
-          this.aggreTypeId='';
-          Swal.fire({
-            icon: 'success',
-            text: 'Record Updated Successfully'
-          });
-          this.getAllAgreementType();
-        }
-
-      }, error => {
-        this.ngxLoader.stop();
-        Swal.fire({
-          icon: 'error',
-          text: 'Error in Data Update'
         });
-      });
+      }
+      else {
+        this.errorMessages.aggreStDate = 'Start date can not be greater than end date.';
+
+      }
+
     }
   }
 }

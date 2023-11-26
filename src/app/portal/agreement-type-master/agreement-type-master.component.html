@@ -17,7 +17,10 @@
                         </div>
                         <div class="ms-3  d-flex-2  ">
                             <input type="hidden" name="aggreTypeId" id="aggreTypeId" [(ngModel)]="aggreTypeId">
-                            <input type="text" name="aggrementType" id="aggrementType" [(ngModel)]="aggrementType" class="form-control box" (input)="handleAlphanumericInput($event)">
+                            <input type="text" name="aggrementType" id="aggrementType" [(ngModel)]="aggrementType"
+                                class="form-control box" (input)="vldChkLst.allowAlphaWithSpace($event)" maxlength="20">
+                            <div class="text-danger">{{ errorMessages.aggrementType }}</div>
+
                         </div>
                     </div>
                 </div>
@@ -27,7 +30,10 @@
                             Start Date<span class="text-danger">*</span>
                         </div>
                         <div class="ms-3 d-flex-2">
-                            <input type="date" class="form-control box" name="filter_sdate" id="filter_date" [(ngModel)]="aggreStDate" (input)="updateMinEndDate()"/>
+                            <input type="date" class="form-control box" name="filter_sdate" id="filter_date"
+                                [(ngModel)]="aggreStDate" (input)="updateMinEndDate()" />
+                            <div class="text-danger">{{ errorMessages.aggreStDate }}</div>
+
                         </div>
                     </div>
                 </div>
@@ -38,7 +44,10 @@
                             End Date<span class="text-danger">*</span>
                         </div>
                         <div class=" ms-3 flex-1 ">
-                            <input type="date" class="form-control box" name="filter_edate" id="filter_date" [(ngModel)]="aggreEdDate" [min]="aggreStDate"/>
+                            <input type="date" class="form-control box" name="filter_edate" id="filter_date"
+                                [(ngModel)]="aggreEdDate" [min]="aggreStDate" />
+                            <div class="text-danger">{{ errorMessages.aggreEdDate }}</div>
+
                         </div>
                     </div>
                 </div>
@@ -49,7 +58,8 @@
                             Description
                         </div>
                         <div class="ms-3 d-flex-1  ">
-                            <input type="text" name="aggrementTypeDesc" id="aggrementTypeDesc" class="form-control box" [(ngModel)]="aggrementTypeDesc">
+                            <input type="text" name="aggrementTypeDesc" id="aggrementTypeDesc" class="form-control box"
+                                [(ngModel)]="aggrementTypeDesc">
                         </div>
                     </div>
                 </div>
@@ -94,12 +104,14 @@
 
                         <td>
                             <div style="display: inline-flex;">
-                                <button class="btn btn-sm mx-2" (click)="editAgreementType(item.aggreTypeId,item.aggreTypeName,item.aggreStDate,item.description,item.aggreEdDate)"
+                                <button class="btn btn-sm mx-2"
+                                    (click)="editAgreementType(item.aggreTypeId,item.aggreTypeName,item.aggreStDate,item.description,item.aggreEdDate)"
                                     style="background-color: rgb(22, 133, 236); color: #faf7f7;">
                                     <i class="fa-solid fa-edit"></i>
                                 </button>
 
-                                <button class="btn btn-danger btn-sm mx-2" (click)="deleteAgreementType(item.aggreTypeId)">
+                                <button class="btn btn-danger btn-sm mx-2"
+                                    (click)="deleteAgreementType(item.aggreTypeId)">
                                     <i class="fa-solid fa-trash-alt"></i>
                                 </button>
                             </div>

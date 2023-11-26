@@ -17,8 +17,8 @@ export class AgreementMasterComponent {
   constructor(private ngxLoader: NgxUiLoaderService, private formBuilder: FormBuilder, private route: Router, public portalServ: PortalServiceService, private httpClient: HttpClient, public vldChkLst: ValidatorchklistService) { }
   ngOnInit(): void {
     this.getAllState();
-   // this.getAllSbu();
-   // this.getAllPlant();
+    // this.getAllSbu();
+    // this.getAllPlant();
     this.getAllOwner();
     this.getAllAgreementType();
     this.getAllAgreement();
@@ -30,11 +30,11 @@ export class AgreementMasterComponent {
   allPlant: any = [];
   allOwner: any = [];
   getAllAgreementTypeData: any = [];
-  aggreState: any = '';
-  aggreSbu: any = '';
-  aggrePlant: any = '';
-  aggreOwner: any = '';
-  aggreHouse: any = '';
+  aggreState: any = 0;
+  aggreSbu: any = 0;
+  aggrePlant: any = 0;
+  aggreOwner: any = 0;
+  aggreHouse: any = 0;
   aggreAggrementType: any = '';
   aggreElectricBill: any = '';
   aggreWaterBill: any = '';
@@ -43,10 +43,24 @@ export class AgreementMasterComponent {
   aggreStartDate: any = '';
   aggreEndDate: any = '';
   aggreId: any = '';
-  selectedCropFileNames:any='';
-  selectedCropFiles:any=[];
-  cropPreviews:any=[];
-  getallhouseList:any;
+  selectedCropFileNames: any = '';
+  selectedCropFiles: any = [];
+  cropPreviews: any = [];
+  getallhouseList: any;
+  errorMessages: any = {
+    aggreState: '',
+    aggreSbu: '',
+    aggrePlant: '',
+    aggreOwner: '',
+    aggreHouse: '',
+    aggreAggrementType: '',
+    aggreElectricBill: '',
+    aggreWaterBill: '',
+    aggreMonthlyRent: '',
+    aggrePeriod: '',
+    aggreStartDate: '',
+    aggreEndDate: '',
+  };
   getVal(val: any) {
     this.aggreElectricBill = val.checked;
   }
@@ -106,39 +120,45 @@ export class AgreementMasterComponent {
     });
   }
 
-  getSbu(aggreState:any) {
+  getSbu(aggreState: any) {
     console.log(aggreState);
     this.ngxLoader.start();
-    this.portalServ.get('PAPL/get/sbu/by/'+aggreState)
-    .subscribe(res=>{
-      console.log(res);
-      this.allSbu = res
-      this.ngxLoader.stop();
-      
-    })
-    
+    this.portalServ.get('PAPL/get/sbu/by/' + aggreState)
+      .subscribe(res => {
+        console.log(res);
+        this.allSbu = res
+        this.ngxLoader.stop();
+
+      })
+
   }
 
-  getplant(aggreSbu:any) {
+  getplant(aggreSbu: any) {
     this.ngxLoader.start();
-    this.portalServ.get('PAPL/get/plant/by/'+aggreSbu)
-    .subscribe(res=>{
-      console.log(res);
-      this.allPlant = res
-      this.ngxLoader.stop();
-      
-    })
+    this.portalServ.get('PAPL/get/plant/by/' + aggreSbu)
+      .subscribe(res => {
+        console.log(res);
+        this.allPlant = res
+        this.ngxLoader.stop();
+
+      })
   }
+
+
   getAllOwner() {
     let param = {};
     this.ngxLoader.start();
     this.portalServ.getAllOwner(param).subscribe(res => {
       this.ngxLoader.stop();
-      if (res.length > 0) {
-        this.allOwner = res;
-      } else {
-        this.allOwner = [];
-      }
+      // if (res.length > 0) {
+      this.allOwner = res.data;
+      console.log(res);
+
+      console.log(this.allOwner);
+
+      // } else {
+      //   this.allOwner = [];
+      // }
     }, error => {
       this.ngxLoader.stop();
     });
@@ -181,7 +201,7 @@ export class AgreementMasterComponent {
       // if (res.length > 0) {
       //   this.getAllAgreementTypeData = res;
       //   console.log(res);
-        
+
       // } else {
       //   this.getAllAgreementTypeData = [];
       // }
@@ -195,59 +215,79 @@ export class AgreementMasterComponent {
     this.portalServ.getAllAgreement(param).subscribe(res => {
       console.log(res);
       this.ngxLoader.stop();
-      
-        this.tableData = res.data;
-     
+
+      this.tableData = res.data;
+
     }, error => {
       this.ngxLoader.stop();
     });
   }
 
-  getallhouse(){
+  getallhouse() {
     this.portalServ.get("PAPL/getAllHouse")
-    .subscribe(res=>{
-      console.log(res);
-      this.getallhouseList = res
-    })
+      .subscribe(res => {
+        console.log(res);
+        this.getallhouseList = res
+      })
   }
   validateData() {
     let vSts = true;
-    if (!this.vldChkLst.selectDropdown(this.aggreState, "State")) {
+    if (!this.vldChkLst.selectDropdownWithoutAlert(this.aggreState)) {
       vSts = false;
+      this.errorMessages.aggreState = 'State is required.';
+
     }
-    else if (!this.vldChkLst.selectDropdown(this.aggreSbu, "SBU")) {
+    else if (!this.vldChkLst.selectDropdownWithoutAlert(this.aggreSbu)) {
       vSts = false;
+      this.errorMessages.aggreSbu = 'SBU is required.';
+
     }
-    else if (!this.vldChkLst.selectDropdown(this.aggrePlant, "PLANT")) {
+    else if (!this.vldChkLst.selectDropdownWithoutAlert(this.aggrePlant)) {
       vSts = false;
+      this.errorMessages.aggrePlant = 'Plant is required.';
+
     }
-    else if (!this.vldChkLst.selectDropdown(this.aggreOwner, "Owner")) {
+    else if (!this.vldChkLst.selectDropdownWithoutAlert(this.aggreOwner)) {
       vSts = false;
+      this.errorMessages.aggreOwner = 'Owner Name is required.';
+
     }
-    else if (!this.vldChkLst.selectDropdown(this.aggreHouse, "House")) {
+    else if (!this.vldChkLst.selectDropdownWithoutAlert(this.aggreHouse)) {
       vSts = false;
+      this.errorMessages.aggreHouse = 'House is required.';
+
     }
-    else if (!this.vldChkLst.selectDropdown(this.aggreAggrementType, "Aggrement Type")) {
+    else if (!this.vldChkLst.selectDropdownWithoutAlert(this.aggreAggrementType)) {
       vSts = false;
+      this.errorMessages.aggreAggrementType = 'Agreement type is required.';
+
     }
-    else if (!this.vldChkLst.blankCheck(this.aggreMonthlyRent, "Monthly Rent")) {
+    else if (!this.vldChkLst.blankCheckWithoutAlert(this.aggreMonthlyRent)) {
       vSts = false;
+      this.errorMessages.aggreMonthlyRent = 'Monthly rent is required.';
+
     }
-    else if (!this.vldChkLst.blankCheck(this.aggrePeriod, "Aggrement Period")) {
+    else if (!this.vldChkLst.blankCheckWithoutAlert(this.aggrePeriod)) {
       vSts = false;
+      this.errorMessages.aggrePeriod = 'Agreement Period is required.';
+
     }
-    else if (!this.vldChkLst.blankCheck(this.aggreStartDate, "Start Date")) {
+    else if (!this.vldChkLst.blankCheckWithoutAlert(this.aggreStartDate)) {
       vSts = false;
+      this.errorMessages.aggreStartDate = 'Start date is required.';
+
     }
-    else if (!this.vldChkLst.blankCheck(this.aggreEndDate, "End Date")) {
+    else if (!this.vldChkLst.blankCheckWithoutAlert(this.aggreEndDate)) {
       vSts = false;
+      this.errorMessages.aggreEndDate = 'End date is required.';
+
     }
     else {
       vSts = true;
     }
     return vSts;
   }
-  editAgreement(aggreId:any,stateId:any,sbuId:any,plantId:any,ownerId:any,houseId:any,aggreTypeId:any,rent:any,rentPeriod:any,rentStartDt:any,rentEndDt:any,withElectricBill:any,withWaterBill:any){
+  editAgreement(aggreId: any, stateId: any, sbuId: any, plantId: any, ownerId: any, houseId: any, aggreTypeId: any, rent: any, rentPeriod: any, rentStartDt: any, rentEndDt: any, withElectricBill: any, withWaterBill: any) {
     Swal.fire({
       icon: 'warning',
       text: "Are you sure you want to Edit the details?",
@@ -307,26 +347,28 @@ export class AgreementMasterComponent {
         "withElectricBill": this.aggreElectricBill,
         "withWaterBill": this.aggreWaterBill
       };
-     // this.ngxLoader.start();
+      // this.ngxLoader.start();
       this.portalServ.addAgreement(param).subscribe(res => {
         this.ngxLoader.stop();
         // if (res.responseCode == 200 || res.responseCode == 201) {
-          this.aggreElectricBill = '';
-          this.aggreWaterBill = '';
-          this.aggreState = '';
-          this.aggreSbu = '';
-          this.aggreStartDate = '';
-          this.aggrePeriod = '';
-          this.aggreEndDate = '';
-          this.aggreMonthlyRent = '';
-          this.aggrePlant = '';
-          this.aggreOwner = '';
-          this.aggreAggrementType = '';
-          Swal.fire({
-            icon: 'success',
-            text: 'Record Saved Successfully'
-          });
-          this.getAllAgreement();
+        this.aggreElectricBill = '';
+        this.aggreWaterBill = '';
+        this.aggreState = 0;
+        this.aggreSbu = 0;
+        this.aggreStartDate = '';
+        this.aggrePeriod = '';
+        this.aggreEndDate = '';
+        this.aggreMonthlyRent = '';
+        this.aggrePlant = 0;
+        this.aggreOwner = 0;
+        this.aggreAggrementType = 0;
+        this.aggreHouse = 0;
+        Swal.fire({
+          icon: 'success',
+          text: 'Record Saved Successfully'
+        });
+
+        this.getAllAgreement();
         // } else {
         //   Swal.fire({
         //     icon: 'error',
@@ -378,22 +420,23 @@ export class AgreementMasterComponent {
       this.portalServ.updateAgreement(param).subscribe(res => {
         this.ngxLoader.stop();
         // if (res.responseCode == 200 || res.responseCode == 201) {
-          this.aggreElectricBill = '';
-          this.aggreWaterBill = '';
-          this.aggreState = '';
-          this.aggreSbu = '';
-          this.aggreStartDate = '';
-          this.aggrePeriod = '';
-          this.aggreEndDate = '';
-          this.aggreMonthlyRent = '';
-          this.aggrePlant = '';
-          this.aggreOwner = '';
-          this.aggreAggrementType = '';
-          Swal.fire({
-            icon: 'success',
-            text: 'Record Update Successfully'
-          });
-          this.getAllAgreement();
+        this.aggreElectricBill = '';
+        this.aggreWaterBill = '';
+        this.aggreState = 0;
+        this.aggreSbu = 0;
+        this.aggreStartDate = '';
+        this.aggrePeriod = '';
+        this.aggreEndDate = '';
+        this.aggreMonthlyRent = '';
+        this.aggrePlant = 0;
+        this.aggreOwner = 0;
+        this.aggreAggrementType = '';
+        this.aggreHouse = 0;
+        Swal.fire({
+          icon: 'success',
+          text: 'Record Update Successfully'
+        });
+        this.getAllAgreement();
         // } else {
         //   Swal.fire({
         //     icon: 'error',
@@ -413,19 +456,19 @@ export class AgreementMasterComponent {
   selectFiles(event: any): void {
     this.selectedCropFileNames = '';
     this.selectedCropFiles = event.target.files;
-    this.cropPreviews= [];
+    this.cropPreviews = [];
 
     const file = this.selectedCropFiles[0];
-    const  fileType = file['type'];
+    const fileType = file['type'];
     const fileSize = file['size'];
-    const validPdfTypes = ['application/pdf','image/jpg', 'image/jpeg', 'image/png'];
+    const validPdfTypes = ['application/pdf', 'image/jpg', 'image/jpeg', 'image/png'];
     if (!validPdfTypes.includes(fileType)) {
       // invalid file type code goes here.
       Swal.fire({
         icon: 'error',
         text: 'Please select a valid  file'
       });
-      return ;
+      return;
     }
     // if (fileSize>500000) {
     //   // invalid file size code goes here.
@@ -444,13 +487,13 @@ export class AgreementMasterComponent {
           this.cropPreviews.push(e.target.result);
         };
         reader.readAsDataURL(this.selectedCropFiles[i]);
-        this.selectedCropFileNames  = this.selectedCropFiles[i].name;
+        this.selectedCropFileNames = this.selectedCropFiles[i].name;
       }
 
     }
   }
 
-  addMonthToDate(selectedDate:any, selectedMonth?:any) {
+  addMonthToDate(selectedDate: any, selectedMonth?: any) {
     // Parse the input date string to a JavaScript Date object
     const dateObject = new Date(selectedDate);
     selectedMonth = this.aggrePeriod;
@@ -459,20 +502,20 @@ export class AgreementMasterComponent {
 
     // Format the resulting date to your preferred format (e.g., "MM/DD/YYYY")
     const formattedDate = `${dateObject.getMonth() + 1}/${dateObject.getDate()}/${dateObject.getFullYear()}`;
-    console.log("formattedDate",formattedDate);
-    
-   // return formattedDate;
-}
-captureDate(): void {
-  // const selectedMonth = this.aggrePeriod;
-  // const date = new Date(this.aggreStartDate);
-  // console.log(date);
-  // const newDate = moment(date).add(selectedMonth, 'months').format('yyyy-MM-dd'); // Include day name in formatted date
-  // this.aggreEndDate = newDate;
-  // console.log(newDate);
+    console.log("formattedDate", formattedDate);
+
+    // return formattedDate;
+  }
+  captureDate(): void {
+    // const selectedMonth = this.aggrePeriod;
+    // const date = new Date(this.aggreStartDate);
+    // console.log(date);
+    // const newDate = moment(date).add(selectedMonth, 'months').format('yyyy-MM-dd'); // Include day name in formatted date
+    // this.aggreEndDate = newDate;
+    // console.log(newDate);
 
 
-  console.log('Date captured:', this.aggreStartDate);
+    console.log('Date captured:', this.aggreStartDate);
 
     const newDate = moment(this.aggreStartDate).add(this.aggrePeriod, 'months');
 
@@ -480,7 +523,7 @@ captureDate(): void {
     const formattedDate = newDate.format('yyyy-MM-DD');
     console.log('formattedDate', formattedDate);
     this.aggreEndDate = formattedDate
-}
+  }
 
 
 }

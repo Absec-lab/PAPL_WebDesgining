@@ -15,9 +15,11 @@
                         <label for="state" class="form-label">State<span class="text-danger">*</span></label>
                         <input type="hidden" name="aggreId" id="aggreId" [(ngModel)]="aggreId">
                         <select class="form-select" aria-label="Default select example" [(ngModel)]="aggreState" name="aggreState" (change)="getSbu(aggreState)">
-                            <option value="">Choose State... </option>
+                            <option value="0">Choose State... </option>
                             <option value={{item.stateId}} *ngFor="let item of allState; let i = index">{{item.stateName}}</option>
                         </select>
+                        <div class="text-danger">{{ errorMessages.aggreState }}</div>
+
                     </div>
 
                 </div>
@@ -25,9 +27,11 @@
                     <div class="form-group">
                         <label for="state" class="form-label">SBU<span class="text-danger">*</span></label>
                         <select class="form-select" aria-label="Default select example" [(ngModel)]="aggreSbu" name="aggreSbu" (change)="getplant(aggreSbu)">
-                            <option value="">Choose SBU... </option>
+                            <option value="0">Choose SBU... </option>
                             <option value={{item.locationId}} *ngFor="let item of allSbu; let i = index">{{item.locationName}} ({{item.shortCode}})</option>
                         </select>
+                        <div class="text-danger">{{ errorMessages.aggreSbu }}</div>
+
                     </div>
 
                 </div>
@@ -35,9 +39,11 @@
                     <div class="form-group">
                         <label for="state" class="form-label">Plant<span class="text-danger">*</span></label>
                         <select class="form-select" aria-label="Default select example" [(ngModel)]="aggrePlant" name="aggrePlant">
-                            <option value="">Choose Plant... </option>
+                            <option value="0">Choose Plant... </option>
                             <option value={{item.plantId}} *ngFor="let item of allPlant; let i = index">{{item.plantName}} ({{item.shortCode}})</option>
                         </select>
+                        <div class="text-danger">{{ errorMessages.aggrePlant }}</div>
+
                     </div>
 
                 </div>
@@ -45,9 +51,11 @@
                     <div class="form-group">
                         <label for="state" class="form-label">Owner Name<span class="text-danger">*</span></label>
                         <select class="form-select" aria-label="Default select example" [(ngModel)]="aggreOwner" name="aggreOwner">
-                            <option value="">Choose Owner... </option>
-                            <option value={{item.ownerId}} *ngFor="let item of allOwner; let i = index">{{item.ownerName}}</option>
+                            <option value="0">Choose Owner... </option>
+                            <option value={{item.ownerId}} *ngFor="let item of allOwner; let i = index">{{item.ownerName}} </option>
                         </select>
+                        <div class="text-danger">{{ errorMessages.aggreOwner }}</div>
+
                     </div>
 
                 </div>
@@ -55,10 +63,12 @@
                     <div class="form-group">
                         <label for="state" class="form-label">House Name<span class="text-danger">*</span></label>
                         <select class="form-select" aria-label="Default select example" [(ngModel)]="aggreHouse" name="aggreHouse">
-                            <option value="">House State...</option>
-                            <option value="{{list.houseId}}" *ngFor="let list of getallhouseList; let i = index"> {{list.houseId}}</option>
+                            <option value="0">Choose House...</option>
+                            <option value="{{list.houseId}}" *ngFor="let list of getallhouseList; let i = index"> {{list.houseName}}</option>
                            
                         </select>
+                        <div class="text-danger">{{ errorMessages.aggreHouse }}</div>
+
                     </div>
 
 
@@ -71,6 +81,8 @@
                             <option value={{item.aggreTypeId}} *ngFor="let item of getAllAgreementTypeData; let i = index">{{item.aggreTypeName}}
                             </option>
                         </select>
+                        <div class="text-danger">{{ errorMessages.aggreAggrementType}}</div>
+
                     </div>
 
                 </div>
@@ -78,6 +90,7 @@
                     <div class="form-group">
                         <label for="state" class="form-label">Agreement Upload<span class="text-danger">*</span></label>
                         <input type="file" name="aggreUpload" id="aggreUpload" class="form-control" accept="image/*" (change)="selectFiles($event)">
+                        <div class="text-danger">{{ errorMessages.aggreUpload }}</div>
 
                     </div>
 
@@ -86,6 +99,8 @@
                     <div class="form-group">
                         <label for="state" class="form-label">Monthly Rent<span class="text-danger">*</span></label>
                         <input type="text" name="aggreMonthlyRent" id="aggreMonthlyRent" class="form-control" [(ngModel)]="aggreMonthlyRent">
+                        <div class="text-danger">{{ errorMessages.aggreMonthlyRent }}</div>
+
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
@@ -93,18 +108,24 @@
                         <label for="state" class="form-label">Agreement Period (Months)<span class="text-danger">*</span></label>
                         <input type="text" name="aggrePeriod" id="aggrePeriod" class="form-control"
                             [(ngModel)]="aggrePeriod">
+                            <div class="text-danger">{{ errorMessages.aggrePeriod }}</div>
+
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
                     <div class="form-group">
                         <label for="state" class="form-label">Start Date<span class="text-danger">*</span></label>
                         <input type="date" name="aggreStartDate" id="aggreStartDate" class="form-control" [(ngModel)]="aggreStartDate" class="form-control" (input)="captureDate()">
+                        <div class="text-danger">{{ errorMessages.aggreStartDate }}</div>
+
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
                     <div class="form-group">
                         <label for="state" class="form-label">End Date<span class="text-danger">*</span></label>
                         <input type="date" name="aggreEndDate" id="aggreEndDate" [(ngModel)]="aggreEndDate" class="form-control"disabled>
+                        <div class="text-danger">{{ errorMessages.aggreEndDate }}</div>
+
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
@@ -177,7 +198,7 @@
                         <td>{{ item.locationName }}</td>
                         <td>{{ item.plantName}}</td>
                         <td>{{ item.ownerName }}</td>
-                        <td>{{item.houseId}}</td>
+                        <td>{{item.houseName}}</td>
                         <td>{{ item.aggreTypeName }}</td>
                         <td>{{ item.rent }}</td>
                         <td>{{ item.rentPeriod }}</td>
@@ -188,7 +209,7 @@
                         <td>{{ item.createdDate }}</td>
                         <td>
                             <div style="display: inline-flex;">
-                                <button class="btn btn-sm mx-2" (click)="editAgreement(item.aggreId,item.stateId,item.locationId,item.plantId,item.ownerId,1,item.aggreTypeId,item.rent,item.rentPeriod,item.rentStartDt,item.rentEndDt,item.withElectricBill,item.withWaterBill)"
+                                <button class="btn btn-sm mx-2" (click)="editAgreement(item.aggreId,item.stateId,item.locationId,item.plantId,item.ownerId,item.houseId,item.aggreTypeId,item.rent,item.rentPeriod,item.rentStartDt,item.rentEndDt,item.withElectricBill,item.withWaterBill)"
                                     style="background-color: rgb(22, 133, 236);color: #faf7f7;">
                                     <i class="fa-solid fa-edit"></i>
                                 </button>

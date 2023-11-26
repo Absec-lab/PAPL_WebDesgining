@@ -562,6 +562,14 @@ export class ValidatorchklistService {
     }
     return true;
   }
+
+  selectDropdownWithoutAlert(elmVal: any) {
+    if (elmVal == 0 || elmVal == '' || typeof (elmVal) == undefined || elmVal == null) {
+      
+      return false;
+    }
+    return true;
+  }
   maxLength(elmVal: any, fldLngth: any, msg: any) {
     if (elmVal.length > 0 && elmVal.length > fldLngth) {
       Swal.fire({

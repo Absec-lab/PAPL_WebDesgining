@@ -17,7 +17,7 @@
                         <select class="form-select" aria-label="Default select example" [(ngModel)]="aggreState"
                             name="aggreState" (change)="getSbu(aggreState)">
                             <option value="0">Choose State... </option>
-                            <option *ngFor="let item of allState; let i = index" [value]="item.stateName">
+                            <option *ngFor="let item of allState; let i = index" [value]="item.stateId">
                                 {{item.stateName}}</option>
                         </select>
                         <div class="text-danger">{{ errorMessages.aggreState }}</div>

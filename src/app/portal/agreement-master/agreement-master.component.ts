@@ -35,7 +35,7 @@ export class AgreementMasterComponent {
   aggrePlant: any = 0;
   aggreOwner: any = 0;
   aggreHouse: any = 0;
-  aggreAggrementType: any = '';
+  aggreAggrementType: any = 0;
   aggreElectricBill: any = '';
   aggreWaterBill: any = '';
   aggreMonthlyRent: any = '';
@@ -46,7 +46,7 @@ export class AgreementMasterComponent {
   selectedCropFileNames: any = '';
   selectedCropFiles: any = [];
   cropPreviews: any = [];
-  getallhouseList: any;
+  getallhouseList: any = [];
   errorMessages: any = {
     aggreState: '',
     aggreSbu: '',
@@ -149,16 +149,12 @@ export class AgreementMasterComponent {
     let param = {};
     this.ngxLoader.start();
     this.portalServ.getAllOwner(param).subscribe(res => {
-      this.ngxLoader.stop();
-      // if (res.length > 0) {
       this.allOwner = res.data;
       console.log(res);
+      this.ngxLoader.stop();
 
       console.log(this.allOwner);
 
-      // } else {
-      //   this.allOwner = [];
-      // }
     }, error => {
       this.ngxLoader.stop();
     });
@@ -195,16 +191,12 @@ export class AgreementMasterComponent {
     let param = {};
     this.ngxLoader.start();
     this.portalServ.getAllAgreementType(param).subscribe(res => {
-      this.ngxLoader.stop();
       console.log(res);
-      this.getAllAgreementTypeData = res.data;
-      // if (res.length > 0) {
-      //   this.getAllAgreementTypeData = res;
-      //   console.log(res);
+      this.ngxLoader.stop();
 
-      // } else {
-      //   this.getAllAgreementTypeData = [];
-      // }
+      this.getAllAgreementTypeData = res.data;
+
+
     }, error => {
       this.ngxLoader.stop();
     });
@@ -225,66 +217,105 @@ export class AgreementMasterComponent {
 
   getallhouse() {
     this.portalServ.get("PAPL/getAllHouse")
-      .subscribe(res => {
-        console.log(res);
+      .subscribe((res: any) => {
+
         this.getallhouseList = res
+
+
+        console.log(res);
       })
   }
   validateData() {
     let vSts = true;
     if (!this.vldChkLst.selectDropdownWithoutAlert(this.aggreState)) {
       vSts = false;
-      this.errorMessages.aggreState = 'State is required.';
+      this.errorMessages.aggreState = 'State is required';
+    }
+    else {
+      this.errorMessages.aggreState = '';
 
     }
-    else if (!this.vldChkLst.selectDropdownWithoutAlert(this.aggreSbu)) {
+
+    if (!this.vldChkLst.selectDropdownWithoutAlert(this.aggreSbu)) {
       vSts = false;
       this.errorMessages.aggreSbu = 'SBU is required.';
+    }
+    else {
+      this.errorMessages.aggreSbu = '';
 
     }
-    else if (!this.vldChkLst.selectDropdownWithoutAlert(this.aggrePlant)) {
+    if (!this.vldChkLst.selectDropdownWithoutAlert(this.aggrePlant)) {
       vSts = false;
       this.errorMessages.aggrePlant = 'Plant is required.';
 
     }
-    else if (!this.vldChkLst.selectDropdownWithoutAlert(this.aggreOwner)) {
+    else {
+      this.errorMessages.aggrePlant = '';
+
+    }
+    if (!this.vldChkLst.selectDropdownWithoutAlert(this.aggreOwner)) {
       vSts = false;
       this.errorMessages.aggreOwner = 'Owner Name is required.';
 
     }
-    else if (!this.vldChkLst.selectDropdownWithoutAlert(this.aggreHouse)) {
+    else {
+      this.errorMessages.aggreOwner = '';
+
+    }
+    if (!this.vldChkLst.selectDropdownWithoutAlert(this.aggreHouse)) {
       vSts = false;
       this.errorMessages.aggreHouse = 'House is required.';
 
     }
-    else if (!this.vldChkLst.selectDropdownWithoutAlert(this.aggreAggrementType)) {
+    else {
+      this.errorMessages.aggreHouse = '';
+
+    }
+    if (!this.vldChkLst.selectDropdownWithoutAlert(this.aggreAggrementType)) {
       vSts = false;
       this.errorMessages.aggreAggrementType = 'Agreement type is required.';
 
     }
-    else if (!this.vldChkLst.blankCheckWithoutAlert(this.aggreMonthlyRent)) {
+    else {
+      this.errorMessages.aggreAggrementType = '';
+
+    }
+    if (!this.vldChkLst.blankCheckWithoutAlert(this.aggreMonthlyRent)) {
       vSts = false;
       this.errorMessages.aggreMonthlyRent = 'Monthly rent is required.';
 
     }
-    else if (!this.vldChkLst.blankCheckWithoutAlert(this.aggrePeriod)) {
+    else {
+      this.errorMessages.aggreMonthlyRent = '';
+
+    }
+    if (!this.vldChkLst.blankCheckWithoutAlert(this.aggrePeriod)) {
       vSts = false;
       this.errorMessages.aggrePeriod = 'Agreement Period is required.';
 
     }
-    else if (!this.vldChkLst.blankCheckWithoutAlert(this.aggreStartDate)) {
+    else {
+      this.errorMessages.aggrePeriod = '';
+
+    }
+    if (!this.vldChkLst.blankCheckWithoutAlert(this.aggreStartDate)) {
       vSts = false;
       this.errorMessages.aggreStartDate = 'Start date is required.';
 
     }
-    else if (!this.vldChkLst.blankCheckWithoutAlert(this.aggreEndDate)) {
-      vSts = false;
-      this.errorMessages.aggreEndDate = 'End date is required.';
+    else {
+      this.errorMessages.aggreStartDate = '';
 
     }
-    else {
-      vSts = true;
+    if (!this.vldChkLst.blankCheckWithoutAlert(this.aggreEndDate)) {
+      vSts = false;
+      this.errorMessages.aggreEndDate = 'End date is required.';
     }
+    else {
+        this.errorMessages.aggreEndDate = '';
+      }
+    
+    
     return vSts;
   }
   editAgreement(aggreId: any, stateId: any, sbuId: any, plantId: any, ownerId: any, houseId: any, aggreTypeId: any, rent: any, rentPeriod: any, rentStartDt: any, rentEndDt: any, withElectricBill: any, withWaterBill: any) {
@@ -430,7 +461,7 @@ export class AgreementMasterComponent {
         this.aggreMonthlyRent = '';
         this.aggrePlant = 0;
         this.aggreOwner = 0;
-        this.aggreAggrementType = '';
+        this.aggreAggrementType = 0;
         this.aggreHouse = 0;
         Swal.fire({
           icon: 'success',

@@ -18,7 +18,7 @@
                         <div class="ms-3  d-flex-2  ">
                             <input type="hidden" name="aggreTypeId" id="aggreTypeId" [(ngModel)]="aggreTypeId">
                             <input type="text" name="aggrementType" id="aggrementType" [(ngModel)]="aggrementType"
-                                class="form-control box" (input)="vldChkLst.allowAlphaWithSpace($event)" maxlength="20">
+                                class="form-control box" (input)="vldChkLst.allowAlphaWithSpace($event)" maxlength="50">
                             <div class="text-danger">{{ errorMessages.aggrementType }}</div>
 
                         </div>

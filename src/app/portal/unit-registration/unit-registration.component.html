@@ -12,21 +12,22 @@
             <div class="row " style="background-color: rgba(226, 242, 246, 1); padding:1% 5%; margin-bottom: 0.5cm;">
                 <div class="col-sm-6 col-md-4  ">
                     <div class="form-group">
-                        <label  class="form-label">State<span
-                                class="text-danger">*</span></label>
-                        <select class="form-select" aria-label="Default select example" (change)="getSubonStateChange($event)">
+                        <label class="form-label">State<span class="text-danger">*</span></label>
+                        <select class="form-select" aria-label="Default select example"
+                            (change)="getSubonStateChange($event)">
                             <option selected>Choose State... </option>
-                            <option *ngFor="let state of stateDtails" [value]="state.stateId">{{ state.stateName }}</option>
-                        
+                            <option *ngFor="let state of stateDtails" [value]="state.stateId">{{ state.stateName }}
+                            </option>
+
                         </select>
                     </div>
 
                 </div>
                 <div class="col-sm-6 col-md-4 ">
                     <div class="form-group">
-                        <label  class="form-label">SBU<span
-                                class="text-danger">*</span></label>
-                        <select class="form-select" aria-label="Default select example" (change)="getPlantOnSubChange($event)">
+                        <label class="form-label">SBU<span class="text-danger">*</span></label>
+                        <select class="form-select" aria-label="Default select example"
+                            (change)="getPlantOnSubChange($event)">
                             <option value="">Choose SBU... </option>
                             <option *ngFor="let sbu of activeSBU" [value]="sbu.locationId">{{sbu.locationName}}</option>
                         </select>
@@ -35,99 +36,115 @@
                 </div>
                 <div class="col-sm-6 col-md-4  ">
                     <div class="form-group">
-                        <label  class="form-label">Plant<span
-                                class="text-danger">*</span></label>
-                        <select class="form-select" aria-label="Default select example" (change)="getHouseByPlantId($event)" >
-                            <option selected>Choose Plant... </option>
-                            <option [value]="plant.plantId" *ngFor="let plant of activePlant">{{plant.plantName}}</option>
+                        <label class="form-label">Plant<span class="text-danger">*</span></label>
+                        <select class="form-select" aria-label="Default select example"
+                            (change)="getHouseByPlantId($event)">
+                            <option value="0" selected>Choose Plant... </option>
+                            <option [value]="plant.plantId" *ngFor="let plant of activePlant">{{plant.plantName}}
+                            </option>
                         </select>
                     </div>
 
                 </div>
-                              
-                                    
+
+
             </div>
-            
-            
+
+
         </form>
-       
+
 
         <form action="" [formGroup]="unitRegisterForm">
-            <div formArrayName="homereigster" class="row" style="background-color: rgba(226, 242, 246, 1); padding: 5%; margin-bottom: 0.5cm;">
-              <div *ngFor="let unit of unitArray.controls; let i = index" [formGroupName]="i" class="row">
-                <!-- Form Control 1 (House Name) -->
-                <div class="col-sm-6 col-md-4">
-                  <div class="form-group">
-                    <label class="form-label">House Name<span class="text-danger">*</span></label>
-                    <select class="form-select" formControlName="houseId" aria-label="Default select example">
-                      <option selected>Choose House...</option>
-                      <option *ngFor="let house of activeHouse" [value]="house.houseId">{{house.houseId}}</option>
-                    </select>
-                  </div>
-                </div>
-          
-                <!-- Form Control 2 (Room No.) -->
-                <div class="col-sm-6 col-md-4">
-                  <div class="form-group">
-                    <label class="form-label">Room No.<span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" formControlName="unitNo">
-                  </div>
-                </div>
-          
-                <!-- Form Control 3 (Unit Capacity) -->
-                <div class="col-sm-6 col-md-4">
-                  <div class="form-group">
-                    <label class="form-label">Unit Capacity<span class="text-danger"></span></label>
-                    <input type="text" class="form-control" formControlName="unitCapacity">
-                  </div>
-                </div>
+            <div formArrayName="homereigster" class="row"
+                style="background-color: rgba(226, 242, 246, 1); padding: 5%; margin-bottom: 0.5cm;">
+                <div *ngFor="let unit of unitArray.controls; let i = index" [formGroupName]="i" class="row">
+                    <!-- Form Control 1 (House Name) -->
 
-                <div class="col-sm-6 col-md-4">
-                    <div class="form-group">
-                        <label  class="form-label">Electric Bill Percentage<span
-                                class="text-danger"></span></label>
-                        <input type="number"  class="form-control" formControlName="electBillPercent" >
+                    <div class="col-sm-6 col-md-4">
+                        <div class="form-group">
+                            <label class="form-label">Owner Name <span class="text-danger">*</span></label>
+
+                            <select class="form-select" formControlName="ownerName" aria-label="Default select example">
+                                <option value="0" selected>Choose Owner Name...</option>
+                                <option *ngFor="let item of allOwner; let i = index" [value]="item.ownerId">
+                                    {{item.ownerName}} </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                        <div class="form-group">
+                            <label class="form-label">House No. <span class="text-danger">*</span></label>
+                            <select class="form-select" formControlName="houseId" aria-label="Default select example">
+                                <option value="0" selected>Choose House No...</option>
+                                <option *ngFor="let house of activeHouse" [value]="house.houseId">{{house.houseId}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+
+
+                    <!-- Form Control 2 (Room No.) -->
+                    <div class="col-sm-6 col-md-4">
+                        <div class="form-group">
+                            <label class="form-label">Room No.<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" formControlName="unitNo">
+                        </div>
+                    </div>
+
+                    <!-- Form Control 3 (Unit Capacity) -->
+                    <div class="col-sm-6 col-md-4">
+                        <div class="form-group">
+                            <label class="form-label">Unit Capacity<span class="text-danger"></span></label>
+                            <input type="text" class="form-control" formControlName="unitCapacity">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-4">
+                        <div class="form-group">
+                            <label class="form-label">Electric Bill Percentage<span class="text-danger"></span></label>
+                            <input type="text" class="form-control" formControlName="electBillPercent">
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                        <div class="form-group">
+                            <label class="form-label">Water Bill Percentage<span class="text-danger"></span></label>
+                            <input type="text" class="form-control" formControlName="waterBillPercent">
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                        <div class="form-group">
+                            <label class="form-label">Start Date<span class="text-danger">*</span></label>
+                            <input type="date" (input)=" updateMinEndDate(i)" class="form-control" id="startDate"
+                                formControlName="startDate">
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                        <div class="form-group">
+                            <label class="form-label">End Date<span class="text-danger"></span></label>
+                            <input type="date" class="form-control" id="endDate" formControlName="endDate">
+                        </div>
+                    </div>
+
+                    <!-- Additional Form Controls (similar to Form Control 1, 2, 3) -->
+
+                    <!-- Buttons for adding/removing units -->
+                    <div class="col-sm-6 col-md-2 button-container">
+                        <button type="button" class="btn btn-danger btn-sm" *ngIf="i>0" (click)="removeUnit(i)"><i
+                                class="fa-solid fa-minus"></i></button>
+                        <button type="button" class="btn btn-primary m-1 btn-sm" (click)="addunit()"><i
+                                class="fa-solid fa-plus"></i></button>
                     </div>
                 </div>
-                <div class="col-sm-6 col-md-4">
-                    <div class="form-group">
-                        <label  class="form-label">Water Bill Percentage<span
-                                class="text-danger"></span></label>
-                        <input type="number"  class="form-control" formControlName="waterBillPercent">
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4">
-                    <div class="form-group">
-                        <label  class="form-label">Start Date<span
-                                class="text-danger">*</span></label>
-                        <input type="date" (input)=" updateMinEndDate(i)"  class="form-control" id="startDate" formControlName="startDate" >
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4">
-                    <div class="form-group">
-                        <label  class="form-label">End Date<span
-                                class="text-danger"></span></label>
-                        <input type="date"  class="form-control" id="endDate" formControlName="endDate" >
-                    </div>
-                </div>
-          
-                <!-- Additional Form Controls (similar to Form Control 1, 2, 3) -->
-          
-                <!-- Buttons for adding/removing units -->
-                <div class="col-sm-6 col-md-2 button-container">
-                    <button type="button" class="btn btn-danger btn-sm" *ngIf="i>0" (click)="removeUnit(i)"><i class="fa-solid fa-minus"></i></button>
-                    <button type="button" class="btn btn-primary m-1 btn-sm" (click)="addunit()"><i class="fa-solid fa-plus"></i></button>
-                  </div>
-              </div>
             </div>
-          
+
             <div class="mt-4 d-flex justify-content-end">
-              <button class="btn btn-primary form-save-btn" (click)="postUnit()">
-                Save
-              </button>
+                <button class="btn btn-primary form-save-btn" (click)="postUnit()">
+                    Save
+                </button>
             </div>
-          </form>
-          
+        </form>
+
 
         <div class="" style=" position: relative; overflow-x: auto; overflow-y: auto; margin-top: 30px;">
             <table class="table w-full table-bordered table-striped">
@@ -160,10 +177,10 @@
 
                         <td>
                             <div style="display: inline-flex; ">
-                                <!-- <button class="btn  btn-sm mx-2"
+                                <button class="btn  btn-sm mx-2" (click)="updateUnit()"
                                     style="background-color: rgb(22, 133, 236);color: #faf7f7;">
                                     <i class="fa-solid fa-edit"></i>
-                                </button> -->
+                                </button>
 
                                 <button class="btn btn-danger btn-sm mx-2 " (click)="deleteUnit(item.unitId)">
                                     <i class="fa-solid fa-trash-alt"></i>

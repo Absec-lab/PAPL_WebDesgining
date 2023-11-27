@@ -35,6 +35,7 @@ export class AgreementMasterComponent {
   aggrePlant: any = 0;
   aggreOwner: any = 0;
   aggreHouse: any = 0;
+  aggreUpload:any;
   aggreAggrementType: any = 0;
   aggreElectricBill: any = '';
   aggreWaterBill: any = '';
@@ -56,6 +57,7 @@ export class AgreementMasterComponent {
     aggreAggrementType: '',
     aggreElectricBill: '',
     aggreWaterBill: '',
+    aggreUpload:'',
     aggreMonthlyRent: '',
     aggrePeriod: '',
     aggreStartDate: '',
@@ -280,6 +282,7 @@ export class AgreementMasterComponent {
       this.errorMessages.aggreAggrementType = '';
 
     }
+   
     if (!this.vldChkLst.blankCheckWithoutAlert(this.aggreMonthlyRent)) {
       vSts = false;
       this.errorMessages.aggreMonthlyRent = 'Monthly rent is required.';
@@ -488,6 +491,15 @@ export class AgreementMasterComponent {
     this.selectedCropFileNames = '';
     this.selectedCropFiles = event.target.files;
     this.cropPreviews = [];
+
+    if (!this.selectedCropFiles || this.selectedCropFiles.length === 0) {
+      // No file selected, set an error message
+      this.errorMessages.aggreUpload = 'No files selected';
+      return;
+    } else {
+      // Clear the error message if a file is selected
+      this.errorMessages.aggreUpload = '';
+    }
 
     const file = this.selectedCropFiles[0];
     const fileType = file['type'];

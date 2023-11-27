@@ -21,6 +21,7 @@ export class UnitRegistrationComponent {
   allSbu: any = [];
   allPlant: any = [];
   allHouses: any = [];
+  allOwner: any ;
   allUnits: any;
   activeSBU:any;
   stateId:any;
@@ -34,6 +35,7 @@ export class UnitRegistrationComponent {
   ngOnInit(): void {
     this.getAllState();
     this.getAllUnit();
+    this.getAllOwner();
 
     this.unitRegisterForm = this.formBuilder.group({
       homereigster: this.formBuilder.array([]),
@@ -48,7 +50,8 @@ export class UnitRegistrationComponent {
 
   addunit() {
     const unitGroup = this.formBuilder.group({
-      houseId: ['',Validators.required],
+      ownerName:[0,Validators.required],
+      houseId: [0,Validators.required],
       unitNo: ['',Validators.required],
       unitCapacity: [''],
       electBillPercent: [''],
@@ -86,6 +89,17 @@ export class UnitRegistrationComponent {
       
       this.allPlant = res;
     });
+  }
+
+  getAllOwner() {
+    this.ngxLoader.start();
+    this.portalServ.get("PAPL/getAllOwner")
+    .pipe((takeUntil(this.destroy$)))
+    .subscribe(res=>{
+      console.log(res);
+      this.allOwner = res.data;
+      this.ngxLoader.stop();
+    })
   }
   getSubonStateChange(event: any) {
     this.ngxLoader.start()
@@ -145,15 +159,53 @@ export class UnitRegistrationComponent {
     })
   }
   deleteUnit(id:any) {
-    this.ngxLoader.start()
-    this.portalServ.get(`deactivate/Unit?id=${id}`)
-    .pipe(takeUntil(this.destroy$))
-    .subscribe((res)=>{
 
-      console.log(res);
-      this.getAllUnit()
-      this.ngxLoader.stop()
-    })
+    Swal.fire({
+      //icon: 'warning',
+      text: "Are you sure you want to Delete the details?",
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      cancelButtonColor: '#df1141'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        
+        this.ngxLoader.start();
+        this.portalServ.get(`deactivate/Unit?id=${id}`)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((res)=>{
+          this.ngxLoader.stop();
+          if (res.responseCode == 200) {
+            Swal.fire({
+              icon: 'success',
+              text: 'Record Deleted Successfully'
+            });
+            this.getAllUnit();
+          } else {
+            Swal.fire({
+              icon: 'error',
+              text: res.message
+            });
+          }
+        }, error => {
+          this.ngxLoader.stop();
+          Swal.fire({
+            icon: 'error',
+            text: 'Error'
+          });
+        });
+      }
+    });
+
+    // this.ngxLoader.start()
+    // this.portalServ.get(`deactivate/Unit?id=${id}`)
+    // .pipe(takeUntil(this.destroy$))
+    // .subscribe((res)=>{
+
+    //   console.log(res);
+    //   this.getAllUnit()
+    //   this.ngxLoader.stop()
+    // })
 
   }
  
@@ -201,6 +253,14 @@ export class UnitRegistrationComponent {
       text: `Please Select State, Sbu and Plant `
     });
    }
+  }
+
+  updateUnit() {
+    alert('update in progress');
+    this.unitRegisterForm.patchValue({
+      ownerName: [''],
+    })
+    
   }
 
   updateMinEndDate(index:any): void {

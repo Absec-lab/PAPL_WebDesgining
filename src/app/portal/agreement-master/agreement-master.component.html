@@ -105,7 +105,7 @@
                         <label  class="form-label">Agreement Upload<span class="text-danger">*</span></label>
                         <input type="file" name="aggreUpload" id="aggreUpload" class="form-control" accept="image/*"
                             (change)="selectFiles($event)">
-                        <div class="text-danger">{{ errorMessages.aggreUpload }}</div>
+                            <div *ngIf="errorMessages.aggreUpload" class="text-danger">{{ errorMessages.aggreUpload }}</div>
 
                     </div>
 

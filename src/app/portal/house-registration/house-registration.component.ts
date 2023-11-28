@@ -34,7 +34,7 @@ export class HouseRegistrationComponent implements OnInit {
     this. getAllHouseDetailList()
 
     this.houseRegistrationForm = this.formBuilder.group({
-      ownerName: ['',Validators.required],
+      ownerName: [0,Validators.required],
       noOfRooms: ['', [Validators.required, Validators.pattern('^[0-9]{1,2}$')]],
       electricBill: ['',Validators.required],
       waterBill: ['',Validators.required],
@@ -82,7 +82,7 @@ export class HouseRegistrationComponent implements OnInit {
     .pipe((takeUntil(this.destroy$)))
     .subscribe(res=>{
       console.log(res);
-      this.allOwner = res;
+      this.allOwner = res.data;
       this.ngxLoader.stop();
     })
   }
@@ -245,7 +245,7 @@ getSubonStateChange(event: any, index: number) {
   updateHouse(item:any) {
     console.log(item)
     this.houseRegistrationForm.patchValue({
-      ownerName: [''],
+      ownerName: item.ownerName,
       noOfRooms: item.noOfUnits,
       electricBill: item.noOfEleBills,
       waterBill: item.noOfWtrBills,
@@ -282,13 +282,53 @@ getSubonStateChange(event: any, index: number) {
   //   });
 
   removeHouse(id: any = 0) {
-      this.portalService.removeHouse(id).subscribe(res => {  
-        if(res) {
-          alert("House Deactivated !")
-        }
-        this.getAllHouseDetailList();
+
+
+    Swal.fire({
+      //icon: 'warning',
+      text: "Are you sure you want to Delete the details?",
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      cancelButtonColor: '#df1141'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        
+        this.ngxLoader.start();
+        this.portalService.removeHouse(id).subscribe(res => {  
+          this.ngxLoader.stop();
+          if (res) {
+            Swal.fire({
+              icon: 'success',
+              text: 'Record Deleted Successfully'
+            });
+            this.getAllHouseDetailList();
+          } else {
+            Swal.fire({
+              icon: 'error',
+              text: res.message
+            });
+          }
+        }, error => {
+          this.ngxLoader.stop();
+          Swal.fire({
+            icon: 'error',
+            text: 'Error'
+          });
+        });
+      }
+    });
+
+
+
+
+    //   this.portalService.removeHouse(id).subscribe(res => {  
+    //     if(res) {
+    //       alert("House Deactivated !")
+    //     }
+    //     this.getAllHouseDetailList();
             
-     }); 
+    //  }); 
 
   }
 

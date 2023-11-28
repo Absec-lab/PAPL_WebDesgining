@@ -699,6 +699,18 @@ export class ValidatorchklistService {
     }
   }
 
+  allowNumericDigitsDecimal(e: any) {
+    // Allow up to four digits, including decimal point
+    if (!/^\d{0,4}(\.\d{0,2})?$/.test(e.target.value)) {
+      // Remove non-numeric and extra decimal point characters
+      e.target.value = e.target.value.replace(/[^\d.]/g, '');
+      // Remove extra decimal points
+      const parts = e.target.value.split('.');
+      e.target.value = parts[0] + (parts.length > 1 ? '.' + parts[1].slice(0, 2) : '');
+    }
+  }
+  
+
   allowNumericDigitsWithSlash(e: any) {
     if (/[^\d/]/g.test(e.target.value)) {
       e.target.value = e.target.value.replace(/[^\d/]/g, '');

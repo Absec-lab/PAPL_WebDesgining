@@ -18,8 +18,10 @@
                             <option selected>Choose State... </option>
                             <option *ngFor="let state of stateDtails" [value]="state.stateId">{{ state.stateName }}
                             </option>
-
                         </select>
+                        <div  class="text-danger" *ngIf="stateControl.invalid && stateControl.touched">
+                            State is required!
+                        </div>
                     </div>
 
                 </div>
@@ -31,6 +33,9 @@
                             <option value="">Choose SBU... </option>
                             <option *ngFor="let sbu of activeSBU" [value]="sbu.locationId">{{sbu.locationName}}</option>
                         </select>
+                        <div  class="text-danger" *ngIf="sbuControl.invalid && sbuControl.touched">
+                            SBU is required!
+                          </div>
                     </div>
 
                 </div>
@@ -43,6 +48,9 @@
                             <option [value]="plant.plantId" *ngFor="let plant of activePlant">{{plant.plantName}}
                             </option>
                         </select>
+                        <div class="text-danger" *ngIf="plantControl.invalid && plantControl.touched">
+                            Plant is required!
+                          </div>
                     </div>
 
                 </div>
@@ -69,16 +77,25 @@
                                 <option *ngFor="let item of allOwner; let i = index" [value]="item.ownerId">
                                     {{item.ownerName}} </option>
                             </select>
+                            <div class="text-danger"
+                                *ngIf="unitArray.controls[i].get('ownerName')?.hasError('required') && unitArray.controls[i].get('ownerName')?.touched">
+                                Owner Name is required!
+                            </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
-                            <label class="form-label">House No. <span class="text-danger">*</span></label>
+                            <label class="form-label">House Name <span class="text-danger">*</span></label>
                             <select class="form-select" formControlName="houseId" aria-label="Default select example">
-                                <option value="0" selected>Choose House No...</option>
-                                <option *ngFor="let house of activeHouse" [value]="house.houseId">{{house.houseId}}
+                                <option value="0" selected>Choose House Name...</option>
+                                <option *ngFor="let house of activeHouse" [value]="house.houseId">{{house.houseName}}
                                 </option>
                             </select>
+                            <div class="text-danger"
+                                *ngIf="unitArray.controls[i].get('houseId')?.hasError('required') && unitArray.controls[i].get('houseId')?.touched">
+                                House ID is required!
+                            </div>
+
                         </div>
                     </div>
 
@@ -88,7 +105,13 @@
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             <label class="form-label">Room No.<span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" formControlName="unitNo">
+                            <input type="text" class="form-control" formControlName="unitNo" maxlength="4"
+                                (input)="vldChkLst.allowNumericDigits($event)">
+                            <div class="text-danger"
+                                *ngIf="unitArray.controls[i].get('unitNo')?.hasError('required') && unitArray.controls[i].get('unitNo')?.touched">
+                                Room No is required!
+                            </div>
+
                         </div>
                     </div>
 
@@ -96,20 +119,35 @@
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             <label class="form-label">Unit Capacity<span class="text-danger"></span></label>
-                            <input type="text" class="form-control" formControlName="unitCapacity">
+                            <input type="text" class="form-control" formControlName="unitCapacity" maxlength="5"
+                                (input)="vldChkLst.allowNumericDigitsDecimal($event)">
+                            <div class="text-danger"
+                                *ngIf="unitArray.controls[i].get('unitCapacity')?.hasError('required') && unitArray.controls[i].get('unitCapacity')?.touched">
+                                Unit Capacity is required!
+                            </div>
                         </div>
                     </div>
 
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             <label class="form-label">Electric Bill Percentage<span class="text-danger"></span></label>
-                            <input type="text" class="form-control" formControlName="electBillPercent">
+                            <input type="text" class="form-control" formControlName="electBillPercent" maxlength="2"
+                                (input)="vldChkLst.allowNumericDigits($event)">
+                            <div class="text-danger"
+                                *ngIf="unitArray.controls[i].get('electBillPercent')?.hasError('required') && unitArray.controls[i].get('electBillPercent')?.touched">
+                                ElectBill Percent is required!
+                            </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             <label class="form-label">Water Bill Percentage<span class="text-danger"></span></label>
-                            <input type="text" class="form-control" formControlName="waterBillPercent">
+                            <input type="text" class="form-control" formControlName="waterBillPercent" maxlength="2"
+                                (input)="vldChkLst.allowNumericDigits($event)">
+                            <div class="text-danger"
+                                *ngIf="unitArray.controls[i].get('waterBillPercent')?.hasError('required') && unitArray.controls[i].get('waterBillPercent')?.touched">
+                                Water Bill Percent is required!
+                            </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
@@ -117,12 +155,20 @@
                             <label class="form-label">Start Date<span class="text-danger">*</span></label>
                             <input type="date" (input)=" updateMinEndDate(i)" class="form-control" id="startDate"
                                 formControlName="startDate">
+                            <div class="text-danger"
+                                *ngIf="unitArray.controls[i].get('startDate')?.hasError('required') && unitArray.controls[i].get('startDate')?.touched">
+                                Start Date is required!
+                            </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             <label class="form-label">End Date<span class="text-danger"></span></label>
                             <input type="date" class="form-control" id="endDate" formControlName="endDate">
+                            <div class="text-danger"
+                                *ngIf="unitArray.controls[i].get('endDate')?.hasError('required') && unitArray.controls[i].get('endDate')?.touched">
+                                End Date is required!
+                            </div>
                         </div>
                     </div>
 
@@ -130,8 +176,8 @@
 
                     <!-- Buttons for adding/removing units -->
                     <div class="col-sm-6 col-md-2 button-container">
-                        <button type="button" class="btn btn-danger btn-sm" *ngIf="i>0" (click)="removeUnit(i)"><i
-                                class="fa-solid fa-minus"></i></button>
+                        <button type="button" class="btn btn-danger btn-sm" *ngIf="i>0" (click)="removeUnit(i)"> <i
+                                class="fa-solid fa-trash-alt"></i></button>
                         <button type="button" class="btn btn-primary m-1 btn-sm" (click)="addunit()"><i
                                 class="fa-solid fa-plus"></i></button>
                     </div>
@@ -166,7 +212,7 @@
                 <tbody>
                     <tr *ngFor="let item of allUnits; let i = index">
                         <td>{{ i + 1 }}</td>
-                        <td>{{ item.houseId }}</td>
+                        <td>{{ item.houseName }}</td>
                         <td>{{ item.unitNo }}</td>
                         <td>{{ item.unitCapacity}}</td>
                         <td>{{ item.electBillPercent }}</td>
@@ -177,7 +223,7 @@
 
                         <td>
                             <div style="display: inline-flex; ">
-                                <button class="btn  btn-sm mx-2" (click)="updateUnit()"
+                                <button class="btn  btn-sm mx-2" (click)="updateUnit(item)"
                                     style="background-color: rgb(22, 133, 236);color: #faf7f7;">
                                     <i class="fa-solid fa-edit"></i>
                                 </button>

@@ -191,12 +191,6 @@ getSubonStateChange(event: any, index: number) {
       }
       
     }
-    if (!this.stateArray.valid) {
-      Swal.fire({
-        text: "Please fill in all details in House Mapping",
-      });
-      vSts = false;
-    }
    
     
     return vSts;

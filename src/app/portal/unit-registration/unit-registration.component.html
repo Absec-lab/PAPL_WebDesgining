@@ -19,7 +19,7 @@
                             <option *ngFor="let state of stateDtails" [value]="state.stateId">{{ state.stateName }}
                             </option>
                         </select>
-                        <div  class="text-danger" *ngIf="stateControl.invalid && stateControl.touched">
+                        <div class="text-danger" *ngIf="stateControl.invalid && stateControl.touched">
                             State is required!
                         </div>
                     </div>
@@ -33,9 +33,9 @@
                             <option value="">Choose SBU... </option>
                             <option *ngFor="let sbu of activeSBU" [value]="sbu.locationId">{{sbu.locationName}}</option>
                         </select>
-                        <div  class="text-danger" *ngIf="sbuControl.invalid && sbuControl.touched">
+                        <div class="text-danger" *ngIf="sbuControl.invalid && sbuControl.touched">
                             SBU is required!
-                          </div>
+                        </div>
                     </div>
 
                 </div>
@@ -50,7 +50,7 @@
                         </select>
                         <div class="text-danger" *ngIf="plantControl.invalid && plantControl.touched">
                             Plant is required!
-                          </div>
+                        </div>
                     </div>
 
                 </div>
@@ -119,8 +119,8 @@
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             <label class="form-label">Unit Capacity<span class="text-danger"></span></label>
-                            <input type="text" class="form-control" formControlName="unitCapacity" maxlength="5"
-                                (input)="vldChkLst.allowNumericDigitsDecimal($event)">
+                            <input type="text" class="form-control" formControlName="unitCapacity"
+                                (input)="vldChkLst.allowNumericDigits($event)" maxlength="2">
                             <div class="text-danger"
                                 *ngIf="unitArray.controls[i].get('unitCapacity')?.hasError('required') && unitArray.controls[i].get('unitCapacity')?.touched">
                                 Unit Capacity is required!
@@ -131,8 +131,8 @@
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             <label class="form-label">Electric Bill Percentage<span class="text-danger"></span></label>
-                            <input type="text" class="form-control" formControlName="electBillPercent" maxlength="2"
-                                (input)="vldChkLst.allowNumericDigits($event)">
+                            <input type="text" class="form-control" formControlName="electBillPercent" maxlength="5"
+                                (input)="vldChkLst.allowNumericDigitsDecimal($event)">
                             <div class="text-danger"
                                 *ngIf="unitArray.controls[i].get('electBillPercent')?.hasError('required') && unitArray.controls[i].get('electBillPercent')?.touched">
                                 ElectBill Percent is required!
@@ -142,8 +142,8 @@
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             <label class="form-label">Water Bill Percentage<span class="text-danger"></span></label>
-                            <input type="text" class="form-control" formControlName="waterBillPercent" maxlength="2"
-                                (input)="vldChkLst.allowNumericDigits($event)">
+                            <input type="text" class="form-control" formControlName="waterBillPercent" maxlength="5"
+                            (input)="vldChkLst.allowNumericDigitsDecimal($event)">
                             <div class="text-danger"
                                 *ngIf="unitArray.controls[i].get('waterBillPercent')?.hasError('required') && unitArray.controls[i].get('waterBillPercent')?.touched">
                                 Water Bill Percent is required!

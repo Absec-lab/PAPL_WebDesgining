@@ -338,13 +338,10 @@ export class UnitRegistrationComponent {
 
 
   updateUnit(item: any) {
-    // Assuming 'unitArray' is always present and has at least one control
     const firstUnitGroup = this.unitArray.at(0) as FormGroup;
     console.log(firstUnitGroup);
     
-  
-    // Assuming the 'ownerName', 'houseId', 'unitNo', 'unitCapacity', 'electBillPercent',
-    // 'waterBillPercent', 'startDate', and 'endDate' fields exist in your form
+    
     firstUnitGroup.patchValue({
       ownerName: item.ownerName,
       houseId: item.houseId,

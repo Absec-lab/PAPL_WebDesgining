@@ -8,6 +8,7 @@ import { HttpClient } from "@angular/common/http";
 import { ValidatorchklistService } from './../serviceapi/validatorchklist.service';
 import { Subject, takeUntil } from 'rxjs';
 
+
 @Component({
   selector: 'app-unit-registration',
   templateUrl: './unit-registration.component.html',
@@ -33,6 +34,7 @@ export class UnitRegistrationComponent {
   stateControl: FormControl = new FormControl('', Validators.required);
   sbuControl: FormControl = new FormControl('', Validators.required);
   plantControl: FormControl = new FormControl('', Validators.required);
+  updatebtn: boolean = false;
 
 
   fullArr: any = [];
@@ -283,9 +285,9 @@ export class UnitRegistrationComponent {
           .subscribe((res) => {
             console.log(res)
             this.getAllUnit()
-            this.stateId = null;
-            this.sbuId = null;
-            this.plantId = null;
+            this.stateId = "";
+            this.sbuId = "";
+            this.plantId = "";
             this.unitArray.clear()
             this.addunit()
             this.ngxLoader.stop()
@@ -338,6 +340,8 @@ export class UnitRegistrationComponent {
 
 
   updateUnit(item: any) {
+    this.updatebtn = true;
+
     const firstUnitGroup = this.unitArray.at(0) as FormGroup;
     console.log(firstUnitGroup);
     
@@ -356,7 +360,54 @@ export class UnitRegistrationComponent {
     // Additional logic or actions if needed
   }
   
+  updateUnitForm() {
+    // alert(this.updatebtn )
 
+    // if (this.stateControl.valid && this.sbuControl.valid && this.plantControl.valid) {
+      // alert("coming to update")
+      if (this.unitArray.controls[0].valid) {
+        // alert(this.unitArray.controls[0].value)
+        let data = {
+          "stateId": this.stateId,
+          "sbuId": this.sbuId,
+          "plantId": this.plantId,
+          "unitDTO": this.unitArray.value,
+        }
+  
+        this.ngxLoader.start();
+        this.portalServ.updateUnits(data)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe((res) => {
+            console.log(res);
+            this.getAllUnit();
+            this.stateId = null;
+            this.sbuId = null;
+            this.plantId = null;
+            this.unitArray.clear();
+            this.addunit();
+            this.ngxLoader.stop();
+            Swal.fire({
+              icon: 'success',
+              text: 'Unit Updated Successfully'
+            });
+            this.updatebtn = false;
+            this.unitRegisterForm.reset();
+            this.unitArray.reset();
+          }, error => {
+            this.ngxLoader.stop();
+            Swal.fire({
+              icon: 'error',
+              text: 'Error updating unit'
+            });
+          });
+      } else {
+        this.showStateSbuPlantErrors();
+      }
+    // } else {
+    //   this.showFieldErrors();
+    // }
+  }
+  
   updateMinEndDate(index: any): void {
     const startDateInput = document.getElementById('startDate') as HTMLInputElement;
     if (startDateInput) {

@@ -88,6 +88,13 @@ export class PortalServiceService {
 		let serviceRes = this.Http.post(serviceUrl, params);
 		return serviceRes;
 	}
+
+	// update units
+	updateUnits(params: any): Observable<any> {
+		let serviceUrl = environment.serviceURL + 'PAPL/updateUnit';
+		let serviceRes = this.Http.put(serviceUrl, params);
+		return serviceRes;
+	}
 	//Get All Houses by plant id
 	getAllHousesByPlantId(params: any): Observable<any> {
 		let serviceUrl = environment.serviceURL + 'PAPL/get/house/by/1';

@@ -185,8 +185,11 @@
             </div>
 
             <div class="mt-4 d-flex justify-content-end">
-                <button class="btn btn-primary form-save-btn" (click)="postUnit()">
+                <button *ngIf="!updatebtn" class="btn btn-primary form-save-btn" (click)="postUnit()">
                     Save
+                </button>
+                <button *ngIf="updatebtn" class="btn btn-primary form-save-btn" (click)=" updateUnitForm()">
+                    Update
                 </button>
             </div>
         </form>

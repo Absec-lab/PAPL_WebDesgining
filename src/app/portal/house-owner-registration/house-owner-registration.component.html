@@ -76,14 +76,14 @@
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             <label for="state" class="form-label">Upload Govt ID Proof<span
-                                    class="text-danger"></span></label>
+                                    class="text-danger">*</span></label>
                             <input type="file" #fileInput name="" id="" class="form-control" accept="image/*,.pdf"
                                 required (change)="onImageChange($event, 'idProofDoc')" />
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
-                            <label for="state" class="form-label">Govt ID Proof<span class="text-danger"></span></label>
+                            <label for="state" class="form-label">Govt ID Proof<span class="text-danger">*</span></label>
                             <input type="text" name="idProof" id="idProof" class="form-control"
                                 formControlName="gIdproof" (input)="vldChkLst.allowNumericDigitsWithAlpha($event)"
                                 maxlength="15" />
@@ -196,7 +196,7 @@
                         <div class="col-sm-6 col-md-4">
                             <div class="form-group">
                                 <label for="state" class="form-label">Account Holder Name<span
-                                        class="text-danger"></span></label>
+                                        class="text-danger">*</span></label>
                                 <input type="text" name="accountHolderName" id="accountHolderName" maxlength="25"
                                     formControlName="accHolName" class="form-control"
                                     (input)="vldChkLst.allowAlphaWithSpace($event)">
@@ -205,21 +205,21 @@
                         <div class="col-sm-6 col-md-4">
                             <div class="form-group">
                                 <label for="state" class="form-label">Account Number<span
-                                        class="text-danger"></span></label>
+                                        class="text-danger">*</span></label>
                                 <input type="text" name="bankAccountNo" id="bankAccountNo" class="form-control" maxlength="25"
                                     formControlName="accounNum" (input)="vldChkLst.allowNumericDigits($event)">
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-4">
                             <div class="form-group">
-                                <label for="state" class="form-label">IFSC<span class="text-danger"></span></label>
+                                <label for="state" class="form-label">IFSC<span class="text-danger">*</span></label>
                                 <input type="text" name="ifscCode" id="ifscCode" class="form-control" maxlength="15"
                                     formControlName="ifsc" (input)="vldChkLst.allowNumericDigitsWithAlpha($event)">
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-4">
                             <div class="form-group">
-                                <label for="state" class="form-label">PAN Card <span class="text-danger"></span></label>
+                                <label for="state" class="form-label">PAN Card <span class="text-danger">*</span></label>
                                 <input type="text" name="panNo" id="panNo" class="form-control" formControlName="pan" maxlength="12"
                                     (input)="vldChkLst.allowNumericDigitsWithAlpha($event)">
                             </div>
@@ -227,7 +227,7 @@
                         <div class="col-sm-6 col-md-4">
                             <div class="form-group">
                                 <label for="state" class="form-label">Upload PAN Card<span
-                                        class="text-danger"></span></label>
+                                        class="text-danger">*</span></label>
                                 <input type="file" name="" id="" class="form-control" accept="image/*,.pdf"
                                     (change)="onImageChange($event, 'panPic')" formControlName="panPic">
                             </div>
@@ -238,14 +238,14 @@
                     <div class="row pt-4" *ngIf="upi">
                         <div class="col-sm-6 col-md-4">
                             <div class="form-group">
-                                <label for="state" class="form-label">UPI ID<span class="text-danger"></span></label>
+                                <label for="state" class="form-label">UPI ID<span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" formControlName="upiId" maxlength="20">
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-4">
                             <div class="form-group">
                                 <label for="state" class="form-label">Linked Mob._No<span
-                                        class="text-danger"></span></label>
+                                        class="text-danger">*</span></label>
                                 <input type="text" class="form-control" (keyup)="vldChkLst.allowNumericDigits($event)" formControlName="linkMobile" maxlength="10">
                             </div>
                         </div>
@@ -254,7 +254,7 @@
                         <div class="col-sm-6 col-md-4">
                             <div class="form-group">
                                 <label for="state" class="form-label">Upload QR Code<span
-                                        class="text-danger"></span></label>
+                                        class="text-danger">*</span></label>
                                 <input type="file" name="" id="" class="form-control" accept="image/*,.pdf"
                                     (change)="onImageChange($event, 'qrCode')">
                             </div>
@@ -280,7 +280,7 @@
                     </div>
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
-                            <label for="state" class="form-label">Owner Name<span class="text-danger"></span></label>
+                            <label for="state" class="form-label">Owner Name<span class="text-danger">*</span></label>
                             <input type="text" name="name" id="" formControlName="ownerName" class="form-control"
                                 readonly required>
                         </div>
@@ -288,7 +288,7 @@
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             <label for="state" class="form-label">Upload L.H. Certificate<span
-                                    class="text-danger"></span></label>
+                                    class="text-danger">*</span></label>
                             <input type="file" name="" id="" class="form-control" accept="image/*,.pdf"
                                 (change)="onImageChange($event, 'uploadlegalheir')" required>
                         </div>
@@ -296,7 +296,7 @@
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             <label for="state" class="form-label">No of Legal Parties<span
-                                    class="text-danger"></span></label>
+                                    class="text-danger">*</span></label>
                             <input type="text" name="noOfLegalParties" id="" class="form-control"
                                 [ngModelOptions]="{standalone: true}" [(ngModel)]="noOfLegalParties">
                         </div>
@@ -580,7 +580,7 @@
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Phone no</th>
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Address</th>
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">Govt ID</th>
-                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">ID Proof</th>
+                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">ID Proof Address</th>
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Account Number</th>
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">IFSC Code</th>
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">PAN Card</th>

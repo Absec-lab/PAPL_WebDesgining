@@ -146,7 +146,7 @@
                         <select class="form-select" (change)="paymentmode($event, 'owner')"
                             aria-label="Default select example" formControlName="paymode" name="paymtMode"
                             id="paymtMode">
-                            <option value="0" selected>Choose Payment Mode...</option>
+                            <option value="" selected>Choose Payment Mode...</option>
                             <option [value]="1" routerLink="">
                                 Bank AC
                             </option>
@@ -315,7 +315,7 @@
                                     <div class="col-sm-6 col-md-4">
                                         <div class="form-group">
                                             <label for="state" class="form-label">House Owner Name<span
-                                                    class="text-danger"></span></label>
+                                                    class="text-danger">*</span></label>
                                             <input type="text" formControlName="ownerName" name="name" id="ownerName"
                                                 class="form-control" maxlength="30"
                                                 (keyup)="vldChkLst.blockspecialchar_first($event)" required>
@@ -344,7 +344,7 @@
                                     <div class="col-sm-6 col-md-4">
                                         <div class="form-group">
                                             <label for="state" class="form-label">Phone Number<span
-                                                    class="text-danger"></span></label>
+                                                    class="text-danger">*</span></label>
                                             <input type="text" formControlName="phoneNo" name="" id=""
                                                 class="form-control" maxlength="10" required>
                                         </div>
@@ -352,7 +352,7 @@
                                     <div class="col-sm-6 col-md-4">
                                         <div class="form-group">
                                             <label for="state" class="form-label">Email ID<span
-                                                    class="text-danger"></span></label>
+                                                    class="text-danger">*</span></label>
                                             <input type="email" formControlName="emailId" name="" id=""
                                                 class="form-control" required>
                                         </div>
@@ -362,7 +362,7 @@
                                     <div class="col-sm-6 col-md-4">
                                         <div class="form-group">
                                             <label for="state" class="form-label">Upload Govt ID Proof<span
-                                                    class="text-danger"></span></label>
+                                                    class="text-danger">*</span></label>
                                             <input type="file" name="" id="" class="form-control" accept="image/*,.pdf"
                                                 (change)="onImageChange($event, 'idProofDoc', 'legal',i)" required>
                                         </div>
@@ -370,7 +370,7 @@
                                     <div class="col-sm-6 col-md-4">
                                         <div class="form-group">
                                             <label for="state" class="form-label">Govt ID Proof<span
-                                                    class="text-danger"></span></label>
+                                                    class="text-danger">*</span></label>
                                             <input type="text" formControlName="idProof" name="" id=""
                                                 class="form-control" required>
                                         </div>
@@ -379,7 +379,7 @@
                                     <div class="col-sm-6 col-md-4">
                                         <div class="form-group">
                                             <label for="state" class="form-label">Address 1<span
-                                                    class="text-danger"></span></label>
+                                                    class="text-danger">*</span></label>
                                             <input type="text" formControlName="address1" name="" id=""
                                                 class="form-control" required>
                                         </div>
@@ -398,7 +398,7 @@
                                     <div class="col-sm-6 col-md-4">
                                         <div class="form-group">
                                             <label for="state" class="form-label">State<span
-                                                    class="text-danger"></span></label>
+                                                    class="text-danger">*</span></label>
                                             <select class="form-select" formControlName="stateId"
                                                 aria-label="Default select example">
                                                 <option selected>Choose State... </option>
@@ -411,7 +411,7 @@
                                     <div class="col-sm-6 col-md-4">
                                         <div class="form-group">
                                             <label for="state" class="form-label">District<span
-                                                    class="text-danger"></span></label>
+                                                    class="text-danger">*</span></label>
                                             <input type="text" formControlName="district" name="" id=""
                                                 class="form-control" required>
                                         </div>
@@ -422,14 +422,14 @@
                                     <div class="col-sm-6 col-md-4">
                                         <div class="form-group">
                                             <label for="state" class="form-label">PIN<span
-                                                    class="text-danger"></span></label>
+                                                    class="text-danger">*</span></label>
                                             <input type="text" formControlName="pinCode" name="" id=""
                                                 class="form-control" required>
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-md-4">
                                         <label for="state" class="form-label">Payment Mode<span
-                                                class="text-danger"></span></label>
+                                                class="text-danger">*</span></label>
                                         <select formControlName="paymtMode" class="form-select"
                                             aria-label="Default select example" required
                                             (change)="paymentmode($event, 'legal',i)">
@@ -470,7 +470,7 @@
                                         <div class="col-sm-6 col-md-4">
                                             <div class="form-group">
                                                 <label for="state" class="form-label">Account Holder Name<span
-                                                        class="text-danger"></span></label>
+                                                        class="text-danger">*</span></label>
                                                 <input type="text" formControlName="accountHolderName"
                                                     name="accountHolderName" id="accountHolderName"
                                                     class="form-control">
@@ -479,7 +479,7 @@
                                         <div class="col-sm-6 col-md-4">
                                             <div class="form-group">
                                                 <label for="state" class="form-label">Account Number<span
-                                                        class="text-danger"></span></label>
+                                                        class="text-danger">*</span></label>
                                                 <input type="text" formControlName="bankAccountNo" name="bankAccountNo"
                                                     id="bankAccountNo" class="form-control">
                                             </div>
@@ -487,7 +487,7 @@
                                         <div class="col-sm-6 col-md-4">
                                             <div class="form-group">
                                                 <label for="state" class="form-label">IFSC<span
-                                                        class="text-danger"></span></label>
+                                                        class="text-danger">*</span></label>
                                                 <input type="text" formControlName="ifscCode" name="ifscCode"
                                                     id="ifscCode" class="form-control">
                                             </div>
@@ -495,7 +495,7 @@
                                         <div class="col-sm-6 col-md-4">
                                             <div class="form-group">
                                                 <label for="state" class="form-label">PAN Card <span
-                                                        class="text-danger"></span></label>
+                                                        class="text-danger">*</span></label>
                                                 <input type="text" formControlName="panNo" name="panNo" id="panNo"
                                                     class="form-control">
                                             </div>
@@ -503,7 +503,7 @@
                                         <div class="col-sm-6 col-md-4">
                                             <div class="form-group">
                                                 <label for="state" class="form-label">Upload PAN Card<span
-                                                        class="text-danger"></span></label>
+                                                        class="text-danger">*</span></label>
                                                 <input type="file" name="" id="" class="form-control"
                                                     accept="image/*,.pdf"
                                                     (change)="onImageChange($event, 'panNoDoc', 'legal',i)">
@@ -516,14 +516,14 @@
                                         <div class="col-sm-6 col-md-4">
                                             <div class="form-group">
                                                 <label for="state" class="form-label">UPI ID<span
-                                                        class="text-danger"></span></label>
+                                                        class="text-danger">*</span></label>
                                                 <input formControlName="upiId" type="text" class="form-control">
                                             </div>
                                         </div>
                                         <div class="col-sm-6 col-md-4">
                                             <div class="form-group">
                                                 <label for="state" class="form-label">Linked Mob._No<span
-                                                        class="text-danger"></span></label>
+                                                        class="text-danger">*</span></label>
                                                 <input type="number" formControlName="upiPhoneNo" class="form-control">
                                             </div>
                                         </div>
@@ -532,7 +532,7 @@
                                         <div class="col-sm-6 col-md-4">
                                             <div class="form-group">
                                                 <label for="state" class="form-label">Upload QR Code<span
-                                                        class="text-danger"></span></label>
+                                                        class="text-danger">*</span></label>
                                                 <input type="file" name="" id="" class="form-control"
                                                     accept="image/*,.pdf"
                                                     (change)="onImageChange($event, 'quarCodeDoc', 'legal',i)">

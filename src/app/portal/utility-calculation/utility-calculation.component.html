@@ -18,6 +18,9 @@
                             <option selected>Choose State... </option>
                             <option *ngFor="let state of stateDtails" [value]="state.stateId">{{ state.stateName }}</option>
                         </select>
+                         <div *ngIf="utilityCalculation.get('state')?.hasError('required') && utilityCalculation.get('state')?.touched" style="color: red;">
+                            State is required.
+                          </div>
 
                     </div>
                 </div>
@@ -29,6 +32,9 @@
                             <option [value]="sbu.locationId" *ngFor="let sbu of activeSBU" >{{sbu.locationName}}</option>
                     
                         </select>
+                        <div *ngIf="utilityCalculation.get('sbu')?.hasError('required') && utilityCalculation.get('sbu')?.touched" style="color: red;">
+                            SBU is required.
+                          </div>
                     </div>
                 </div>
 
@@ -39,6 +45,9 @@
                             <option selected>Choose Plant... </option>
                             <option [value]="plant.plantId" *ngFor="let plant of activePlant">{{plant.plantName}}</option>
                         </select>
+                        <div *ngIf="utilityCalculation.get('plant')?.hasError('required') && utilityCalculation.get('plant')?.touched" style="color: red;">
+                            Plant is required.
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
@@ -49,6 +58,9 @@
                             <option *ngFor="let house of activeHouse" [value]="house.houseId">{{house.houseId}}</option>
                            
                         </select>
+                        <div *ngIf="utilityCalculation.get('houseId')?.hasError('required') && utilityCalculation.get('houseId')?.touched" style="color: red;">
+                            House Id is required.
+                        </div>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
@@ -56,6 +68,9 @@
                         <label for="state" class="form-label">Start Date<span class="text-danger">*</span></label>
                         <input type="date" name="" id="" class="form-control" formControlName="startDate"
                             required>
+                            <div *ngIf="utilityCalculation.get('startDate')?.hasError('required') && utilityCalculation.get('startDate')?.touched" style="color: red;">
+                                Start Date is required.
+                              </div>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
@@ -63,6 +78,9 @@
                         <label for="state" class="form-label">End Date<span class="text-danger">*</span></label>
                         <input type="date" name="" id="" class="form-control" formControlName="endDate"
                             required>
+                            <div *ngIf="utilityCalculation.get('endDate')?.hasError('required') && utilityCalculation.get('endDate')?.touched" style="color: red;">
+                                End Date is required.
+                              </div>
                     </div>
                 </div>
 
@@ -78,7 +96,10 @@
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             <label for="state" class="form-label">Misc Expense<span class="text-danger">*</span></label>
-                            <input type="text" name="" id="" class="form-control" required formControlName="miscExp">
+                            <input type="text" name="" id="" class="form-control" required formControlName="miscExp"  maxlength="8" (input)="validateService.allowNumericDigits($event)">
+                            <div *ngIf="utilityCalculation.get('miscExp')?.hasError('required') && utilityCalculation.get('miscExp')?.touched" style="color: red;">
+                                Misc Expense is required.
+                              </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4  ">
@@ -86,6 +107,9 @@
                             <label for="state" class="form-label">Bill Upload<span class="text-danger">*</span></label>
                              <!-- Hidden input to store file value  -->
                           <input type="file" class="form-control"  accept="image/*,.pdf" (change)="onImageChange($event, 'miscBill')">
+                          <div *ngIf="utilityCalculation.get('miscBill')?.hasError('required') && utilityCalculation.get('miscBill')?.touched" style="color: red;">
+                            Misc Bill Upload is required.
+                          </div>
                           <!-- Visible input to display file name  -->
                          <!-- <input type="text" readonly class="form-control" (click)="fileInputmiscBill.click()" formControlName="miscBill" > -->
                         </div>
@@ -96,6 +120,9 @@
                             <label for="state" class="form-label">Receipt Upload<span class="text-danger">*</span></label>
                              <!-- Hidden input to store file value  -->
                           <input type="file" class="form-control"  accept="image/*,.pdf" (change)="onImageChange($event, 'miscrecept')">
+                          <div *ngIf="utilityCalculation.get('miscrecept')?.hasError('required') && utilityCalculation.get('miscrecept')?.touched" style="color: red;">
+                            Misc Receipt Upload is required.
+                          </div>
                           <!-- Visible input to display file name  -->
                          <!-- <input type="text" readonly class="form-control" (click)="fileInputmiscrecept.click()" formControlName="miscrecept" > -->
                         </div>
@@ -106,7 +133,10 @@
                     <div class="col-sm-6 col-md-4 ">
                         <div class="form-group">
                             <label for="state" class="form-label">HR Expense<span class="text-danger">*</span></label>
-                            <input type="text" name="" id="" class="form-control" required formControlName="hrexp">
+                            <input type="text" name="" id="" class="form-control" required formControlName="hrexp"  maxlength="8" (input)="validateService.allowNumericDigits($event)">
+                            <div *ngIf="utilityCalculation.get('hrexp')?.hasError('required') && utilityCalculation.get('hrexp')?.touched" style="color: red;">
+                                HR Expense is required.
+                              </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4  ">
@@ -114,6 +144,9 @@
                             <label for="state" class="form-label">Bill Upload<span class="text-danger">*</span></label>
                              <!-- Hidden input to store file value  -->
                           <input type="file" class="form-control"  accept="image/*,.pdf" (change)="onImageChange($event, 'hrbill')">
+                          <div *ngIf="utilityCalculation.get('hrbill')?.hasError('required') && utilityCalculation.get('hrbill')?.touched" style="color: red;">
+                            HR Expense Bill Upload is required.
+                          </div>
                           <!-- Visible input to display file name  -->
                          <!-- <input type="text" readonly class="form-control" (click)="fileInputhrbill.click()" formControlName="hrbill" > -->
                         </div>
@@ -126,7 +159,10 @@
                           <label for="state" class="form-label">Receipt Upload<span class="text-danger">*</span></label>
                            <!-- Hidden input to store file value  -->
                           <input type="file"  class="form-control" accept="image/*,.pdf" (change)="onImageChange($event, 'hrrecept')">
-                           <!-- Visible input to display file name  -->
+                          <div *ngIf="utilityCalculation.get('hrrecept')?.hasError('required') && utilityCalculation.get('hrrecept')?.touched" style="color: red;">
+                            HR Expense Receipt Upload is required.
+                          </div>
+                          <!-- Visible input to display file name  -->
                           <!-- <input type="text" readonly class="form-control" (click)="fileInputhrrecept.click()" formControlName="hrrecept" > -->
                         </div>
                       </div>

@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit } from '@angular/core';
 import { PortalServiceService } from '../serviceapi/portal-service.service';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
+import { ValidatorchklistService } from '../serviceapi/validatorchklist.service';
 
 @Component({
   selector: 'app-utility-calculation',
@@ -12,7 +13,7 @@ export class UtilityCalculationComponent implements OnInit {
   utilityCalculation!: FormGroup;
   stateDtails: any = [];
   
-  constructor(private portalservice: PortalServiceService,private formBuilder: FormBuilder) { }
+  constructor(public validateService: ValidatorchklistService, private portalservice: PortalServiceService,private formBuilder: FormBuilder) { }
 
 
   ngOnInit(): void {
@@ -24,12 +25,12 @@ export class UtilityCalculationComponent implements OnInit {
       houseId: ['',Validators.required],
       startDate: ['',Validators.required],
       endDate: ['',Validators.required],
-      miscExp:[''],
-      miscBill:[''],
-      miscrecept:[''],
-      hrexp:[''],
-      hrbill:[''],
-      hrrecept:[''],
+      miscExp:['',Validators.required],
+      miscBill:['',Validators.required],
+      miscrecept:['',Validators.required],
+      hrexp:['',Validators.required],
+      hrbill:['',Validators.required],
+      hrrecept:['',Validators.required],
       hrrecFileExt:[''],
       hrbillFileExt:[''],
       misbillFileExt:[''],
@@ -297,9 +298,26 @@ export class UtilityCalculationComponent implements OnInit {
         alert("calculation saved successfully")
       })
      } else {
-      alert("Please Enter Required fields !")
+      this.markFormGroupTouched(this.utilityCalculation);
+      this.scrollToTop();
+     // alert("Please Enter Required fields !")
      }
     }
 
+    markFormGroupTouched(formGroup: FormGroup) {
+      Object.values(formGroup.controls).forEach(control => {
+        control.markAsTouched();
+    
+        // If the control is a nested form group, mark its controls as touched recursively
+        if (control instanceof FormGroup) {
+          this.markFormGroupTouched(control);
+        }
+      });
+    }
+
+
+    scrollToTop(): void {
+      window.scrollTo(0, 0);
+    }
 
 }

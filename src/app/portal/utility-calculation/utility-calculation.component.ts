@@ -49,17 +49,11 @@ export class UtilityCalculationComponent implements OnInit {
 
   addelectric() {
     const stateGroup = this.formBuilder.group({
-      eleExpenseAmt:[''],
-      eleBillDoc:[''] ,
-      eleRecDoc:[''] ,
+      eleExpenseAmt:['', Validators.required],
+      eleBillDoc:['', Validators.required] ,
+      eleRecDoc:['', Validators.required] ,
       billFileExt: [''],
       recFileExt:['']
-      // "eleExpenseAmt": 0,
-      // "eleBillDoc": "string",
-      // "eleRecDoc": "string",
-      // "billFileExt": "string",
-      // "recFileExt": "string"
-      // Add more form controls as needed
     });
 
     this.electric.push(stateGroup);
@@ -76,31 +70,11 @@ export class UtilityCalculationComponent implements OnInit {
   addwater() {
     const stateGroup = this.formBuilder.group({
 
-      waterExpenseAmount: [''],
-      waterBilldoc: [''],
-      waterRecDoc: [''],
+      waterExpenseAmount: ['', Validators.required],
+      waterBilldoc: ['', Validators.required],
+      waterRecDoc: ['', Validators.required],
       billFileExt: [''],
       recFileExt:['']
-      // "waterExpenseAmount": 0,
-      // "waterBilldoc": "string",
-      // "waterRecDoc": "string",
-      // "billFileExt": "string",
-      // "recFileExt": "string"
-      // Add more form controls as needed
-
-      //----------------------//
-      // "hrExpenseAmt": 0,
-      // "hrBillDoc": "string",
-      // "hrrecDoc": "string",
-      // "billFileExt": "string",
-      // "recFileExt": "string"
-
-      //--------------------//
-    //   "miscExpenseAmt": 0,
-    // "miscBillDoc": "string",
-    // "miscRecDoc": "string",
-    // "billFileExt": "string",
-    // "recFileExt": "string"
     });
 
     this.water.push(stateGroup);
@@ -260,7 +234,7 @@ export class UtilityCalculationComponent implements OnInit {
 
 
     postUtilityCalc() {
-     if(this.utilityCalculation.valid) {
+     if(this.utilityCalculation.valid  && this.electric.valid && this.water.valid) {
       let data = {
         "utilityCalculationData": {
           "fkStateId": this.utilityCalculation.value.state,
@@ -299,6 +273,8 @@ export class UtilityCalculationComponent implements OnInit {
       })
      } else {
       this.markFormGroupTouched(this.utilityCalculation);
+      this.markFormArrayControlsTouched(this.electric);
+      this.markFormArrayControlsTouched(this.water);
       this.scrollToTop();
      // alert("Please Enter Required fields !")
      }
@@ -309,6 +285,14 @@ export class UtilityCalculationComponent implements OnInit {
         control.markAsTouched();
     
         // If the control is a nested form group, mark its controls as touched recursively
+        if (control instanceof FormGroup) {
+          this.markFormGroupTouched(control);
+        }
+      });
+    }
+
+    markFormArrayControlsTouched(formArray: FormArray) {
+      formArray.controls.forEach(control => {
         if (control instanceof FormGroup) {
           this.markFormGroupTouched(control);
         }

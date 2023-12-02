@@ -116,7 +116,7 @@
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             <label class="form-label">State<span class="text-danger">*</span></label>
-                            <select class="form-select" aria-label="Default select example" formControlName="state">
+                            <select class="form-select" aria-label="Default select example" formControlName="state" (change)="getDistirct($event)">
                                 <option value="0" selected>Choose State... </option>
                                 <option *ngFor="let state of stateDtails" [value]="state.stateId">{{ state.stateName }}
                                 </option>
@@ -304,7 +304,7 @@
                             <label for="state" class="form-label">No of Legal Parties<span
                                     class="text-danger">*</span></label>
                             <input type="text" name="noOfLegalParties" id="" class="form-control"
-                                [ngModelOptions]="{standalone: true}" [(ngModel)]="noOfLegalParties">
+                                [ngModelOptions]="{standalone: true}" [(ngModel)]="noOfLegalParties" (keyup)="vldChkLst.allowNumericDigits($event)">
                         </div>
                     </div>
                     <form action="" [formGroup]="legalheirForm">
@@ -319,6 +319,9 @@
                                             <input type="text" formControlName="ownerName" name="name" id="ownerName"
                                                 class="form-control" maxlength="30"
                                                 (keyup)="vldChkLst.blockspecialchar_first($event)" required>
+                                                <div style="color: red;" *ngIf="legalheirarray.controls[i].get('ownerName')?.hasError('required') && legalheirarray.controls[i].get('ownerName')?.touched">
+                                                    House Owner Name is required.
+                                                  </div>
                                         </div>
 
                                         <div *ngIf="legalheirForm.get('ownerName')?.invalid && legalheirForm.get('fullName')?.touched"
@@ -346,7 +349,7 @@
                                             <label for="state" class="form-label">Phone Number<span
                                                     class="text-danger">*</span></label>
                                             <input type="text" formControlName="phoneNo" name="" id=""
-                                                class="form-control" maxlength="10" required>
+                                                class="form-control"  (keyup)="vldChkLst.allowNumericDigits($event)" minlength="10" maxlength="10" autocomplete="off" required>
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-md-4">
@@ -354,7 +357,7 @@
                                             <label for="state" class="form-label">Email ID<span
                                                     class="text-danger">*</span></label>
                                             <input type="email" formControlName="emailId" name="" id=""
-                                                class="form-control" required>
+                                                class="form-control" required  (oninput)="vldChkLst.validEmail($event)">
                                         </div>
                                     </div>
                                 </div>
@@ -424,7 +427,7 @@
                                             <label for="state" class="form-label">PIN<span
                                                     class="text-danger">*</span></label>
                                             <input type="text" formControlName="pinCode" name="" id=""
-                                                class="form-control" required>
+                                                class="form-control" required maxlength="6"  (keyup)="vldChkLst.allowNumericDigits($event)">
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-md-4">

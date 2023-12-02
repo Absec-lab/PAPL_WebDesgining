@@ -80,15 +80,15 @@ export class HouseOwnerRegistrationComponent {
       ownerName: ['', Validators.required, [CommonValidatorService.fullNameValidator]],
       phoneNo: ['', Validators.required],
       emailId: ['', [CommonValidatorService.validateEmail]],
-      idProofDoc: [''],
+      idProofDoc: ['', Validators.required],
       idProofDocPrifix: [''],
-      idProof: [''],
-      address1: [''],
+      idProof: ['', Validators.required],
+      address1: ['', Validators.required],
       address2: [''],
-      stateId: [''],
-      district: [''],
-      pinCode: [''],
-      paymtMode: [''],
+      stateId: ['', Validators.required],
+      district: ['', Validators.required],
+      pinCode: ['', Validators.required],
+      paymtMode: ['', Validators.required],
       isActive: ['1'],
       accountHolderName: [''],
       bankAccountNo: [''],
@@ -156,20 +156,17 @@ export class HouseOwnerRegistrationComponent {
     });
   }
 
+  getDistirct(event:any) {
+    console.log(event.target.value);
+    
+      this.portalServ.get(`PAPL/getDistrictByStateName?statename=${'ODISHA'}`)
+      .subscribe(res => {
+        console.log(res)
+      })
+  }
 
 
-
-  // }
-
-  //   this.portalServ.deleteOwner(id).subscribe(res => {
-  //     if (res) {
-  //       Swal.fire('Deleted!', 'Owner deleted.', 'success');
-  //     }
-  //     this.getAllOwner();
-
-  //   });
-  // }
-
+  
   onImageChange(event: any, formControlName: string, formArrName?: string, index?: number): void {
     console.log("formControlName", formControlName);
 
@@ -463,58 +460,74 @@ export class HouseOwnerRegistrationComponent {
   updateowner() {
     // let valid = this.validateLegalData();
     // if (valid) {
-    let data = {
-      "legalHeirRequestDto": this.legalheirarray.value,
-      "ownerRegistrationRequestDto": {
-        "ownerId": this.houseRegistrationForm.value.ownerId,
-        "ownerName": this.houseRegistrationForm.value.ownerName,
-        "phoneNo": this.houseRegistrationForm.value.phone,
-        "emailId": this.houseRegistrationForm.value.email,
-        "paymtMode": this.houseRegistrationForm.value.paymode,
-        "address1": this.houseRegistrationForm.value.add1,
-        "address2": this.houseRegistrationForm.value.add2,
-        "stateId": this.houseRegistrationForm.value.state,
-        "district": this.houseRegistrationForm.value.dist,
-        "pinCode": this.houseRegistrationForm.value.pin,
-        "idProof": this.houseRegistrationForm.value.gIdproof,
-        "idProofDoc": this.houseRegistrationForm.value.idProof,
-        "isActive": this.houseRegistrationForm.value.status,
-        "accountHolderName": this.houseRegistrationForm.value.accHolName,
-        "bankAccountNo": this.houseRegistrationForm.value.accounNum,
-        "ifscCode": this.houseRegistrationForm.value.ifsc,
-        "panNo": this.houseRegistrationForm.value.pan,
-        "panCardAddress": this.houseRegistrationForm.value.panPic,
-        "upiId": this.houseRegistrationForm.value.upiId,
-        "upiPhoneNo": this.houseRegistrationForm.value.linkMobile,
-        "uploadQuarCodeDoc": this.houseRegistrationForm.value.qrCode,
-        "legalIdProof": "testing",
-        "legalIdProofDocPrifix": this.houseRegistrationForm.value.legalprifix,
-        "legalIdProofDoc": this.houseRegistrationForm.value.uploadlegalheir,
-        "noofLegalParties": this.noOfLegalParties,
-        "description": this.houseRegistrationForm.value.desc,
+
+    if(this.legalheirarray.valid) {
+      let data = {
+        "legalHeirRequestDto": this.legalheirarray.value,
+        "ownerRegistrationRequestDto": {
+          "ownerId": this.houseRegistrationForm.value.ownerId,
+          "ownerName": this.houseRegistrationForm.value.ownerName,
+          "phoneNo": this.houseRegistrationForm.value.phone,
+          "emailId": this.houseRegistrationForm.value.email,
+          "paymtMode": this.houseRegistrationForm.value.paymode,
+          "address1": this.houseRegistrationForm.value.add1,
+          "address2": this.houseRegistrationForm.value.add2,
+          "stateId": this.houseRegistrationForm.value.state,
+          "district": this.houseRegistrationForm.value.dist,
+          "pinCode": this.houseRegistrationForm.value.pin,
+          "idProof": this.houseRegistrationForm.value.gIdproof,
+          "idProofDoc": this.houseRegistrationForm.value.idProof,
+          "isActive": this.houseRegistrationForm.value.status,
+          "accountHolderName": this.houseRegistrationForm.value.accHolName,
+          "bankAccountNo": this.houseRegistrationForm.value.accounNum,
+          "ifscCode": this.houseRegistrationForm.value.ifsc,
+          "panNo": this.houseRegistrationForm.value.pan,
+          "panCardAddress": this.houseRegistrationForm.value.panPic,
+          "upiId": this.houseRegistrationForm.value.upiId,
+          "upiPhoneNo": this.houseRegistrationForm.value.linkMobile,
+          "uploadQuarCodeDoc": this.houseRegistrationForm.value.qrCode,
+          "legalIdProof": "testing",
+          "legalIdProofDocPrifix": this.houseRegistrationForm.value.legalprifix,
+          "legalIdProofDoc": this.houseRegistrationForm.value.uploadlegalheir,
+          "noofLegalParties": this.noOfLegalParties,
+          "description": this.houseRegistrationForm.value.desc,
+        }
       }
-    }
-    console.log(this.legalheirarray.value);
-
-    this.portalServ.put("PAPL/updateOwner", data)
-      .subscribe(res => {
-        Swal.fire({
-          icon: 'success',
-          text: 'House Owner Update succesfull'
-        }).then((result: any) => {
-          console.log(res)
-          this.getAllOwner();
-          this.houseRegistrationForm.reset();
-          window.location.reload()
-          this.legalheirarray.controls.forEach((control: any) => {
-            control.reset();
+      console.log(this.legalheirarray.value);
+  
+      this.portalServ.put("PAPL/updateOwner", data)
+        .subscribe(res => {
+          Swal.fire({
+            icon: 'success',
+            text: 'House Owner Update succesfull'
+          }).then((result: any) => {
+            console.log(res)
+            this.getAllOwner();
+            this.houseRegistrationForm.reset();
+            window.location.reload()
+            this.legalheirarray.controls.forEach((control: any) => {
+              control.reset();
+            });
+            this.legalbtnh = false;
           });
-          this.legalbtnh = false;
-        });
-
-      })
-    // }
+  
+        })
+    } else {
+     // alert("ku6 to gad bad he re bada")
+     this.markFormArrayControlsTouched(this.legalheirarray)
+    }
+   
+    
   }
+
+  markFormArrayControlsTouched(formArray: FormArray) {
+    formArray.controls.forEach(control => {
+      if (control instanceof FormGroup) {
+        this.markFormGroupTouched(control);
+      }
+    });
+  }
+
   legalbtnh: boolean = false
   showLegal(event: any) {
     const value = event.target.value;

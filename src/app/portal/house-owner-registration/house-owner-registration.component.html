@@ -55,6 +55,7 @@
                             <label for="state" class="form-label">Phone Number<span class="text-danger">*</span></label>
                             <input type="text" name="phoneNo" id="phoneNo" class="form-control" formControlName="phone"
                                 (keyup)="vldChkLst.allowNumericDigits($event)" minlength="10" maxlength="10" autocomplete="off" />
+                                <div style="color: red;" *ngIf="houseRegistrationForm.get('phone')?.hasError('required')">Phone Number is required.</div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
@@ -79,6 +80,7 @@
                                     class="text-danger">*</span></label>
                             <input type="file" #fileInput name="" id="" class="form-control" accept="image/*,.pdf"
                                 required (change)="onImageChange($event, 'idProofDoc')" />
+                                <div style="color: red;" *ngIf="houseRegistrationForm.get('idProofDoc')?.hasError('required')">Govt ID Proof is yet to upload.</div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
@@ -101,6 +103,7 @@
                             <label for="state" class="form-label">Address 1<span class="text-danger">*</span></label>
                             <input type="text" name="address1" id="address1" class="form-control"
                                 formControlName="add1" />
+                                <div style="color: red;" *ngIf="houseRegistrationForm.get('add1')?.hasError('required')">Address 1 is required.</div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
@@ -119,6 +122,7 @@
                                 </option>
 
                             </select>
+                            <div style="color: red;" *ngIf="houseRegistrationForm.get('state')?.hasError('required')">State is required.</div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
@@ -126,6 +130,7 @@
                             <label for="state" class="form-label">District<span class="text-danger">*</span></label>
                             <input type="text" name="dist" id="dist" class="form-control" formControlName="dist"
                                 (input)="vldChkLst.allowAlpha($event)" />
+                                <div style="color: red;" *ngIf="houseRegistrationForm.get('dist')?.hasError('required')">District is required.</div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
@@ -133,6 +138,7 @@
                             <label for="state" class="form-label">PIN<span class="text-danger">*</span></label>
                             <input type="text" name="pinCode" id="pinCode" class="form-control" formControlName="pin"
                                 (input)="vldChkLst.allowNumericDigits($event)" maxlength="6" />
+                                <div style="color: red;" *ngIf="houseRegistrationForm.get('pin')?.hasError('required')">Pincode is required.</div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">

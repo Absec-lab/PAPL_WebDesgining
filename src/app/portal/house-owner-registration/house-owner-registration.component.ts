@@ -38,7 +38,7 @@ export class HouseOwnerRegistrationComponent {
       ownerName: ['', [Validators.required, CommonValidatorService.fullNameValidator]],
       phone: ['', Validators.required],
       email: ['', [Validators.required, CommonValidatorService.validateEmail]],
-      idProofDoc: [''],
+      idProofDoc: ['', Validators.required],
       idProofDocPrifix: [''],
       gIdproof: ['', Validators.required],
       add1: ['', Validators.required],
@@ -247,48 +247,59 @@ export class HouseOwnerRegistrationComponent {
     return types[mimeType] || 'unknown';
   }
 
-  validateData() {
-    const formControls = [
-      { control: this.houseRegistrationForm.get('ownerName'), name: "Owner Name" },
-      { control: this.houseRegistrationForm.get('phone'), name: "Phone" },
-      { control: this.houseRegistrationForm.get('email'), name: "Email" },
-      { control: this.houseRegistrationForm.get('gIdproof'), name: "Govt. Id Proof" },
-      { control: this.houseRegistrationForm.get('add1'), name: "Address 1" },
-      // { control: this.houseRegistrationForm.get('add2'), name: "Address 2" },
+  // validateData() {
+  //   const formControls = [
+  //     { control: this.houseRegistrationForm.get('ownerName'), name: "Owner Name" },
+  //     { control: this.houseRegistrationForm.get('phone'), name: "Phone" },
+  //     { control: this.houseRegistrationForm.get('email'), name: "Email" },
+  //     { control: this.houseRegistrationForm.get('gIdproof'), name: "Govt. Id Proof" },
+  //     { control: this.houseRegistrationForm.get('add1'), name: "Address 1" },
+  //     // { control: this.houseRegistrationForm.get('add2'), name: "Address 2" },
 
-      { control: this.houseRegistrationForm.get('state'), name: "State" },
-      { control: this.houseRegistrationForm.get('dist'), name: "District" },
-      { control: this.houseRegistrationForm.get('pin'), name: "Pin Code" },
+  //     { control: this.houseRegistrationForm.get('state'), name: "State" },
+  //     { control: this.houseRegistrationForm.get('dist'), name: "District" },
+  //     { control: this.houseRegistrationForm.get('pin'), name: "Pin Code" },
 
-      { control: this.houseRegistrationForm.get('paymode'), name: "Payment mode" },
-      { control: this.houseRegistrationForm.get('accHolName'), name: "Account holder name" },
-      { control: this.houseRegistrationForm.get('accounNum'), name: "Account Number" },
-      { control: this.houseRegistrationForm.get('ifsc'), name: "IFSC" },
-      { control: this.houseRegistrationForm.get('pan'), name: "PAN" },
-      //   if (this.upi == true) {
-      //   { control: this.houseRegistrationForm.get('upiId'), name: "UPI Id" },
-      //   { control: this.houseRegistrationForm.get('linkMobile'), name: "Linked Mobile No." },
-      // }
+  //     { control: this.houseRegistrationForm.get('paymode'), name: "Payment mode" },
+  //     { control: this.houseRegistrationForm.get('accHolName'), name: "Account holder name" },
+  //     { control: this.houseRegistrationForm.get('accounNum'), name: "Account Number" },
+  //     { control: this.houseRegistrationForm.get('ifsc'), name: "IFSC" },
+  //     { control: this.houseRegistrationForm.get('pan'), name: "PAN" },
+  //     //   if (this.upi == true) {
+  //     //   { control: this.houseRegistrationForm.get('upiId'), name: "UPI Id" },
+  //     //   { control: this.houseRegistrationForm.get('linkMobile'), name: "Linked Mobile No." },
+  //     // }
 
 
-    ];
+  //   ];
 
-    let vSts = true;
+  //   let vSts = true;
 
-    for (const formControl of formControls) {
-      if (formControl.control?.valid) {
-        vSts = true;
-      } else {
-        Swal.fire({
-          // icon: 'error',
-          text: `Please select ${formControl.name}`
-        });
-        vSts = false
-        break;
+  //   for (const formControl of formControls) {
+  //     if (formControl.control?.valid) {
+  //       vSts = true;
+  //     } else {
+  //       Swal.fire({
+  //         // icon: 'error',
+  //         text: `Please select ${formControl.name}`
+  //       });
+  //       vSts = false
+  //       break;
+  //     }
+
+  //   }
+  //   return vSts;
+  // }
+
+  markFormGroupTouched(formGroup: FormGroup) {
+    Object.values(formGroup.controls).forEach(control => {
+      control.markAsTouched();
+  
+      // If the control is a nested form group, mark its controls as touched recursively
+      if (control instanceof FormGroup) {
+        this.markFormGroupTouched(control);
       }
-
-    }
-    return vSts;
+    });
   }
 
   ownerRegistration() {
@@ -311,8 +322,8 @@ export class HouseOwnerRegistrationComponent {
       errFlag = 1;
     }
 
-    let valid = this.validateData();
-    if (valid) {
+   // let valid = this.validateData();
+    if (this.houseRegistrationForm.valid) {
       let data: any =
       {
         "ownerName": this.houseRegistrationForm.value.ownerName,
@@ -368,6 +379,9 @@ export class HouseOwnerRegistrationComponent {
 
 
         })
+    } else {
+      this.markFormGroupTouched(this.houseRegistrationForm);
+      window.scrollTo(0, 0);
     }
   }
 

@@ -299,6 +299,11 @@ export class UtilityCalculationComponent implements OnInit {
       });
     }
 
+    getCurrentDate(): string {
+      const currentDate = new Date();
+      return currentDate.toISOString().substring(0, 10);
+    }
+
 
     scrollToTop(): void {
       window.scrollTo(0, 0);

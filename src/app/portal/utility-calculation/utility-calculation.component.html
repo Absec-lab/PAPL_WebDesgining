@@ -67,7 +67,7 @@
                     <div class="form-group">
                         <label for="state" class="form-label">Start Date<span class="text-danger">*</span></label>
                         <input type="date" name="" id="" class="form-control" formControlName="startDate"
-                            required>
+                            required  [min]="getCurrentDate() | date:'yyyy-MM-dd'">
                             <div *ngIf="utilityCalculation.get('startDate')?.hasError('required') && utilityCalculation.get('startDate')?.touched" style="color: red;">
                                 Start Date is required.
                               </div>
@@ -77,7 +77,7 @@
                     <div class="form-group">
                         <label for="state" class="form-label">End Date<span class="text-danger">*</span></label>
                         <input type="date" name="" id="" class="form-control" formControlName="endDate"
-                            required>
+                            required   [min]="utilityCalculation.get('startDate')?.value | date:'yyyy-MM-dd'">
                             <div *ngIf="utilityCalculation.get('endDate')?.hasError('required') && utilityCalculation.get('endDate')?.touched" style="color: red;">
                                 End Date is required.
                               </div>

@@ -156,13 +156,69 @@ export class HouseOwnerRegistrationComponent {
     });
   }
 
-  getDistirct(event:any) {
-    console.log(event.target.value);
+  allDistictList:any;
+  arrayDistList:any;
+  getDistirct(event:any, array?:any) {
+    console.log(event, typeof event);
     
-      this.portalServ.get(`PAPL/getDistrictByStateName?statename=${'ODISHA'}`)
+    this.ngxLoader.start()
+    let eventValue :any;
+    if (typeof event === 'number') {
+      eventValue = event;
+    } else {
+      eventValue = event.target.value;
+    }
+    console.log("eventValue",eventValue);
+   
+    let distValue:any;
+
+    if(eventValue == 1 ) {
+      distValue = 'ODISHA'
+    } else if(eventValue == 2 ) {
+      distValue = 'CHHATTISGARH'
+    } else if( eventValue == 3 ){
+      distValue = 'MADHYA PRADESH'
+    } else if( eventValue == 4 ){
+      distValue = 'MAHARASHTRA'
+    }
+    
+      this.portalServ.get(`PAPL/getDistrictByStateName?statename=${distValue}`)
       .subscribe(res => {
-        console.log(res)
+        if(array) {
+          this.arrayDistList = res
+        } else {
+
+          this.allDistictList = res
+        }
+        this.ngxLoader.stop()
+       // console.log(res)
       })
+  }
+  pincodeList:any;
+  arrayPincode:any;
+  getPinCode(event:any,array?:any) {
+    this.ngxLoader.start()
+    //console.log(event.target.value);
+    let distValue :any;
+    if (typeof event === 'string') {
+      distValue = event;
+    } else {
+      distValue = event.target.value;
+    }
+
+    this.portalServ.get(`PAPL/getPincodeAndStateByDistrict?Districtname=${distValue}`)
+    .subscribe(res => {
+
+      if(array) {
+        this.arrayPincode = res
+      } else {
+
+        this.pincodeList = res
+      }
+      this.ngxLoader.stop()
+      console.log(res)
+    })
+
   }
 
 
@@ -387,6 +443,8 @@ export class HouseOwnerRegistrationComponent {
     this.updatebtn = true;
     this.descripinput = true;
     this.paymentmode(item.paymtMode == 'string' ? 2 : item.paymtMode, 'owner')
+    this.getDistirct(item.stateId)
+    this.getPinCode(item.district)
     this.houseRegistrationForm.patchValue({
       ownerId: item.ownerId,
       ownerName: item.ownerName,
@@ -461,7 +519,7 @@ export class HouseOwnerRegistrationComponent {
     // let valid = this.validateLegalData();
     // if (valid) {
 
-    if(this.legalheirarray.valid) {
+    if(this.legalheirarray.valid && this.houseRegistrationForm.valid) {
       let data = {
         "legalHeirRequestDto": this.legalheirarray.value,
         "ownerRegistrationRequestDto": {
@@ -514,6 +572,7 @@ export class HouseOwnerRegistrationComponent {
         })
     } else {
      // alert("ku6 to gad bad he re bada")
+     this.markFormGroupTouched(this.houseRegistrationForm);
      this.markFormArrayControlsTouched(this.legalheirarray)
     }
    

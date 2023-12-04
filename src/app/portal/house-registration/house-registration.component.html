@@ -11,7 +11,7 @@
         <div class="row " style="background-color: rgba(226, 242, 246, 1); padding: 5%; margin-bottom: 0.5cm;">
             <div class="col-sm-6 col-md-4">
                 <div class="form-group">
-                    <label for="state" class="form-label">Owner Name<span class="text-danger">*</span></label>
+                    <label  class="form-label">Owner Name<span class="text-danger">*</span></label>
                     <!-- <input type="text" name="" id="" class="form-control" required formControlName="ownerName"> -->
                     <select formControlName="ownerName" class="form-select" aria-label="Default select example" required>
                         <option value="0" selected>Choose Owner Name...</option>
@@ -23,14 +23,14 @@
 
             <div class="col-sm-6 col-md-4">
                 <div class="form-group">
-                    <label for="state" class="form-label">House No/Name<span class="text-danger">*</span></label>
-                    <input type="text" name="" id="" class="form-control" required formControlName="houseName" maxlength="20">
+                    <label  class="form-label">House No/Name<span class="text-danger">*</span></label>
+                    <input type="text" name="" id="" class="form-control"  formControlName="houseName" maxlength="20">
                 </div>
             </div>
 
             <div class="col-sm-6 col-md-4">
                 <div class="form-group">
-                    <label for="state" class="form-label">No Of Rooms<span class="text-danger">*</span></label>
+                    <label  class="form-label">No Of Rooms<span class="text-danger">*</span></label>
                     <input type="text" name="" id=""  
                      class="form-control" required formControlName="noOfRooms" maxlength="2" (input)="vldChkLst.allowNumericDigits($event)">
                 </div>
@@ -38,19 +38,19 @@
 
             <div class="col-sm-6 col-md-4">
                 <div class="form-group">
-                    <label for="state" class="form-label">No Of Electric Bills<span class="text-danger">*</span></label>
+                    <label  class="form-label">No Of Electric Bills<span class="text-danger">*</span></label>
                     <input type="text" name="" id="" class="form-control" required formControlName="electricBill">
                 </div>
             </div>
             <div class="col-sm-6 col-md-4">
                 <div class="form-group">
-                    <label for="state" class="form-label">No of water Bills<span class="text-danger">*</span></label>
+                    <label  class="form-label">No of water Bills<span class="text-danger">*</span></label>
                     <input type="text" name="" id="" class="form-control" required formControlName="waterBill">
                 </div>
             </div>
             <div class="col-sm-6 col-md-4">
                 <div class="form-group">
-                    <label for="state" class="form-label">Address<span class="text-danger">*</span></label>
+                    <label  class="form-label">Address<span class="text-danger">*</span></label>
                     <input type="text" name="" id="" class="form-control" required formControlName="address">
                 </div>
             </div>
@@ -58,31 +58,31 @@
 
             <div class="col-sm-6 col-md-4">
                 <div class="form-group">
-                    <label for="state" class="form-label">Address 2<span class="text-danger"></span></label>
+                    <label  class="form-label">Address 2<span class="text-danger"></span></label>
                     <input type="text" name="" id="" class="form-control" required formControlName="address2">
                 </div>
             </div>
             <div class="col-sm-6 col-md-4">
                 <div class="form-group">
-                    <label for="state" class="form-label">District<span class="text-danger">*</span></label>
+                    <label  class="form-label">District<span class="text-danger">*</span></label>
                     <input type="text" name="" id="" class="form-control" required formControlName="district">
                 </div>
             </div>
             <div class="col-sm-6 col-md-4">
                 <div class="form-group">
-                    <label for="state" class="form-label">PIN<span class="text-danger">*</span></label>
+                    <label  class="form-label">PIN<span class="text-danger">*</span></label>
                     <input type="text" name="" id="" class="form-control" required formControlName="pin">
                 </div>
             </div>
             <div class="col-sm-6 col-md-4">
                 <div class="form-group">
-                    <label for="state" class="form-label">Start Date<span class="text-danger">*</span></label>
+                    <label  class="form-label">Start Date<span class="text-danger">*</span></label>
                     <input type="date" class="form-control box" name="filter_date" id="startDate" required formControlName="startDate" (input)="updateMinEndDate()" />
                 </div>
             </div>
             <div class="col-sm-6 col-md-4">
                 <div class="form-group">
-                    <label for="state" class="form-label">End Date</label>
+                    <label  class="form-label">End Date</label>
                     <input type="date" class="form-control box" name="filter_date" id="endDate" required formControlName="endDate"  [min]="houseRegistrationForm.get('startDate')?.value" />
                 </div>
             </div>

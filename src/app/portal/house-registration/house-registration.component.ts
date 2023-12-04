@@ -35,6 +35,7 @@ export class HouseRegistrationComponent implements OnInit {
 
     this.houseRegistrationForm = this.formBuilder.group({
       ownerName: [0,Validators.required],
+      houseName:['',Validators.required],
       noOfRooms: ['', [Validators.required, Validators.pattern('^[0-9]{1,2}$')]],
       electricBill: ['',Validators.required],
       waterBill: ['',Validators.required],
@@ -167,6 +168,7 @@ getSubonStateChange(event: any, index: number) {
   validateData() {
     const formControls = [
       { control: this.houseRegistrationForm.get('ownerName'), name: "Owner Name" },
+      { control: this.houseRegistrationForm.get('houseName'), name: "House Name" },
       { control: this.houseRegistrationForm.get('noOfRooms'), name: "Number of Rooms" },
       { control: this.houseRegistrationForm.get('electricBill'), name: "Electric Bill" },
       { control: this.houseRegistrationForm.get('waterBill'), name: "Water Bill" },
@@ -240,6 +242,7 @@ getSubonStateChange(event: any, index: number) {
     console.log(item)
     this.houseRegistrationForm.patchValue({
       ownerName: item.ownerName,
+      houseName: item.houseName,
       noOfRooms: item.noOfUnits,
       electricBill: item.noOfEleBills,
       waterBill: item.noOfWtrBills,

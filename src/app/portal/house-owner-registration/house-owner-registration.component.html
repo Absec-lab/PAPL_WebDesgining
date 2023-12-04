@@ -37,7 +37,7 @@
                                 *ngIf="houseRegistrationForm.get('ownerName')?.invalid && houseRegistrationForm.get('ownerName')?.touched">
                                 <div *ngIf="houseRegistrationForm.get('ownerName')?.hasError('required')">Owner name is
                                     required.</div>
-                                <div
+                                <!-- <div
                                     *ngIf="houseRegistrationForm.get('ownerName')?.hasError('fullNameContainsSpecialChars')">
                                     Owner name should
                                     not contain special characters or numbers.</div>
@@ -46,7 +46,7 @@
                                     contain less than 50 character. </div>
                                 <div *ngIf="houseRegistrationForm.get('ownerName')?.hasError('fullNameTooSmall')">
                                     Owner name should
-                                    contain more than 3 character. </div>
+                                    contain more than 3 character. </div> -->
                             </div>
                         </div>
                     </div>
@@ -679,10 +679,10 @@
                         <td>{{ item.bankAccountNo }}</td>
                         <td>{{ item.ifscCode}}</td>
                         <td>{{ item.panNo }}</td>
-                        <td>{{ item.paymtMode }}</td>
+                        <td> {{ item.paymtMode == 1 ? 'Bank' : item.paymtMode == 2 ? 'Cash' : item.paymtMode == 3 ? 'UPI' : 'UPI' }}</td>
                         <td>{{ item.upiPhoneNo}}</td>
                         <td>{{ item.uploadQuarCodeAdds }}</td>
-                        <td>{{ item.isActive}}</td>
+                        <td>{{ item.isActive == 1 ? 'Active' : 'InActive'}}</td>
                         <td>{{ item.createdDate}}</td>
                         <td>
                             <div style="display: inline-flex; ">

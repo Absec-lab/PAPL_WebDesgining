@@ -416,8 +416,9 @@ export class HouseOwnerRegistrationComponent {
           }).then((result: any) => {
             console.log(res)
             this.getAllOwner();
+            window.location.reload()
             this.houseRegistrationForm.reset();
-            this.fileInput.nativeElement.value = '';
+            // this.fileInput.nativeElement.value = '';
             this.houseRegistrationForm.patchValue({
               idProofDoc: '',
               status: '1'
@@ -623,6 +624,16 @@ export class HouseOwnerRegistrationComponent {
 
 
     if (userType == 'owner') {
+      if(value !== '1') {
+        this.houseRegistrationForm.get('accHolName')?.clearValidators();
+        this.houseRegistrationForm.get('accHolName')?.updateValueAndValidity();
+        this.houseRegistrationForm.get('accounNum')?.clearValidators();
+        this.houseRegistrationForm.get('accounNum')?.updateValueAndValidity();
+        this.houseRegistrationForm.get('ifsc')?.clearValidators();
+        this.houseRegistrationForm.get('ifsc')?.updateValueAndValidity();
+        this.houseRegistrationForm.get('pan')?.clearValidators();
+        this.houseRegistrationForm.get('pan')?.updateValueAndValidity();
+      }
       if (value == '2') {
         this.heading = false
       } else {
@@ -636,21 +647,7 @@ export class HouseOwnerRegistrationComponent {
         this.bank = false;
         this.upi = true;
       }
-    } else if (userType == 'legal') {
-      // if(value == '2') {
-      //   this.legalheading = false 
-      // } else {
-      // this.legalheading = true 
-      // }
-
-      // if(value=='1') {
-
-      //   this.legalbank = true
-      //   this.legalupi = false
-      // } else {
-      //   this.legalbank = false;
-      //   this.legalupi = true;
-      // }
+    } else if (userType == 'legal') {     
     }
 
 

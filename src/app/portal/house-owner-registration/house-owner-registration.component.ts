@@ -79,7 +79,7 @@ export class HouseOwnerRegistrationComponent {
       prevOwonerId: [this.houseRegistrationForm.value.ownerId],
       ownerName: ['', Validators.required, [CommonValidatorService.fullNameValidator]],
       phoneNo: ['', Validators.required],
-      emailId: ['', [CommonValidatorService.validateEmail]],
+      emailId: ['', [Validators.required, CommonValidatorService.validateEmail]],
       idProofDoc: ['', Validators.required],
       idProofDocPrifix: [''],
       idProof: ['', Validators.required],

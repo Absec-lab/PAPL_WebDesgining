@@ -375,9 +375,18 @@
                                                     class="text-danger">*</span></label>
                                             <input type="email" formControlName="emailId" name="" id=""
                                                 class="form-control" required  (oninput)="vldChkLst.validEmail($event)">
-                                                <div style="color: red;" *ngIf="legalheirarray.controls[i].get('emailId')?.hasError('required') && legalheirarray.controls[i].get('emailId')?.touched">
+                                                <!-- <div style="color: red;" *ngIf="legalheirarray.controls[i].get('emailId')?.hasError('required') && legalheirarray.controls[i].get('emailId')?.touched">
                                                     Email ID is required.
+                                                  </div> -->
+                                                  <div class="error-message"
+                                                  *ngIf="legalheirarray.controls[i].get('emailId')?.invalid && legalheirarray.controls[i].get('emailId')?.touched">
+                                                  <div *ngIf="legalheirarray.controls[i].get('emailId')?.hasError('required')">Enter emailId
+                                                      address.
                                                   </div>
+                                                  <div *ngIf="legalheirarray.controls[i].get('emailId')?.hasError('emailFormat')">Invalid emailId
+                                                      format.
+                                                  </div>
+                                              </div>
                                         </div>
                                     </div>
                                 </div>
@@ -652,6 +661,7 @@
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Payment Mode</th>
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">UPI Id/linked Mob. No.</th>
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">QR Code</th>
+                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Status</th>
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Start Date</th>
                         <!-- <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Created Date</th> -->
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">Action</th>
@@ -672,7 +682,7 @@
                         <td>{{ item.paymtMode }}</td>
                         <td>{{ item.upiPhoneNo}}</td>
                         <td>{{ item.uploadQuarCodeAdds }}</td>
-                        <!-- <td>{{ item.createdDate }}</td> -->
+                        <td>{{ item.isActive}}</td>
                         <td>{{ item.updatedDate}}</td>
                         <td>
                             <div style="display: inline-flex; ">

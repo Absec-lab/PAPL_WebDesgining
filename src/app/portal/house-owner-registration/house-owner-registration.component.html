@@ -52,7 +52,7 @@
                     </div>
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
-                            <label for="state" class="form-label">Phone Number<span class="text-danger">*</span></label>
+                            <label for="state" class="form-label">Phone Number<span class="text-danger">*</span></label>+91
                             <input type="text" name="phoneNo" id="phoneNo" class="form-control" formControlName="phone"
                                 (keyup)="vldChkLst.allowNumericDigits($event)" minlength="10" maxlength="10" autocomplete="off" />
                                 <div style="color: red;" *ngIf="houseRegistrationForm.get('phone')?.hasError('required')">Phone Number is required.</div>
@@ -361,7 +361,7 @@
                                     <div class="col-sm-6 col-md-4">
                                         <div class="form-group">
                                             <label for="state" class="form-label">Phone Number<span
-                                                    class="text-danger">*</span></label>
+                                                    class="text-danger">*</span></label>+91
                                             <input type="text" formControlName="phoneNo" name="" id=""
                                                 class="form-control"  (keyup)="vldChkLst.allowNumericDigits($event)" minlength="10" maxlength="10" autocomplete="off" required>
                                                 <div style="color: red;" *ngIf="legalheirarray.controls[i].get('phoneNo')?.hasError('required') && legalheirarray.controls[i].get('phoneNo')?.touched">

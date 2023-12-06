@@ -12,7 +12,6 @@ import Swal from 'sweetalert2';
   styleUrls: ['../../common.css', './house-registration.component.css']
 })
 export class HouseRegistrationComponent implements OnInit {
-
   updatebtn: boolean = false;
   stateDtails: any;
   houseRegistrationForm!: FormGroup;
@@ -26,9 +25,9 @@ export class HouseRegistrationComponent implements OnInit {
   private destroy$ = new Subject<void>();
   currentDate: Date = new Date();
   houseId: any = '';
-  mapId:any = '';
+  mapId: any = '';
 
-  constructor(private portalService: PortalServiceService, private formBuilder: FormBuilder, public vldChkLst: ValidatorchklistService, private ngxLoader: NgxUiLoaderService,) {
+  constructor(private portalService: PortalServiceService, private formBuilder: FormBuilder, public vldChkLst: ValidatorchklistService, private ngxLoader: NgxUiLoaderService) {
 
   }
 
@@ -346,7 +345,7 @@ export class HouseRegistrationComponent implements OnInit {
 
 
   updateHouseForm() {
-    console.log("update work in progress");
+
 
     // let vSts = this.validateData();
     // console.log(vSts);
@@ -372,6 +371,7 @@ export class HouseRegistrationComponent implements OnInit {
         "houseRegistrationMapDto": this.stateArray.value,
 
       }
+
       console.log(data);
       console.log(this.stateArray.value)
       this.ngxLoader.start();
@@ -390,6 +390,7 @@ export class HouseRegistrationComponent implements OnInit {
             text: 'Record Updated Successfully'
           });
           this.updatebtn = false;
+          window.scrollTo({ top: 0, behavior: 'smooth' });
 
           // alert("House Registration succcesfull")
         })

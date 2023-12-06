@@ -344,7 +344,8 @@ export class UnitRegistrationComponent {
 
     const firstUnitGroup = this.unitArray.at(0) as FormGroup;
     console.log(firstUnitGroup);
-    
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
     
     firstUnitGroup.patchValue({
       ownerName: item.ownerName,

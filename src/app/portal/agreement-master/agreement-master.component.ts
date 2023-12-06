@@ -35,7 +35,7 @@ export class AgreementMasterComponent {
   aggrePlant: any = 0;
   aggreOwner: any = 0;
   aggreHouse: any = 0;
-  aggreUpload:any;
+  aggreUpload: any;
   aggreAggrementType: any = 0;
   aggreElectricBill: any = '';
   aggreWaterBill: any = '';
@@ -57,7 +57,7 @@ export class AgreementMasterComponent {
     aggreAggrementType: '',
     aggreElectricBill: '',
     aggreWaterBill: '',
-    aggreUpload:'',
+    aggreUpload: '',
     aggreMonthlyRent: '',
     aggrePeriod: '',
     aggreStartDate: '',
@@ -282,7 +282,7 @@ export class AgreementMasterComponent {
       this.errorMessages.aggreAggrementType = '';
 
     }
-   
+
     if (!this.vldChkLst.blankCheckWithoutAlert(this.aggreMonthlyRent)) {
       vSts = false;
       this.errorMessages.aggreMonthlyRent = 'Monthly rent is required.';
@@ -315,13 +315,16 @@ export class AgreementMasterComponent {
       this.errorMessages.aggreEndDate = 'End date is required.';
     }
     else {
-        this.errorMessages.aggreEndDate = '';
-      }
-    
-    
+      this.errorMessages.aggreEndDate = '';
+    }
+
+
     return vSts;
   }
   editAgreement(aggreId: any, stateId: any, sbuId: any, plantId: any, ownerId: any, houseId: any, aggreTypeId: any, rent: any, rentPeriod: any, rentStartDt: any, rentEndDt: any, withElectricBill: any, withWaterBill: any) {
+    
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
     Swal.fire({
       icon: 'warning',
       text: "Are you sure you want to Edit the details?",
@@ -330,6 +333,7 @@ export class AgreementMasterComponent {
       cancelButtonText: 'No',
       cancelButtonColor: '#df1141'
     }).then((result) => {
+
       if (result.isConfirmed) {
         this.aggreState = stateId;
         this.aggreSbu = sbuId;
@@ -346,7 +350,10 @@ export class AgreementMasterComponent {
         this.aggreId = aggreId;
 
         this.getSbu(stateId);
-        this.getplant(sbuId)
+        this.getplant(sbuId);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+
       }
     });
   }
@@ -397,11 +404,14 @@ export class AgreementMasterComponent {
         this.aggreOwner = 0;
         this.aggreAggrementType = 0;
         this.aggreHouse = 0;
+        this.aggreUpload = '';
         Swal.fire({
           icon: 'success',
           text: 'Record Saved Successfully'
-        });
+        }).then(() => {
+          window.location.reload();
 
+        });
         this.getAllAgreement();
         // } else {
         //   Swal.fire({
@@ -470,6 +480,7 @@ export class AgreementMasterComponent {
           icon: 'success',
           text: 'Record Update Successfully'
         });
+        // window.location.reload();
         this.getAllAgreement();
         // } else {
         //   Swal.fire({

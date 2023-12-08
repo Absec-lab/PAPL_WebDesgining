@@ -53,7 +53,8 @@
             <div class="col-sm-6 col-md-4">
                 <div class="form-group">
                     <label class="form-label">No Of Electric Bills<span class="text-danger">*</span></label>
-                    <input type="text" name="" id="" class="form-control" required formControlName="electricBill" (input)="vldChkLst.allowNumericDigits($event)" maxlength="2">
+                    <input type="text" name="" id="" class="form-control" required formControlName="electricBill"
+                        (input)="vldChkLst.allowNumericDigits($event)" maxlength="2">
                     <div *ngIf="houseRegistrationForm.get('electricBill')?.invalid && houseRegistrationForm.get('electricBill')?.touched"
                         class="error-message">
                         No Of Electric Bills is required.
@@ -63,7 +64,8 @@
             <div class="col-sm-6 col-md-4">
                 <div class="form-group">
                     <label class="form-label">No of water Bills<span class="text-danger">*</span></label>
-                    <input type="text" name="" id="" class="form-control" required formControlName="waterBill" (input)="vldChkLst.allowNumericDigits($event)" maxlength="2">
+                    <input type="text" name="" id="" class="form-control" required formControlName="waterBill"
+                        (input)="vldChkLst.allowNumericDigits($event)" maxlength="2">
                     <div *ngIf="houseRegistrationForm.get('waterBill')?.invalid && houseRegistrationForm.get('waterBill')?.touched"
                         class="error-message">
                         No of Water Bills is required.
@@ -73,7 +75,8 @@
             <div class="col-sm-6 col-md-4">
                 <div class="form-group">
                     <label class="form-label">Address<span class="text-danger">*</span></label>
-                    <input type="text" name="" id="" class="form-control" required formControlName="address" maxlength="35">
+                    <input type="text" name="" id="" class="form-control" required formControlName="address"
+                        maxlength="35">
                     <div *ngIf="houseRegistrationForm.get('address')?.invalid && houseRegistrationForm.get('address')?.touched"
                         class="error-message">
                         Address is required.
@@ -85,13 +88,15 @@
             <div class="col-sm-6 col-md-4">
                 <div class="form-group">
                     <label class="form-label">Address 2<span class="text-danger"></span></label>
-                    <input type="text" name="" id="" class="form-control" required formControlName="address2" maxlength="35">
+                    <input type="text" name="" id="" class="form-control" required formControlName="address2"
+                        maxlength="35">
                 </div>
             </div>
             <div class="col-sm-6 col-md-4">
                 <div class="form-group">
                     <label class="form-label">District<span class="text-danger">*</span></label>
-                    <input type="text" name="" id="" class="form-control" required formControlName="district" (input)="vldChkLst.allowAlpha($event)">
+                    <input type="text" name="" id="" class="form-control" required formControlName="district"
+                        (input)="vldChkLst.allowAlpha($event)">
                     <div *ngIf="houseRegistrationForm.get('district')?.invalid && houseRegistrationForm.get('district')?.touched"
                         class="error-message">
                         District is required.
@@ -101,7 +106,8 @@
             <div class="col-sm-6 col-md-4">
                 <div class="form-group">
                     <label class="form-label">PIN<span class="text-danger">*</span></label>
-                    <input type="text" name="" id="" class="form-control" required formControlName="pin" (input)="vldChkLst.allowNumericDigits($event)" maxlength="6">
+                    <input type="text" name="" id="" class="form-control" required formControlName="pin"
+                        (input)="vldChkLst.allowNumericDigits($event)" maxlength="6">
                     <div *ngIf="houseRegistrationForm.get('pin')?.invalid && houseRegistrationForm.get('pin')?.touched"
                         class="error-message">
                         PIN is required.
@@ -144,30 +150,42 @@
                     <div *ngFor="let stateGroup of stateArray.controls; let i = index" [formGroupName]="i" class="row">
                         <div class="col-sm-6 col-md-4 py-2">
                             <label for="state" class="form-label">State<span class="text-danger">*</span></label>
-                            <select class="form-select" formControlName="stateId" aria-label="Default select example"
-                                required (change)="getSubonStateChange($event,i)">
+                            <select class="form-select" formControlName="stateId" id="stateId"
+                                aria-label="Default select example" required (change)="getSubonStateChange($event,i)">
                                 <option selected>Choose State...</option>
                                 <option *ngFor="let state of stateDtails" [value]="state.stateId">{{ state.stateName }}
                                 </option>
                             </select>
+                            <div *ngIf="stateArray.controls[i].get('stateId')?.invalid && stateArray.controls[i].get('stateId')?.touched"
+                                class="error-message">
+                                State is required.
+                            </div>
                         </div>
                         <div class="col-sm-6 col-md-4 py-2">
                             <label for="state" class="form-label">SBU<span class="text-danger">*</span></label>
-                            <select formControlName="sbuId" class="form-select" aria-label="Default select example"
-                                required (change)="getPlantOnSubChange($event,i)">
+                            <select formControlName="sbuId" id="sbuId" class="form-select"
+                                aria-label="Default select example" required (change)="getPlantOnSubChange($event,i)">
                                 <option selected>Choose SBU...</option>
                                 <option *ngFor="let sbu of activeSBU[i]" [value]="sbu.locationId">{{ sbu.locationName }}
                                 </option>
                             </select>
+                            <div *ngIf="stateArray.controls[i].get('sbuId')?.invalid && stateArray.controls[i].get('sbuId')?.touched"
+                                class="error-message">
+                                SBU is required.
+                            </div>
                         </div>
                         <div class="col-sm-6 col-md-2 py-2">
                             <label for="state" class="form-label">Plant<span class="text-danger">*</span></label>
-                            <select formControlName="plantId" class="form-select" aria-label="Default select example"
-                                required>
+                            <select formControlName="plantId" id="plantId" class="form-select"
+                                aria-label="Default select example" required>
                                 <option selected>Choose Plant...</option>
                                 <option [value]="plant.plantId" *ngFor="let plant of activePlant[i]">{{ plant.plantName
                                     }}</option>
                             </select>
+                            <div *ngIf="stateArray.controls[i].get('plantId')?.invalid && stateArray.controls[i].get('plantId')?.touched"
+                                class="error-message">
+                                Plant is required.
+                            </div>
                         </div>
                         <div class="col-1 py-2" style="    margin-top: 31px;">
                             <button class="btn btn-danger btn-sm" *ngIf="i>0" (click)="removeState(i)">
@@ -180,7 +198,7 @@
 
                 </div>
             </form>
-
+            <div class="text-danger">{{errorMessageForHouseMapping}}</div>
 
 
 
@@ -193,6 +211,7 @@
             <button *ngIf="updatebtn" class="btn btn-primary form-save-btn" (click)=" updateHouseForm()">
                 Update
             </button>
+
         </div>
     </form>
     <div class="container" style=" position: relative; overflow-x: auto; overflow-y: auto; margin-top: 30px;">

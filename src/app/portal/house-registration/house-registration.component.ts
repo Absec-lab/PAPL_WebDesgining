@@ -26,6 +26,7 @@ export class HouseRegistrationComponent implements OnInit {
   currentDate: Date = new Date();
   houseId: any = '';
   mapId: any = '';
+  errorMessageForHouseMapping: any = '';
 
   constructor(private portalService: PortalServiceService, private formBuilder: FormBuilder, public vldChkLst: ValidatorchklistService, private ngxLoader: NgxUiLoaderService) {
 
@@ -56,6 +57,16 @@ export class HouseRegistrationComponent implements OnInit {
 
     this.addstate()
     this.getAllOwner()
+    this.initFormValidators();
+  }
+
+  initFormValidators(): void {
+    // Add validators for the stateForm controls as needed
+    this.stateArray.controls.forEach((control: FormGroup) => {
+      control.get('stateId')?.setValidators([Validators.required]);
+      control.get('sbuId')?.setValidators([Validators.required]);
+      control.get('plantId')?.setValidators([Validators.required]);
+    });
   }
   dateTimeValidator(control: FormControl): { [key: string]: boolean } | null {
     const selectedDateTime: Date = new Date(control.value);
@@ -108,13 +119,13 @@ export class HouseRegistrationComponent implements OnInit {
       stateId: ['', Validators.required],
       sbuId: ['', Validators.required],
       plantId: ['', Validators.required],
-      // Add more form controls as needed
     });
 
+    stateGroup.get('stateId')?.setValidators([Validators.required]);
+    stateGroup.get('sbuId')?.setValidators([Validators.required]);
+    stateGroup.get('plantId')?.setValidators([Validators.required]);
+
     this.stateArray.push(stateGroup);
-    console.log("ku6 nahi ho raha", this.stateArray);
-
-
   }
 
   removeState(index: number) {
@@ -220,6 +231,9 @@ export class HouseRegistrationComponent implements OnInit {
       { control: this.houseRegistrationForm.get('address'), name: "Address" },
       { control: this.houseRegistrationForm.get('district'), name: "District" },
       { control: this.houseRegistrationForm.get('startDate'), name: "Start Date" },
+
+      { control: this.stateArray, name: "State Array" },
+
     ];
 
     let vSts = true;
@@ -250,6 +264,11 @@ export class HouseRegistrationComponent implements OnInit {
         break;
       }
     }
+
+    
+
+    if (!vSts) {
+      this.errorMessageForHouseMapping = "Kindly fill the all the field for House Registration"    }
 
     return vSts;
   }
@@ -291,12 +310,15 @@ export class HouseRegistrationComponent implements OnInit {
             icon: 'success',
             text: 'Record Saved Successfully'
           });
+          window.location.reload();
           // alert("House Registration succcesfull")
         })
     }
   }
 
   updateHouse(item: any) {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
     this.updatebtn = true;
     console.log(item);
     this.houseRegistrationForm.patchValue({
@@ -336,7 +358,22 @@ export class HouseRegistrationComponent implements OnInit {
       for (let i = 0; i < stateId.length; i++) {
         stateId[i].dispatchEvent(new Event('change'));
       }
-    }, 1000);
+    }, 1010);
+    setTimeout(() => {
+      const sbuId = document.querySelectorAll('#sbuId');
+      for (let i = 0; i < sbuId.length; i++) {
+        sbuId[i].dispatchEvent(new Event('change'));
+      }
+    }, 2010);
+    setTimeout(() => {
+      const plantId = document.querySelectorAll('#plantId');
+      for (let i = 0; i < plantId.length; i++) {
+        plantId[i].dispatchEvent(new Event('change'));
+      }
+    }, 3010);
+
+
+   
 
     this.houseId = item.houseId;
     this.mapId = item.mapId;
@@ -347,11 +384,11 @@ export class HouseRegistrationComponent implements OnInit {
   updateHouseForm() {
 
 
-    // let vSts = this.validateData();
-    // console.log(vSts);
-    // console.log(this.houseRegistrationForm.valid);
-    // console.log(this.stateArray.valid);
-    // if (vSts) {
+    let vSts = this.validateData();
+    console.log(vSts);
+    console.log(this.houseRegistrationForm.valid);
+    console.log(this.stateArray.valid);
+    if (vSts) {
     if (this.houseId !== null && this.mapId !== null) {
 
       let data = {
@@ -390,7 +427,6 @@ export class HouseRegistrationComponent implements OnInit {
             text: 'Record Updated Successfully'
           });
           this.updatebtn = false;
-          window.scrollTo({ top: 0, behavior: 'smooth' });
 
           // alert("House Registration succcesfull")
         })
@@ -399,7 +435,7 @@ export class HouseRegistrationComponent implements OnInit {
     else {
       console.error("houseId is null");
     }
-
+  }
 
   }
 

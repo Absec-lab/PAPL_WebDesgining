@@ -14,6 +14,7 @@ import {PortalServiceService} from './serviceapi/portal-service.service';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     CommonModule,
     PortalRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxPaginationModule
   ]
 })
 export class PortalModule { }

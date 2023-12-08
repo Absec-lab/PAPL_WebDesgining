@@ -1,13 +1,14 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { PortalServiceService } from './../serviceapi/portal-service.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { FormBuilder, FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, Validators, FormArray, AbstractControl } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { HttpClient } from "@angular/common/http";
 import { ValidatorchklistService } from './../serviceapi/validatorchklist.service';
 import { takeUntil } from 'rxjs';
 import { CommonValidatorService } from 'src/app/common-validator.service';
+
 @Component({
   selector: 'app-home-owner-registration',
   templateUrl: './house-owner-registration.component.html',
@@ -24,9 +25,14 @@ export class HouseOwnerRegistrationComponent {
   stateDtails: any = []
   houseRegistrationForm!: FormGroup<any>;
   updatebtn: boolean = false;
+  isfileuploaded: boolean = false;
   descripinput: boolean = false;
   legalheirForm!: FormGroup;
   noOfLegalParties: any;
+  page: number = 1;
+  count: number = 0;
+  tableSize: number = 7;
+  tableSizes: any = [3, 6, 9, 12];
   @ViewChild('fileInput') fileInput!: ElementRef;
   constructor(private ngxLoader: NgxUiLoaderService, private formBuilder: FormBuilder, private route: Router, public portalServ: PortalServiceService, private httpClient: HttpClient, public vldChkLst: ValidatorchklistService) { }
   ngOnInit(): void {
@@ -38,15 +44,15 @@ export class HouseOwnerRegistrationComponent {
       ownerName: ['', [Validators.required, CommonValidatorService.fullNameValidator]],
       phone: ['', Validators.required],
       email: ['', [Validators.required, CommonValidatorService.validateEmail]],
-      idProofDoc: ['', Validators.required],
+      idProofDoc: [''],
       idProofDocPrifix: [''],
       gIdproof: ['', Validators.required],
       add1: ['', Validators.required],
       add2: [''],
-      state: [0, Validators.required],
-      dist: ['', Validators.required],
-      pin: ['', Validators.required],
-      paymode: [0, Validators.required],
+      state: ['', [Validators.required]],
+      dist: ['', [Validators.required]],
+      pin: ['', [Validators.required]],
+      paymode: ['', [Validators.required]],
       status: ['1'],
       accHolName: ['', Validators.required],
       accounNum: ['', Validators.required],
@@ -69,7 +75,15 @@ export class HouseOwnerRegistrationComponent {
       legal: this.formBuilder.array([])
     })
   }
-
+  onTableDataChange(event: any) {
+    this.page = event;
+    this.getAllOwner();
+  }
+  onTableSizeChange(event: any): void {
+    this.tableSize = event.target.value;
+    this.page = 1;
+    this.getAllOwner();
+  }
   get legalheirarray(): any {
     return this.legalheirForm.get('legal') as FormArray;
   }
@@ -80,7 +94,7 @@ export class HouseOwnerRegistrationComponent {
       ownerName: ['', Validators.required, [CommonValidatorService.fullNameValidator]],
       phoneNo: ['', Validators.required],
       emailId: ['', [Validators.required, CommonValidatorService.validateEmail]],
-      idProofDoc: ['', Validators.required],
+      idProofDoc: [''],
       idProofDocPrifix: [''],
       idProof: ['', Validators.required],
       address1: ['', Validators.required],
@@ -111,7 +125,22 @@ export class HouseOwnerRegistrationComponent {
 
     // }
   }
+   checkFileType(control: AbstractControl): { [key: string]: any } | null {
+    const files: File[] = control.value;
+    let errors: string[] = [];
 
+   if (files.length >= 1 ) {
+       for (let index = 0; index < files.length; index++) {
+           //Use a type list here to check for your types for example "image/jpeg"
+           if (files[index].type === '') {                 
+               errors.push(`${files[index].name} has an invalid type of unknown\n`);
+           }
+       }
+
+       return  errors.length >= 1 ? { invalid_type: errors } : null;           
+   }
+   return null;  // no file, can be capture by "Required" validation 
+}
   removelegalform(index: number) {
     this.legalheirarray.removeAt(index)
   }
@@ -160,7 +189,12 @@ export class HouseOwnerRegistrationComponent {
   arrayDistList:any;
   getDistirct(event:any, array?:any) {
     console.log(event, typeof event);
-    
+    debugger;
+    let checkEventValue = typeof event;
+    if(checkEventValue !== 'number' && event?.target?.value === ''){
+      //this.allDistictList = [];
+      return;
+     }
     this.ngxLoader.start()
     let eventValue :any;
     if (typeof event === 'number') {
@@ -197,8 +231,15 @@ export class HouseOwnerRegistrationComponent {
   pincodeList:any;
   arrayPincode:any;
   getPinCode(event:any,array?:any) {
+    debugger;
+    let checkEventValue = typeof event;
+    if(checkEventValue !== 'number' && event?.target?.value === ''){
+      //this.pincodeList = [];
+      return;
+    }
     this.ngxLoader.start()
     //console.log(event.target.value);
+   
     let distValue :any;
     if (typeof event === 'string') {
       distValue = event;
@@ -232,6 +273,7 @@ export class HouseOwnerRegistrationComponent {
       const file = inputElement.files[0];
 
       if (file) {
+        this.isfileuploaded = false;
         const reader = new FileReader();
 
         reader.onload = (e) => {
@@ -285,6 +327,8 @@ export class HouseOwnerRegistrationComponent {
           console.error('Invalid file type. Please select an image or PDF file.');
         }
       }
+    } else {
+      this.isfileuploaded = true;
     }
     console.log(this.houseRegistrationForm);
   }
@@ -356,6 +400,11 @@ export class HouseOwnerRegistrationComponent {
   }
 
   ownerRegistration() {
+    debugger;
+    let uploadFile = this.houseRegistrationForm.value.idProofDoc;
+    if(uploadFile === '') {
+      this.isfileuploaded = true;
+    }
     let errFlag = 0;
     let emailId: any = this.houseRegistrationForm.value.emailId;
     let gIdproof: any = this.houseRegistrationForm.value.gIdproof;
@@ -376,7 +425,7 @@ export class HouseOwnerRegistrationComponent {
     }
 
    // let valid = this.validateData();
-    if (this.houseRegistrationForm.valid) {
+    if (this.houseRegistrationForm.valid && !this.isfileuploaded) {
       let data: any =
       {
         "ownerName": this.houseRegistrationForm.value.ownerName,
@@ -622,7 +671,10 @@ export class HouseOwnerRegistrationComponent {
       value = event.target.value;
     }
 
-
+if(value === '') {
+  this.heading = false;
+  return;
+}
     if (userType == 'owner') {
       if(value !== '1') {
         this.houseRegistrationForm.get('accHolName')?.clearValidators();

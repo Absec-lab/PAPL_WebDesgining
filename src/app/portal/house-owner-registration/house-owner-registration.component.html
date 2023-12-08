@@ -55,7 +55,11 @@
                             <label for="state" class="form-label">Phone Number<span class="text-danger">*</span></label>+91
                             <input type="text" name="phoneNo" id="phoneNo" class="form-control" formControlName="phone"
                                 (keyup)="vldChkLst.allowNumericDigits($event)" minlength="10" maxlength="10" autocomplete="off" />
-                                <div style="color: red;" *ngIf="houseRegistrationForm.get('phone')?.hasError('required')">Phone Number is required.</div>
+                                <div class="error-message"
+                                *ngIf="houseRegistrationForm.get('phone')?.invalid && houseRegistrationForm.get('phone')?.touched">
+                                <div *ngIf="houseRegistrationForm.get('phone')?.hasError('required')">Phone Number is required.
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
@@ -79,8 +83,8 @@
                             <label for="state" class="form-label">Upload Govt ID Proof<span
                                     class="text-danger">*</span></label>
                             <input type="file" #fileInput name="" id="" class="form-control" accept="image/*,.pdf"
-                                required (change)="onImageChange($event, 'idProofDoc')" />
-                                <div style="color: red;" *ngIf="houseRegistrationForm.get('idProofDoc')?.hasError('required')">Govt ID Proof is yet to upload.</div>
+                                (change)="onImageChange($event, 'idProofDoc')" />
+                                <div style="color: red;" *ngIf="isfileuploaded">Govt ID Proof is yet to upload.</div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
@@ -88,7 +92,7 @@
                             <label for="state" class="form-label">Govt ID Proof<span class="text-danger">*</span></label>
                             <input type="text" name="idProof" id="idProof" class="form-control"
                                 formControlName="gIdproof" (input)="vldChkLst.allowNumericDigitsWithAlpha($event)"
-                                maxlength="15" />
+                                maxlength="12" />
                             <div class="error-message"
                                 *ngIf="houseRegistrationForm.get('gIdproof')?.invalid && houseRegistrationForm.get('gIdproof')?.touched">
                                 <div *ngIf="houseRegistrationForm.get('gIdproof')?.hasError('required')">Enter Id proof
@@ -103,7 +107,11 @@
                             <label for="state" class="form-label">Address 1<span class="text-danger">*</span></label>
                             <input type="text" name="address1" id="address1" class="form-control"
                                 formControlName="add1" />
-                                <div style="color: red;" *ngIf="houseRegistrationForm.get('add1')?.hasError('required')">Address 1 is required.</div>
+                                <div class="error-message"
+                                *ngIf="houseRegistrationForm.get('add1')?.invalid && houseRegistrationForm.get('add1')?.touched">
+                                <div *ngIf="houseRegistrationForm.get('add1')?.hasError('required')">Address 1 is required.
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
@@ -117,12 +125,15 @@
                         <div class="form-group">
                             <label class="form-label">State<span class="text-danger">*</span></label>
                             <select class="form-select" aria-label="Default select example" formControlName="state" (change)="getDistirct($event)">
-                                <option value="0" selected>Choose State... </option>
+                                <option value="">Choose State... </option>
                                 <option *ngFor="let state of stateDtails" [value]="state.stateId">{{ state.stateName }}
                                 </option>
-
                             </select>
-                            <div style="color: red;" *ngIf="houseRegistrationForm.get('state')?.hasError('required')">State is required.</div>
+                            <div class="error-message"
+                            *ngIf="houseRegistrationForm.get('state')?.invalid && houseRegistrationForm.get('state')?.touched">
+                            <div *ngIf="houseRegistrationForm.get('state')?.hasError('required')">State is required.
+                            </div>
+                        </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
@@ -132,12 +143,15 @@
                                 (input)="vldChkLst.allowAlpha($event)" /> -->
                                 <select class="form-select" formControlName="dist" (change)="getPinCode($event)"
                                                 aria-label="Default select example">
-                                                <option selected>Choose District... </option>
+                                                <option value="">Choose District... </option>
                                                 <option *ngFor="let dist of allDistictList" [value]="dist.districtName">{{
                                                     dist.districtName }}</option>
-
                                             </select>
-                                <div style="color: red;" *ngIf="houseRegistrationForm.get('dist')?.hasError('required')">District is required.</div>
+                                            <div class="error-message"
+                                            *ngIf="houseRegistrationForm.get('dist')?.invalid && houseRegistrationForm.get('dist')?.touched">
+                                            <div *ngIf="houseRegistrationForm.get('dist')?.hasError('required')">District is required.
+                                            </div>
+                                        </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
@@ -147,12 +161,15 @@
                                 (input)="vldChkLst.allowNumericDigits($event)" maxlength="6" /> -->
                                 <select class="form-select" formControlName="pin"
                                                 aria-label="Default select example">
-                                                <option selected>Choose Pincode... </option>
+                                                <option value="">Choose Pincode... </option>
                                                 <option *ngFor="let pin of pincodeList" [value]="pin.pincode">{{
                                                     pin.pincode }}</option>
-
                                             </select>
-                                <div style="color: red;" *ngIf="houseRegistrationForm.get('pin')?.hasError('required')">Pincode is required.</div>
+                                            <div class="error-message"
+                                            *ngIf="houseRegistrationForm.get('pin')?.invalid && houseRegistrationForm.get('pin')?.touched">
+                                            <div *ngIf="houseRegistrationForm.get('pin')?.hasError('required')">Pincode is required.
+                                            </div>
+                                        </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
@@ -160,7 +177,7 @@
                         <select class="form-select" (change)="paymentmode($event, 'owner')"
                             aria-label="Default select example" formControlName="paymode" name="paymtMode"
                             id="paymtMode">
-                            <option value="" selected>Choose Payment Mode...</option>
+                            <option value="">Choose Payment Mode...</option>
                             <option [value]="1" routerLink="">
                                 Bank AC
                             </option>
@@ -178,6 +195,11 @@
                                 Google Pay
                             </option>
                         </select>
+                        <div class="error-message"
+                                            *ngIf="houseRegistrationForm.get('paymode')?.invalid && houseRegistrationForm.get('paymode')?.touched">
+                                            <div *ngIf="houseRegistrationForm.get('paymode')?.hasError('required')">Paymode is required.
+                                            </div>
+                                        </div>
                     </div>
 
                     <div class="col-sm-6 col-md-4">
@@ -442,7 +464,7 @@
                                                     class="text-danger">*</span></label>
                                             <select class="form-select" formControlName="stateId"  (change)="getDistirct($event, 'array')"
                                                 aria-label="Default select example">
-                                                <option selected>Choose State... </option>
+                                                <option value="">Choose State... </option>
                                                 <option *ngFor="let state of stateDtails" [value]="state.stateId">{{
                                                     state.stateName }}</option>
 
@@ -669,7 +691,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let item of allOwner; let i = index">
+                    <tr *ngFor="let item of allOwner | paginate
+                    : {
+                        itemsPerPage: tableSize,
+                        currentPage: page,
+                        totalItems: count
+                      }; let i = index">
                         <td>{{ i+1 }}</td>
                         <td>{{ item.ownerName }}</td>
                         <td>{{ item.phoneNo }}</td>
@@ -700,7 +727,20 @@
                     </tr>
                 </tbody>
             </table>
+    
         </div>
+        <br>
+        <div class="d-flex justify-content-center">
+            <pagination-controls
+              previousLabel="Prev"
+              nextLabel="Next"
+              (pageChange)="onTableDataChange($event)"
+            >
+            </pagination-controls>
+        </div>
+
+
     </div>
+
 </section>
 <app-footer></app-footer>

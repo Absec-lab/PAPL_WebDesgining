@@ -21,7 +21,8 @@
                     </select>
                     <div *ngIf="houseRegistrationForm.get('ownerName')?.invalid && houseRegistrationForm.get('ownerName')?.touched"
                         class="error-message">
-                        Owner Name is required.
+                        <div *ngIf="houseRegistrationForm.get('ownerName')?.hasError('min')">
+                            Select Owner Name.</div>
                     </div>
                 </div>
             </div>
@@ -152,39 +153,43 @@
                             <label for="state" class="form-label">State<span class="text-danger">*</span></label>
                             <select class="form-select" formControlName="stateId" id="stateId"
                                 aria-label="Default select example" required (change)="getSubonStateChange($event,i)">
-                                <option selected>Choose State...</option>
+                                <option value="0" selected>Choose State...</option>
                                 <option *ngFor="let state of stateDtails" [value]="state.stateId">{{ state.stateName }}
                                 </option>
                             </select>
                             <div *ngIf="stateArray.controls[i].get('stateId')?.invalid && stateArray.controls[i].get('stateId')?.touched"
                                 class="error-message">
-                                State is required.
+                                <div *ngIf="stateArray.controls[i].get('stateId')?.hasError('min')">
+                                    Select State.</div>
+
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-4 py-2">
                             <label for="state" class="form-label">SBU<span class="text-danger">*</span></label>
                             <select formControlName="sbuId" id="sbuId" class="form-select"
                                 aria-label="Default select example" required (change)="getPlantOnSubChange($event,i)">
-                                <option selected>Choose SBU...</option>
+                                <option value="0" selected>Choose SBU...</option>
                                 <option *ngFor="let sbu of activeSBU[i]" [value]="sbu.locationId">{{ sbu.locationName }}
                                 </option>
                             </select>
                             <div *ngIf="stateArray.controls[i].get('sbuId')?.invalid && stateArray.controls[i].get('sbuId')?.touched"
                                 class="error-message">
-                                SBU is required.
+                                <div *ngIf="stateArray.controls[i].get('sbuId')?.hasError('min')">
+                                    Select SBU.</div>
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-2 py-2">
                             <label for="state" class="form-label">Plant<span class="text-danger">*</span></label>
                             <select formControlName="plantId" id="plantId" class="form-select"
                                 aria-label="Default select example" required>
-                                <option selected>Choose Plant...</option>
+                                <option value="0" selected>Choose Plant...</option>
                                 <option [value]="plant.plantId" *ngFor="let plant of activePlant[i]">{{ plant.plantName
                                     }}</option>
                             </select>
                             <div *ngIf="stateArray.controls[i].get('plantId')?.invalid && stateArray.controls[i].get('plantId')?.touched"
                                 class="error-message">
-                                Plant is required.
+                                <div *ngIf="stateArray.controls[i].get('plantId')?.hasError('min')">
+                                    Select Plant.</div>
                             </div>
                         </div>
                         <div class="col-1 py-2" style="    margin-top: 31px;">
@@ -199,7 +204,7 @@
                 </div>
             </form>
 
-
+            <div class="text-danger">{{errorMessageForHouseMapping}}</div>
 
 
         </div>

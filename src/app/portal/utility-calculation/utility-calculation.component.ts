@@ -3,7 +3,8 @@ import { PortalServiceService } from '../serviceapi/portal-service.service';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { ValidatorchklistService } from '../serviceapi/validatorchklist.service';
-
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-utility-calculation',
   templateUrl: './utility-calculation.component.html',
@@ -13,7 +14,7 @@ export class UtilityCalculationComponent implements OnInit {
   utilityCalculation!: FormGroup;
   stateDtails: any = [];
   
-  constructor(public validateService: ValidatorchklistService, private portalservice: PortalServiceService,private formBuilder: FormBuilder) { }
+  constructor(private ngxLoader: NgxUiLoaderService, public validateService: ValidatorchklistService, private portalservice: PortalServiceService,private formBuilder: FormBuilder) { }
 
 
   ngOnInit(): void {
@@ -267,9 +268,14 @@ export class UtilityCalculationComponent implements OnInit {
       this.portalservice.post("PAPL/calculate",data)
       .pipe(takeUntil(this.destroy$))
       .subscribe(res=> {
-        console.log(res);
+        this.ngxLoader.stop();     
+        //console.log(res);
+        Swal.fire({
+          icon: 'success',
+          text: 'Calculation Saved Successfully'
+        });
         this. getAllUtilityCalc()
-        alert("calculation saved successfully")
+         // alert("calculation saved successfully")
       })
      } else {
       this.markFormGroupTouched(this.utilityCalculation);

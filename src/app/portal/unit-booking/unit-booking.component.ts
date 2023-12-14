@@ -112,9 +112,8 @@ export class UnitBookingComponent implements OnInit {
     .pipe(takeUntil(this.destroy$))
     .subscribe((res)=>{
       this.activeUnitId = res;
-      this.activeUnitId = res.map((item:any) => item.houseRegistration);
-      //this.activeUnitId = this.activeUnitId.houseRegistration
-      console.log("activeUnitId plan", this.activeUnitId)
+      //this.activeUnitId = res.map((item:any) => item.unit);
+       console.log("activeUnitId plan", this.activeUnitId.unitId)
     })
   }
 

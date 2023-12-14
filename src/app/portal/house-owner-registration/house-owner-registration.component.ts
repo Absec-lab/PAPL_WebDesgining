@@ -97,7 +97,7 @@ export class HouseOwnerRegistrationComponent {
   get legalheirarray(): any {
     return this.legalheirForm.get('legal') as FormArray;
   }
-
+//addlegaleirform changes
   addlegaleirform() {
     const legalform = this.formBuilder.group({
       prevOwonerId: [this.houseRegistrationForm.value.ownerId],

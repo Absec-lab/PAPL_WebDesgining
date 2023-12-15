@@ -52,12 +52,15 @@
                     </div>
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
-                            <label for="state" class="form-label">Phone Number<span class="text-danger">*</span></label>+91
+                            <label for="state" class="form-label">Phone Number<span
+                                    class="text-danger">*</span></label>+91
                             <input type="text" name="phoneNo" id="phoneNo" class="form-control" formControlName="phone"
-                                (keyup)="vldChkLst.allowNumericDigits($event)" minlength="10" maxlength="10" autocomplete="off" />
-                                <div class="error-message"
+                                (keyup)="vldChkLst.allowNumericDigits($event)" minlength="10" maxlength="10"
+                                autocomplete="off" />
+                            <div class="error-message"
                                 *ngIf="houseRegistrationForm.get('phone')?.invalid && houseRegistrationForm.get('phone')?.touched">
-                                <div *ngIf="houseRegistrationForm.get('phone')?.hasError('required')">Phone Number is required.
+                                <div *ngIf="houseRegistrationForm.get('phone')?.hasError('required')">Phone Number is
+                                    required.
                                 </div>
                             </div>
                         </div>
@@ -91,7 +94,8 @@
                     </div>
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
-                            <label for="state" class="form-label">Govt ID Proof<span class="text-danger">*</span></label>
+                            <label for="state" class="form-label">Govt ID Proof<span
+                                    class="text-danger">*</span></label>
                             <input type="text" name="idProof" id="idProof" class="form-control"
                                 formControlName="gIdproof" (input)="vldChkLst.allowNumericDigitsWithAlpha($event)"
                                 maxlength="12" />
@@ -109,9 +113,10 @@
                             <label for="state" class="form-label">Address 1<span class="text-danger">*</span></label>
                             <input type="text" name="address1" id="address1" class="form-control"
                                 formControlName="add1" />
-                                <div class="error-message"
+                            <div class="error-message"
                                 *ngIf="houseRegistrationForm.get('add1')?.invalid && houseRegistrationForm.get('add1')?.touched">
-                                <div *ngIf="houseRegistrationForm.get('add1')?.hasError('required')">Address 1 is required.
+                                <div *ngIf="houseRegistrationForm.get('add1')?.hasError('required')">Address 1 is
+                                    required.
                                 </div>
                             </div>
                         </div>
@@ -126,16 +131,17 @@
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             <label class="form-label">State<span class="text-danger">*</span></label>
-                            <select class="form-select" aria-label="Default select example" formControlName="state" (change)="getDistirct($event)">
+                            <select class="form-select" aria-label="Default select example" formControlName="state"
+                                (change)="getDistirct($event)">
                                 <option value="">Choose State... </option>
                                 <option *ngFor="let state of stateDtails" [value]="state.stateId">{{ state.stateName }}
                                 </option>
                             </select>
                             <div class="error-message"
-                            *ngIf="houseRegistrationForm.get('state')?.invalid && houseRegistrationForm.get('state')?.touched">
-                            <div *ngIf="houseRegistrationForm.get('state')?.hasError('required')">State is required.
+                                *ngIf="houseRegistrationForm.get('state')?.invalid && houseRegistrationForm.get('state')?.touched">
+                                <div *ngIf="houseRegistrationForm.get('state')?.hasError('required')">State is required.
+                                </div>
                             </div>
-                        </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
@@ -204,10 +210,10 @@
                             </option>
                         </select>
                         <div class="error-message"
-                                            *ngIf="houseRegistrationForm.get('paymode')?.invalid && houseRegistrationForm.get('paymode')?.touched">
-                                            <div *ngIf="houseRegistrationForm.get('paymode')?.hasError('required')">Paymode is required.
-                                            </div>
-                                        </div>
+                            *ngIf="houseRegistrationForm.get('paymode')?.invalid && houseRegistrationForm.get('paymode')?.touched">
+                            <div *ngIf="houseRegistrationForm.get('paymode')?.hasError('required')">Paymode is required.
+                            </div>
+                        </div>
                     </div>
 
                     <div class="col-sm-6 col-md-4">
@@ -385,7 +391,8 @@
                             <label for="state" class="form-label">No of Legal Parties<span
                                     class="text-danger">*</span></label>
                             <input type="text" name="noOfLegalParties" id="" class="form-control"
-                                [ngModelOptions]="{standalone: true}" [(ngModel)]="noOfLegalParties" (keyup)="vldChkLst.allowNumericDigits($event)">
+                                [ngModelOptions]="{standalone: true}" [(ngModel)]="noOfLegalParties"
+                                (keyup)="vldChkLst.allowNumericDigits($event)">
                         </div>
                     </div>
                     <form action="" [formGroup]="legalheirForm">
@@ -400,14 +407,17 @@
                                             <input type="text" formControlName="ownerName" name="name" id="ownerName"
                                                 class="form-control" maxlength="30"
                                                 (keyup)="vldChkLst.blockspecialchar_first($event)" required>
-                                                <div style="color: red;" *ngIf="legalheirarray.controls[i].get('ownerName')?.hasError('required') && legalheirarray.controls[i].get('ownerName')?.touched">
-                                                    House Owner Name is required.
-                                                  </div>
+                                            <div style="color: red;"
+                                                *ngIf="legalheirarray.controls[i].get('ownerName')?.hasError('required') && legalheirarray.controls[i].get('ownerName')?.touched">
+                                                House Owner Name is required.
+                                            </div>
                                         </div>
 
                                         <div *ngIf="legalheirarray.controls[i].get('ownerName')?.invalid && legalheirarray.controls[i].get('fullName')?.touched"
                                             class="reg-error-message">
-                                            <div *ngIf="legalheirarray.controls[i].get('ownerName')?.hasError('required')">Full name
+                                            <div
+                                                *ngIf="legalheirarray.controls[i].get('ownerName')?.hasError('required')">
+                                                Full name
                                                 is required.</div>
                                             <!-- <div *ngIf="houseRegistrationForm.get('fullName')?.hasError('fullNameInvalid')">Full name should contain at
                     least two letters.</div> -->
@@ -415,11 +425,13 @@
                                                 *ngIf="legalheirarray.controls[i].get('ownerName')?.hasError('fullNameContainsSpecialChars')">
                                                 Full name should
                                                 not contain special characters or numbers.</div>
-                                            <div *ngIf="legalheirarray.controls[i].get('ownerName')?.hasError('fullNameTooLong')">
+                                            <div
+                                                *ngIf="legalheirarray.controls[i].get('ownerName')?.hasError('fullNameTooLong')">
                                                 Full
                                                 name should
                                                 contain less than 50 charcter. </div>
-                                            <div *ngIf="legalheirarray.controls[i].get('ownerName')?.hasError('fullNameTooSmall')">
+                                            <div
+                                                *ngIf="legalheirarray.controls[i].get('ownerName')?.hasError('fullNameTooSmall')">
                                                 Full name should
                                                 contain more than 3 charcter. </div>
                                         </div>
@@ -430,10 +442,12 @@
                                             <label for="state" class="form-label">Phone Number<span
                                                     class="text-danger">*</span></label>+91
                                             <input type="text" formControlName="phoneNo" name="" id=""
-                                                class="form-control"  (keyup)="vldChkLst.allowNumericDigits($event)" minlength="10" maxlength="10" autocomplete="off" required>
-                                                <div style="color: red;" *ngIf="legalheirarray.controls[i].get('phoneNo')?.hasError('required') && legalheirarray.controls[i].get('phoneNo')?.touched">
-                                                    Phone number is required.
-                                                  </div>
+                                                class="form-control" (keyup)="vldChkLst.allowNumericDigits($event)"
+                                                minlength="10" maxlength="10" autocomplete="off" required>
+                                            <div style="color: red;"
+                                                *ngIf="legalheirarray.controls[i].get('phoneNo')?.hasError('required') && legalheirarray.controls[i].get('phoneNo')?.touched">
+                                                Phone number is required.
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-md-4">
@@ -441,19 +455,23 @@
                                             <label for="state" class="form-label">Email ID<span
                                                     class="text-danger">*</span></label>
                                             <input type="email" formControlName="emailId" name="" id=""
-                                                class="form-control" required  (oninput)="vldChkLst.validEmail($event)">
-                                                <!-- <div style="color: red;" *ngIf="legalheirarray.controls[i].get('emailId')?.hasError('required') && legalheirarray.controls[i].get('emailId')?.touched">
+                                                class="form-control" required (oninput)="vldChkLst.validEmail($event)">
+                                            <!-- <div style="color: red;" *ngIf="legalheirarray.controls[i].get('emailId')?.hasError('required') && legalheirarray.controls[i].get('emailId')?.touched">
                                                     Email ID is required.
                                                   </div> -->
-                                                  <div class="error-message"
-                                                  *ngIf="legalheirarray.controls[i].get('emailId')?.invalid && legalheirarray.controls[i].get('emailId')?.touched">
-                                                  <div *ngIf="legalheirarray.controls[i].get('emailId')?.hasError('required')">Enter emailId
-                                                      address.
-                                                  </div>
-                                                  <div *ngIf="legalheirarray.controls[i].get('emailId')?.hasError('emailFormat')">Invalid emailId
-                                                      format.
-                                                  </div>
-                                              </div>
+                                            <div class="error-message"
+                                                *ngIf="legalheirarray.controls[i].get('emailId')?.invalid && legalheirarray.controls[i].get('emailId')?.touched">
+                                                <div
+                                                    *ngIf="legalheirarray.controls[i].get('emailId')?.hasError('required')">
+                                                    Enter emailId
+                                                    address.
+                                                </div>
+                                                <div
+                                                    *ngIf="legalheirarray.controls[i].get('emailId')?.hasError('emailFormat')">
+                                                    Invalid emailId
+                                                    format.
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -487,9 +505,10 @@
                                                     class="text-danger">*</span></label>
                                             <input type="text" formControlName="address1" name="" id=""
                                                 class="form-control" required>
-                                                <div style="color: red;" *ngIf="legalheirarray.controls[i].get('address1')?.hasError('required') && legalheirarray.controls[i].get('address1')?.touched">
-                                                    Address 1 is required.
-                                                  </div>
+                                            <div style="color: red;"
+                                                *ngIf="legalheirarray.controls[i].get('address1')?.hasError('required') && legalheirarray.controls[i].get('address1')?.touched">
+                                                Address 1 is required.
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -507,35 +526,40 @@
                                         <div class="form-group">
                                             <label for="state" class="form-label">State<span
                                                     class="text-danger">*</span></label>
-                                            <select class="form-select" formControlName="stateId"  (change)="getDistirct($event, 'array')"
+                                            <select class="form-select" formControlName="stateId"
+                                                (change)="getDistirct($event, 'array')"
                                                 aria-label="Default select example">
                                                 <option value="">Choose State... </option>
                                                 <option *ngFor="let state of stateDtails" [value]="state.stateId">{{
                                                     state.stateName }}</option>
 
                                             </select>
-                                            <div style="color: red;" *ngIf="legalheirarray.controls[i].get('stateId')?.hasError('required') && legalheirarray.controls[i].get('stateId')?.touched">
+                                            <div style="color: red;"
+                                                *ngIf="legalheirarray.controls[i].get('stateId')?.hasError('required') && legalheirarray.controls[i].get('stateId')?.touched">
                                                 State is required.
-                                              </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-md-4">
                                         <div class="form-group">
                                             <label for="state" class="form-label">District<span
                                                     class="text-danger">*</span></label>
-                                                    <select class="form-select" formControlName="district" (change)="getPinCode($event,'array')"
-                                                    aria-label="Default select example">
-                                                    <option selected>Choose District... </option>
-                                                    <option *ngFor="let dist of arrayDistList" [value]="dist.districtName">{{
-                                                        dist.districtName }}</option>
-    
-                                                </select>
-                                                <div style="color: red;" *ngIf="legalheirarray.controls[i].get('district')?.hasError('required') && legalheirarray.controls[i].get('district')?.touched">
-                                                    District is required.
-                                                  </div>
+                                            <select class="form-select" formControlName="district"
+                                                (change)="getPinCode($event,'array')"
+                                                aria-label="Default select example">
+                                                <option selected>Choose District... </option>
+                                                <option *ngFor="let dist of arrayDistList" [value]="dist.districtName">
+                                                    {{
+                                                    dist.districtName }}</option>
+
+                                            </select>
+                                            <div style="color: red;"
+                                                *ngIf="legalheirarray.controls[i].get('district')?.hasError('required') && legalheirarray.controls[i].get('district')?.touched">
+                                                District is required.
+                                            </div>
                                             <!-- <input type="text" formControlName="district" name="" id=""
                                                 class="form-control" required> -->
-                                                
+
                                         </div>
                                     </div>
                                 </div>
@@ -545,16 +569,17 @@
                                         <div class="form-group">
                                             <label for="state" class="form-label">PIN<span
                                                     class="text-danger">*</span></label>
-                                                    <select class="form-select" formControlName="pinCode"
-                                                    aria-label="Default select example">
-                                                    <option selected>Choose Pincode... </option>
-                                                    <option *ngFor="let pin of arrayPincode" [value]="pin.pincode">{{
-                                                        pin.pincode }}</option>
-    
-                                                </select>
-                                                <div style="color: red;" *ngIf="legalheirarray.controls[i].get('pinCode')?.hasError('required') && legalheirarray.controls[i].get('pinCode')?.touched">
-                                                    Pincode is required.
-                                                  </div>
+                                            <select class="form-select" formControlName="pinCode"
+                                                aria-label="Default select example">
+                                                <option selected>Choose Pincode... </option>
+                                                <option *ngFor="let pin of arrayPincode" [value]="pin.pincode">{{
+                                                    pin.pincode }}</option>
+
+                                            </select>
+                                            <div style="color: red;"
+                                                *ngIf="legalheirarray.controls[i].get('pinCode')?.hasError('required') && legalheirarray.controls[i].get('pinCode')?.touched">
+                                                Pincode is required.
+                                            </div>
                                             <!-- <input type="text" formControlName="pinCode" name="" id=""
                                                 class="form-control" required maxlength="6"  (keyup)="vldChkLst.allowNumericDigits($event)"> -->
                                         </div>
@@ -573,9 +598,10 @@
                                             <option value="5" routerLink="">Paytm</option>
                                             <option value="6" routerLink="">Google Pay</option>
                                         </select>
-                                        <div style="color: red;" *ngIf="legalheirarray.controls[i].get('paymtMode')?.hasError('required') && legalheirarray.controls[i].get('paymtMode')?.touched">
+                                        <div style="color: red;"
+                                            *ngIf="legalheirarray.controls[i].get('paymtMode')?.hasError('required') && legalheirarray.controls[i].get('paymtMode')?.touched">
                                             Payment Mode is required.
-                                          </div>
+                                        </div>
                                     </div>
                                     <div class="col-sm-6 col-md-4  ">
                                         <label for="state" class="form-label">Status (Legal heir)<span
@@ -787,7 +813,8 @@
                         <td>{{ item.bankAccountNo }}</td>
                         <td>{{ item.ifscCode}}</td>
                         <td>{{ item.panNo }}</td>
-                        <td> {{ item.paymtMode == 1 ? 'Bank' : item.paymtMode == 2 ? 'Cash' : item.paymtMode == 3 ? 'UPI' : 'UPI' }}</td>
+                        <td> {{ item.paymtMode == 1 ? 'Bank' : item.paymtMode == 2 ? 'Cash' : item.paymtMode == 3 ?
+                            'UPI' : 'UPI' }}</td>
                         <td>{{ item.upiPhoneNo}}</td>
                         <td>{{ item.uploadQuarCodeAdds }}</td>
                         <td>{{ item.isActive == 1 ? 'Active' : 'InActive'}}</td>
@@ -808,15 +835,11 @@
                     </tr>
                 </tbody>
             </table>
-    
+
         </div>
         <br>
         <div class="d-flex justify-content-center">
-            <pagination-controls
-              previousLabel="Prev"
-              nextLabel="Next"
-              (pageChange)="onTableDataChange($event)"
-            >
+            <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
             </pagination-controls>
         </div>
 

@@ -26,6 +26,7 @@ export class HouseRegistrationComponent implements OnInit {
   currentDate: Date = new Date();
   houseId: any = '';
   mapId: any = '';
+  errorMessageForHouseMapping: any = '';
 
   constructor(private portalService: PortalServiceService, private formBuilder: FormBuilder, public vldChkLst: ValidatorchklistService, private ngxLoader: NgxUiLoaderService) {
 
@@ -37,7 +38,7 @@ export class HouseRegistrationComponent implements OnInit {
     this.getAllHouseDetailList()
 
     this.houseRegistrationForm = this.formBuilder.group({
-      ownerName: ['', [Validators.required]],
+      ownerName: [0, [Validators.required, Validators.min(1)]],
       houseName: ['', Validators.required],
       noOfRooms: ['', [Validators.required, Validators.pattern('^[0-9]{1,2}$')]],
       electricBill: ['', Validators.required],
@@ -56,11 +57,22 @@ export class HouseRegistrationComponent implements OnInit {
 
     this.addstate()
     this.getAllOwner()
+    this.initFormValidators();
+  }
+
+  initFormValidators(): void {
+    // Add validators for the stateForm controls as needed
+    this.stateArray.controls.forEach((control: FormGroup) => {
+      control.get('stateId')?.setValidators([Validators.required, Validators.min(1)]);
+      control.get('sbuId')?.setValidators([Validators.required, Validators.min(1)]);
+      control.get('plantId')?.setValidators([Validators.required, Validators.min(1)]);
+    });
   }
   dateTimeValidator(control: FormControl): { [key: string]: boolean } | null {
     const selectedDateTime: Date = new Date(control.value);
 
     if (selectedDateTime < this.currentDate) {
+      // alert('selectedDateTime'+selectedDateTime+'this.currentDate'+this.currentDate)
       return { 'pastDateTime': true };
     }
 
@@ -105,16 +117,20 @@ export class HouseRegistrationComponent implements OnInit {
 
   addstate() {
     const stateGroup = this.formBuilder.group({
-      stateId: ['', Validators.required],
-      sbuId: ['', Validators.required],
-      plantId: ['', Validators.required],
-      // Add more form controls as needed
+      stateId: [0, [Validators.required, Validators.min(1)]],
+      sbuId: [0, [Validators.required, Validators.min(1)]],
+      plantId: [0, [Validators.required, Validators.min(1)]],
+      mapId: [0, [Validators.required, Validators.min(1)]],
+      houseId: [0, [Validators.required, Validators.min(1)]],
     });
 
+    stateGroup.get('stateId')?.setValidators([Validators.required, Validators.min(1)]);
+    stateGroup.get('sbuId')?.setValidators([Validators.required, Validators.min(1)]);
+    stateGroup.get('plantId')?.setValidators([Validators.required, Validators.min(1)]);
+    stateGroup.get('mapId')?.setValidators([Validators.required, Validators.min(1)]);
+    stateGroup.get('houseId')?.setValidators([Validators.required, Validators.min(1)]);
+
     this.stateArray.push(stateGroup);
-    console.log("ku6 nahi ho raha", this.stateArray);
-
-
   }
 
   removeState(index: number) {
@@ -176,38 +192,6 @@ export class HouseRegistrationComponent implements OnInit {
 
   }
 
-  // validateData() {
-  //   const formControls = [
-  //     { control: this.houseRegistrationForm.get('ownerName'), name: "Owner Name" },
-  //     { control: this.houseRegistrationForm.get('houseName'), name: "House Name" },
-  //     { control: this.houseRegistrationForm.get('noOfRooms'), name: "Number of Rooms" },
-  //     { control: this.houseRegistrationForm.get('electricBill'), name: "Electric Bill" },
-  //     { control: this.houseRegistrationForm.get('waterBill'), name: "Water Bill" },
-  //     { control: this.houseRegistrationForm.get('address'), name: "Address" },
-  //     { control: this.houseRegistrationForm.get('district'), name: "District" },
-  //     { control: this.houseRegistrationForm.get('startDate'), name: "Start Date" },
-
-  //   ];
-
-  //   let vSts = true;
-
-  //   for (const formControl of formControls) {
-  //     if(formControl.control?.valid) {
-  //       vSts = true;
-  //     } else {
-  //       // Swal.fire({
-  //       //   // icon: 'error',
-  //       //   text: `Please select ${formControl.name}`
-  //       // });
-  //       vSts = false
-  //       break;
-  //     }
-
-  //   }
-
-
-  //   return vSts;
-  // }
 
 
   validateData() {
@@ -220,6 +204,9 @@ export class HouseRegistrationComponent implements OnInit {
       { control: this.houseRegistrationForm.get('address'), name: "Address" },
       { control: this.houseRegistrationForm.get('district'), name: "District" },
       { control: this.houseRegistrationForm.get('startDate'), name: "Start Date" },
+
+      { control: this.stateArray, name: "State Array" },
+
     ];
 
     let vSts = true;
@@ -249,6 +236,12 @@ export class HouseRegistrationComponent implements OnInit {
 
         break;
       }
+    }
+
+
+
+    if (!vSts) {
+      this.errorMessageForHouseMapping = "Kindly fill the all the field for House Registration"
     }
 
     return vSts;
@@ -290,6 +283,9 @@ export class HouseRegistrationComponent implements OnInit {
           Swal.fire({
             icon: 'success',
             text: 'Record Saved Successfully'
+          }).then(() => {
+            window.location.reload();
+
           });
           // alert("House Registration succcesfull")
         })
@@ -297,6 +293,8 @@ export class HouseRegistrationComponent implements OnInit {
   }
 
   updateHouse(item: any) {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
     this.updatebtn = true;
     console.log(item);
     this.houseRegistrationForm.patchValue({
@@ -324,6 +322,8 @@ export class HouseRegistrationComponent implements OnInit {
       stateId: item.stateId,
       sbuId: item.sbuId,
       plantId: item.plantId,
+      mapId: item.mapId,
+      houseId: item.houseId,
     });
 
     setTimeout(() => {
@@ -336,7 +336,22 @@ export class HouseRegistrationComponent implements OnInit {
       for (let i = 0; i < stateId.length; i++) {
         stateId[i].dispatchEvent(new Event('change'));
       }
-    }, 1000);
+    }, 1010);
+    setTimeout(() => {
+      const sbuId = document.querySelectorAll('#sbuId');
+      for (let i = 0; i < sbuId.length; i++) {
+        sbuId[i].dispatchEvent(new Event('change'));
+      }
+    }, 2010);
+    setTimeout(() => {
+      const plantId = document.querySelectorAll('#plantId');
+      for (let i = 0; i < plantId.length; i++) {
+        plantId[i].dispatchEvent(new Event('change'));
+      }
+    }, 3010);
+
+
+
 
     this.houseId = item.houseId;
     this.mapId = item.mapId;
@@ -347,59 +362,61 @@ export class HouseRegistrationComponent implements OnInit {
   updateHouseForm() {
 
 
-    // let vSts = this.validateData();
-    // console.log(vSts);
-    // console.log(this.houseRegistrationForm.valid);
-    // console.log(this.stateArray.valid);
-    // if (vSts) {
-    if (this.houseId !== null && this.mapId !== null) {
+    let vSts = this.validateData();
+    console.log(vSts);
+    console.log(this.houseRegistrationForm.valid);
+    console.log(this.stateArray.valid);
+    if (vSts) {
+      if (this.houseId !== null && this.mapId !== null) {
 
-      let data = {
-        "houseId": this.houseId,
-        "mapId": this.mapId,
-        "ownerId": this.houseRegistrationForm.value.ownerName,
-        "houseName": this.houseRegistrationForm.value.houseName,
-        "address": this.houseRegistrationForm.value.address,
-        "address2": this.houseRegistrationForm.value.address2,
-        "district": this.houseRegistrationForm.value.district,
-        "pinCode": this.houseRegistrationForm.value.pin,
-        "noOfRooms": this.houseRegistrationForm.value.noOfRooms,
-        "noOfEleBills": this.houseRegistrationForm.value.electricBill,
-        "noOfWtrBills": this.houseRegistrationForm.value.waterBill,
-        "startDate": this.houseRegistrationForm.value.startDate,
-        "endDate": this.houseRegistrationForm.value.endDate,
-        "houseRegistrationMapDto": this.stateArray.value,
+        let data = {
+          "houseId": this.houseId,
+          "mapId": this.mapId,
+          "ownerId": this.houseRegistrationForm.value.ownerName,
+          "houseName": this.houseRegistrationForm.value.houseName,
+          "address": this.houseRegistrationForm.value.address,
+          "address2": this.houseRegistrationForm.value.address2,
+          "district": this.houseRegistrationForm.value.district,
+          "pinCode": this.houseRegistrationForm.value.pin,
+          "noOfRooms": this.houseRegistrationForm.value.noOfRooms,
+          "noOfEleBills": this.houseRegistrationForm.value.electricBill,
+          "noOfWtrBills": this.houseRegistrationForm.value.waterBill,
+          "startDate": this.houseRegistrationForm.value.startDate,
+          "endDate": this.houseRegistrationForm.value.endDate,
+          "houseRegistrationMapDto": this.stateArray.value,
 
+        }
+
+        console.log(data);
+        console.log(this.stateArray.value)
+        this.ngxLoader.start();
+        this.portalService.put("PAPL/updateHouse", data)
+          .subscribe((res) => {
+            this.ngxLoader.stop();
+            console.log(res)
+            this.updatebtn = false;
+
+            this.getAllHouseDetailList()
+            this.houseRegistrationForm.reset()
+            this.stateArray.clear()
+            this.addstate()
+            Swal.fire({
+              icon: 'success',
+              text: 'Record Updated Successfully'
+            }).then(() => {
+              window.location.reload();
+  
+            });
+            this.updatebtn = false;
+
+            // alert("House Registration succcesfull")
+          })
+        // }
       }
-
-      console.log(data);
-      console.log(this.stateArray.value)
-      this.ngxLoader.start();
-      this.portalService.put("PAPL/updateHouse", data)
-        .subscribe((res) => {
-          this.ngxLoader.stop();
-          console.log(res)
-          this.updatebtn = false;
-
-          this.getAllHouseDetailList()
-          this.houseRegistrationForm.reset()
-          this.stateArray.clear()
-          this.addstate()
-          Swal.fire({
-            icon: 'success',
-            text: 'Record Updated Successfully'
-          });
-          this.updatebtn = false;
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-
-          // alert("House Registration succcesfull")
-        })
-      // }
+      else {
+        console.error("houseId is null");
+      }
     }
-    else {
-      console.error("houseId is null");
-    }
-
 
   }
 

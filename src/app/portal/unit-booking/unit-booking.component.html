@@ -54,7 +54,7 @@
                     <label for="state" class="form-label">Unit Name/ID <span class="text-danger">*</span></label>
                     <select class="form-select" aria-label="Default select example" required (change)="getunitId($event)">
                         <option selected>Choose Unit ID... </option>
-                        <option  *ngFor="let unit of activeUnitId" [value]="unit.houseId">{{unit.houseId}}</option>
+                        <option  *ngFor="let unit of activeUnitId" [value]="unit.unitId">{{unit.unitId}}</option>
                     </select>
                 </div>
 

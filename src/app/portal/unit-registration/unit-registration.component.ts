@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
 import { PortalServiceService } from './../serviceapi/portal-service.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { HttpClient } from "@angular/common/http";
 import { ValidatorchklistService } from './../serviceapi/validatorchklist.service';
 import { Subject, takeUntil } from 'rxjs';
-
 
 @Component({
   selector: 'app-unit-registration',
@@ -28,73 +27,71 @@ export class UnitRegistrationComponent {
   stateId: any;
   activePlant: any;
   sbuId: any;
+  unitId: any;
   activeHouse: any = [];
   plantId: any;
   unitRegisterForm!: FormGroup;
-  stateControl: FormControl = new FormControl('', Validators.required);
-  sbuControl: FormControl = new FormControl('', Validators.required);
-  plantControl: FormControl = new FormControl('', Validators.required);
+
   updatebtn: boolean = false;
 
-
-  fullArr: any = [];
   ngOnInit(): void {
     this.getAllState();
     this.getAllUnit();
     this.getAllOwner();
 
     this.unitRegisterForm = this.formBuilder.group({
+      stateId: [0, [Validators.required, Validators.min(1)]],
+      sbuId: [0, [Validators.required, Validators.min(1)]],
+      plantId: [0, [Validators.required, Validators.min(1)]],
       homereigster: this.formBuilder.array([]),
-      stateId: this.stateControl,
-      sbuId: this.sbuControl,
-      plantId: this.plantControl,
     });
 
-    this.addunit()
+    this.addunit();
   }
 
-  get unitArray() {
-    return this.unitRegisterForm.get('homereigster') as FormArray
-  }
-
-  addunit() {
-    const unitGroup = this.formBuilder.group({
-      ownerName: ['', Validators.required],
-      houseId: ['', Validators.required],
+  createUnitGroup(): FormGroup {
+    return this.formBuilder.group({
+      ownerId: [0,  [Validators.required, Validators.min(1)]],
+      houseId: [0,  [Validators.required, Validators.min(1)]],
       unitNo: ['', Validators.required],
       unitCapacity: ['', Validators.required],
       electBillPercent: ['', Validators.required],
       waterBillPercent: ['', Validators.required],
       startDate: ['', Validators.required],
       endDate: [''],
-    },);
+    });
+  }
 
+  get unitArray() {
+    return this.unitRegisterForm.get('homereigster') as FormArray;
+  }
+
+  addunit() {
+    const unitGroup = this.createUnitGroup();
     this.unitArray.push(unitGroup);
-    console.log("ku6 nahi ho raha", this.unitArray);
   }
 
   removeUnit(index: number) {
-    this.unitArray.removeAt(index)
+    this.unitArray.removeAt(index);
   }
+
   getAllHouses() {
     let param = {};
-
     this.portalServ.getAllHousesByPlantId(param).subscribe(res => {
       this.allHouses = res;
     });
   }
+
   getAllState() {
     let param = {};
-
     this.portalServ.getAllState(param).subscribe(res => {
       this.stateDtails = res;
     });
   }
+
   getAllPlant() {
     let param = {};
-
     this.portalServ.getAllPlant(param).subscribe(res => {
-
       this.allPlant = res;
     });
   }
@@ -107,10 +104,11 @@ export class UnitRegistrationComponent {
         console.log(res);
         this.allOwner = res.data;
         this.ngxLoader.stop();
-      })
+      });
   }
+
   getSubonStateChange(event: any) {
-    this.ngxLoader.start()
+    this.ngxLoader.start();
     this.activeSBU = [];
     const selectedStateId = event.target.value;
     this.stateId = selectedStateId;
@@ -119,13 +117,12 @@ export class UnitRegistrationComponent {
       .pipe(takeUntil(this.destroy$))
       .subscribe((res) => {
         this.activeSBU = res;
-        this.ngxLoader.stop()
-        //console.log(res);
+        this.ngxLoader.stop();
       });
   }
 
   getPlantOnSubChange(event: any) {
-    this.ngxLoader.start()
+    this.ngxLoader.start();
     this.activePlant = [];
     const selectedSublocation = event.target.value;
     this.sbuId = selectedSublocation;
@@ -134,14 +131,12 @@ export class UnitRegistrationComponent {
       .pipe(takeUntil(this.destroy$))
       .subscribe((res) => {
         this.activePlant = res;
-        this.ngxLoader.stop()
-        // console.log("active plan", this.activePlant)
-      })
-
+        this.ngxLoader.stop();
+      });
   }
 
   getHouseByPlantId(event: any) {
-    this.ngxLoader.start()
+    this.ngxLoader.start();
     this.activeHouse = [];
     const selectedPlantId = event.target.value;
     this.plantId = selectedPlantId;
@@ -150,26 +145,20 @@ export class UnitRegistrationComponent {
       .pipe(takeUntil(this.destroy$))
       .subscribe((res) => {
         this.activeHouse = res;
-        this.ngxLoader.stop()
-        // console.log("active plan", this.activeHouse)
-      })
+        this.ngxLoader.stop();
+      });
   }
-
-
-
-
 
   getAllUnit() {
     this.portalServ.get('PAPL/getAllUnit')
       .subscribe((res) => {
-        this.allUnits = res.data
-        console.log(this.allUnits)
-      })
+        this.allUnits = res.data;
+        console.log(this.allUnits);
+      });
   }
-  deleteUnit(id: any) {
 
+  deleteUnit(id: any) {
     Swal.fire({
-      //icon: 'warning',
       text: "Are you sure you want to Delete the details?",
       showCancelButton: true,
       confirmButtonText: 'Yes',
@@ -177,7 +166,6 @@ export class UnitRegistrationComponent {
       cancelButtonColor: '#df1141'
     }).then((result) => {
       if (result.isConfirmed) {
-
         this.ngxLoader.start();
         this.portalServ.get(`deactivate/Unit?id=${id}`)
           .pipe(takeUntil(this.destroy$))
@@ -204,131 +192,45 @@ export class UnitRegistrationComponent {
           });
       }
     });
-
-    // this.ngxLoader.start()
-    // this.portalServ.get(`deactivate/Unit?id=${id}`)
-    // .pipe(takeUntil(this.destroy$))
-    // .subscribe((res)=>{
-
-    //   console.log(res);
-    //   this.getAllUnit()
-    //   this.ngxLoader.stop()
-    // })
-
   }
 
-  // postUnit() {
-  //   if (this.stateControl.valid && this.sbuControl.valid && this.plantControl.valid) {
-  //     if (this.unitArray.controls[0].valid) {
-  //       let data = {
-  //         "stateId": this.stateId,
-  //         "sbuId": this.sbuId,
-  //         "plantId": this.plantId,
-  //         "unitDTO": this.unitArray.value,
-  //       }
-  //       this.ngxLoader.start()
-  //       this.portalServ.post("PAPL/addUnits", data)
-  //         .pipe(takeUntil(this.destroy$))
-  //         .subscribe((res) => {
-  //           console.log(res)
-  //           this.getAllUnit()
-  //           this.stateId = null;
-  //           this.sbuId = null;
-  //           this.plantId = null;
-  //           this.unitArray.clear()
-  //           this.addunit()
-  //           this.ngxLoader.stop()
-  //           Swal.fire({
-  //             icon: 'success',
-  //             text: 'Unit Registration Successful'
-  //           });
-  //           this.unitRegisterForm.reset();
-  //           this.unitArray.reset();
-  //           // window.location.reload();
-  //         })
-  //     } else {
-  //       this.showStateSbuPlantErrors();
-  //     }
-  //   } else {
-  //     this.showFieldErrors();
-  //   }
-  // }
-
-  // showStateSbuPlantErrors() {
-  //   if (this.stateControl.invalid && this.stateControl.touched) {
-  //     // Show validation error for State
-  //     console.log('State is required!');
-  //   }
-  //   if (this.sbuControl.invalid && this.sbuControl.touched) {
-  //     // Show validation error for SBU
-  //     console.log('SBU is required!');
-  //   }
-  //   if (this.plantControl.invalid && this.plantControl.touched) {
-  //     // Show validation error for Plant
-  //     console.log('Plant is required!');
-  //   }
-  // }
-
-
   postUnit() {
-    if (this.stateControl.valid && this.sbuControl.valid && this.plantControl.valid) {
-      if (this.unitArray.controls[0].valid) {
-        let data = {
-          "stateId": this.stateId,
-          "sbuId": this.sbuId,
-          "plantId": this.plantId,
-          "unitDTO": this.unitArray.value,
-        }
-        this.ngxLoader.start()
-        this.portalServ.post("PAPL/addUnits", data)
-          .pipe(takeUntil(this.destroy$))
-          .subscribe((res) => {
-            console.log(res)
-            this.getAllUnit()
-            this.stateId = "";
-            this.sbuId = "";
-            this.plantId = "";
-            this.unitArray.clear()
-            this.addunit()
-            this.ngxLoader.stop()
-            Swal.fire({
-              icon: 'success',
-              text: 'Unit Registration Successful'
-            });
-            this.unitRegisterForm.reset();
-            this.unitArray.reset();
-            // window.location.reload();
-          })
-      } else {
-        this.showStateSbuPlantErrors();
-      }
+    if (this.unitArray.controls[0].valid) {
+      let data = {
+        "stateId": this.stateId,
+        "sbuId": this.sbuId,
+        "plantId": this.plantId,
+        "unitDTO": this.unitArray.value,
+      };
+      this.ngxLoader.start();
+      this.portalServ.post("PAPL/addUnits", data)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((res) => {
+          console.log(res);
+          this.getAllUnit();
+          this.stateId = "";
+          this.sbuId = "";
+          this.plantId = "";
+          this.unitArray.clear();
+          this.addunit();
+          this.ngxLoader.stop();
+          Swal.fire({
+            icon: 'success',
+            text: 'Unit Registration Successful'
+          });
+          this.unitRegisterForm.reset();
+          this.unitArray.reset();
+        });
     } else {
       this.showFieldErrors();
     }
   }
-  
-  showStateSbuPlantErrors() {
-    if (this.stateControl.invalid && this.stateControl.touched) {
-      // Show validation error for State
-      console.log('State is required!');
-    }
-    if (this.sbuControl.invalid && this.sbuControl.touched) {
-      // Show validation error for SBU
-      console.log('SBU is required!');
-    }
-    if (this.plantControl.invalid && this.plantControl.touched) {
-      // Show validation error for Plant
-      console.log('Plant is required!');
-    }
-  }
-  
+
   showFieldErrors() {
-    // Loop through each form control and display validation errors
     (this.unitArray as FormArray).controls.forEach((control: AbstractControl, index: number) => {
       if (control instanceof FormGroup) {
         Object.keys(control.controls).forEach((key: string) => {
           const formControl = control.get(key);
-
           if (formControl && formControl.invalid) {
             formControl.markAsTouched();
           }
@@ -337,18 +239,11 @@ export class UnitRegistrationComponent {
     });
   }
 
-
-
   updateUnit(item: any) {
     this.updatebtn = true;
-
     const firstUnitGroup = this.unitArray.at(0) as FormGroup;
-    console.log(firstUnitGroup);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-
-    
     firstUnitGroup.patchValue({
-      ownerName: item.ownerName,
+      ownerId: item.ownerId,
       houseId: item.houseId,
       unitNo: item.unitNo,
       unitCapacity: item.unitCapacity,
@@ -357,74 +252,88 @@ export class UnitRegistrationComponent {
       startDate: item.startDate,
       endDate: item.endDate,
     });
-  
-    // Additional logic or actions if needed
-  }
-  
-  updateUnitForm() {
-    // alert(this.updatebtn )
 
-    // if (this.stateControl.valid && this.sbuControl.valid && this.plantControl.valid) {
-      // alert("coming to update")
-      if (this.unitArray.controls[0].valid) {
-        // alert(this.unitArray.controls[0].value)
-        let data = {
-          "stateId": this.stateId,
-          "sbuId": this.sbuId,
-          "plantId": this.plantId,
-          "unitDTO": this.unitArray.value,
-        }
-  
-        this.ngxLoader.start();
-        this.portalServ.updateUnits(data)
-          .pipe(takeUntil(this.destroy$))
-          .subscribe((res) => {
-            console.log(res);
-            this.getAllUnit();
-            this.stateId = null;
-            this.sbuId = null;
-            this.plantId = null;
-            this.unitArray.clear();
-            this.addunit();
-            this.ngxLoader.stop();
-            Swal.fire({
-              icon: 'success',
-              text: 'Unit Updated Successfully'
-            });
-            this.updatebtn = false;
-            this.unitRegisterForm.reset();
-            this.unitArray.reset();
-          }, error => {
-            this.ngxLoader.stop();
-            Swal.fire({
-              icon: 'error',
-              text: 'Error updating unit'
-            });
-          });
-      } else {
-        this.showStateSbuPlantErrors();
+    setTimeout(() => {
+      this.getSubonStateChange(item.stateId);
+      this.getPlantOnSubChange(item.sbuId);
+    });
+
+    setTimeout(() => {
+      const stateId = document.querySelectorAll('#stateId');
+      for (let i = 0; i < stateId.length; i++) {
+        stateId[i].dispatchEvent(new Event('change'));
       }
-    // } else {
-    //   this.showFieldErrors();
-    // }
+    }, 1010);
+    setTimeout(() => {
+      const sbuId = document.querySelectorAll('#sbuId');
+      for (let i = 0; i < sbuId.length; i++) {
+        sbuId[i].dispatchEvent(new Event('change'));
+      }
+    }, 2010);
+    setTimeout(() => {
+      const plantId = document.querySelectorAll('#plantId');
+      for (let i = 0; i < plantId.length; i++) {
+        plantId[i].dispatchEvent(new Event('change'));
+      }
+    }, 3010);
+    setTimeout(() => {
+      const houseId = document.querySelectorAll('#houseId');
+      for (let i = 0; i < houseId.length; i++) {
+        houseId[i].dispatchEvent(new Event('change'));
+      }
+    }, 4010);
   }
-  
+
+  updateUnitForm() {
+    if (this.unitArray.controls[0].valid) {
+      let data = {
+        "unitNo":this.unitId,
+        "stateId": this.stateId,
+        "sbuId": this.sbuId,
+        "plantId": this.plantId,
+        "unitDTO": this.unitArray.value,
+      };
+
+      this.ngxLoader.start();
+      this.portalServ.updateUnits(data)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((res) => {
+          console.log(res);
+          this.getAllUnit();
+          this.stateId = null;
+          this.sbuId = null;
+          this.plantId = null;
+          this.unitArray.clear();
+          this.addunit();
+          this.ngxLoader.stop();
+          Swal.fire({
+            icon: 'success',
+            text: 'Unit Updated Successfully'
+          });
+          this.updatebtn = false;
+          this.unitRegisterForm.reset();
+          this.unitArray.reset();
+        }, error => {
+          this.ngxLoader.stop();
+          Swal.fire({
+            icon: 'error',
+            text: 'Error updating unit'
+          });
+        });
+    } else {
+      this.showFieldErrors();
+    }
+  }
+
   updateMinEndDate(index: any): void {
     const startDateInput = document.getElementById('startDate') as HTMLInputElement;
     if (startDateInput) {
       const startDateValue = startDateInput.value;
-      // Set the minimum allowed value for the end date to the selected start date
       document.getElementById('endDate')?.setAttribute('min', startDateValue);
-      // Ensure the end date is always greater than or equal to the start date
       if (this.unitArray.at(index).value.startDate < startDateValue) {
         this.unitArray.at(index).value.endDate = startDateValue;
       }
       console.log(this.unitArray.at(index).value.startDate);
-
     }
   }
-
-
-
 }
-

@@ -72,6 +72,7 @@ export class HouseRegistrationComponent implements OnInit {
     const selectedDateTime: Date = new Date(control.value);
 
     if (selectedDateTime < this.currentDate) {
+      // alert('selectedDateTime'+selectedDateTime+'this.currentDate'+this.currentDate)
       return { 'pastDateTime': true };
     }
 
@@ -119,11 +120,15 @@ export class HouseRegistrationComponent implements OnInit {
       stateId: [0, [Validators.required, Validators.min(1)]],
       sbuId: [0, [Validators.required, Validators.min(1)]],
       plantId: [0, [Validators.required, Validators.min(1)]],
+      mapId: [0, [Validators.required, Validators.min(1)]],
+      houseId: [0, [Validators.required, Validators.min(1)]],
     });
 
     stateGroup.get('stateId')?.setValidators([Validators.required, Validators.min(1)]);
     stateGroup.get('sbuId')?.setValidators([Validators.required, Validators.min(1)]);
     stateGroup.get('plantId')?.setValidators([Validators.required, Validators.min(1)]);
+    stateGroup.get('mapId')?.setValidators([Validators.required, Validators.min(1)]);
+    stateGroup.get('houseId')?.setValidators([Validators.required, Validators.min(1)]);
 
     this.stateArray.push(stateGroup);
   }
@@ -317,6 +322,8 @@ export class HouseRegistrationComponent implements OnInit {
       stateId: item.stateId,
       sbuId: item.sbuId,
       plantId: item.plantId,
+      mapId: item.mapId,
+      houseId: item.houseId,
     });
 
     setTimeout(() => {

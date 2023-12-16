@@ -192,7 +192,7 @@ export class AgreementTypeMasterComponent {
         "aggreTypeName": this.aggrementType,
         "description": this.aggrementTypeDesc
       };
-      if (this.aggreStDate < this.aggreEdDate) {
+      if (this.aggreStDate <= this.aggreEdDate) {
         this.ngxLoader.start();
         this.portalServ.updateAgreementType(param).subscribe(res => {
 

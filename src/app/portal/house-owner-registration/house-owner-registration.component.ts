@@ -471,7 +471,7 @@ export class HouseOwnerRegistrationComponent {
         "quarCodeDoc": this.houseRegistrationForm.value.qrCode,
         "quarCodePrifix": this.houseRegistrationForm.value.quarCodePrifix,
       }
-
+debugger
       this.ngxLoader.start();
       this.portalServ.post("PAPL/addOwners", data)
         .subscribe((res) => {

@@ -273,7 +273,7 @@
 
             </div>
             <div class="mt-4 d-flex justify-content-end">
-                <button class="btn btn-primary form-save-btn" (click)=" postUtilityCalc()">
+                <button *ngIf="!updatebtn" class="btn btn-primary form-save-btn" (click)="postUtilityCalc()">
                     Save
                 </button>
             </div>
@@ -293,8 +293,8 @@
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">WTR EXP</th>
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Start Date</th>
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">End Date</th>
-                        <!-- <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">Created Date</th> -->
-                        <!-- <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">Action</th> -->
+                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">Created Date</th> 
+                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">Action</th>
 
                     </tr>
                 </thead>
@@ -311,21 +311,25 @@
                         <td>{{ item.waterExpenseAmount }}</td>
                         <td>{{ item.startDate}}</td>
                         <td>{{ item.endDate }}</td>
-                        <!-- <td>{{ item.createdDate}}</td> -->
+                        <td>{{ item.createdDate}}</td>
 
-                        <!-- <td>
+                         <td>
                             <div style="display: inline-flex; ">
                                 <button class="btn  btn-sm mx-2"
-                                    style="background-color: rgb(22, 133, 236);color: #faf7f7;">
+                                style="background-color: rgb(22, 133, 236);color: #faf7f7;" (click)="updateUtilityCalcForm(item)">
                                     <i class="fa-solid fa-edit"></i>
                                 </button>
 
-                                <button class="btn btn-danger btn-sm mx-2 " (click)="onClick()">
+                                <!-- <button class="btn btn-danger btn-sm mx-2 " (click)="onClick()">
+                                    <i class="fa-solid fa-trash-alt"></i>
+                                </button> -->
+                                <button class="btn btn-danger btn-sm mx-2 " (click)=" removeUtilityCalc(item.utilityCalcId)">
                                     <i class="fa-solid fa-trash-alt"></i>
                                 </button>
+
                             </div>
 
-                        </td> -->
+                        </td> 
                     </tr>
                 </tbody>
             </table>

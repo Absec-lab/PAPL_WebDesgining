@@ -151,5 +151,9 @@ export class PortalServiceService {
 		let serviceRes = this.Http.delete(serviceUrl, {params});
 		return serviceRes;
 	}
-	
+	removeUtilityCalc(params: any): Observable<any> {
+		let serviceUrl = environment.serviceURL + 'deactivate/calculation?id='+params;
+		let serviceRes = this.Http.delete(serviceUrl, {params});
+		return serviceRes;
+	}
 }

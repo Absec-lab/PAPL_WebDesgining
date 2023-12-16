@@ -5,6 +5,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { ValidatorchklistService } from '../serviceapi/validatorchklist.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-utility-calculation',
   templateUrl: './utility-calculation.component.html',
@@ -13,7 +14,7 @@ import Swal from 'sweetalert2';
 export class UtilityCalculationComponent implements OnInit {
   utilityCalculation!: FormGroup;
   stateDtails: any = [];
-  
+  updatebtn: boolean = false;
   constructor(private ngxLoader: NgxUiLoaderService, public validateService: ValidatorchklistService, private portalservice: PortalServiceService,private formBuilder: FormBuilder) { }
 
 
@@ -275,8 +276,9 @@ export class UtilityCalculationComponent implements OnInit {
           text: 'Calculation Saved Successfully'
         });
         this. getAllUtilityCalc()
+        alert("calculation saved successfully")
          // alert("calculation saved successfully")
-      })
+      })
      } else {
       this.markFormGroupTouched(this.utilityCalculation);
       this.markFormArrayControlsTouched(this.electric);
@@ -314,5 +316,117 @@ export class UtilityCalculationComponent implements OnInit {
     scrollToTop(): void {
       window.scrollTo(0, 0);
     }
+    updateUtilityCalcForm(item: any) {
+      
 
+      // let vSts = this.validateData();
+      // console.log(vSts);
+      // console.log(this.houseRegistrationForm.valid);
+      // console.log(this.stateArray.valid);
+      // if (vSts) {
+      //   if (this.houseId !== null && this.mapId !== null) {
+  
+      //     let data = {
+            // "houseId": this.houseId,
+            // "mapId": this.mapId,
+            // "ownerId": this.houseRegistrationForm.value.ownerName,
+            // "houseName": this.houseRegistrationForm.value.houseName,
+            // "address": this.houseRegistrationForm.value.address,
+            // "address2": this.houseRegistrationForm.value.address2,
+            // "district": this.houseRegistrationForm.value.district,
+            // "pinCode": this.houseRegistrationForm.value.pin,
+            // "noOfRooms": this.houseRegistrationForm.value.noOfRooms,
+            // "noOfEleBills": this.houseRegistrationForm.value.electricBill,
+            // "noOfWtrBills": this.houseRegistrationForm.value.waterBill,
+            // "startDate": this.houseRegistrationForm.value.startDate,
+            // "endDate": this.houseRegistrationForm.value.endDate,
+            // "houseRegistrationMapDto": this.stateArray.value,
+  
+    //       }
+  
+    //       console.log(data);
+    //       console.log(this.stateArray.value)
+    //       this.ngxLoader.start();
+    //       this.portalService.put("PAPL/updateHouse", data)
+    //         .subscribe((res) => {
+    //           this.ngxLoader.stop();
+    //           console.log(res)
+    //           this.updatebtn = false;
+  
+    //           this.getAllHouseDetailList()
+    //           this.houseRegistrationForm.reset()
+    //           this.stateArray.clear()
+    //           this.addstate()
+    //           Swal.fire({
+    //             icon: 'success',
+    //             text: 'Record Updated Successfully'
+    //           }).then(() => {
+    //             window.location.reload();
+    
+    //           });
+    //           this.updatebtn = false;
+  
+    //           // alert("House Registration succcesfull")
+    //         })
+    //       // }
+    //     }
+    //     else {
+    //       console.error("houseId is null");
+    //     }
+    //   }
+  
+   }
+    
+    updateUtilityCalc() {
+      alert('Update Button Click')
+       }
+          removeUtilityCalc(id: any) {
+      
+            Swal.fire({
+              //icon: 'warning',
+              text: "Are you sure you want to Delete the details?",
+              showCancelButton: true,
+              confirmButtonText: 'Yes',
+              cancelButtonText: 'No',
+              cancelButtonColor: '#df1141'
+            }).then((result) => {
+              if (result.isConfirmed) {
+        
+                this.ngxLoader.start();
+                this.portalservice.removeUtilityCalc(id).subscribe(res => {
+                  this.ngxLoader.stop();
+                  if (res) {
+                    Swal.fire({
+                      icon: 'success',
+                      text: 'Record Deleted Successfully'
+                    });
+                    this.getAllUtilityCalc();
+                  } else {
+                    Swal.fire({
+                      icon: 'error',
+                      text: res.message
+                    });
+                  }
+                }, error => {
+                  this.ngxLoader.stop();
+                  Swal.fire({
+                    icon: 'error',
+                    text: 'Error'
+                  });
+                });
+              }
+            });
+        
+        
+        
+        
+            //   this.portalService.removeHouse(id).subscribe(res => {  
+            //     if(res) {
+            //       alert("House Deactivated !")
+            //     }
+            //     this.getAllHouseDetailList();
+        
+            //  }); 
+        
+          }
 }

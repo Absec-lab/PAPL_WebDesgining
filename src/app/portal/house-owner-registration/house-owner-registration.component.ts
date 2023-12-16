@@ -80,10 +80,15 @@ export class HouseOwnerRegistrationComponent {
     })
   }
   private _distfilter(value: string): DistrictDropdownList[] {
-    debugger
+    if(value === '' || value === null || value === undefined) {
+      this.houseRegistrationForm.controls['dist'].setValue('');
+    }
     return this.allDistictList.filter(option => option.districtName.toLowerCase().indexOf(value.toLowerCase()) === 0);
   }
   private _pinfilter(value: string): PincodeDropdownList[] {
+    if(value === '' || value === null || value === undefined) {
+      this.houseRegistrationForm.controls['pin'].setValue('');
+    }
     return this.pincodeList.filter(option => option.pincode.toString().indexOf(value) === 0);
   }
   onTableDataChange(event: any) {

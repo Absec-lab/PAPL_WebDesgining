@@ -32,7 +32,7 @@ export class AgreementTypeMasterComponent {
   validateData() {
     let vSts = true;
 
-    if (!this.vldChkLst.blankCheckWithoutAlert(this.aggrementType)) {
+    if (!this.vldChkLst.blankCheckWithoutAlert(this.aggrementType.trim())) {
       vSts = false;
       this.errorMessages.aggrementType = 'Agreement Type is required.';
     } else {

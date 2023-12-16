@@ -6,8 +6,9 @@ import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { HttpClient } from "@angular/common/http";
 import { ValidatorchklistService } from './../serviceapi/validatorchklist.service';
-import { takeUntil } from 'rxjs';
+import { Observable, map, of, startWith, takeUntil } from 'rxjs';
 import { CommonValidatorService } from 'src/app/common-validator.service';
+import { DistrictDropdownList, PincodeDropdownList } from 'src/app/common/model/dropdown-list.model';
 
 @Component({
   selector: 'app-home-owner-registration',
@@ -25,7 +26,6 @@ export class HouseOwnerRegistrationComponent {
   stateDtails: any = []
   houseRegistrationForm!: FormGroup<any>;
   updatebtn: boolean = false;
-  isfileuploaded: boolean = false;
   descripinput: boolean = false;
   legalheirForm!: FormGroup;
   noOfLegalParties: any;
@@ -33,6 +33,10 @@ export class HouseOwnerRegistrationComponent {
   count: number = 0;
   tableSize: number = 7;
   tableSizes: any = [3, 6, 9, 12];
+  distControl = new FormControl();
+  pinControl = new FormControl();
+  distFilteredOptions: Observable<DistrictDropdownList[]>;
+  pinFilteredOptions: Observable<PincodeDropdownList[]>;
   @ViewChild('fileInput') fileInput!: ElementRef;
   constructor(private ngxLoader: NgxUiLoaderService, private formBuilder: FormBuilder, private route: Router, public portalServ: PortalServiceService, private httpClient: HttpClient, public vldChkLst: ValidatorchklistService) { }
   ngOnInit(): void {
@@ -44,7 +48,7 @@ export class HouseOwnerRegistrationComponent {
       ownerName: ['', [Validators.required, CommonValidatorService.fullNameValidator]],
       phone: ['', Validators.required],
       email: ['', [Validators.required, CommonValidatorService.validateEmail]],
-      idProofDoc: [''],
+      idProofDoc: ['',Validators.required],
       idProofDocPrifix: [''],
       gIdproof: ['', Validators.required],
       add1: ['', Validators.required],
@@ -55,14 +59,14 @@ export class HouseOwnerRegistrationComponent {
       paymode: ['', [Validators.required]],
       status: ['1'],
       accHolName: ['', Validators.required],
-      accounNum: ['', Validators.required],
-      ifsc: ['', Validators.required],
-      pan: ['', Validators.required],
-      panPic: [''],
+      accounNum: ['', [Validators.required]],
+      ifsc: ['', [Validators.required]],
+      pan: ['', [Validators.required, CommonValidatorService.validatePan]],
+      panPic: ['',Validators.required],
       panNoPrifix: [''],
       desc: [''],
-      upiId: [''],
-      linkMobile: [''],
+      upiId: ['', [Validators.required]],
+      linkMobile: ['', [Validators.required]],
       qrCode: [''],
       uploadlegalheir: [''],
       legalprifix: ['']
@@ -74,6 +78,13 @@ export class HouseOwnerRegistrationComponent {
 
       legal: this.formBuilder.array([])
     })
+  }
+  private _distfilter(value: string): DistrictDropdownList[] {
+    debugger
+    return this.allDistictList.filter(option => option.districtName.toLowerCase().indexOf(value.toLowerCase()) === 0);
+  }
+  private _pinfilter(value: string): PincodeDropdownList[] {
+    return this.pincodeList.filter(option => option.pincode.toString().indexOf(value) === 0);
   }
   onTableDataChange(event: any) {
     this.page = event;
@@ -94,7 +105,7 @@ export class HouseOwnerRegistrationComponent {
       ownerName: ['', Validators.required, [CommonValidatorService.fullNameValidator]],
       phoneNo: ['', Validators.required],
       emailId: ['', [Validators.required, CommonValidatorService.validateEmail]],
-      idProofDoc: [''],
+      idProofDoc: ['',[Validators.required]],
       idProofDocPrifix: [''],
       idProof: ['', Validators.required],
       address1: ['', Validators.required],
@@ -104,18 +115,18 @@ export class HouseOwnerRegistrationComponent {
       pinCode: ['', Validators.required],
       paymtMode: ['', Validators.required],
       isActive: ['1'],
-      accountHolderName: [''],
-      bankAccountNo: [''],
-      ifscCode: [''],
-      panNo: [''],
+      accountHolderName: ['',[Validators.required]],
+      bankAccountNo: ['',[Validators.required]],
+      ifscCode: ['',[Validators.required]],
+      panNo: ['',[Validators.required]],
       panCardAddress: [''],
-      panNoDoc: [''],
+      panNoDoc: ['',[Validators.required]],
       panNoPrifix: [''],
-      upiId: [''],
-      upiPhoneNo: [''],
+      upiId: ['',[Validators.required]],
+      upiPhoneNo: ['',[Validators.required]],
       uploadQuarCodeAdds: [''],
       quarCodePrifix: [''],
-      quarCodeDoc: ['']
+      quarCodeDoc: ['',[Validators.required]]
 
     })
     console.log(typeof this.noOfLegalParties);
@@ -185,8 +196,8 @@ export class HouseOwnerRegistrationComponent {
     });
   }
 
-  allDistictList:any;
-  arrayDistList:any;
+  allDistictList: DistrictDropdownList[];
+  arrayDistList: DistrictDropdownList[];
   getDistirct(event:any, array?:any) {
     console.log(event, typeof event);
     debugger;
@@ -223,17 +234,21 @@ export class HouseOwnerRegistrationComponent {
         } else {
 
           this.allDistictList = res
+          this.distFilteredOptions = this.distControl.valueChanges.pipe(
+            startWith(''),
+            map(value => this._distfilter(value))
+          );
         }
         this.ngxLoader.stop()
        // console.log(res)
       })
   }
-  pincodeList:any;
-  arrayPincode:any;
+  pincodeList: PincodeDropdownList[];
+  arrayPincode: PincodeDropdownList[];
   getPinCode(event:any,array?:any) {
     debugger;
     let checkEventValue = typeof event;
-    if(checkEventValue !== 'number' && event?.target?.value === ''){
+    if(checkEventValue !== 'number' && event?.source?.value === ''){
       //this.pincodeList = [];
       return;
     }
@@ -244,7 +259,7 @@ export class HouseOwnerRegistrationComponent {
     if (typeof event === 'string') {
       distValue = event;
     } else {
-      distValue = event.target.value;
+      distValue = event?.source?.value;
     }
 
     this.portalServ.get(`PAPL/getPincodeAndStateByDistrict?Districtname=${distValue}`)
@@ -255,6 +270,10 @@ export class HouseOwnerRegistrationComponent {
       } else {
 
         this.pincodeList = res
+        this.pinFilteredOptions = this.pinControl.valueChanges.pipe(
+          startWith(''),
+          map(value => this._pinfilter(value))
+        );
       }
       this.ngxLoader.stop()
       console.log(res)
@@ -263,7 +282,13 @@ export class HouseOwnerRegistrationComponent {
   }
 
 
-  
+  selectPinCode(event:any) {
+    let pinValue: any;
+    if(event?.source?.value !== '') {
+      pinValue = event?.source?.value;
+      this.houseRegistrationForm.controls['pin'].setValue(pinValue);
+    }
+  }
   onImageChange(event: any, formControlName: string, formArrName?: string, index?: number): void {
     console.log("formControlName", formControlName);
 
@@ -273,7 +298,6 @@ export class HouseOwnerRegistrationComponent {
       const file = inputElement.files[0];
 
       if (file) {
-        this.isfileuploaded = false;
         const reader = new FileReader();
 
         reader.onload = (e) => {
@@ -327,9 +351,7 @@ export class HouseOwnerRegistrationComponent {
           console.error('Invalid file type. Please select an image or PDF file.');
         }
       }
-    } else {
-      this.isfileuploaded = true;
-    }
+    } 
     console.log(this.houseRegistrationForm);
   }
 
@@ -400,11 +422,7 @@ export class HouseOwnerRegistrationComponent {
   }
 
   ownerRegistration() {
-    debugger;
-    let uploadFile = this.houseRegistrationForm.value.idProofDoc;
-    if(uploadFile === '') {
-      this.isfileuploaded = true;
-    }
+   
     let errFlag = 0;
     let emailId: any = this.houseRegistrationForm.value.emailId;
     let gIdproof: any = this.houseRegistrationForm.value.gIdproof;
@@ -425,7 +443,7 @@ export class HouseOwnerRegistrationComponent {
     }
 
    // let valid = this.validateData();
-    if (this.houseRegistrationForm.valid && !this.isfileuploaded) {
+    if (this.houseRegistrationForm.valid ) {
       let data: any =
       {
         "ownerName": this.houseRegistrationForm.value.ownerName,
@@ -500,6 +518,7 @@ export class HouseOwnerRegistrationComponent {
       ownerName: item.ownerName,
       phone: item.phoneNo,
       email: item.emailId,
+      idProofDoc: item.idProofDoc,
       // idProof: item.idProofAddress,
       gIdproof: item.idProof,
       add1: item.address1,
@@ -676,34 +695,94 @@ if(value === '') {
   return;
 }
     if (userType == 'owner') {
-      if(value !== '1') {
+      // For Bank AC
+      if(value == '1') {
+        this.heading = true;
+        this.bank = true;
+        this.upi = false;
+        this.houseRegistrationForm.controls['accHolName'].setValidators([Validators.required]);
+        this.houseRegistrationForm.controls['accHolName'].updateValueAndValidity();
+
+        this.houseRegistrationForm.controls['accounNum'].setValidators([Validators.required]);
+        this.houseRegistrationForm.controls['accounNum'].updateValueAndValidity();
+
+        this.houseRegistrationForm.controls['ifsc'].setValidators([Validators.required]);
+        this.houseRegistrationForm.controls['ifsc'].updateValueAndValidity();
+
+        this.houseRegistrationForm.controls['pan'].setValidators([Validators.required]);
+        this.houseRegistrationForm.controls['pan'].updateValueAndValidity();
+
+        this.houseRegistrationForm.controls['panPic'].setValidators([Validators.required]);
+        this.houseRegistrationForm.controls['panPic'].updateValueAndValidity();
+
+        this.houseRegistrationForm.get('upiId')?.clearValidators();
+        this.houseRegistrationForm.get('upiId')?.updateValueAndValidity();
+
+        this.houseRegistrationForm.get('linkMobile')?.clearValidators();
+        this.houseRegistrationForm.get('linkMobile')?.updateValueAndValidity();
+
+        this.houseRegistrationForm.get('qrCode')?.clearValidators();
+        this.houseRegistrationForm.get('qrCode')?.updateValueAndValidity();
+
+      }
+      // For Cash
+      else if (value == '2') {
+        this.heading = false;
+        this.bank = false;
+        this.upi = false;
         this.houseRegistrationForm.get('accHolName')?.clearValidators();
         this.houseRegistrationForm.get('accHolName')?.updateValueAndValidity();
+
         this.houseRegistrationForm.get('accounNum')?.clearValidators();
         this.houseRegistrationForm.get('accounNum')?.updateValueAndValidity();
+
         this.houseRegistrationForm.get('ifsc')?.clearValidators();
         this.houseRegistrationForm.get('ifsc')?.updateValueAndValidity();
+
+        this.houseRegistrationForm.get('linkMobile')?.clearValidators();
+        this.houseRegistrationForm.get('linkMobile')?.updateValueAndValidity();
+
         this.houseRegistrationForm.get('pan')?.clearValidators();
         this.houseRegistrationForm.get('pan')?.updateValueAndValidity();
-      }
-      if (value == '2') {
-        this.heading = false
-      } else {
-        this.heading = true
-      }
 
-      if (value == '1') {
-        this.bank = true
-        this.upi = false
+        this.houseRegistrationForm.get('upiId')?.clearValidators();
+        this.houseRegistrationForm.get('upiId')?.updateValueAndValidity();
+
+        this.houseRegistrationForm.get('panPic')?.clearValidators();
+        this.houseRegistrationForm.get('panPic')?.updateValueAndValidity();
+
+        this.houseRegistrationForm.get('qrCode')?.clearValidators();
+        this.houseRegistrationForm.get('qrCode')?.updateValueAndValidity();
       } else {
+        this.heading = true;
         this.bank = false;
         this.upi = true;
+        this.houseRegistrationForm.get('accHolName')?.clearValidators();
+        this.houseRegistrationForm.get('accHolName')?.updateValueAndValidity();
+
+        this.houseRegistrationForm.get('accounNum')?.clearValidators();
+        this.houseRegistrationForm.get('accounNum')?.updateValueAndValidity();
+
+        this.houseRegistrationForm.get('ifsc')?.clearValidators();
+        this.houseRegistrationForm.get('ifsc')?.updateValueAndValidity();
+
+        this.houseRegistrationForm.get('pan')?.clearValidators();
+        this.houseRegistrationForm.get('pan')?.updateValueAndValidity();
+
+        this.houseRegistrationForm.get('panPic')?.clearValidators();
+        this.houseRegistrationForm.get('panPic')?.updateValueAndValidity();
+
+        this.houseRegistrationForm.controls['upiId'].setValidators([Validators.required]);
+        this.houseRegistrationForm.controls['upiId'].updateValueAndValidity();
+
+        this.houseRegistrationForm.controls['linkMobile'].setValidators([Validators.required]);
+        this.houseRegistrationForm.controls['linkMobile'].updateValueAndValidity();
+
+        this.houseRegistrationForm.controls['qrCode'].setValidators([Validators.required]);
+        this.houseRegistrationForm.controls['qrCode'].updateValueAndValidity();
       }
     } else if (userType == 'legal') {     
     }
-
-
-
   }
 
 

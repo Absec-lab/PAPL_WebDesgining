@@ -735,7 +735,11 @@ export class ValidatorchklistService {
     }
   }
 
-
+  AllowAlphanumericWithSpace(e: any) {
+    if (/[^a-zA-Z\s]/g.test(e.target.value)) {
+      e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
+    }
+  }
 
 
 

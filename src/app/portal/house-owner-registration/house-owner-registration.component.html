@@ -59,7 +59,10 @@
                                 autocomplete="off" />
                             <div class="error-message"
                                 *ngIf="houseRegistrationForm.get('phone')?.invalid && houseRegistrationForm.get('phone')?.touched">
-                                <div *ngIf="houseRegistrationForm.get('phone')?.hasError('required')">Phone Number is
+                                <!-- <div *ngIf="houseRegistrationForm.get('phone')?.hasError('required')">Phone Number is
+                                    required.
+                                </div> -->
+                                <div *ngIf="houseRegistrationForm.get('phone')?.hasError('minlength')">Phone Number is
                                     required.
                                 </div>
                             </div>
@@ -184,7 +187,7 @@
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
-                        <label for="state" class="form-label">Payment Mode0wn<span class="text-danger">*</span></label>
+                        <label for="state" class="form-label">Payment Mode<span class="text-danger">*</span></label>
                         <select class="form-select" (change)="paymentmode($event, 'owner')"
                             aria-label="Default select example" formControlName="paymode" name="paymtMode"
                             id="paymtMode">
@@ -307,7 +310,7 @@
                                         class="text-danger">*</span></label>
                                         <input type="file" name="" id="" class="form-control" accept="image/*,.pdf"
                                         (change)="onImageChange($event, 'panPic')" formControlName="panPic">
-                                        (change)="onImageChange($event, 'panPic')" formControlName="panPic" required>
+                                        <!-- (change)="onImageChange($event, 'panPic')" formControlName="panPic" required> -->
                                         <div style="color: red;" *ngIf="houseRegistrationForm.get('panPic')?.hasError('required') && houseRegistrationForm.get('panPic')?.touched">
                                             PAN Card is Mandatory.
                                           </div>
@@ -348,7 +351,6 @@
                                         class="text-danger">*</span></label>
                                         <input type="file" name="" id="" class="form-control" accept="image/*,.pdf"
                                         (change)="onImageChange($event, 'qrCode')">
-                                        (change)="onImageChange($event, 'qrCode')" formControlName="qrCode">
                                         <div style="color: red;" *ngIf="houseRegistrationForm.get('qrCode')?.hasError('required') && houseRegistrationForm.get('qrCode')?.touched">
                                             QR Code is Mandatory.
                                           </div>

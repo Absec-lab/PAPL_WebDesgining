@@ -264,7 +264,7 @@ export class HouseOwnerRegistrationComponent {
 
     this.portalServ.get(`PAPL/getPincodeAndStateByDistrict?Districtname=${distValue}`)
     .subscribe(res => {
-
+      this.houseRegistrationForm.controls['dist'].setValue(distValue);
       if(array) {
         this.arrayPincode = res
       } else {
@@ -472,6 +472,7 @@ export class HouseOwnerRegistrationComponent {
         "quarCodePrifix": this.houseRegistrationForm.value.quarCodePrifix,
       }
 debugger
+console.log('Data',data)
       this.ngxLoader.start();
       this.portalServ.post("PAPL/addOwners", data)
         .subscribe((res) => {

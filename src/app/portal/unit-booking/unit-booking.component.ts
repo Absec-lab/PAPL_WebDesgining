@@ -133,10 +133,10 @@ export class UnitBookingComponent implements OnInit {
   unitBookingSearch() {
     let vSts = this.validateData();
     if (vSts) {
-    // if(this.unitId==undefined)
-    // {
-    //   this.unitId=0;
-    // }
+    if(this.unitId==undefined)
+    {
+      this.unitId=0;
+    }
     this.portalService.get(`PAPL/UnitBookingsearch?fk_state_id=${this.stateId}&fk_sbu_id=${this.sbuId}&fk_plant_id=${this.plantId}&fk_House_id=${this.houseId}&unit_id=${this.unitId}`)
     .pipe(takeUntil(this.destroy$))
     .subscribe((res)=> {

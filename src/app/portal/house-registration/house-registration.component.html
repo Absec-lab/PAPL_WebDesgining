@@ -42,7 +42,7 @@
             <div class="col-sm-6 col-md-4">
                 <div class="form-group">
                     <label class="form-label">No Of Rooms<span class="text-danger">*</span></label>
-                    <input type="text" name="" id="" class="form-control" required formControlName="noOfRooms"
+                    <input type="text" name="" id="" class="form-control" required formControlName="noOfRooms"ng-pattern="/(^0$)|(^[1-9]\d{0,8}$)/" 
                         maxlength="2" (input)="vldChkLst.allowNumericDigits($event)">
                     <div *ngIf="houseRegistrationForm.get('noOfRooms')?.invalid && houseRegistrationForm.get('noOfRooms')?.touched"
                         class="error-message">

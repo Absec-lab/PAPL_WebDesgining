@@ -239,8 +239,10 @@ export class HouseOwnerRegistrationComponent {
         } else {
 
           this.allDistictList = res
+          let ownerId = this.houseRegistrationForm.value.ownerId;
+          let distChangeValue = ownerId !== '' ?  this.houseRegistrationForm.value.dist : '';
           this.distFilteredOptions = this.distControl.valueChanges.pipe(
-            startWith(''),
+            startWith(distChangeValue),
             map(value => this._distfilter(value))
           );
         }
@@ -275,8 +277,10 @@ export class HouseOwnerRegistrationComponent {
       } else {
 
         this.pincodeList = res
+        let ownerId = this.houseRegistrationForm.value.ownerId;
+        let pinChangeValue = ownerId !== '' ?  this.houseRegistrationForm.value.pin : '';
         this.pinFilteredOptions = this.pinControl.valueChanges.pipe(
-          startWith(''),
+          startWith(pinChangeValue),
           map(value => this._pinfilter(value))
         );
       }

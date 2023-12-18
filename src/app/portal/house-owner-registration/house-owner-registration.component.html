@@ -815,14 +815,30 @@
                         <td>{{ item.phoneNo }}</td>
                         <td>{{ item.address1}}</td>
                         <td>{{ item.idProof }}</td>
-                        <td>{{item.idProofAddress }}</td>
+                        <!-- <td>{{item.idProofAddress }}</td> -->
+                        <td>
+                            <div style="display: inline-flex; ">
+                                <button class="btn  btn-sm mx-2"
+                                    style="background-color: rgb(22, 133, 236);color: #faf7f7;">
+                                    <i class="fa fa-download"></i>
+                                </button>
+                            </div>
+                        </td>
                         <td>{{ item.bankAccountNo }}</td>
                         <td>{{ item.ifscCode}}</td>
                         <td>{{ item.panNo }}</td>
                         <td> {{ item.paymtMode == 1 ? 'Bank' : item.paymtMode == 2 ? 'Cash' : item.paymtMode == 3 ?
                             'UPI' : 'UPI' }}</td>
                         <td>{{ item.upiPhoneNo}}</td>
-                        <td>{{ item.uploadQuarCodeAdds }}</td>
+                        <!-- <td>{{ item.uploadQuarCodeAdds }}</td> -->
+                        <td>
+                            <div style="display: inline-flex; ">
+                                <button class="btn  btn-sm mx-2"
+                                    style="background-color: rgb(22, 133, 236);color: #faf7f7;">
+                                    <i class="fa fa-download"></i>
+                                </button>
+                            </div>
+                        </td>
                         <td>{{ item.isActive == 1 ? 'Active' : 'InActive'}}</td>
                         <td>{{ item.createdDate}}</td>
                         <td>

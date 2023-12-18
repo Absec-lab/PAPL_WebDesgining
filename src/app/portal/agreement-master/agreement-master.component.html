@@ -124,7 +124,7 @@
                         <label  class="form-label">Agreement Period (Months)<span
                                 class="text-danger">*</span></label>
                         <input type="text" name="aggrePeriod" id="aggrePeriod" class="form-control"
-                            (input)="vldChkLst.allowNumericDigits($event)" maxlength="3" [(ngModel)]="aggrePeriod">
+                            (input)="vldChkLst.allowNumericDigits($event)" maxlength="3" [(ngModel)]="aggrePeriod" (input)="captureDate()">
                         <div class="text-danger">{{ errorMessages.aggrePeriod }}</div>
 
                     </div>

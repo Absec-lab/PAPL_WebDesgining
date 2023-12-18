@@ -71,10 +71,10 @@ export class HouseRegistrationComponent implements OnInit {
   dateTimeValidator(control: FormControl): { [key: string]: boolean } | null {
     const selectedDateTime: Date = new Date(control.value);
 
-    if (selectedDateTime < this.currentDate) {
-      // alert('selectedDateTime'+selectedDateTime+'this.currentDate'+this.currentDate)
-      return { 'pastDateTime': true };
-    }
+    // if (selectedDateTime < this.currentDate) {
+    //   // alert('selectedDateTime'+selectedDateTime+'this.currentDate'+this.currentDate)
+    //   return { 'pastDateTime': true };
+    // }
 
     return null;
   }

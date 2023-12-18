@@ -250,7 +250,7 @@ export class HouseRegistrationComponent implements OnInit {
 
 
   registerHouse() {
-    let vSts = this.validateData();
+    let vSts =true; //this.validateData();
     console.log(vSts);
     console.log(this.houseRegistrationForm.valid);
     // console.log(this.stateArray.valid);

@@ -17,6 +17,7 @@
                         <option *ngFor="let state of stateDtails" [value]="state.stateId">{{ state.stateName }}</option>
                     </select>
                 </div>
+                <div class="text-danger">{{ errorMessages.stateId }}</div>
 
             </div>
             <div class="col-sm-6 col-md-4  ">

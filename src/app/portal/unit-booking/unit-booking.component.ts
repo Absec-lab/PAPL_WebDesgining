@@ -2,7 +2,9 @@ import {  Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { PortalServiceService } from '../serviceapi/portal-service.service';
 import { Subject, takeUntil } from 'rxjs';
 import { FormBuilder, FormGroup } from '@angular/forms';
-
+import { ValidatorchklistService } from '../serviceapi/validatorchklist.service';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-unit-booking',
@@ -27,10 +29,15 @@ export class UnitBookingComponent implements OnInit {
   unitId:any;
 
   houseDetails:any = [];
+  errorMessages: any = {
+    aggrementType: '',
+    aggreStDate: '',
+    aggreEdDate: '',
+  };
 
   private destroy$ = new Subject<void>();
   
-  constructor(private portalService:PortalServiceService,private formBuilder: FormBuilder) {}
+  constructor(private ngxLoader: NgxUiLoaderService, private portalService:PortalServiceService,private formBuilder: FormBuilder, public vldChkLst: ValidatorchklistService) {}
 
 
 
@@ -124,19 +131,40 @@ export class UnitBookingComponent implements OnInit {
   }
 
   unitBookingSearch() {
-    if(this.unitId==undefined)
-    {
-      this.unitId=0;
-    }
+    let vSts = this.validateData();
+    if (vSts) {
+    // if(this.unitId==undefined)
+    // {
+    //   this.unitId=0;
+    // }
     this.portalService.get(`PAPL/UnitBookingsearch?fk_state_id=${this.stateId}&fk_sbu_id=${this.sbuId}&fk_plant_id=${this.plantId}&fk_House_id=${this.houseId}&unit_id=${this.unitId}`)
     .pipe(takeUntil(this.destroy$))
     .subscribe((res)=> {
       this.houseDetails = res;
       console.log(res)
-    })
+    }, error => {
+      this.ngxLoader.stop();
+      Swal.fire({
+        icon: 'error',
+        text: 'Error in Data Insertion'
+      });
+    }
+    
+    )
   }
+}
 
+  validateData() {
+    let vSts = true;
 
+    if (!this.vldChkLst.blankCheckWithoutAlert(this.stateId)) {
+      vSts = false;
+      this.errorMessages.stateId = 'State is required.';
+    } else {
+      this.errorMessages.stateId = '';
+    }
+    return vSts;
+  }
   
 
   getEmployeeDetails() {

@@ -533,7 +533,7 @@
                                             <label for="state" class="form-label">State<span
                                                     class="text-danger">*</span></label>
                                             <select class="form-select" formControlName="stateId"
-                                                (change)="getDistirct($event, 'array')"
+                                                (change)="getLegalHeirDistirct($event, 'array',i)"
                                                 aria-label="Default select example">
                                                 <option value="">Choose State... </option>
                                                 <option *ngFor="let state of stateDtails" [value]="state.stateId">{{
@@ -550,7 +550,7 @@
                                         <div class="form-group">
                                             <label for="state" class="form-label">District<span
                                                     class="text-danger">*</span></label>
-                                            <select class="form-select" formControlName="district"
+                                            <!-- <select class="form-select" formControlName="district"
                                                 (change)="getPinCode($event,'array')"
                                                 aria-label="Default select example">
                                                 <option selected>Choose District... </option>
@@ -562,7 +562,18 @@
                                             <div style="color: red;"
                                                 *ngIf="legalheirarray.controls[i].get('district')?.hasError('required') && legalheirarray.controls[i].get('district')?.touched">
                                                 District is required.
-                                            </div>
+                                            </div> -->
+                                            <input type="text" placeholder="Choose District... " matInput [formControl]="distLegalHeirControl" [matAutocomplete]="auto" class="form-control" formControlName="district">
+                                            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                                              <mat-option (onSelectionChange)="getLegalHeirPinCode($event,'array',i)" *ngFor="let option of distLegalHeirFilteredOptions | async" [value]="option.districtName">
+                                                {{option.districtName}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+                                        <div class="error-message"
+                                        *ngIf="legalheirarray.controls[i].get('district')?.invalid && legalheirarray.controls[i].get('district')?.touched">
+                                        <div *ngIf="legalheirarray.controls[i].get('district')?.hasError('required')">District is required.
+                                        </div>
+                                    </div>
                                             <!-- <input type="text" formControlName="district" name="" id=""
                                                 class="form-control" required> -->
 
@@ -575,7 +586,7 @@
                                         <div class="form-group">
                                             <label for="state" class="form-label">PIN<span
                                                     class="text-danger">*</span></label>
-                                            <select class="form-select" formControlName="pinCode"
+                                            <!-- <select class="form-select" formControlName="pinCode"
                                                 aria-label="Default select example">
                                                 <option selected>Choose Pincode... </option>
                                                 <option *ngFor="let pin of arrayPincode" [value]="pin.pincode">{{
@@ -585,7 +596,19 @@
                                             <div style="color: red;"
                                                 *ngIf="legalheirarray.controls[i].get('pinCode')?.hasError('required') && legalheirarray.controls[i].get('pinCode')?.touched">
                                                 Pincode is required.
+                                            </div> -->
+                                            <input type="text" placeholder="Choose Pincode..." matInput [formControl]="pinLegalHeirControl" [matAutocomplete]="pinauto" class="form-control" formControlName="pinCode">
+                                            <mat-autocomplete autoActiveFirstOption #pinauto="matAutocomplete">
+                                              <mat-option (onSelectionChange)="selectLegalHeirPinCode($event,i)" *ngFor="let option of pinLegalHeirFilteredOptions | async" [value]="option.pincode">
+                                                {{option.pincode}}
+                                              </mat-option>
+                                            </mat-autocomplete>
+
+                                            <div class="error-message"
+                                            *ngIf="legalheirarray.controls[i].get('pinCode')?.invalid && legalheirarray.controls[i].get('pinCode')?.touched">
+                                            <div *ngIf="legalheirarray.controls[i].get('pinCode')?.hasError('required')">Pincode is required.
                                             </div>
+                                        </div>
                                             <!-- <input type="text" formControlName="pinCode" name="" id=""
                                                 class="form-control" required maxlength="6"  (keyup)="vldChkLst.allowNumericDigits($event)"> -->
                                         </div>

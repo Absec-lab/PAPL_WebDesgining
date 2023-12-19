@@ -38,6 +38,10 @@ export class HouseOwnerRegistrationComponent {
   distFilteredOptions: Observable<DistrictDropdownList[]>;
   pinFilteredOptions: Observable<PincodeDropdownList[]>;
   @ViewChild('fileInput') fileInput!: ElementRef;
+  distLegalHeirControl = new FormControl();
+  pinLegalHeirControl = new FormControl();
+  distLegalHeirFilteredOptions: Observable<DistrictDropdownList[]>;
+  pinLegalHeirFilteredOptions: Observable<PincodeDropdownList[]>;
   constructor(private ngxLoader: NgxUiLoaderService, private formBuilder: FormBuilder, private route: Router, public portalServ: PortalServiceService, private httpClient: HttpClient, public vldChkLst: ValidatorchklistService) { }
   ngOnInit(): void {
     this.getAllOwner();
@@ -90,6 +94,20 @@ export class HouseOwnerRegistrationComponent {
       this.houseRegistrationForm.controls['pin'].setValue('');
     }
     return this.pincodeList.filter(option => option.pincode.toString().indexOf(value) === 0);
+  }
+  private _distlegalheirfilter(value: string,index: number): DistrictDropdownList[] {
+    debugger;
+    if(value === '' || value === null || value === undefined) {
+      this.legalheirarray.controls[index].controls['district'].setValue('');
+    }
+    return this.arrayDistList.filter(option => option.districtName.toLowerCase().indexOf(value.toLowerCase()) === 0);
+  }
+  private _pinlegalheirfilter(value: string,index: number): PincodeDropdownList[] {
+    debugger
+    if(value === '' || value === null || value === undefined) {
+      this.legalheirarray.controls[index].controls['pinCode'].setValue('');
+    }
+    return this.arrayPincode.filter(option => option.pincode.toString().indexOf(value) === 0);
   }
   onTableDataChange(event: any) {
     this.page = event;
@@ -180,7 +198,100 @@ export class HouseOwnerRegistrationComponent {
 
     });
   }
-
+  getLegalHeirDistirct(event:any, array?:any,index?: any) {
+    debugger;
+    console.log(event, typeof event);
+    let checkEventValue = typeof event;
+    if(checkEventValue !== 'number' && event?.target?.value === ''){
+      //this.allDistictList = [];
+      return;
+     }
+    this.ngxLoader.start()
+    let eventValue :any;
+    if (typeof event === 'number') {
+      eventValue = event;
+    } else {
+      eventValue = event.target.value;
+    }
+    console.log("eventValue",eventValue);
+   
+    let distValue:any;
+  
+    if(eventValue == 1 ) {
+      distValue = 'ODISHA'
+    } else if(eventValue == 2 ) {
+      distValue = 'CHHATTISGARH'
+    } else if( eventValue == 3 ){
+      distValue = 'MADHYA PRADESH'
+    } else if( eventValue == 4 ){
+      distValue = 'MAHARASHTRA'
+    }
+    
+      this.portalServ.get(`PAPL/getDistrictByStateName?statename=${distValue}`)
+      .subscribe(res => {
+        if(array) {
+          this.arrayDistList = res;
+          this.distLegalHeirFilteredOptions = this.distLegalHeirControl.valueChanges.pipe(
+            startWith(''),
+            map(value => this._distlegalheirfilter(value,index))
+          );
+        } else {
+          this.allDistictList = res;
+        }
+        this.ngxLoader.stop()
+       // console.log(res)
+      })
+  }
+  
+  getLegalHeirPinCode(event:any,array?:any,index?: any) {
+    debugger;
+    let checkEventValue = typeof event;
+    if(checkEventValue !== 'number' && event?.source?.value === ''){
+      //this.pincodeList = [];
+      return;
+    }
+    this.ngxLoader.start()
+    //console.log(event.target.value);
+   
+    let distValue :any;
+    if (typeof event === 'string') {
+      distValue = event;
+    } else {
+      distValue = event?.source?.value;
+    }
+    this.legalheirarray.controls[index].controls['district'].setValue(distValue);
+    this.portalServ.get(`PAPL/getPincodeAndStateByDistrict?Districtname=${distValue}`)
+    .subscribe(res => {
+  
+      if(array) {
+        this.arrayPincode = res;
+        this.pinLegalHeirFilteredOptions = this.pinLegalHeirControl.valueChanges.pipe(
+          startWith(''),
+          map(value => this._pinlegalheirfilter(value,index))
+        );
+      } else {
+  
+        this.pincodeList = res
+        console.log('Pin',res)
+        let ownerId = this.houseRegistrationForm.value.ownerId;
+        let pinChangeValue = ownerId !== '' ?  this.houseRegistrationForm.value.pin : '';
+        this.pinFilteredOptions = this.pinControl.valueChanges.pipe(
+          startWith(pinChangeValue),
+          map(value => this._pinfilter(value))
+        );
+      }
+      this.ngxLoader.stop()
+      console.log(res)
+    })
+  
+  }
+  selectLegalHeirPinCode(event:any,index?: any) {
+    let pinValue: any;
+    if(event?.source?.value !== '') {
+      pinValue = event?.source?.value;
+      this.legalheirarray.controls[index].controls['pinCode'].setValue(pinValue);
+    }
+  }
 
   deleteOwner(id: any = 0) {
     Swal.fire({
@@ -693,7 +804,7 @@ console.log('Data',data)
     console.log("image");
     let value: any;
     //console.log(event, userType, typeof(event))
-    if (typeof (event) == 'string') {
+    if (typeof (event) == 'number') {
       value = event
     } else {
 

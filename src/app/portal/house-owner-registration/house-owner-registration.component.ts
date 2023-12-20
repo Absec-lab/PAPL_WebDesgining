@@ -125,7 +125,7 @@ export class HouseOwnerRegistrationComponent {
   addlegaleirform() {
     const legalform = this.formBuilder.group({
       prevOwonerId: [this.houseRegistrationForm.value.ownerId],
-      ownerName: ['', Validators.required, [CommonValidatorService.fullNameValidator]],
+      ownerName: ['', [Validators.required, CommonValidatorService.fullNameValidator]],
       phoneNo: ['', Validators.required],
       emailId: ['', [Validators.required, CommonValidatorService.validateEmail]],
       idProofDoc: ['',[Validators.required]],
@@ -628,7 +628,9 @@ console.log('Data',data)
   }
 
   editOwner(item: any) {
+    debugger;
     console.log(item)
+    console.log('idproof',item.idProofAddress)
     this.updatebtn = true;
     this.descripinput = true;
     this.paymentmode(item.paymtMode == 'string' ? 2 : item.paymtMode, 'owner')
@@ -639,7 +641,7 @@ console.log('Data',data)
       ownerName: item.ownerName,
       phone: item.phoneNo,
       email: item.emailId,
-      idProofDoc: item.idProofDoc,
+      idProofDoc: item.idProofAddress,
       // idProof: item.idProofAddress,
       gIdproof: item.idProof,
       add1: item.address1,
@@ -708,7 +710,15 @@ console.log('Data',data)
   updateowner() {
     // let valid = this.validateLegalData();
     // if (valid) {
-
+      // debugger
+      // const invalid = [];
+      // const controls = this.legalheirarray.controls[0].controls;
+      // for (const name in controls) {
+      //     if (controls[name].invalid) {
+      //         invalid.push(name);
+      //     }
+      // }
+      // console.log('Log',invalid);
     if(this.legalheirarray.valid && this.houseRegistrationForm.valid) {
       let data = {
         "legalHeirRequestDto": this.legalheirarray.value,
@@ -749,6 +759,7 @@ console.log('Data',data)
             icon: 'success',
             text: 'House Owner Update succesfull'
           }).then((result: any) => {
+            debugger;
             console.log(res)
             this.getAllOwner();
             this.houseRegistrationForm.reset();
@@ -802,12 +813,12 @@ console.log('Data',data)
   legalupi = false;
   paymentmode(event: any, userType: string, index?: any) {
     console.log("image");
+    debugger;
     let value: any;
     //console.log(event, userType, typeof(event))
-    if (typeof (event) == 'number') {
+    if (typeof(event) === 'number' || typeof(event) === 'string') {
       value = event
     } else {
-
       value = event.target.value;
     }
 
@@ -830,8 +841,11 @@ if(value === '') {
         this.houseRegistrationForm.controls['ifsc'].setValidators([Validators.required]);
         this.houseRegistrationForm.controls['ifsc'].updateValueAndValidity();
 
-        this.houseRegistrationForm.controls['pan'].setValidators([Validators.required]);
+        this.houseRegistrationForm.controls['pan'].setValidators([Validators.required,CommonValidatorService.validatePan]);
         this.houseRegistrationForm.controls['pan'].updateValueAndValidity();
+
+
+
 
         this.houseRegistrationForm.controls['panPic'].setValidators([Validators.required]);
         this.houseRegistrationForm.controls['panPic'].updateValueAndValidity();
@@ -902,10 +916,98 @@ if(value === '') {
         this.houseRegistrationForm.controls['qrCode'].setValidators([Validators.required]);
         this.houseRegistrationForm.controls['qrCode'].updateValueAndValidity();
       }
-    } else if (userType == 'legal') {     
+    } else if (userType == 'legal') {
+      // For Bank AC
+      if(value == '1') {
+        this.legalheading = true;
+        this.legalbank = true;
+        this.legalupi = false;
+        this.legalheirarray.controls[index].controls['accountHolderName'].setValidators([Validators.required]);
+        this.legalheirarray.controls[index].controls['accountHolderName'].updateValueAndValidity();
+
+        this.legalheirarray.controls[index].controls['bankAccountNo'].setValidators([Validators.required]);
+        this.legalheirarray.controls[index].controls['bankAccountNo'].updateValueAndValidity();
+
+        this.legalheirarray.controls[index].controls['ifscCode'].setValidators([Validators.required]);
+        this.legalheirarray.controls[index].controls['ifscCode'].updateValueAndValidity();
+
+        this.legalheirarray.controls[index].controls['panNo'].setValidators([Validators.required,CommonValidatorService.validatePan]);
+        this.legalheirarray.controls[index].controls['panNo'].updateValueAndValidity();
+
+
+
+
+        this.legalheirarray.controls[index].controls['panNoDoc'].setValidators([Validators.required]);
+        this.legalheirarray.controls[index].controls['panNoDoc'].updateValueAndValidity();
+
+        this.legalheirarray.controls[index].get('upiId')?.clearValidators();
+        this.legalheirarray.controls[index].get('upiId')?.updateValueAndValidity();
+
+        this.legalheirarray.controls[index].get('upiPhoneNo')?.clearValidators();
+        this.legalheirarray.controls[index].get('upiPhoneNo')?.updateValueAndValidity();
+
+        this.legalheirarray.controls[index].get('quarCodeDoc')?.clearValidators();
+        this.legalheirarray.controls[index].get('quarCodeDoc')?.updateValueAndValidity();
+
+      }
+      // For Cash
+      else if (value == '2') {
+        this.legalheading = false;
+        this.legalbank = false;
+        this.legalupi = false;
+        this.legalheirarray.controls[index].get('accountHolderName')?.clearValidators();
+        this.legalheirarray.controls[index].get('accountHolderName')?.updateValueAndValidity();
+
+        this.legalheirarray.controls[index].get('bankAccountNo')?.clearValidators();
+        this.legalheirarray.controls[index].get('bankAccountNo')?.updateValueAndValidity();
+
+        this.legalheirarray.controls[index].get('ifscCode')?.clearValidators();
+        this.legalheirarray.controls[index].get('ifscCode')?.updateValueAndValidity();
+
+        this.legalheirarray.controls[index].get('panNo')?.clearValidators();
+        this.legalheirarray.controls[index].get('panNo')?.updateValueAndValidity();
+
+        this.legalheirarray.controls[index].get('panNoDoc')?.clearValidators();
+        this.legalheirarray.controls[index].get('panNoDoc')?.updateValueAndValidity();
+
+        this.legalheirarray.controls[index].get('upiId')?.clearValidators();
+        this.legalheirarray.controls[index].get('upiId')?.updateValueAndValidity();
+
+        this.legalheirarray.controls[index].get('upiPhoneNo')?.clearValidators();
+        this.legalheirarray.controls[index].get('upiPhoneNo')?.updateValueAndValidity();
+
+        this.legalheirarray.controls[index].get('quarCodeDoc')?.clearValidators();
+        this.legalheirarray.controls[index].get('quarCodeDoc')?.updateValueAndValidity();
+      } else {
+        this.legalheading = true;
+        this.legalbank = false;
+        this.legalupi = true;
+        this.legalheirarray.controls[index].get('accountHolderName')?.clearValidators();
+        this.legalheirarray.controls[index].get('accountHolderName')?.updateValueAndValidity();
+
+        this.legalheirarray.controls[index].get('bankAccountNo')?.clearValidators();
+        this.legalheirarray.controls[index].get('bankAccountNo')?.updateValueAndValidity();
+
+        this.legalheirarray.controls[index].get('ifscCode')?.clearValidators();
+        this.legalheirarray.controls[index].get('ifscCode')?.updateValueAndValidity();
+
+        this.legalheirarray.controls[index].get('panNo')?.clearValidators();
+        this.legalheirarray.controls[index].get('panNo')?.updateValueAndValidity();
+
+        this.legalheirarray.controls[index].get('panNoDoc')?.clearValidators();
+        this.legalheirarray.controls[index].get('panNoDoc')?.updateValueAndValidity();
+
+        this.legalheirarray.controls[index].controls['upiId'].setValidators([Validators.required]);
+        this.legalheirarray.controls[index].controls['upiId'].updateValueAndValidity();
+
+        this.legalheirarray.controls[index].controls['upiPhoneNo'].setValidators([Validators.required]);
+        this.legalheirarray.controls[index].controls['upiPhoneNo'].updateValueAndValidity();
+
+        this.legalheirarray.controls[index].controls['quarCodeDoc'].setValidators([Validators.required]);
+        this.legalheirarray.controls[index].controls['quarCodeDoc'].updateValueAndValidity();
+      }     
     }
   }
-
 
 
   showhidebankdetails(indes: any) {

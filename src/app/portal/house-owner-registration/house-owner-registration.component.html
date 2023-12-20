@@ -88,7 +88,7 @@
                         <div class="form-group">
                             <label for="state" class="form-label">Upload Govt ID Proof<span
                                     class="text-danger">*</span></label>
-                                    <input type="file" #fileInput name="" id="" class="form-control" accept="image/*,.pdf"
+                                    <input type="file" #fileInput formControlName="idProofDoc" name="" id="" class="form-control" accept="image/*,.pdf"
                                     (change)="onImageChange($event, 'idProofDoc')" />
                                     <!-- <div style="color: red;" *ngIf="isfileuploaded">Govt ID Proof is yet to upload.</div> -->
                                     <!-- (change)="onImageChange($event, 'idProofDoc')" formControlName="idProofDoc" required/> -->
@@ -411,33 +411,21 @@
                                             <input type="text" formControlName="ownerName" name="name" id="ownerName"
                                                 class="form-control" maxlength="30"
                                                 (keyup)="vldChkLst.blockspecialchar_first($event)" required>
-                                            <div style="color: red;"
-                                                *ngIf="legalheirarray.controls[i].get('ownerName')?.hasError('required') && legalheirarray.controls[i].get('ownerName')?.touched">
-                                                House Owner Name is required.
+                                                <div class="error-message"
+                                                *ngIf="legalheirarray.controls[i].get('ownerName')?.invalid && legalheirarray.controls[i].get('ownerName')?.touched">
+                                                <div *ngIf="legalheirarray.controls[i].get('ownerName')?.hasError('required')">House Owner Name is required.
+                                                </div>
+                                                <div *ngIf="legalheirarray.controls[i].get('ownerName')?.hasError('fullNameContainsSpecialChars')"> Full name should
+                                                    not contain special characters or numbers.
+                                                </div>
+                                                <div *ngIf="legalheirarray.controls[i].get('ownerName')?.hasError('fullNameTooLong')"> Full
+                                                    name should
+                                                    contain less than 50 charcter.
+                                                </div>
+                                                <div *ngIf="legalheirarray.controls[i].get('ownerName')?.hasError('fullNameTooSmall')"> Full name should
+                                                    contain more than 3 charcter.
+                                                </div>
                                             </div>
-                                        </div>
-
-                                        <div *ngIf="legalheirarray.controls[i].get('ownerName')?.invalid && legalheirarray.controls[i].get('fullName')?.touched"
-                                            class="reg-error-message">
-                                            <div
-                                                *ngIf="legalheirarray.controls[i].get('ownerName')?.hasError('required')">
-                                                Full name
-                                                is required.</div>
-                                            <!-- <div *ngIf="houseRegistrationForm.get('fullName')?.hasError('fullNameInvalid')">Full name should contain at
-                    least two letters.</div> -->
-                                            <div
-                                                *ngIf="legalheirarray.controls[i].get('ownerName')?.hasError('fullNameContainsSpecialChars')">
-                                                Full name should
-                                                not contain special characters or numbers.</div>
-                                            <div
-                                                *ngIf="legalheirarray.controls[i].get('ownerName')?.hasError('fullNameTooLong')">
-                                                Full
-                                                name should
-                                                contain less than 50 charcter. </div>
-                                            <div
-                                                *ngIf="legalheirarray.controls[i].get('ownerName')?.hasError('fullNameTooSmall')">
-                                                Full name should
-                                                contain more than 3 charcter. </div>
                                         </div>
 
                                     </div>
@@ -525,7 +513,7 @@
                                             <label for="state" class="form-label">Address 2<span
                                                     class="text-danger"></span></label>
                                             <input type="text" name="" formControlName="address2" id=""
-                                                class="form-control" required>
+                                                class="form-control">
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-md-4">
@@ -648,124 +636,124 @@
 
 
                                 <ng-container
-                                    *ngIf=" showhidebankdetails(i) == 'Bank' ||  showhidebankdetails(i) == 'upi'">
-                                    <h5 class="mt-4 text-secondary">Bank Account Details of Legaal Heir</h5>
-                                    <hr class="my-1" />
-                                    <!-- cash -->
-                                    <div class="cash row pt-4 ">
+                                *ngIf="legalheading">
+                                <h5 class="mt-4 text-secondary">Bank Account Details of Legaal Heir</h5>
+                                <hr class="my-1" />
+                                <!-- cash -->
+                                <div class="cash row pt-4 ">
 
-                                    </div>
-                                    <!-- bank-ac -->
-                                    <div class=" bank-ac row pt-4" *ngIf=" showhidebankdetails(i) == 'Bank'">
-                                        <div class="col-sm-6 col-md-4">
-                                            <div class="form-group">
-                                                <label for="state" class="form-label">Account Holder Name<span
-                                                        class="text-danger">*</span></label>
-                                                <input type="text" formControlName="accountHolderName"
-                                                    name="accountHolderName" id="accountHolderName"
-                                                    class="form-control">
-                                                    <div class="error-message"
-                                                    *ngIf="legalheirarray.controls[i].get('accountHolderName')?.invalid && legalheirarray.controls[i].get('accountHolderName')?.touched">
-                                                    <div *ngIf="legalheirarray.controls[i].get('accountHolderName')?.hasError('required')">Account Holder Name Is Required.
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 col-md-4">
-                                            <div class="form-group">
-                                                <label for="state" class="form-label">Account Number<span
-                                                        class="text-danger">*</span></label>
-                                                <input type="text" formControlName="bankAccountNo" name="bankAccountNo"
-                                                    id="bankAccountNo" class="form-control">
-                                                    <div class="error-message"
-                                                    *ngIf="legalheirarray.controls[i].get('bankAccountNo')?.invalid && legalheirarray.controls[i].get('bankAccountNo')?.touched">
-                                                    <div *ngIf="legalheirarray.controls[i].get('bankAccountNo')?.hasError('required')">Account Number Is Required.
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 col-md-4">
-                                            <div class="form-group">
-                                                <label for="state" class="form-label">IFSC<span
-                                                        class="text-danger">*</span></label>
-                                                <input type="text" formControlName="ifscCode" name="ifscCode"
-                                                    id="ifscCode" class="form-control">
-                                                    <div class="error-message"
-                                                    *ngIf="legalheirarray.controls[i].get('ifscCode')?.invalid && legalheirarray.controls[i].get('ifscCode')?.touched">
-                                                    <div *ngIf="legalheirarray.controls[i].get('ifscCode')?.hasError('required')">IFSC Is Required.
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 col-md-4">
-                                            <div class="form-group">
-                                                <label for="state" class="form-label">PAN Card <span
-                                                        class="text-danger">*</span></label>
-                                                <input type="text" formControlName="panNo" name="panNo" id="panNo"
-                                                    class="form-control">
-                                                    <div class="error-message"
-                                                    *ngIf="legalheirarray.controls[i].get('panNo')?.invalid && legalheirarray.controls[i].get('panNo')?.touched">
-                                                    <div *ngIf="legalheirarray.controls[i].get('panNo')?.hasError('required')">PAN Card Is Required.
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 col-md-4">
-                                            <div class="form-group">
-                                                <label for="state" class="form-label">Upload PAN Card<span
-                                                        class="text-danger">*</span></label>
-                                                <input type="file" name="" id="" class="form-control"
-                                                    accept="image/*,.pdf"
-                                                    (change)="onImageChange($event, 'panNoDoc', 'legal',i)" formControlName="panNoDoc" required>
-                                                    <div style="color: red;" *ngIf="legalheirarray.controls[i].get('panNoDoc')?.hasError('required') && legalheirarray.controls[i].get('panNoDoc')?.touched">
-                                                        PAN Card is Mandatory.
-                                                      </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <!-- upi -->
-                                    <div class="row pt-4" *ngIf="showhidebankdetails(i) == 'upi'">
-                                        <div class="col-sm-6 col-md-4">
-                                            <div class="form-group">
-                                                <label for="state" class="form-label">UPI ID<span
-                                                        class="text-danger">*</span></label>
-                                                <input formControlName="upiId" type="text" class="form-control">
+                                </div>
+                                <!-- bank-ac -->
+                                <div class="bank-ac row pt-4" *ngIf="legalbank">
+                                    <div class="col-sm-6 col-md-4">
+                                        <div class="form-group">
+                                            <label for="state" class="form-label">Account Holder Name<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" formControlName="accountHolderName"
+                                                name="accountHolderName" id="accountHolderName"
+                                                class="form-control">
                                                 <div class="error-message"
-                                                *ngIf="legalheirarray.controls[i].get('upiId')?.invalid && legalheirarray.controls[i].get('upiId')?.touched">
-                                                <div *ngIf="legalheirarray.controls[i].get('upiId')?.hasError('required')">UPI ID Is Required.
-                                                </div>
-                                            </div>
-                                            </div>
+                                              *ngIf="legalheirarray.controls[i].get('accountHolderName')?.invalid && legalheirarray.controls[i].get('accountHolderName')?.touched">
+                                              <div *ngIf="legalheirarray.controls[i].get('accountHolderName')?.hasError('required')">Account Holder Name Is Required.
+                                              </div>
+                                          </div>
                                         </div>
-                                        <div class="col-sm-6 col-md-4">
-                                            <div class="form-group">
-                                                <label for="state" class="form-label">Linked Mob._No<span
-                                                        class="text-danger">*</span></label>
-                                                <input type="number" formControlName="upiPhoneNo" class="form-control">
+                                    </div>
+                                    <div class="col-sm-6 col-md-4">
+                                        <div class="form-group">
+                                            <label for="state" class="form-label">Account Number<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" formControlName="bankAccountNo" name="bankAccountNo"
+                                                id="bankAccountNo" class="form-control">
                                                 <div class="error-message"
-                                                *ngIf="legalheirarray.controls[i].get('upiPhoneNo')?.invalid && legalheirarray.controls[i].get('upiPhoneNo')?.touched">
-                                                <div *ngIf="legalheirarray.controls[i].get('upiPhoneNo')?.hasError('required')">Linked Mob._No Is Required.
+                                                *ngIf="legalheirarray.controls[i].get('bankAccountNo')?.invalid && legalheirarray.controls[i].get('bankAccountNo')?.touched">
+                                                <div *ngIf="legalheirarray.controls[i].get('bankAccountNo')?.hasError('required')">Account Number Is Required.
                                                 </div>
-                                            </div>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="col-sm-6 col-md-4">
-                                            <div class="form-group">
-                                                <label for="state" class="form-label">Upload QR Code<span
-                                                        class="text-danger">*</span></label>
-                                                <input type="file" name="" id="" class="form-control"
-                                                    accept="image/*,.pdf"
-                                                    (change)="onImageChange($event, 'quarCodeDoc', 'legal',i)" formControlName="quarCodeDoc" required>
-                                                    <div style="color: red;" *ngIf="legalheirarray.controls[i].get('quarCodeDoc')?.hasError('required') && legalheirarray.controls[i].get('quarCodeDoc')?.touched">
-                                                        QR Code is Mandatory.
-                                                      </div>
                                             </div>
                                         </div>
                                     </div>
-                                </ng-container>
+                                    <div class="col-sm-6 col-md-4">
+                                        <div class="form-group">
+                                            <label for="state" class="form-label">IFSC<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" formControlName="ifscCode" name="ifscCode"
+                                                id="ifscCode" class="form-control">
+                                                <div class="error-message"
+                                                *ngIf="legalheirarray.controls[i].get('ifscCode')?.invalid && legalheirarray.controls[i].get('ifscCode')?.touched">
+                                                <div *ngIf="legalheirarray.controls[i].get('ifscCode')?.hasError('required')">IFSC Is Required.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-md-4">
+                                        <div class="form-group">
+                                            <label for="state" class="form-label">PAN Card <span
+                                                    class="text-danger">*</span></label>
+                                            <input type="text" formControlName="panNo" name="panNo" id="panNo"
+                                                class="form-control">
+                                                <div class="error-message"
+                                                *ngIf="legalheirarray.controls[i].get('panNo')?.invalid && legalheirarray.controls[i].get('panNo')?.touched">
+                                                <div *ngIf="legalheirarray.controls[i].get('panNo')?.hasError('required')">PAN Card Is Required.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-md-4">
+                                        <div class="form-group">
+                                            <label for="state" class="form-label">Upload PAN Card<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="file" name="" id="" class="form-control"
+                                                accept="image/*,.pdf"
+                                                (change)="onImageChange($event, 'panNoDoc', 'legal',i)" formControlName="panNoDoc" required>
+                                                <div style="color: red;" *ngIf="legalheirarray.controls[i].get('panNoDoc')?.hasError('required') && legalheirarray.controls[i].get('panNoDoc')?.touched">
+                                                    PAN Card is Mandatory.
+                                                  </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- upi -->
+                                <div class="row pt-4" *ngIf="legalupi">
+                                    <div class="col-sm-6 col-md-4">
+                                        <div class="form-group">
+                                            <label for="state" class="form-label">UPI ID<span
+                                                    class="text-danger">*</span></label>
+                                            <input formControlName="upiId" type="text" class="form-control">
+                                            <div class="error-message"
+                                            *ngIf="legalheirarray.controls[i].get('upiId')?.invalid && legalheirarray.controls[i].get('upiId')?.touched">
+                                            <div *ngIf="legalheirarray.controls[i].get('upiId')?.hasError('required')">UPI ID Is Required.
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-md-4">
+                                        <div class="form-group">
+                                            <label for="state" class="form-label">Linked Mob._No<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="number" formControlName="upiPhoneNo" class="form-control">
+                                            <div class="error-message"
+                                            *ngIf="legalheirarray.controls[i].get('upiPhoneNo')?.invalid && legalheirarray.controls[i].get('upiPhoneNo')?.touched">
+                                            <div *ngIf="legalheirarray.controls[i].get('upiPhoneNo')?.hasError('required')">Linked Mob._No Is Required.
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-sm-6 col-md-4">
+                                        <div class="form-group">
+                                            <label for="state" class="form-label">Upload QR Code<span
+                                                    class="text-danger">*</span></label>
+                                            <input type="file" name="" id="" class="form-control"
+                                                accept="image/*,.pdf"
+                                                (change)="onImageChange($event, 'quarCodeDoc', 'legal',i)" formControlName="quarCodeDoc" required>
+                                                <div style="color: red;" *ngIf="legalheirarray.controls[i].get('quarCodeDoc')?.hasError('required') && legalheirarray.controls[i].get('quarCodeDoc')?.touched">
+                                                    QR Code is Mandatory.
+                                                  </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
                                 <div class="mt-4 d-flex justify-content-end" *ngIf="legalbtnh">
                                     <button class="btn btn-danger " style="margin-right: 10px;" *ngIf="i>0"
                                         (click)="removelegalform(i)">

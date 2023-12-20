@@ -21,11 +21,11 @@ export const CommonValidatorService = {
       }
     }
      // Check if the full name is less than 50 characters
-     if (fullName.length >= 50) {
+     if (fullName?.length >= 50) {
       return { 'fullNameTooLong': true };
     }
 
-    if (fullName.length <= 2) {
+    if (fullName?.length <= 2) {
       return { 'fullNameTooSmall': true };
     }
 

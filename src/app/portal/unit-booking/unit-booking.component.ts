@@ -1,7 +1,7 @@
 import {  Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { PortalServiceService } from '../serviceapi/portal-service.service';
 import { Subject, takeUntil } from 'rxjs';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ValidatorchklistService } from '../serviceapi/validatorchklist.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import Swal from 'sweetalert2';
@@ -14,8 +14,7 @@ import Swal from 'sweetalert2';
 export class UnitBookingComponent implements OnInit {
 
   employeeForm!: FormGroup;
-
-  stateDtails:any;
+  stateDtails: any = [];
   activeSBU:any = [];
   activePlant:any = [];
   activeHouse:any = [];
@@ -45,14 +44,17 @@ export class UnitBookingComponent implements OnInit {
     this.getAllStateList()
 
     this.employeeForm = this.formBuilder.group({
-      empId: [''],
-      empName: [''],
-      emailId: [''],
-      mobileNo: [''],
-      bookStartDate: [''],
-      bkEndDate: [''],
+      state: ['',Validators.required],
+      sbuId: ['',Validators.required],
+      plantId: ['',Validators.required],
+      empId: ['',Validators.required],
+      empName: ['',Validators.required],
+      emailId: ['',Validators.required],
+      mobileNo: ['',Validators.required],
+      bookStartDate: ['',Validators.required],
+      bkEndDate: ['',Validators.required],
       selectPeriod:[''],
-      plantName:[''],
+      plantName:['',Validators.required],
       serviceOrder:[''],
       
     });
@@ -67,7 +69,9 @@ export class UnitBookingComponent implements OnInit {
     })
   }
 
-  
+  scrollToTop(): void {
+    window.scrollTo(0, 0);
+  }
 
   getSubonStateChange(event: any) {
     this.activeSBU = [];
@@ -131,8 +135,9 @@ export class UnitBookingComponent implements OnInit {
   }
 
   unitBookingSearch() {
-    let vSts = this.validateData();
-    if (vSts) {
+    if(this.employeeForm.valid){
+    // let vSts = this.validateData();
+    // if (vSts) {
     if(this.unitId==undefined)
     {
       this.unitId=0;
@@ -151,7 +156,12 @@ export class UnitBookingComponent implements OnInit {
     }
     
     )
-  }
+  }else {
+    this.markFormGroupTouched(this.employeeForm);    
+    this.scrollToTop();
+   // alert("Please Enter Required fields !")
+   }
+  
 }
 
   validateData() {
@@ -193,6 +203,7 @@ postBooking() {
     "bkEndDate": this.employeeForm.get('bkEndDate')?.value,
 
 }
+
   console.log(data);
   
   this.portalService.post("PAPL/UnitBooking",data)
@@ -203,6 +214,26 @@ postBooking() {
     this.ngOnInit()
   })
 }
+
+markFormGroupTouched(formGroup: FormGroup) {
+  Object.values(formGroup.controls).forEach(control => {
+    control.markAsTouched();
+
+    // If the control is a nested form group, mark its controls as touched recursively
+    if (control instanceof FormGroup) {
+      this.markFormGroupTouched(control);
+    }
+  });
+}
+
+markFormArrayControlsTouched(formArray: FormArray) {
+  formArray.controls.forEach(control => {
+    if (control instanceof FormGroup) {
+      this.markFormGroupTouched(control);
+    }
+  });
+}
+
 
 selectEmp(event: any) {
   const empID = event.target.value;

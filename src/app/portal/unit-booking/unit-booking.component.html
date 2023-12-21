@@ -7,18 +7,21 @@
     </div>
 </section>
 <section id="page-content">
-    <form class="container">
+    <form class="container" [formGroup]="employeeForm" action="">
         <div class="row " style="background-color: rgba(226, 242, 246, 1); padding: 5%; margin-bottom: 0.5cm;">
-            <div class="col-sm-6 col-md-4  ">
+            <div class="col-sm-6 col-md-4">
                 <div class="form-group">
-                    <label for="state" class="form-label">State <span class="text-danger">*</span></label>
-                    <select class="form-select" aria-label="Default select example" required (change)="getSubonStateChange($event)">
+                    <label for="state" class="form-label">State<span class="text-danger">*</span></label>
+
+                    <select class="form-select" aria-label="Default select example" required formControlName="state"  (change)="getSubonStateChange($event)">
                         <option selected>Choose State... </option>
                         <option *ngFor="let state of stateDtails" [value]="state.stateId">{{ state.stateName }}</option>
                     </select>
-                </div>
-                <div class="text-danger">{{ errorMessages.stateId }}</div>
+                     <div *ngIf="employeeForm.get('state')?.hasError('required') && employeeForm.get('state')?.touched" style="color: red;">
+                        State is required.
+                      </div>
 
+                </div>
             </div>
             <div class="col-sm-6 col-md-4  ">
                 <div class="form-group">

@@ -321,21 +321,10 @@ export class AgreementMasterComponent {
 
     return vSts;
   }
-  editAgreement(aggreId: any, stateId: any, sbuId: any, plantId: any, ownerId: any, houseId: any, aggreTypeId: any, rent: any, rentPeriod: any, rentStartDt: any, rentEndDt: any, withElectricBill: any, withWaterBill: any) {
+  editAgreement(aggreId: any, stateId: any, sbuId: any, plantId: any, ownerId: any, houseId: any, aggreTypeId: any, rent: any, rentPeriod: any, rentStartDt: any, rentEndDt: any, withElectricBill: any, withWaterBill: any, aggreUpload:any) {
     
     window.scrollTo({ top: 0, behavior: 'smooth' });
-
-    Swal.fire({
-      icon: 'warning',
-      text: "Are you sure you want to Edit the details?",
-      showCancelButton: true,
-      confirmButtonText: 'Yes',
-      cancelButtonText: 'No',
-      cancelButtonColor: '#df1141'
-    }).then((result) => {
-
-      if (result.isConfirmed) {
-        this.aggreState = stateId;
+       this.aggreState = stateId;
         this.aggreSbu = sbuId;
         this.aggrePlant = plantId;
         this.aggreOwner = ownerId;
@@ -343,6 +332,7 @@ export class AgreementMasterComponent {
         this.aggreAggrementType = aggreTypeId;
         this.aggreElectricBill = withElectricBill;
         this.aggreWaterBill = withWaterBill;
+        this.aggreUpload = aggreUpload;
         this.aggreMonthlyRent = rent;
         this.aggrePeriod = rentPeriod;
         this.aggreStartDate = rentStartDt.split('T')[0];
@@ -352,10 +342,7 @@ export class AgreementMasterComponent {
         this.getSbu(stateId);
         this.getplant(sbuId);
         window.scrollTo({ top: 0, behavior: 'smooth' });
-
-
-      }
-    });
+    
   }
   saveAggreement() {
     let vSts = this.validateData();

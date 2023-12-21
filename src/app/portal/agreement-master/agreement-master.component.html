@@ -203,6 +203,7 @@
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Agreement Type</th>
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">Monthly Rent</th>
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Agreement Period</th>
+                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Agreement Upload</th>
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Start Date</th>
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">End Date</th>
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Electric Bill</th>
@@ -223,6 +224,7 @@
                         <td>{{ item.aggreTypeName }}</td>
                         <td>{{ item.rent }}</td>
                         <td>{{ item.rentPeriod }}</td>
+                        <td>{{ item.aggreUpload }}</td>
                         <td>{{ item.rentStartDt | date: 'MM/dd/yyyy'}}</td>
                         <td>{{ item.rentEndDt | date: 'MM/dd/yyyy'}}</td>
                         <td>{{ item.withElectricBill }}</td>
@@ -231,7 +233,7 @@
                         <td>
                             <div style="display: inline-flex;">
                                 <button class="btn btn-sm mx-2"
-                                    (click)="editAgreement(item.aggreId,item.stateId,item.locationId,item.plantId,item.ownerId,item.houseId,item.aggreTypeId,item.rent,item.rentPeriod,item.rentStartDt,item.rentEndDt,item.withElectricBill,item.withWaterBill)"
+                                    (click)="editAgreement(item.aggreId,item.stateId,item.locationId,item.plantId,item.ownerId,item.houseId,item.aggreTypeId,item.rent,item.rentPeriod,item.rentStartDt,item.rentEndDt,item.withElectricBill,item.withWaterBill,item.aggreUpload)"
                                     style="background-color: rgb(22, 133, 236);color: #faf7f7;">
                                     <i class="fa-solid fa-edit"></i>
                                 </button>

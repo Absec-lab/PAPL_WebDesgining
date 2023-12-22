@@ -135,7 +135,7 @@ export class UnitBookingComponent implements OnInit {
   }
 
   unitBookingSearch() {
-    if(this.employeeForm.valid){
+    //if(this.employeeForm.valid){
     // let vSts = this.validateData();
     // if (vSts) {
     if(this.unitId==undefined)
@@ -156,11 +156,11 @@ export class UnitBookingComponent implements OnInit {
     }
     
     )
-  }else {
-    this.markFormGroupTouched(this.employeeForm);    
-    this.scrollToTop();
-   // alert("Please Enter Required fields !")
-   }
+  // }else {
+  //   this.markFormGroupTouched(this.employeeForm);    
+  //   this.scrollToTop();
+  //  // alert("Please Enter Required fields !")
+  //  }
   
 }
 

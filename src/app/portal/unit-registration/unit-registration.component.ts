@@ -97,7 +97,7 @@ export class UnitRegistrationComponent {
   }
 
   getAllOwner() {
-    this.ngxLoader.start();
+    // this.ngxLoader.start();
     this.portalServ.get("PAPL/getAllOwner")
       .pipe((takeUntil(this.destroy$)))
       .subscribe(res => {
@@ -108,7 +108,7 @@ export class UnitRegistrationComponent {
   }
 
   getSubonStateChange(event: any) {
-    this.ngxLoader.start();
+   // this.ngxLoader.start();
     this.activeSBU = [];
     const selectedStateId = event.target.value;
     this.stateId = selectedStateId;
@@ -122,7 +122,7 @@ export class UnitRegistrationComponent {
   }
 
   getPlantOnSubChange(event: any) {
-    this.ngxLoader.start();
+   // this.ngxLoader.start();
     this.activePlant = [];
     const selectedSublocation = event.target.value;
     this.sbuId = selectedSublocation;
@@ -136,7 +136,7 @@ export class UnitRegistrationComponent {
   }
 
   getHouseByPlantId(event: any) {
-    this.ngxLoader.start();
+   // this.ngxLoader.start();
     this.activeHouse = [];
     const selectedPlantId = event.target.value;
     this.plantId = selectedPlantId;
@@ -166,7 +166,7 @@ export class UnitRegistrationComponent {
       cancelButtonColor: '#df1141'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.ngxLoader.start();
+       // this.ngxLoader.start();
         this.portalServ.get(`deactivate/Unit?id=${id}`)
           .pipe(takeUntil(this.destroy$))
           .subscribe((res) => {
@@ -197,12 +197,12 @@ export class UnitRegistrationComponent {
   postUnit() {
     if (this.unitArray.controls[0].valid) {
       let data = {
-        "stateId": this.stateId,
+       "stateId": this.stateId,
         "sbuId": this.sbuId,
         "plantId": this.plantId,
         "unitDTO": this.unitArray.value,
       };
-      this.ngxLoader.start();
+     // this.ngxLoader.start();
       this.portalServ.post("PAPL/addUnits", data)
         .pipe(takeUntil(this.destroy$))
         .subscribe((res) => {
@@ -239,23 +239,57 @@ export class UnitRegistrationComponent {
     });
   }
 
+  // updateUnit(item: any) {
+  //   this.updatebtn = true;
+  //   const firstUnitGroup = this.unitArray.at(0) as FormGroup;
+  //   firstUnitGroup.patchValue({
+  //     ownerId: item.ownerId,
+  //     houseId: item.houseId,
+  //     unitNo: item.unitNo,
+  //     unitCapacity: item.unitCapacity,
+  //     electBillPercent: item.electBillPercent,
+  //     waterBillPercent: item.waterBillPercent,
+  //     startDate: item.startDate,
+  //     endDate: item.endDate,
+  //   });
+
+
   updateUnit(item: any) {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
     this.updatebtn = true;
-    const firstUnitGroup = this.unitArray.at(0) as FormGroup;
-    firstUnitGroup.patchValue({
-      ownerId: item.ownerId,
+    console.log(item);
+    this.unitRegisterForm.patchValue({
+      unitId: item.unitId,
+      stateId: item.stateId,
+      sbuId: item.locationId,
+      plantId: item.plantId,
+      mapId: item.mapId,
       houseId: item.houseId,
-      unitNo: item.unitNo,
-      unitCapacity: item.unitCapacity,
-      electBillPercent: item.electBillPercent,
-      waterBillPercent: item.waterBillPercent,
-      startDate: item.startDate,
-      endDate: item.endDate,
+    });
+
+    while (this.unitArray.length !== 0) {
+      this.unitArray.removeAt(0);
+    }
+
+    this.addunit();
+
+    const stateGroup = this.unitArray.at(0);
+    stateGroup.patchValue({
+   
+          ownerId: item.ownerId,
+          houseId: item.houseId,
+          unitNo: item.unitNo,
+          unitCapacity: item.unitCapacity,
+          electBillPercent: item.electBillPercent,
+          waterBillPercent: item.waterBillPercent,
+          startDate: item.startDate,
+          endDate: item.endDate,
     });
 
     setTimeout(() => {
       this.getSubonStateChange(item.stateId);
-      this.getPlantOnSubChange(item.sbuId);
+      this.getPlantOnSubChange(item.locationId);
     });
 
     setTimeout(() => {
@@ -287,14 +321,14 @@ export class UnitRegistrationComponent {
   updateUnitForm() {
     if (this.unitArray.controls[0].valid) {
       let data = {
-        "unitNo":this.unitId,
+        "unitId":"177",
         "stateId": this.stateId,
         "sbuId": this.sbuId,
         "plantId": this.plantId,
         "unitDTO": this.unitArray.value,
       };
 
-      this.ngxLoader.start();
+      // this.ngxLoader.start();
       this.portalServ.updateUnits(data)
         .pipe(takeUntil(this.destroy$))
         .subscribe((res) => {

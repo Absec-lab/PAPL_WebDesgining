@@ -17,7 +17,7 @@
                             aria-label="Default select example" (change)="getSubonStateChange($event)">
                             <option value="0" selected>Choose State... </option>
                             <option *ngFor="let state of stateDtails" [value]="state.stateId">{{ state.stateName }}
-                            </option>
+                             </option>
                         </select>
                         <div *ngIf="unitRegisterForm.get('stateId')?.invalid && unitRegisterForm.get('stateId')?.touched"
                             class="error-message">

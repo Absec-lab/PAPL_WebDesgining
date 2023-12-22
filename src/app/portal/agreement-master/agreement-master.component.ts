@@ -397,6 +397,7 @@ export class AgreementMasterComponent {
           text: 'Record Saved Successfully'
         }).then(() => {
           window.location.reload();
+          this.aggreUpload.reset();
 
         });
         this.getAllAgreement();
@@ -420,7 +421,7 @@ export class AgreementMasterComponent {
     let vSts = this.validateData();
     if (vSts) {
       let param = {
-        "aggreAddr": "string",
+        "aggreAddr": this.aggreUpload,
         "aggreId": this.aggreId,
         "agreementType": {
           "aggreTypeId": this.aggreAggrementType
@@ -466,6 +467,7 @@ export class AgreementMasterComponent {
         Swal.fire({
           icon: 'success',
           text: 'Record Update Successfully'
+          
         });
         // window.location.reload();
         this.getAllAgreement();

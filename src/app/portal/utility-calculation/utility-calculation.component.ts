@@ -279,6 +279,8 @@ export class UtilityCalculationComponent implements OnInit {
         alert("calculation saved successfully")
          // alert("calculation saved successfully")
       })
+        this.utilityCalculation.reset;
+
      } else {
       this.markFormGroupTouched(this.utilityCalculation);
       this.markFormArrayControlsTouched(this.electric);

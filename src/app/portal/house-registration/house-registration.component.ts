@@ -159,7 +159,7 @@ export class HouseRegistrationComponent implements OnInit {
 
   // Update your component code
   getSubonStateChange(event: any, index: number) {
-    // this.activeSBU = [];
+    this.activeSBU = [];
     const selectedStateId = event.target.value;
     this.stateId = selectedStateId;
 
@@ -250,7 +250,7 @@ export class HouseRegistrationComponent implements OnInit {
 
 
   registerHouse() {
-    let vSts =true; //this.validateData();
+    let vSts =this.validateData();
     console.log(vSts);
     console.log(this.houseRegistrationForm.valid);
     // console.log(this.stateArray.valid);
@@ -294,7 +294,6 @@ export class HouseRegistrationComponent implements OnInit {
 
   updateHouse(item: any) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-
     this.updatebtn = true;
     console.log(item);
     this.houseRegistrationForm.patchValue({
@@ -316,7 +315,6 @@ export class HouseRegistrationComponent implements OnInit {
     }
 
     this.addstate();
-
     const stateGroup = this.stateArray.at(0);
     stateGroup.patchValue({
       stateId: item.stateId,
@@ -367,7 +365,7 @@ export class HouseRegistrationComponent implements OnInit {
     console.log(this.houseRegistrationForm.valid);
     console.log(this.stateArray.valid);
     if (vSts) {
-      if (this.houseId !== null && this.mapId !== null) {
+      if (this.stateId!==null && this.sbuId!==null && this.houseId !== null && this.mapId !== null) {
 
         let data = {
           "houseId": this.houseId,
@@ -392,7 +390,7 @@ export class HouseRegistrationComponent implements OnInit {
         this.ngxLoader.start();
         this.portalService.put("PAPL/updateHouse", data)
           .subscribe((res) => {
-            this.ngxLoader.stop();
+            //this.ngxLoader.stop();
             console.log(res)
             this.updatebtn = false;
 

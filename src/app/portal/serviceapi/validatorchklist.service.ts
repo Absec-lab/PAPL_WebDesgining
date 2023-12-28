@@ -740,6 +740,16 @@ export class ValidatorchklistService {
       e.target.value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
     }
   }
+  allowNumericDigitsWithoutZero(e: any) {	
+    debugger;
+    let isValidEventValue = (e.target.value !== undefined || e.target.value.length === 1) 
+    && (e.keyCode === 48)
+		if(/\D/g.test(e.target.value)) {
+			e.target.value = e.target.value.replace(/\D/g,'');
+		} else if(isValidEventValue) {
+      e.target.value = '';
+    }
+	}
 
 
 

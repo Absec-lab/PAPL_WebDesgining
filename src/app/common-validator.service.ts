@@ -47,6 +47,22 @@ export const CommonValidatorService = {
   }
     return null;
   },
+   noSpaceValidatorWithoutRequired(control: AbstractControl): ValidationErrors | null {
+    debugger;
+    const isWhitespace = control?.value != '' && (control && control?.value && control?.value.toString() || '').trim().length === 0;
+    const isValid = !isWhitespace;
+    if(!isValid){  
+      return {'cannotContainSpaceWithoutRequired': true}  
+  }
+    return null;
+  },
+  upivalid(control: AbstractControl): ValidationErrors | null {
+    const upiidregx = /^[\w.-]+@[\w.-]+$/;
+    if(!upiidregx.test(control.value)) {
+      return { 'upiformat': true };
+    }
+    return null;
+  },
   phonenovalid(control: AbstractControl): ValidationErrors | null {
     debugger;
     if (control.value === '0000000000') {

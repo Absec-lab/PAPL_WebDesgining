@@ -42,6 +42,7 @@ export class HouseOwnerRegistrationComponent {
   pinLegalHeirControl = new FormControl();
   distLegalHeirFilteredOptions: Observable<DistrictDropdownList[]>;
   pinLegalHeirFilteredOptions: Observable<PincodeDropdownList[]>;
+  isDisableAddButton: boolean = false;
   constructor(private ngxLoader: NgxUiLoaderService, private formBuilder: FormBuilder, private route: Router, public portalServ: PortalServiceService, private httpClient: HttpClient, public vldChkLst: ValidatorchklistService) { }
   ngOnInit(): void {
     this.getAllOwner();
@@ -56,7 +57,7 @@ export class HouseOwnerRegistrationComponent {
       idProofDocPrifix: [''],
       gIdproof: ['', Validators.required],
       add1: ['', [Validators.required,CommonValidatorService.noSpaceValidator]],
-      add2: ['',[CommonValidatorService.noSpaceValidator]],
+      add2: ['',[CommonValidatorService.noSpaceValidatorWithoutRequired]],
       state: ['', [Validators.required]],
       dist: ['', [Validators.required]],
       pin: ['', [Validators.required]],
@@ -82,6 +83,14 @@ export class HouseOwnerRegistrationComponent {
 
       legal: this.formBuilder.array([])
     })
+  }
+  noOfLegalPartiesChange(event: any) {
+    debugger;
+    if(this.legalheirarray.length >= parseInt(event.target.value)) {
+        this.isDisableAddButton = false;
+    } else {
+      this.isDisableAddButton = true;
+    }
   }
   private _distfilter(value: string): DistrictDropdownList[] {
     if(value === '' || value === null || value === undefined) {
@@ -155,6 +164,11 @@ export class HouseOwnerRegistrationComponent {
     console.log(typeof this.noOfLegalParties);
     console.log(this.noOfLegalParties);
     this.legalheirarray.insert(0, legalform);
+    if(this.legalheirarray.length >= parseInt(this.noOfLegalParties)) {
+      this.isDisableAddButton = false;
+  } else {
+    this.isDisableAddButton = true;
+  }
     // if( this.legalheirarray.length > this.noOfLegalParties ) {
 
     // }
@@ -176,7 +190,12 @@ export class HouseOwnerRegistrationComponent {
    return null;  // no file, can be capture by "Required" validation 
 }
   removelegalform(index: number) {
-    this.legalheirarray.removeAt(index)
+    this.legalheirarray.removeAt(index);
+    if(this.legalheirarray.length >= parseInt(this.noOfLegalParties)) {
+      this.isDisableAddButton = false;
+  } else {
+    this.isDisableAddButton = true;
+  }
   }
   bankStatusChk: any = 0;
   getAllStateList() {
@@ -907,7 +926,7 @@ if(value === '') {
         this.houseRegistrationForm.get('panPic')?.clearValidators();
         this.houseRegistrationForm.get('panPic')?.updateValueAndValidity();
 
-        this.houseRegistrationForm.controls['upiId'].setValidators([Validators.required]);
+        this.houseRegistrationForm.controls['upiId'].setValidators([Validators.required,CommonValidatorService.upivalid]);
         this.houseRegistrationForm.controls['upiId'].updateValueAndValidity();
 
         this.houseRegistrationForm.controls['linkMobile'].setValidators([Validators.required]);

@@ -37,6 +37,7 @@
                                 *ngIf="houseRegistrationForm.get('ownerName')?.invalid && houseRegistrationForm.get('ownerName')?.touched">
                                 <div *ngIf="houseRegistrationForm.get('ownerName')?.hasError('required')">Owner name is
                                     required.</div>
+                                    <div *ngIf="houseRegistrationForm.get('ownerName')?.hasError('cannotContainSpace')">Space not allowed</div>
                                 <!-- <div
                                     *ngIf="houseRegistrationForm.get('ownerName')?.hasError('fullNameContainsSpecialChars')">
                                     Owner name should
@@ -64,6 +65,9 @@
                                 </div> -->
                                 <div *ngIf="houseRegistrationForm.get('phone')?.hasError('minlength')">Phone Number is
                                     required.
+                                </div>
+                                <div *ngIf="houseRegistrationForm.get('phone')?.hasError('phonenoformat')">Phone Number isn't
+                                    valid.
                                 </div>
                             </div>
                         </div>
@@ -123,6 +127,7 @@
                                 <div *ngIf="houseRegistrationForm.get('add1')?.hasError('required')">Address 1 is
                                     required.
                                 </div>
+                                <div *ngIf="houseRegistrationForm.get('add1')?.hasError('cannotContainSpace')">Space not allowed</div>
                             </div>
                         </div>
                     </div>
@@ -131,6 +136,10 @@
                             <label for="state" class="form-label">Address 2<span class="text-danger"></span></label>
                             <input type="text" name="address2" id="address2" class="form-control"
                                 formControlName="add2" />
+                                <div class="error-message"
+                                *ngIf="houseRegistrationForm.get('add2')?.invalid && houseRegistrationForm.get('add2')?.touched">
+                                <div *ngIf="houseRegistrationForm.get('add2')?.hasError('cannotContainSpace')">Space not allowed.</div>
+                                </div>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
@@ -229,7 +238,7 @@
                             <div class="form-group">
                                 <label for="state" class="form-label">Description<span
                                         class="text-danger"></span></label>
-                                <input type="text" class="form-control" formControlName="desc">
+                                <input type="text" maxlength="300" class="form-control" formControlName="desc">
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-8" *ngIf="legalheir" style="margin-top: 28px">
@@ -260,6 +269,8 @@
                                     *ngIf="houseRegistrationForm.get('accHolName')?.invalid && houseRegistrationForm.get('accHolName')?.touched">
                                     <div *ngIf="houseRegistrationForm.get('accHolName')?.hasError('required')">Account Holder Name is required.
                                     </div>
+                                    <div *ngIf="houseRegistrationForm.get('accHolName')?.hasError('cannotContainSpace')">Space not allowed</div>
+
                                 </div>
                             </div>
                         </div>
@@ -267,7 +278,7 @@
                             <div class="form-group">
                                 <label for="state" class="form-label">Account Number<span
                                         class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" maxlength="25"
+                                        <input type="text" class="form-control" maxlength="17"
                                         formControlName="accounNum" (input)="vldChkLst.allowNumericDigits($event)">
                                         <div class="error-message"
                                         *ngIf="houseRegistrationForm.get('accounNum')?.invalid && houseRegistrationForm.get('accounNum')?.touched">
@@ -279,11 +290,13 @@
                         <div class="col-sm-6 col-md-4">
                             <div class="form-group">
                                 <label for="state" class="form-label">IFSC<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" maxlength="15"
+                                <input type="text" class="form-control" maxlength="11"
                                     formControlName="ifsc" (input)="vldChkLst.allowNumericDigitsWithAlpha($event)">
                                     <div class="error-message"
                                     *ngIf="houseRegistrationForm.get('ifsc')?.invalid && houseRegistrationForm.get('ifsc')?.touched">
                                     <div *ngIf="houseRegistrationForm.get('ifsc')?.hasError('required')">IFSC is required.
+                                    </div>
+                                    <div *ngIf="houseRegistrationForm.get('ifsc')?.hasError('ifscformat')">IFSC is invalid.
                                     </div>
                                 </div>
                             </div>
@@ -379,7 +392,7 @@
                         <div class="form-group">
                             <label for="state" class="form-label">Owner Name<span class="text-danger">*</span></label>
                             <input type="text" name="name" id="" formControlName="ownerName" class="form-control"
-                                readonly required>
+                                readonly>
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
@@ -396,7 +409,7 @@
                                     class="text-danger">*</span></label>
                             <input type="text" name="noOfLegalParties" id="" class="form-control"
                                 [ngModelOptions]="{standalone: true}" [(ngModel)]="noOfLegalParties"
-                                (keyup)="vldChkLst.allowNumericDigits($event)">
+                                (keyup)="vldChkLst.allowNumericDigits($event)" maxlength="1">
                         </div>
                     </div>
                     <form action="" [formGroup]="legalheirForm">
@@ -425,7 +438,7 @@
                                                 <div *ngIf="legalheirarray.controls[i].get('ownerName')?.hasError('fullNameTooSmall')"> Full name should
                                                     contain more than 3 charcter.
                                                 </div>
-                                            </div>
+                                                        </div>
                                         </div>
 
                                     </div>
@@ -484,11 +497,14 @@
                                         <div class="form-group">
                                             <label for="state" class="form-label">Govt ID Proof<span
                                                     class="text-danger">*</span></label>
-                                            <input type="text" formControlName="idProof" name="" id="" maxlength="12"
-                                                class="form-control" required>
-                                            <div style="color: red;"
-                                                *ngIf="legalheirarray.controls[i].get('idProof')?.hasError('required') && legalheirarray.controls[i].get('idProof')?.touched">
-                                                Govt ID Proof is required.
+                                            <input type="text" name="idProof" id="idProof" class="form-control"
+                                                formControlName="gIdproof" (input)="vldChkLst.allowNumericDigitsWithAlpha($event)"
+                                                maxlength="12" />
+                                            <div class="error-message"
+                                                *ngIf="houseRegistrationForm.get('gIdproof')?.invalid && houseRegistrationForm.get('gIdproof')?.touched">
+                                                <div *ngIf="houseRegistrationForm.get('gIdproof')?.hasError('required')">Enter Id proof
+                
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -682,6 +698,8 @@
                                                 *ngIf="legalheirarray.controls[i].get('ifscCode')?.invalid && legalheirarray.controls[i].get('ifscCode')?.touched">
                                                 <div *ngIf="legalheirarray.controls[i].get('ifscCode')?.hasError('required')">IFSC Is Required.
                                                 </div>
+                                                <div *ngIf="legalheirarray.controls[i].get('ifscCode')?.hasError('ifscformat')">IFSC is invalid.
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -695,6 +713,9 @@
                                                 *ngIf="legalheirarray.controls[i].get('panNo')?.invalid && legalheirarray.controls[i].get('panNo')?.touched">
                                                 <div *ngIf="legalheirarray.controls[i].get('panNo')?.hasError('required')">PAN Card Is Required.
                                                 </div>
+                                                <div *ngIf="legalheirarray.controls[i].get('panNo')?.hasError('panFormat')">Invalid pan number
+                                                    format.
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -730,10 +751,14 @@
                                         <div class="form-group">
                                             <label for="state" class="form-label">Linked Mob._No<span
                                                     class="text-danger">*</span></label>
-                                            <input type="number" formControlName="upiPhoneNo" class="form-control">
+                                            <input type="text" formControlName="upiPhoneNo" class="form-control" maxlength="10" (keyup)="vldChkLst.allowNumericDigits($event)" maxlength="10"
+                                            autocomplete="off">
                                             <div class="error-message"
                                             *ngIf="legalheirarray.controls[i].get('upiPhoneNo')?.invalid && legalheirarray.controls[i].get('upiPhoneNo')?.touched">
                                             <div *ngIf="legalheirarray.controls[i].get('upiPhoneNo')?.hasError('required')">Linked Mob._No Is Required.
+                                            </div>
+                                            <div *ngIf="legalheirarray.controls[i].get('upiPhoneNo')?.hasError('phonenoformat')">Phone Number isn't
+                                                valid.
                                             </div>
                                         </div>
                                         </div>

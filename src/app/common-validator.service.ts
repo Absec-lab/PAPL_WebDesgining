@@ -20,6 +20,11 @@ export const CommonValidatorService = {
         return { 'fullNameContainsSpecialChars': true };
       }
     }
+    const isWhitespace = (control && control?.value && control?.value.toString() || '').trim().length === 0;
+    const isValid = !isWhitespace;
+    if(!isValid){  
+      return {'cannotContainSpace': true}  
+    }  
      // Check if the full name is less than 50 characters
      if (fullName?.length >= 50) {
       return { 'fullNameTooLong': true };
@@ -33,7 +38,30 @@ export const CommonValidatorService = {
     return null;
   },
 
-
+  noSpaceValidator(control: AbstractControl): ValidationErrors | null {
+    debugger;
+    const isWhitespace = (control && control?.value && control?.value.toString() || '').trim().length === 0;
+    const isValid = !isWhitespace;
+    if(!isValid){  
+      return {'cannotContainSpace': true}  
+  }
+    return null;
+  },
+  phonenovalid(control: AbstractControl): ValidationErrors | null {
+    debugger;
+    if (control.value === '0000000000') {
+      return { 'phonenoformat': true };
+    }
+    return null;
+  },
+  ifsccodevalid(control: AbstractControl): ValidationErrors | null {
+    debugger;
+    const ifsccoderegx = /^[A-Z]{4}0[0-9]{6}$/;
+    if(!ifsccoderegx.test(control.value)) {
+      return { 'ifscformat': true };
+    }
+    return null;
+  },
   // Custom password validator
 validatePassword(control: AbstractControl): ValidationErrors | null {
   const value: string = control.value;

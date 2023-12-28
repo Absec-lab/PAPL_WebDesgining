@@ -50,13 +50,13 @@ export class HouseOwnerRegistrationComponent {
     this.houseRegistrationForm = this.formBuilder.group({
       ownerId: [''],
       ownerName: ['', [Validators.required, CommonValidatorService.fullNameValidator]],
-      phone: ['', Validators.required],
+      phone: ['', [Validators.required,CommonValidatorService.phonenovalid]],
       email: ['', [Validators.required, CommonValidatorService.validateEmail]],
       idProofDoc: ['',Validators.required],
       idProofDocPrifix: [''],
       gIdproof: ['', Validators.required],
-      add1: ['', Validators.required],
-      add2: [''],
+      add1: ['', [Validators.required,CommonValidatorService.noSpaceValidator]],
+      add2: ['',[CommonValidatorService.noSpaceValidator]],
       state: ['', [Validators.required]],
       dist: ['', [Validators.required]],
       pin: ['', [Validators.required]],
@@ -126,7 +126,7 @@ export class HouseOwnerRegistrationComponent {
     const legalform = this.formBuilder.group({
       prevOwonerId: [this.houseRegistrationForm.value.ownerId],
       ownerName: ['', [Validators.required, CommonValidatorService.fullNameValidator]],
-      phoneNo: ['', Validators.required],
+      phoneNo: ['', [Validators.required,CommonValidatorService.phonenovalid]],
       emailId: ['', [Validators.required, CommonValidatorService.validateEmail]],
       idProofDoc: ['',[Validators.required]],
       idProofDocPrifix: [''],
@@ -641,7 +641,7 @@ console.log('Data',data)
       ownerName: item.ownerName,
       phone: item.phoneNo,
       email: item.emailId,
-      idProofDoc: item.idProofAddress,
+      idProofDoc: item.idProofDoc,
       // idProof: item.idProofAddress,
       gIdproof: item.idProof,
       add1: item.address1,
@@ -734,7 +734,7 @@ console.log('Data',data)
           "district": this.houseRegistrationForm.value.dist,
           "pinCode": this.houseRegistrationForm.value.pin,
           "idProof": this.houseRegistrationForm.value.gIdproof,
-          "idProofDoc": this.houseRegistrationForm.value.idProof,
+          "idProofDoc": this.houseRegistrationForm.value.idProofDoc,
           "isActive": this.houseRegistrationForm.value.status,
           "accountHolderName": this.houseRegistrationForm.value.accHolName,
           "bankAccountNo": this.houseRegistrationForm.value.accounNum,
@@ -832,13 +832,13 @@ if(value === '') {
         this.heading = true;
         this.bank = true;
         this.upi = false;
-        this.houseRegistrationForm.controls['accHolName'].setValidators([Validators.required]);
+        this.houseRegistrationForm.controls['accHolName'].setValidators([Validators.required,CommonValidatorService.noSpaceValidator]);
         this.houseRegistrationForm.controls['accHolName'].updateValueAndValidity();
 
         this.houseRegistrationForm.controls['accounNum'].setValidators([Validators.required]);
         this.houseRegistrationForm.controls['accounNum'].updateValueAndValidity();
 
-        this.houseRegistrationForm.controls['ifsc'].setValidators([Validators.required]);
+        this.houseRegistrationForm.controls['ifsc'].setValidators([Validators.required,CommonValidatorService.ifsccodevalid]);
         this.houseRegistrationForm.controls['ifsc'].updateValueAndValidity();
 
         this.houseRegistrationForm.controls['pan'].setValidators([Validators.required,CommonValidatorService.validatePan]);
@@ -928,7 +928,7 @@ if(value === '') {
         this.legalheirarray.controls[index].controls['bankAccountNo'].setValidators([Validators.required]);
         this.legalheirarray.controls[index].controls['bankAccountNo'].updateValueAndValidity();
 
-        this.legalheirarray.controls[index].controls['ifscCode'].setValidators([Validators.required]);
+        this.legalheirarray.controls[index].controls['ifscCode'].setValidators([Validators.required,CommonValidatorService.ifsccodevalid]);
         this.legalheirarray.controls[index].controls['ifscCode'].updateValueAndValidity();
 
         this.legalheirarray.controls[index].controls['panNo'].setValidators([Validators.required,CommonValidatorService.validatePan]);
@@ -1000,7 +1000,7 @@ if(value === '') {
         this.legalheirarray.controls[index].controls['upiId'].setValidators([Validators.required]);
         this.legalheirarray.controls[index].controls['upiId'].updateValueAndValidity();
 
-        this.legalheirarray.controls[index].controls['upiPhoneNo'].setValidators([Validators.required]);
+        this.legalheirarray.controls[index].controls['upiPhoneNo'].setValidators([Validators.required,CommonValidatorService.phonenovalid]);
         this.legalheirarray.controls[index].controls['upiPhoneNo'].updateValueAndValidity();
 
         this.legalheirarray.controls[index].controls['quarCodeDoc'].setValidators([Validators.required]);

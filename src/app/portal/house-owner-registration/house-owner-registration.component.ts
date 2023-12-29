@@ -43,6 +43,7 @@ export class HouseOwnerRegistrationComponent {
   distLegalHeirFilteredOptions: Observable<DistrictDropdownList[]>;
   pinLegalHeirFilteredOptions: Observable<PincodeDropdownList[]>;
   isDisableAddButton: boolean = false;
+  uploadGovtIdProofFileName:string = '';
   constructor(private ngxLoader: NgxUiLoaderService, private formBuilder: FormBuilder, private route: Router, public portalServ: PortalServiceService, private httpClient: HttpClient, public vldChkLst: ValidatorchklistService) { }
   ngOnInit(): void {
     this.getAllOwner();
@@ -361,7 +362,8 @@ export class HouseOwnerRegistrationComponent {
     } else if( eventValue == 4 ){
       distValue = 'MAHARASHTRA'
     }
-    
+    this.houseRegistrationForm.controls['dist'].setValue('');
+    this.houseRegistrationForm.controls['pin'].setValue('');
       this.portalServ.get(`PAPL/getDistrictByStateName?statename=${distValue}`)
       .subscribe(res => {
         if(array) {
@@ -650,6 +652,8 @@ console.log('Data',data)
     debugger;
     console.log(item)
     console.log('idproof',item.idProofAddress)
+    let splitAdressArr = item.idProofAddress.split('/');
+    this.uploadGovtIdProofFileName = splitAdressArr[5];
     this.updatebtn = true;
     this.descripinput = true;
     this.paymentmode(item.paymtMode == 'string' ? 2 : item.paymtMode, 'owner')
@@ -738,6 +742,10 @@ console.log('Data',data)
       //     }
       // }
       // console.log('Log',invalid);
+      if(this.uploadGovtIdProofFileName !== '') {
+        this.houseRegistrationForm.get('idProofDoc')?.clearValidators();
+        this.houseRegistrationForm.get('idProofDoc')?.updateValueAndValidity();
+      }
     if(this.legalheirarray.valid && this.houseRegistrationForm.valid) {
       let data = {
         "legalHeirRequestDto": this.legalheirarray.value,

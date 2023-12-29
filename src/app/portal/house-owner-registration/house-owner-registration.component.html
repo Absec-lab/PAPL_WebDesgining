@@ -91,7 +91,8 @@
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             <label for="state" class="form-label">Upload Govt ID Proof<span
-                                    class="text-danger">*</span></label>
+                                    class="text-danger">*</span>
+                                    <a style="padding-left: 15px;pointer-events: none;" href="">{{uploadGovtIdProofFileName}}</a></label>
                                     <input type="file" #fileInput formControlName="idProofDoc" name="" id="" class="form-control" accept="image/*,.pdf"
                                     (change)="onImageChange($event, 'idProofDoc')" />
                                     <!-- <div style="color: red;" *ngIf="isfileuploaded">Govt ID Proof is yet to upload.</div> -->
@@ -239,7 +240,8 @@
                             <div class="form-group">
                                 <label for="state" class="form-label">Description<span
                                         class="text-danger"></span></label>
-                                <input type="text" maxlength="300" class="form-control" formControlName="desc">
+                                        <textarea formControlName="desc" class="form-control" rows="4" cols="50">
+                                        </textarea>         
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-8" *ngIf="legalheir" style="margin-top: 28px">
@@ -500,9 +502,9 @@
                                         <div class="form-group">
                                             <label for="state" class="form-label">Govt ID Proof<span
                                                     class="text-danger">*</span></label>
-                                            <input type="text" name="" formControlName="idProof" class="form-control"
+                                            <input type="text" name="" formControlName="idProofDoc" class="form-control"
                                             class="form-control" required
-                                                maxlength="12" />
+                                                maxlength="12" (input)="vldChkLst.allowNumericDigitsWithAlpha($event)" />
                                                 <div style="color: red;"
                                                 *ngIf="legalheirarray.controls[i].get('idProofDoc')?.hasError('required') && legalheirarray.controls[i].get('idProofDoc')?.touched">
                                                 Govt ID Proof is Mandatory.

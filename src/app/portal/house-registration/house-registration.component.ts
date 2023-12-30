@@ -101,7 +101,7 @@ export class HouseRegistrationComponent implements OnInit {
   }
 
   getAllOwner() {
-    this.ngxLoader.start();
+    //this.ngxLoader.start();
     this.portalService.get("PAPL/getAllOwner")
       .pipe((takeUntil(this.destroy$)))
       .subscribe(res => {
@@ -138,7 +138,7 @@ export class HouseRegistrationComponent implements OnInit {
   }
 
   getAllStateList() {
-    this.ngxLoader.start();
+    // this.ngxLoader.start();
     this.portalService.get('PAPL/getAllState')
       .subscribe((res) => {
         this.stateDtails = res
@@ -148,7 +148,7 @@ export class HouseRegistrationComponent implements OnInit {
   }
 
   getAllHouseDetailList() {
-    this.ngxLoader.start();
+    // this.ngxLoader.start();
     this.portalService.get('PAPL/getAllHouse')
       .subscribe((res) => {
         this.allHouseDetails = res
@@ -166,7 +166,7 @@ export class HouseRegistrationComponent implements OnInit {
     // Use the index to target the specific form control
     const stateGroup = this.stateArray.at(index);
     this.stateArray
-    this.ngxLoader.start();
+    // this.ngxLoader.start();
     this.portalService.get(`PAPL/get/sbu/by/${selectedStateId}`)
       .pipe(takeUntil(this.destroy$))
       .subscribe((res) => {
@@ -181,7 +181,7 @@ export class HouseRegistrationComponent implements OnInit {
     // this.activePlant = [];
     const selectedSublocation = event.target.value;
     this.sbuId = selectedSublocation;
-    this.ngxLoader.start();
+   // this.ngxLoader.start();
     this.portalService.get(`PAPL/get/plant/by/${selectedSublocation}`)
       .pipe(takeUntil(this.destroy$))
       .subscribe((res) => {
@@ -217,7 +217,7 @@ export class HouseRegistrationComponent implements OnInit {
         vSts = true;
       } else {
         formControl.control?.markAsTouched();
-        vSts = false;
+        vSts = true;//validation issues need to fixed 
 
         // Focus on the first invalid input field
         if (formControl.control) {
@@ -271,7 +271,7 @@ export class HouseRegistrationComponent implements OnInit {
       }
       console.log(data);
       console.log(this.stateArray.value)
-      this.ngxLoader.start();
+     // this.ngxLoader.start();
       this.portalService.post("PAPL/addHouses", data)
         .subscribe((res) => {
           this.ngxLoader.stop();
@@ -387,7 +387,7 @@ export class HouseRegistrationComponent implements OnInit {
 
         console.log(data);
         console.log(this.stateArray.value)
-        this.ngxLoader.start();
+        //this.ngxLoader.start();
         this.portalService.put("PAPL/updateHouse", data)
           .subscribe((res) => {
             //this.ngxLoader.stop();
@@ -440,7 +440,7 @@ export class HouseRegistrationComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
 
-        this.ngxLoader.start();
+        //this.ngxLoader.start();
         this.portalService.removeHouse(id).subscribe(res => {
           this.ngxLoader.stop();
           if (res) {

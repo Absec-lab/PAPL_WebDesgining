@@ -48,7 +48,7 @@
                     <label for="state" class="form-label">Select House <span class="text-danger">*</span></label>
                     <select class="form-select" aria-label="Default select example" required (change)="getHouseId($event)">
                         <option selected>Choose House... </option>
-                        <option *ngFor="let house of activeHouse" [value]="house.houseId">{{house.houseId}}</option>
+                        <option *ngFor="let house of activeHouse" [value]="house.houseId">{{house.houseName}}</option>
                     </select>
                 </div>
 
@@ -58,7 +58,7 @@
                     <label for="state" class="form-label">Unit Name/ID <span class="text-danger">*</span></label>
                     <select class="form-select" aria-label="Default select example" required (change)="getunitId($event)">
                         <option selected>Choose Unit ID... </option>
-                        <option  *ngFor="let unit of activeUnitId" [value]="unit.unitId">{{unit.unitId}}</option>
+                        <option  *ngFor="let unit of activeUnitId" [value]="unit.unitId">{{unit.unitNo}}</option>
                     </select>
                 </div>
 

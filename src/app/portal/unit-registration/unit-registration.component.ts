@@ -321,7 +321,7 @@ export class UnitRegistrationComponent {
   updateUnitForm() {
     if (this.unitArray.controls[0].valid) {
       let data = {
-        "unitId":"177",
+        "unitId":this.unitId,
         "stateId": this.stateId,
         "sbuId": this.sbuId,
         "plantId": this.plantId,

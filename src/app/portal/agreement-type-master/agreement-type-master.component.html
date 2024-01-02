@@ -58,8 +58,11 @@
                             Description
                         </div>
                         <div class="ms-3 d-flex-1  ">
-                            <input type="text" name="aggrementTypeDesc" id="aggrementTypeDesc" class="form-control box"
-                                [(ngModel)]="aggrementTypeDesc">
+                            <!-- <input type="text" name="aggrementTypeDesc" id="aggrementTypeDesc" class="form-control box"
+                                [(ngModel)]="aggrementTypeDesc"> -->
+                                <textarea name="aggrementTypeDesc" id="aggrementTypeDesc" class="form-control" [(ngModel)]="aggrementTypeDesc" rows="4" cols="50">
+                                </textarea>
+                                <div class="text-danger">{{ errorMessages.description }}</div>
                         </div>
                     </div>
                 </div>
@@ -94,7 +97,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let item of tableData; let i = index">
+                    <tr *ngFor="let item of tableData | paginate
+                    : {
+                        itemsPerPage: tableSize,
+                        currentPage: page,
+                        totalItems: count
+                      }; let i = index">
                         <td>{{ i + 1 }}</td>
                         <td>{{ item.aggreTypeName }}</td>
                         <td>{{ item.description }}</td>
@@ -121,6 +129,14 @@
                 </tbody>
             </table>
         </div>
+        <br>
+        <div class="d-flex justify-content-center">
+            <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+            </pagination-controls>
+            <button class="btn btn-primary form-save-btn" (click)="exportAsXLSX()">
+                Export To Excel
+              </button>
+        </div>  
     </div>
 </section>
 <app-footer></app-footer>

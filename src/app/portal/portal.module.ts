@@ -16,6 +16,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { NonZeroOnlyInputDirective } from './portaldirectives/non-zero-input.directive';
+import { ExcelService } from './serviceapi/excel.service';
 
 @NgModule({
   declarations: [
@@ -29,13 +31,13 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     UtilityCalculationComponent,
     UnitBookingComponent,
     DashboardComponent,
-    
+    NonZeroOnlyInputDirective
     
     
     
     
   ],
-  providers: [PortalServiceService],
+  providers: [PortalServiceService,ExcelService],
   imports: [
     CommonModule,
     PortalRoutingModule,

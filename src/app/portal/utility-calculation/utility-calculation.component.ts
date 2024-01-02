@@ -15,7 +15,7 @@ export class UtilityCalculationComponent implements OnInit {
   utilityCalculation!: FormGroup;
   stateDtails: any = [];
   updatebtn: boolean = false;
-  constructor(private ngxLoader: NgxUiLoaderService, public validateService: ValidatorchklistService, private portalservice: PortalServiceService,private formBuilder: FormBuilder) { }
+  constructor(private ngxLoader: NgxUiLoaderService, public validateService: ValidatorchklistService, private portalService: PortalServiceService,private formBuilder: FormBuilder) { }
 
 
   ngOnInit(): void {
@@ -87,7 +87,7 @@ export class UtilityCalculationComponent implements OnInit {
   }
 
   getAllStateList() {
-    this.portalservice.get('PAPL/getAllState')
+    this.portalService.get('PAPL/getAllState')
     .subscribe((res)=>{
       this.stateDtails = res
       //console.log(res)
@@ -101,7 +101,7 @@ export class UtilityCalculationComponent implements OnInit {
     const selectedStateId = event.target.value;
     this.stateId = selectedStateId;
   
-    this.portalservice.get(`PAPL/get/sbu/by/${selectedStateId}`)
+    this.portalService.get(`PAPL/get/sbu/by/${selectedStateId}`)
     .pipe(takeUntil(this.destroy$)) 
     .subscribe((res) => {
       this.activeSBU = res;
@@ -116,7 +116,7 @@ export class UtilityCalculationComponent implements OnInit {
     const selectedSublocation = event.target.value;
     this.sbuId = selectedSublocation;
 
-    this.portalservice.get(`PAPL/get/plant/by/${selectedSublocation}`)
+    this.portalService.get(`PAPL/get/plant/by/${selectedSublocation}`)
     .pipe(takeUntil(this.destroy$))
     .subscribe((res)=>{
       this.activePlant = res;
@@ -131,7 +131,7 @@ export class UtilityCalculationComponent implements OnInit {
     const selectedPlantId = event.target.value;
     this.plantId = selectedPlantId;
 
-    this.portalservice.get(`PAPL/get/house/by/${selectedPlantId}`)
+    this.portalService.get(`PAPL/get/house/by/${selectedPlantId}`)
     .pipe(takeUntil(this.destroy$))
     .subscribe((res)=>{
       this.activeHouse = res;
@@ -152,7 +152,7 @@ export class UtilityCalculationComponent implements OnInit {
   }
 
   getAllUtilityCalc() {
-    this.portalservice.get('PAPL/getAllUtilityCalculation')
+    this.portalService.get('PAPL/getAllUtilityCalculation')
     .subscribe(res => {
       this.tableData = res.data
       console.log( this.tableData )
@@ -266,7 +266,7 @@ export class UtilityCalculationComponent implements OnInit {
         "utilityCalculationWaterDto":this.water.value,
       }
       console.log(data)
-      this.portalservice.post("PAPL/calculate",data)
+      this.portalService.post("PAPL/calculate",data)
       .pipe(takeUntil(this.destroy$))
       .subscribe(res=> {
         this.ngxLoader.stop();     
@@ -382,42 +382,78 @@ export class UtilityCalculationComponent implements OnInit {
     updateUtilityCalc() {
       alert('Update Button Click')
        }
-          removeUtilityCalc(id: any) {
-      
+
+    removeUtilityCalc(id: any) {      
+    Swal.fire({
+      text: "Are you sure you want to Delete the details?",
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      cancelButtonColor: '#df1141'
+    }).then((result) => {
+      if (result.isConfirmed) {
+       // this.ngxLoader.start();
+        this.portalService.get(`deactivate/calculation?id=${id}`)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe((res) => {
+            this.ngxLoader.stop();
+            if (res.responseCode == 200) {
+              Swal.fire({
+                icon: 'success',
+                text: 'Record Deleted Successfully'
+              });
+              this.getAllUtilityCalc();
+            } else {
+              Swal.fire({
+                icon: 'error',
+                text: res.message
+              });
+            }
+          }, error => {
+            this.ngxLoader.stop();
             Swal.fire({
-              //icon: 'warning',
-              text: "Are you sure you want to Delete the details?",
-              showCancelButton: true,
-              confirmButtonText: 'Yes',
-              cancelButtonText: 'No',
-              cancelButtonColor: '#df1141'
-            }).then((result) => {
-              if (result.isConfirmed) {
-        
-                this.ngxLoader.start();
-                this.portalservice.removeUtilityCalc(id).subscribe(res => {
-                  this.ngxLoader.stop();
-                  if (res) {
-                    Swal.fire({
-                      icon: 'success',
-                      text: 'Record Deleted Successfully'
-                    });
-                    this.getAllUtilityCalc();
-                  } else {
-                    Swal.fire({
-                      icon: 'error',
-                      text: res.message
-                    });
-                  }
-                }, error => {
-                  this.ngxLoader.stop();
-                  Swal.fire({
-                    icon: 'error',
-                    text: 'Error'
-                  });
-                });
-              }
+              icon: 'error',
+              text: 'Error'
             });
+          });
+      }
+    });
+  }
+      
+    //         Swal.fire({
+    //           //icon: 'warning',
+    //           text: "Are you sure you want to Delete the details?",
+    //           showCancelButton: true,
+    //           confirmButtonText: 'Yes',
+    //           cancelButtonText: 'No',
+    //           cancelButtonColor: '#df1141'
+    //         }).then((result) => {
+    //           if (result.isConfirmed) {
+        
+    //             this.ngxLoader.start();
+    //             this.portalService.removeUtilityCalc(id).subscribe(res => {
+    //               this.ngxLoader.stop();
+    //               if (res) {
+    //                 Swal.fire({
+    //                   icon: 'success',
+    //                   text: 'Record Deleted Successfully'
+    //                 });
+    //                 this.getAllUtilityCalc();
+    //               } else {
+    //                 Swal.fire({
+    //                   icon: 'error',
+    //                   text: res.message
+    //                 });
+    //               }
+    //             }, error => {
+    //               this.ngxLoader.stop();
+    //               Swal.fire({
+    //                 icon: 'error',
+    //                 text: 'Error'
+    //               });
+    //             });
+    //           }
+    //         });
         
         
         
@@ -429,6 +465,8 @@ export class UtilityCalculationComponent implements OnInit {
             //     this.getAllHouseDetailList();
         
             //  }); 
-        
-          }
-}
+      
+    }
+
+    
+

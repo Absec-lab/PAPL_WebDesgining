@@ -140,7 +140,7 @@ export class HouseOwnerRegistrationComponent {
       emailId: ['', [Validators.required, CommonValidatorService.validateEmail]],
       idProofDoc: ['',[Validators.required]],
       idProofDocPrifix: [''],
-      idProof: ['', Validators.required],
+      idProof: [''],
       address1: ['', Validators.required],
       address2: [''],
       stateId: ['', Validators.required],
@@ -731,6 +731,7 @@ console.log('Data',data)
   }
 
   updateowner() {
+    debugger;
     // let valid = this.validateLegalData();
     // if (valid) {
       // debugger

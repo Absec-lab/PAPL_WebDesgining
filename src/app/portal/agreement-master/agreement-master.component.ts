@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from "@angular/common/http";
 import { ValidatorchklistService } from './../serviceapi/validatorchklist.service';
 import * as moment from 'moment';
+import { ExcelService } from '../serviceapi/excel.service';
 
 @Component({
   selector: 'app-agreement-master',
@@ -14,7 +15,7 @@ import * as moment from 'moment';
   styleUrls: ['../../common.css', './agreement-master.component.css']
 })
 export class AgreementMasterComponent {
-  constructor(private ngxLoader: NgxUiLoaderService, private formBuilder: FormBuilder, private route: Router, public portalServ: PortalServiceService, private httpClient: HttpClient, public vldChkLst: ValidatorchklistService) { }
+  constructor(private ngxLoader: NgxUiLoaderService, private formBuilder: FormBuilder, private route: Router, public portalServ: PortalServiceService, private httpClient: HttpClient, public vldChkLst: ValidatorchklistService,private excelService: ExcelService) { }
   ngOnInit(): void {
     this.getAllState();
     // this.getAllSbu();
@@ -25,6 +26,7 @@ export class AgreementMasterComponent {
     this.getallhouse()
   }
   tableData: any = [];
+  duplicateTableData: any[] =[];
   allState: any = [];
   allSbu: any = [];
   allPlant: any = [];
@@ -48,6 +50,10 @@ export class AgreementMasterComponent {
   selectedCropFiles: any = [];
   cropPreviews: any = [];
   getallhouseList: any = [];
+  page: number = 1;
+  count: number = 0;
+  tableSize: number = 7;
+  tableSizes: any = [3, 6, 9, 12];
   errorMessages: any = {
     aggreState: '',
     aggreSbu: '',
@@ -106,6 +112,15 @@ export class AgreementMasterComponent {
         });
       }
     });
+  }
+  onTableDataChange(event: any) {
+    this.page = event;
+    this.getAllAgreement();
+  }
+  onTableSizeChange(event: any): void {
+    this.tableSize = event.target.value;
+    this.page = 1;
+    this.getAllAgreement();
   }
   getAllState() {
     let param = {};
@@ -211,6 +226,8 @@ export class AgreementMasterComponent {
       this.ngxLoader.stop();
 
       this.tableData = res.data;
+      this.duplicateTableData = res.data;
+
 
     }, error => {
       this.ngxLoader.stop();
@@ -283,7 +300,7 @@ export class AgreementMasterComponent {
 
     }
 
-    if (!this.vldChkLst.blankCheckWithoutAlert(this.aggreMonthlyRent)) {
+    if (!this.vldChkLst.blankCheckWithoutAlert(this.aggreMonthlyRent) || !(parseInt(this.aggreMonthlyRent)>0)) {
       vSts = false;
       this.errorMessages.aggreMonthlyRent = 'Monthly rent is required.';
 
@@ -566,6 +583,19 @@ export class AgreementMasterComponent {
     const formattedDate = newDate.format('yyyy-MM-DD');
     console.log('formattedDate', formattedDate);
     this.aggreEndDate = formattedDate
+  }
+  exportAsXLSX(): void {
+    debugger;
+    let removeColumnData = ['aggreAddr','aggreId','aggreTypeId','houseId','locationId','ownerId','plantId','stateId',''];
+    let Heading =[
+      [ "Agreement Type","Created Date","House Name","SBU","Owner Name","Plant Name","Montly Rent","End Date","Agreement Period","Start Date","State","Electric Bill","Water Bill"]  
+    ];
+    removeColumnData.forEach(e => {
+      this.duplicateTableData.forEach(element => {
+        delete element[e]
+   });
+ });
+    this.excelService.exportAsExcelFile(this.duplicateTableData, 'agreementmaster',Heading);
   }
 
 

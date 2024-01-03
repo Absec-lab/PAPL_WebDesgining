@@ -6,6 +6,7 @@ import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { HttpClient } from "@angular/common/http";
 import { ValidatorchklistService } from './../serviceapi/validatorchklist.service';
+import { ExcelService } from '../serviceapi/excel.service';
 
 @Component({
   selector: 'app-agreement-type-master',
@@ -13,22 +14,38 @@ import { ValidatorchklistService } from './../serviceapi/validatorchklist.servic
   styleUrls: ['../../common.css', './agreement-type-master.component.css']
 })
 export class AgreementTypeMasterComponent {
-  constructor(private ngxLoader: NgxUiLoaderService, private formBuilder: FormBuilder, private route: Router, public portalServ: PortalServiceService, private httpClient: HttpClient, public vldChkLst: ValidatorchklistService) { }
+  constructor(private ngxLoader: NgxUiLoaderService, private formBuilder: FormBuilder, private route: Router, public portalServ: PortalServiceService, private httpClient: HttpClient, public vldChkLst: ValidatorchklistService,private excelService: ExcelService) { }
   ngOnInit(): void {
     this.getAllAgreementType();
   }
   tableData: any = [];
+  duplicateTableData: any[] =[];
   aggrementType: any = '';
   aggreStDate: any = '';
   aggreEdDate: any = '';
   aggrementTypeDesc: any = '';
   aggreTypeId: any = '';
+  page: number = 1;
+  count: number = 0;
+  tableSize: number = 7;
+  tableSizes: any = [3, 6, 9, 12];
+  startDate: Date;
 
   errorMessages: any = {
     aggrementType: '',
     aggreStDate: '',
     aggreEdDate: '',
+    description: null
   };
+  onTableDataChange(event: any) {
+    this.page = event;
+    this.getAllAgreementType();
+  }
+  onTableSizeChange(event: any): void {
+    this.tableSize = event.target.value;
+    this.page = 1;
+    this.getAllAgreementType();
+  }
   validateData() {
     let vSts = true;
 
@@ -52,7 +69,12 @@ export class AgreementTypeMasterComponent {
     } else {
       this.errorMessages.aggreEdDate = '';
     }
-
+    if (this.aggrementTypeDesc.length > 0 && this.aggrementTypeDesc.trim().length === 0) {
+      vSts = false;
+      this.errorMessages.description = "Space isn't required.";
+    } else {
+      this.errorMessages.description = '';
+    }
     return vSts;
   }
 
@@ -129,7 +151,9 @@ export class AgreementTypeMasterComponent {
     this.portalServ.getAllAgreementType(param).subscribe(res => {
       this.ngxLoader.stop();
       console.log("tabledata", res)
-      this.tableData = res.data
+      this.tableData = res.data;
+      this.duplicateTableData = res.data;
+
 
     }, error => {
       this.ngxLoader.stop();
@@ -237,5 +261,18 @@ export class AgreementTypeMasterComponent {
       }
 
     }
+  }
+  exportAsXLSX(): void {
+    debugger;
+    let removeColumnData = ['aggreTypeCode','aggreTypeId','createdBy','isActive','updatedBy','updatedDate'];
+    let Heading =[
+      [ "End Date","Agreement Type","Start Date","Created Date","Description"]  
+    ];
+    removeColumnData.forEach(e => {
+      this.duplicateTableData.forEach(element => {
+        delete element[e]
+   });
+ });
+    this.excelService.exportAsExcelFile(this.duplicateTableData, 'agreementtype',Heading);
   }
 }

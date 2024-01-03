@@ -43,6 +43,7 @@ export class UnitRegistrationComponent {
       stateId: [0, [Validators.required, Validators.min(1)]],
       sbuId: [0, [Validators.required, Validators.min(1)]],
       plantId: [0, [Validators.required, Validators.min(1)]],
+      unitId: [0, [Validators.required, Validators.min(1)]],
       homereigster: this.formBuilder.array([]),
     });
 
@@ -197,9 +198,11 @@ export class UnitRegistrationComponent {
   postUnit() {
     if (this.unitArray.controls[0].valid) {
       let data = {
+
        "stateId": this.stateId,
         "sbuId": this.sbuId,
         "plantId": this.plantId,
+        "unitId": this.unitId,
         "unitDTO": this.unitArray.value,
       };
      // this.ngxLoader.start();
@@ -211,6 +214,7 @@ export class UnitRegistrationComponent {
           this.stateId = "";
           this.sbuId = "";
           this.plantId = "";
+          this.unitId = "";
           this.unitArray.clear();
           this.addunit();
           this.ngxLoader.stop();
@@ -275,8 +279,7 @@ export class UnitRegistrationComponent {
     this.addunit();
 
     const stateGroup = this.unitArray.at(0);
-    stateGroup.patchValue({
-   
+    stateGroup.patchValue({   
           ownerId: item.ownerId,
           houseId: item.houseId,
           unitNo: item.unitNo,
@@ -316,6 +319,7 @@ export class UnitRegistrationComponent {
         houseId[i].dispatchEvent(new Event('change'));
       }
     }, 4010);
+    this.unitId= item.unitId;
   }
 
   updateUnitForm() {
@@ -337,6 +341,7 @@ export class UnitRegistrationComponent {
           this.stateId = null;
           this.sbuId = null;
           this.plantId = null;
+          this.unitId = null;
           this.unitArray.clear();
           this.addunit();
           this.ngxLoader.stop();

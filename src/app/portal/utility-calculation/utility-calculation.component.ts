@@ -319,69 +319,133 @@ export class UtilityCalculationComponent implements OnInit {
       window.scrollTo(0, 0);
     }
     updateUtilityCalcForm(item: any) {
-      
+      window.scrollTo({ top: 0, behavior: 'smooth' });
 
-      // let vSts = this.validateData();
-      // console.log(vSts);
-      // console.log(this.houseRegistrationForm.valid);
-      // console.log(this.stateArray.valid);
-      // if (vSts) {
-      //   if (this.houseId !== null && this.mapId !== null) {
+      this.updatebtn = true;
+      console.log(item);
+      this.utilityCalculation.patchValue({
+      state:item.fkStateId ,
+      sbu: item.fkSbuId,
+      plant: item.fkPlantId ,
+      houseId:item.fkHouseId ,
+      startDate:item.startDate ,
+      endDate: item.endDate ,
+      hrexp : item.hrExpenseAmount,
+      miscExp : item.miscExpenseAmount,
+      eleExpenseAmt :item.eleExpenseAmt,
+      waterExpenseAmount: item.waterExpenseAmount,
+
+      //miscExp:item.miscExpenseAmount,
+      // miscBill:item.miscExpenseAmount,
+      // miscrecept:item.miscrecept, 
+      //hrexp:item.hrExpenseAmount,
+      // hrbill:item.eleExpenseAmount,
+      // hrrecept:item.hrrecept,
+      // hrrecFileExt:item.hrrecFileExt,
+      // hrbillFileExt:item.hrbillFileExt,
+      // misbillFileExt:item.misbillFileExt,
+      // misrecFileExt:item.item.misrecFileExt,
+      // electricbill: this.formBuilder.array([]),
+      // waterbill: this.formBuilder.array([]),
+    });
+
+    while (this.electric.length !== 0) {
+      this.electric.removeAt(0);
+    }
+
+    setTimeout(() => {
+      this.getSubonStateChange(item.fkStateId);
+      this.getPlantOnSubChange(item.fkSbuId);
+    });
+
+    setTimeout(() => {
+      const state = document.querySelectorAll('#state');
+      for (let i = 0; i < state.length; i++) {
+        state[i].dispatchEvent(new Event('change'));
+      }
+    }, 1010);
+    setTimeout(() => {
+      const sbu = document.querySelectorAll('#sbu');
+      for (let i = 0; i < sbu.length; i++) {
+        sbu[i].dispatchEvent(new Event('change'));
+      }
+    }, 2010);
+    setTimeout(() => {
+      const plant = document.querySelectorAll('#plant');
+      for (let i = 0; i < plant.length; i++) {
+        plant[i].dispatchEvent(new Event('change'));
+      }
+    }, 3010);
+    setTimeout(() => {
+      const houseId = document.querySelectorAll('#houseId');
+      for (let i = 0; i < houseId.length; i++) {
+        houseId[i].dispatchEvent(new Event('change'));
+      }
+    }, 4010);
+    
+
+     // let vSts = this.validateData();
+      //console.log(vSts);
+     // console.log(this.utilityCalculation.valid);
+      //console.log(this.electric.valid);
+      //if (vSts) {
+        //if (this.houseId !== null && this.mapId !== null) {
   
       //     let data = {
-            // "houseId": this.houseId,
-            // "mapId": this.mapId,
-            // "ownerId": this.houseRegistrationForm.value.ownerName,
-            // "houseName": this.houseRegistrationForm.value.houseName,
-            // "address": this.houseRegistrationForm.value.address,
-            // "address2": this.houseRegistrationForm.value.address2,
-            // "district": this.houseRegistrationForm.value.district,
-            // "pinCode": this.houseRegistrationForm.value.pin,
-            // "noOfRooms": this.houseRegistrationForm.value.noOfRooms,
-            // "noOfEleBills": this.houseRegistrationForm.value.electricBill,
-            // "noOfWtrBills": this.houseRegistrationForm.value.waterBill,
-            // "startDate": this.houseRegistrationForm.value.startDate,
-            // "endDate": this.houseRegistrationForm.value.endDate,
-            // "houseRegistrationMapDto": this.stateArray.value,
+      //     //  "houseId": this.houseId,
+      //     //  "mapId": this.mapId,
+      //       "ownerId": this.utilityCalculation.value.ownerName,
+      //       "houseName": this.utilityCalculation.value.houseName,
+      //       "address": this.utilityCalculation.value.address,
+      //       "address2": this.utilityCalculation.value.address2,
+      //       "district": this.utilityCalculation.value.district,
+      //       "pinCode": this.utilityCalculation.value.pin,
+      //       "noOfRooms": this.utilityCalculation.value.noOfRooms,
+      //       "noOfEleBills": this.utilityCalculation.value.electricBill,
+      //       "noOfWtrBills": this.utilityCalculation.value.waterBill,
+      //       "startDate": this.utilityCalculation.value.startDate,
+      //       "endDate": this.utilityCalculation.value.endDate,
+            
   
-    //       }
+      //     }
   
-    //       console.log(data);
-    //       console.log(this.stateArray.value)
-    //       this.ngxLoader.start();
-    //       this.portalService.put("PAPL/updateHouse", data)
-    //         .subscribe((res) => {
-    //           this.ngxLoader.stop();
-    //           console.log(res)
-    //           this.updatebtn = false;
+      //     console.log(data);
+      //     console.log(this.electric.value)
+      //     this.ngxLoader.start();
+      //     this.portalService.put("PAPL/updateHouse", data)
+      //       .subscribe((res) => {
+      //         this.ngxLoader.stop();
+      //         console.log(res)
+      //         this.updatebtn = false;
   
-    //           this.getAllHouseDetailList()
-    //           this.houseRegistrationForm.reset()
-    //           this.stateArray.clear()
-    //           this.addstate()
-    //           Swal.fire({
-    //             icon: 'success',
-    //             text: 'Record Updated Successfully'
-    //           }).then(() => {
-    //             window.location.reload();
+      //         // this.getAllHouseDetailList()
+      //         // this.houseRegistrationForm.reset()
+      //         // this.stateArray.clear()
+      //         // this.addstate()
+      //         Swal.fire({
+      //           icon: 'success',
+      //           text: 'Record Updated Successfully'
+      //         }).then(() => {
+      //           window.location.reload();
     
-    //           });
-    //           this.updatebtn = false;
+      //         });
+      //         this.updatebtn = false;
   
-    //           // alert("House Registration succcesfull")
-    //         })
-    //       // }
-    //     }
-    //     else {
-    //       console.error("houseId is null");
-    //     }
-    //   }
+      //         // alert("House Registration succcesfull")
+      //       })
+      //      //}
+      // // }
+      //   // else {
+      //   //   console.error("houseId is null");
+      //   // }
+      }
   
-   }
+  updateUtilityCalc() {
+
+    alert('updateUnitCalc');
+  }
     
-    updateUtilityCalc() {
-      alert('Update Button Click')
-       }
+    
 
     removeUtilityCalc(id: any) {      
     Swal.fire({

@@ -332,7 +332,7 @@ export class UtilityCalculationComponent implements OnInit {
       endDate: item.endDate ,
       hrexp : item.hrExpenseAmount,
       miscExp : item.miscExpenseAmount,
-      eleExpenseAmt :item.eleExpenseAmt,
+      eleExpenseAmt :item.eleExpenseAmount,
       waterExpenseAmount: item.waterExpenseAmount,
 
       //miscExp:item.miscExpenseAmount,
@@ -346,7 +346,7 @@ export class UtilityCalculationComponent implements OnInit {
       // misbillFileExt:item.misbillFileExt,
       // misrecFileExt:item.item.misrecFileExt,
       // electricbill: this.formBuilder.array([]),
-      // waterbill: this.formBuilder.array([]),
+       //waterbill: this.formBuilder.array([]),
     });
 
     while (this.electric.length !== 0) {
@@ -382,67 +382,63 @@ export class UtilityCalculationComponent implements OnInit {
         houseId[i].dispatchEvent(new Event('change'));
       }
     }, 4010);
-    
-
-     // let vSts = this.validateData();
-      //console.log(vSts);
-     // console.log(this.utilityCalculation.valid);
-      //console.log(this.electric.valid);
-      //if (vSts) {
-        //if (this.houseId !== null && this.mapId !== null) {
-  
-      //     let data = {
-      //     //  "houseId": this.houseId,
-      //     //  "mapId": this.mapId,
-      //       "ownerId": this.utilityCalculation.value.ownerName,
-      //       "houseName": this.utilityCalculation.value.houseName,
-      //       "address": this.utilityCalculation.value.address,
-      //       "address2": this.utilityCalculation.value.address2,
-      //       "district": this.utilityCalculation.value.district,
-      //       "pinCode": this.utilityCalculation.value.pin,
-      //       "noOfRooms": this.utilityCalculation.value.noOfRooms,
-      //       "noOfEleBills": this.utilityCalculation.value.electricBill,
-      //       "noOfWtrBills": this.utilityCalculation.value.waterBill,
-      //       "startDate": this.utilityCalculation.value.startDate,
-      //       "endDate": this.utilityCalculation.value.endDate,
-            
-  
-      //     }
-  
-      //     console.log(data);
-      //     console.log(this.electric.value)
-      //     this.ngxLoader.start();
-      //     this.portalService.put("PAPL/updateHouse", data)
-      //       .subscribe((res) => {
-      //         this.ngxLoader.stop();
-      //         console.log(res)
-      //         this.updatebtn = false;
-  
-      //         // this.getAllHouseDetailList()
-      //         // this.houseRegistrationForm.reset()
-      //         // this.stateArray.clear()
-      //         // this.addstate()
-      //         Swal.fire({
-      //           icon: 'success',
-      //           text: 'Record Updated Successfully'
-      //         }).then(() => {
-      //           window.location.reload();
-    
-      //         });
-      //         this.updatebtn = false;
-  
-      //         // alert("House Registration succcesfull")
-      //       })
-      //      //}
-      // // }
-      //   // else {
-      //   //   console.error("houseId is null");
-      //   // }
-      }
+  }
   
   updateUtilityCalc() {
 
-    alert('updateUnitCalc');
+        //if(this.utilityCalculation.valid  && this.electric.valid && this.water.valid) {
+      let data = {
+        "utilityCalculationData": {
+          "fkStateId": this.utilityCalculation.value.state,
+          "fkSbuId":  this.utilityCalculation.value.sbu,
+          "fkPlantId":  this.utilityCalculation.value.plant,
+          "fkHouseId":  this.utilityCalculation.value.houseId,
+          "startDate": this.utilityCalculation.value.startDate,
+          "endDate":  this.utilityCalculation.value.endDate,
+          "createdDate":'',
+          
+        },
+        "utilityCalculationHRExpenseDto": {
+          "hrExpenseAmt":  this.utilityCalculation.value.hrexp,
+          "hrBillDoc":  this.utilityCalculation.value.hrbill,
+          "hrrecDoc":  this.utilityCalculation.value.hrrecept,
+          "recFileExt":this.utilityCalculation.value.hrrecFileExt ,
+          "billFileExt":this.utilityCalculation.value.hrbillFileExt,
+        },
+        "utilityCalculationMiscDto": {
+          "miscExpenseAmt":  this.utilityCalculation.value.miscExp,
+          "miscBillDoc": this.utilityCalculation.value.miscBill,
+          "miscRecDoc":  this.utilityCalculation.value.miscrecept,
+          "billFileExt": this.utilityCalculation.value.misbillFileExt,
+          "recFileExt":this.utilityCalculation.value.misrecFileExt,
+        },
+        "utilityCalculationElectricDto": this.electric.value,
+        "utilityCalculationWaterDto":this.water.value,
+      }
+      console.log(data)
+      this.portalService.post("PAPL/updatecalculation",data)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(res=> {
+        this.ngxLoader.stop();     
+        //console.log(res);
+        Swal.fire({
+          icon: 'success',
+          text: 'Utility Calculation Update Successfully'
+        });
+        this. getAllUtilityCalc()
+        alert("calculation saved successfully")
+         // alert("calculation saved successfully")
+      })
+        this.utilityCalculation.reset;
+
+    // } else {
+     // this.markFormGroupTouched(this.utilityCalculation);
+      //this.markFormArrayControlsTouched(this.electric);
+     // this.markFormArrayControlsTouched(this.water);
+     // this.scrollToTop();
+     // alert("Please Enter Required fields !")
+    //}
+    
   }
     
     

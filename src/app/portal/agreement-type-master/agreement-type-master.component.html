@@ -18,7 +18,7 @@
                         <div class="ms-3  d-flex-2  ">
                             <input type="hidden" name="aggreTypeId" id="aggreTypeId" [(ngModel)]="aggreTypeId">
                             <input type="text" name="aggrementType" id="aggrementType" [(ngModel)]="aggrementType"
-                                class="form-control box" (input)="vldChkLst.AllowAlphanumericWithSpace($event)" maxlength="100">
+                                class="form-control box" (input)="vldChkLst.keyPressAlphanumeric($event)" maxlength="100">
                             <div class="text-danger">{{ errorMessages.aggrementType }}</div>
                             
                         </div>
@@ -60,7 +60,7 @@
                         <div class="ms-3 d-flex-1  ">
                             <!-- <input type="text" name="aggrementTypeDesc" id="aggrementTypeDesc" class="form-control box"
                                 [(ngModel)]="aggrementTypeDesc"> -->
-                                <textarea name="aggrementTypeDesc" id="aggrementTypeDesc" class="form-control" [(ngModel)]="aggrementTypeDesc" rows="4" cols="50">
+                                <textarea name="aggrementTypeDesc" id="aggrementTypeDesc"  class="form-control" [(ngModel)]="aggrementTypeDesc" rows="4" cols="50" >
                                 </textarea>
                                 <div class="text-danger">{{ errorMessages.description }}</div>
                         </div>

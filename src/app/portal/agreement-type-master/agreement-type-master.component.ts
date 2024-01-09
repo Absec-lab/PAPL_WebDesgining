@@ -105,7 +105,7 @@ export class AgreementTypeMasterComponent {
         "aggreStDate": this.aggreStDate,
         "aggreTypeId": null,
         "aggreTypeName": this.aggrementType,
-        "description": this.aggrementTypeDesc
+        "description": this.aggrementTypeDesc.trim()
       };
       if (this.aggreStDate < this.aggreEdDate) {
         this.ngxLoader.start();
@@ -214,7 +214,7 @@ export class AgreementTypeMasterComponent {
         "aggreStDate": this.aggreStDate,
         "aggreTypeId": this.aggreTypeId,
         "aggreTypeName": this.aggrementType,
-        "description": this.aggrementTypeDesc
+        "description": this.aggrementTypeDesc.trim()
       };
       if (this.aggreStDate <= this.aggreEdDate) {
         this.ngxLoader.start();

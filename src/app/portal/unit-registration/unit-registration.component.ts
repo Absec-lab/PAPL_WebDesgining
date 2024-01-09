@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from "@angular/common/http";
 import { ValidatorchklistService } from './../serviceapi/validatorchklist.service';
 import { Subject, takeUntil } from 'rxjs';
-
+import { ExcelService } from '../serviceapi/excel.service';
 @Component({
   selector: 'app-unit-registration',
   templateUrl: './unit-registration.component.html',
@@ -16,7 +16,13 @@ import { Subject, takeUntil } from 'rxjs';
 export class UnitRegistrationComponent {
 
   private destroy$ = new Subject<void>();
-  constructor(private ngxLoader: NgxUiLoaderService, private formBuilder: FormBuilder, private route: Router, public portalServ: PortalServiceService, private httpClient: HttpClient, public vldChkLst: ValidatorchklistService) { }
+  constructor(private ngxLoader: NgxUiLoaderService, private formBuilder: FormBuilder, private route: Router, public portalServ: PortalServiceService, private httpClient: HttpClient, public vldChkLst: ValidatorchklistService,private excelService: ExcelService) { }
+  tableData: any = [];
+  duplicateTableData: any[] =[];
+  page: number = 1;
+  count: number = 0;
+  tableSize: number = 7;
+  tableSizes: any = [3, 6, 9, 12];
   stateDtails: any = [];
   allSbu: any = [];
   allPlant: any = [];
@@ -149,14 +155,27 @@ export class UnitRegistrationComponent {
         this.ngxLoader.stop();
       });
   }
-
+  onTableDataChange(event: any) {
+    this.page = event;
+    this.getAllUnit();
+  }
+  onTableSizeChange(event: any): void {
+    this.tableSize = event.target.value;
+    this.page = 1;
+    this.getAllUnit();
+  }
   getAllUnit() {
     this.portalServ.get('PAPL/getAllUnit')
       .subscribe((res) => {
+        this.tableData = res.data;
         this.allUnits = res.data;
         console.log(this.allUnits);
+        this.duplicateTableData = res.data;
       });
   }
+
+
+
 
   deleteUnit(id: any) {
     Swal.fire({
@@ -374,5 +393,18 @@ export class UnitRegistrationComponent {
       }
       console.log(this.unitArray.at(index).value.startDate);
     }
+  }
+  exportAsXLSX(): void {
+    debugger;
+    let removeColumnData = ['unitId','houseId','locationId','ownerId','plantId','stateId',''];
+    let Heading =[
+      [ "House Name","Owner Name","State","SBU","Plant Name","Room No","Unit Capacity","Electric Bill Percentage","Water Bill Percentage","Start Date","End Date","Created Date"]  
+    ];
+    removeColumnData.forEach(e => {
+      this.duplicateTableData.forEach(element => {
+        delete element[e]
+   });
+ });
+    this.excelService.exportAsExcelFile(this.duplicateTableData, 'unitregistration',Heading);
   }
 }

@@ -3,7 +3,7 @@
     <div class="container d-flex align-items-center gap-2">
         <a href="" class="primary-link fw-bold">Home</a>
         <span>/</span>
-        <span>Unit Registration</span>
+        <span>Room Registration</span>
     </div>
 </section>
 <section id="page-content">
@@ -142,7 +142,7 @@
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             <label class="form-label">Electric Bill Percentage<span class="text-danger"></span></label>
-                            <input type="text" class="form-control" formControlName="electBillPercent" maxlength="5"
+                            <input type="text" class="form-control" formControlName="electBillPercent" maxlength="2"
                                 (input)="vldChkLst.allowNumericDigitsDecimal($event)">
                             <div class="text-danger"
                                 *ngIf="unitArray.controls[i].get('electBillPercent')?.hasError('required') && unitArray.controls[i].get('electBillPercent')?.touched">
@@ -153,7 +153,7 @@
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             <label class="form-label">Water Bill Percentage<span class="text-danger"></span></label>
-                            <input type="text" class="form-control" formControlName="waterBillPercent" maxlength="5"
+                            <input type="text" class="form-control" formControlName="waterBillPercent" maxlength="2"
                                 (input)="vldChkLst.allowNumericDigitsDecimal($event)">
                             <div class="text-danger"
                                 *ngIf="unitArray.controls[i].get('waterBillPercent')?.hasError('required') && unitArray.controls[i].get('waterBillPercent')?.touched">
@@ -224,7 +224,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let item of allUnits; let i = index">
+
+                    <tr *ngFor="let item of tableData | paginate
+                    : {
+                        itemsPerPage: tableSize,
+                        currentPage: page,
+                        totalItems: count
+                      }; let i = index">
                         <td>{{ i + 1 }}</td>
                         <td>{{ item.houseName }}</td>
                         <td>{{ item.unitNo }}</td>
@@ -251,6 +257,14 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+        <br>
+        <div class="d-flex justify-content-center">
+        <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+        </pagination-controls>
+        <button class="btn btn-primary form-save-btn" (click)="exportAsXLSX()">
+            Export To Excel
+        </button>
         </div>
     </div>
 </section>

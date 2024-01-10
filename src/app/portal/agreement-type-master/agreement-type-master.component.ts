@@ -275,4 +275,5 @@ export class AgreementTypeMasterComponent {
  });
     this.excelService.exportAsExcelFile(this.duplicateTableData, 'agreementtype',Heading);
   }
+  
 }

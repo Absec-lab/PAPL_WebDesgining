@@ -128,7 +128,7 @@
                         <div class="ms-5 d-flex-2">
                             <select   formControlName="empId" class="form-select date " aria-label="Default select example" required  (change)="selectEmp($event)">
                                 <option selected> Choose Employee ...</option>
-                                <option *ngFor="let emp of allemployeeDetails" [value]="emp.paplId" >{{emp.paplId}}</option>
+                                <option *ngFor="let emp of allemployeeDetails" [value]="emp.empId" >{{emp.empId}}</option>
                             </select>
                         </div>
                     </div>

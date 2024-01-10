@@ -140,9 +140,9 @@ export class HouseOwnerRegistrationComponent {
       emailId: ['', [Validators.required, CommonValidatorService.validateEmail]],
       idProofDoc: ['',[Validators.required]],
       idProofDocPrifix: [''],
-      idProof: [''],
-      address1: ['', Validators.required],
-      address2: [''],
+      idProof: ['',[Validators.required,CommonValidatorService.noSpaceValidator]],
+      address1: ['', [Validators.required,CommonValidatorService.noSpaceValidator]],
+      address2: ['',[CommonValidatorService.noSpaceValidatorWithoutRequired]],
       stateId: ['', Validators.required],
       district: ['', Validators.required],
       pinCode: ['', Validators.required],
@@ -156,7 +156,7 @@ export class HouseOwnerRegistrationComponent {
       panNoDoc: ['',[Validators.required]],
       panNoPrifix: [''],
       upiId: ['',[Validators.required]],
-      upiPhoneNo: ['',[Validators.required]],
+      upiPhoneNo: ['',[Validators.required,Validators.minLength]],
       uploadQuarCodeAdds: [''],
       quarCodePrifix: [''],
       quarCodeDoc: ['',[Validators.required]]
@@ -1025,10 +1025,10 @@ if(value === '') {
         this.legalheirarray.controls[index].get('panNoDoc')?.clearValidators();
         this.legalheirarray.controls[index].get('panNoDoc')?.updateValueAndValidity();
 
-        this.legalheirarray.controls[index].controls['upiId'].setValidators([Validators.required]);
+        this.legalheirarray.controls[index].controls['upiId'].setValidators([Validators.required,CommonValidatorService.upivalid]);
         this.legalheirarray.controls[index].controls['upiId'].updateValueAndValidity();
 
-        this.legalheirarray.controls[index].controls['upiPhoneNo'].setValidators([Validators.required,CommonValidatorService.phonenovalid]);
+        this.legalheirarray.controls[index].controls['upiPhoneNo'].setValidators([Validators.required,CommonValidatorService.phonenovalid,Validators.minLength]);
         this.legalheirarray.controls[index].controls['upiPhoneNo'].updateValueAndValidity();
 
         this.legalheirarray.controls[index].controls['quarCodeDoc'].setValidators([Validators.required]);

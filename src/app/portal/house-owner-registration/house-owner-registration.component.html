@@ -198,11 +198,11 @@
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
-                        <label for="state" class="form-label">Payment Mode<span class="text-danger">*</span></label>
+                        <label for="state" class="form-label">Bank  Details<span class="text-danger">*</span></label>
                         <select class="form-select" (change)="paymentmode($event, 'owner')"
                             aria-label="Default select example" formControlName="paymode" name="paymtMode"
                             id="paymtMode">
-                            <option value="">Choose Payment Mode...</option>
+                            <option value="">Choose Bank  Details...</option>
                             <option [value]="1" routerLink="">
                                 Bank AC
                             </option>
@@ -502,13 +502,20 @@
                                         <div class="form-group">
                                             <label for="state" class="form-label">Govt ID Proof<span
                                                     class="text-danger">*</span></label>
-                                            <input type="text" name="" formControlName="idProofDoc" class="form-control"
+                                            <input type="text" name="" formControlName="idProof" class="form-control"
                                             class="form-control" required
                                                 maxlength="12" (input)="vldChkLst.allowNumericDigitsWithAlpha($event)" />
-                                                <div style="color: red;"
-                                                *ngIf="legalheirarray.controls[i].get('idProofDoc')?.hasError('required') && legalheirarray.controls[i].get('idProofDoc')?.touched">
+                                                <div class="error-message"
+                                            *ngIf="legalheirarray.controls[i].get('idProof')?.invalid && legalheirarray.controls[i].get('idProof')?.touched">
+                                            <div
+                                                *ngIf="legalheirarray.controls[i].get('idProof')?.hasError('required')">
                                                 Govt ID Proof is Mandatory.
                                             </div>
+                                            <div
+                                            *ngIf="legalheirarray.controls[i].get('idProof')?.hasError('cannotContainSpace')">
+                                            Space isn't allowed
+                                        </div>
+                                        </div>
                                         </div>
                                     </div>
 
@@ -518,9 +525,13 @@
                                                     class="text-danger">*</span></label>
                                             <input type="text" formControlName="address1" name="" id=""
                                                 class="form-control" required>
-                                            <div style="color: red;"
-                                                *ngIf="legalheirarray.controls[i].get('address1')?.hasError('required') && legalheirarray.controls[i].get('address1')?.touched">
-                                                Address 1 is required.
+                                                <div class="error-message"
+                                                *ngIf="legalheirarray.controls[i].get('address1')?.invalid && legalheirarray.controls[i].get('address1')?.touched">
+                                                <div *ngIf="legalheirarray.controls[i].get('address1')?.hasError('required')">Address 1 is
+                                                    required.
+                                                </div>
+                                                <div *ngIf="legalheirarray.controls[i].get('address1')?.hasError('cannotContainSpace')">Address 1 is
+                                                    required space.</div>
                                             </div>
                                             
                                         </div>
@@ -534,6 +545,11 @@
                                                     class="text-danger"></span></label>
                                             <input type="text" name="" formControlName="address2" id=""
                                                 class="form-control">
+                                                <div class="error-message"
+                                *ngIf="legalheirarray.controls[i].get('address2')?.invalid && legalheirarray.controls[i].get('address2')?.touched">
+                                <div *ngIf="legalheirarray.controls[i].get('address2')?.hasError('cannotContainSpaceWithoutRequired')">Address 2 is
+                                    required space.</div>
+                            </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-md-4">
@@ -622,12 +638,12 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-md-4">
-                                        <label for="state" class="form-label">Payment Mode<span
+                                        <label for="state" class="form-label">Bank  Details<span
                                                 class="text-danger">*</span></label>
                                         <select formControlName="paymtMode" class="form-select"
                                             aria-label="Default select example" required
                                             (change)="paymentmode($event, 'legal',i)">
-                                            <option selected>Choose Payment Mode...</option>
+                                            <option selected>Choose Bank  Details...</option>
                                             <option value="1" routerLink="">Bank AC</option>
                                             <option value="2">Cash</option>
                                             <option value="3" routerLink="">BHIM UPI</option>
@@ -748,6 +764,8 @@
                                             *ngIf="legalheirarray.controls[i].get('upiId')?.invalid && legalheirarray.controls[i].get('upiId')?.touched">
                                             <div *ngIf="legalheirarray.controls[i].get('upiId')?.hasError('required')">UPI ID Is Required.
                                             </div>
+                                            <div *ngIf="legalheirarray.controls[i].get('upiId')?.hasError('upiformat')">UPI ID isn't valid.
+                                            </div>
                                         </div>
                                         </div>
                                     </div>
@@ -755,7 +773,7 @@
                                         <div class="form-group">
                                             <label for="state" class="form-label">Linked Mob._No<span
                                                     class="text-danger">*</span></label>
-                                            <input type="text" formControlName="upiPhoneNo" class="form-control" maxlength="10" (keyup)="vldChkLst.allowNumericDigits($event)" maxlength="10"
+                                            <input type="text" formControlName="upiPhoneNo" class="form-control" maxlength="10" (keyup)="vldChkLst.allowNumericDigits($event)" minlength="10"
                                             autocomplete="off">
                                             <div class="error-message"
                                             *ngIf="legalheirarray.controls[i].get('upiPhoneNo')?.invalid && legalheirarray.controls[i].get('upiPhoneNo')?.touched">
@@ -763,6 +781,8 @@
                                             </div>
                                             <div *ngIf="legalheirarray.controls[i].get('upiPhoneNo')?.hasError('phonenoformat')">Phone Number isn't
                                                 valid.
+                                            </div>
+                                            <div *ngIf="legalheirarray.controls[i].get('upiPhoneNo')?.hasError('minlength')">Phone Number should be 10 digits
                                             </div>
                                         </div>
                                         </div>

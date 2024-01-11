@@ -39,10 +39,10 @@ export class HouseRegistrationComponent implements OnInit {
 
     this.houseRegistrationForm = this.formBuilder.group({
       ownerName: [0, [Validators.required, Validators.min(1)]],
-      houseName: ['', Validators.required],
-      noOfRooms: ['', [Validators.required, Validators.pattern('^[0-9]{1,2}$')]],
-      electricBill: ['', Validators.required],
-      waterBill: ['', Validators.required],
+      houseName: ['', Validators.required,Validators.pattern('^[1-9]{1,2}$')],
+      noOfRooms: ['', [Validators.required, Validators.pattern('^[1-9]{1,2}$')]],
+      electricBill: ['', Validators.required,Validators.pattern('^[1-9]{1,2}$')],
+      waterBill: ['', Validators.required,Validators.pattern('^[1-9]{1,2}$')],
       address: ['', Validators.required],
       address2: [''],
       district: ['', Validators.required],

@@ -27,12 +27,12 @@ export class UtilityCalculationComponent implements OnInit {
       houseId: ['',Validators.required],
       startDate: ['',Validators.required],
       endDate: ['',Validators.required],
-      miscExp:['',Validators.required],
-      miscBill:['',Validators.required],
-      miscrecept:['',Validators.required],
-      hrexp:['',Validators.required],
-      hrbill:['',Validators.required],
-      hrrecept:['',Validators.required],
+      miscExp:[''],
+      miscBill:[''],
+      miscrecept:[''],
+      hrexp:[''],
+      hrbill:[''],
+      hrrecept:[''],
       hrrecFileExt:[''],
       hrbillFileExt:[''],
       misbillFileExt:[''],
@@ -236,7 +236,7 @@ export class UtilityCalculationComponent implements OnInit {
 
 
     postUtilityCalc() {
-     if(this.utilityCalculation.valid  && this.electric.valid && this.water.valid) {
+     if(this.electric.valid && this.water.valid) {
       let data = {
         "utilityCalculationData": {
           "fkStateId": this.utilityCalculation.value.state,

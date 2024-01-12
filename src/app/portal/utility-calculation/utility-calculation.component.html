@@ -97,9 +97,9 @@
                         <div class="form-group">
                             <label for="state" class="form-label">Misc Expense<span class="text-danger">*</span></label>
                             <input type="text" name="" id="" class="form-control" required formControlName="miscExp"  maxlength="8" (input)="validateService.allowNumericDigits($event)">
-                            <div *ngIf="utilityCalculation.get('miscExp')?.hasError('required') && utilityCalculation.get('miscExp')?.touched" style="color: red;">
+                            <!-- <div *ngIf="utilityCalculation.get('miscExp')?.hasError('required') && utilityCalculation.get('miscExp')?.touched" style="color: red;">
                                 Misc Expense is required.
-                              </div>
+                              </div> -->
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4  ">

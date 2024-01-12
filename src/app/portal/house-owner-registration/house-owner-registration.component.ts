@@ -9,13 +9,15 @@ import { ValidatorchklistService } from './../serviceapi/validatorchklist.servic
 import { Observable, map, of, startWith, takeUntil } from 'rxjs';
 import { CommonValidatorService } from 'src/app/common-validator.service';
 import { DistrictDropdownList, PincodeDropdownList } from 'src/app/common/model/dropdown-list.model';
-
+import { ExcelService } from '../serviceapi/excel.service';
 @Component({
   selector: 'app-home-owner-registration',
   templateUrl: './house-owner-registration.component.html',
   styleUrls: ['../../common.css', './house-owner-registration.component.css']
 })
 export class HouseOwnerRegistrationComponent {
+  tableData: any = [];
+  duplicateTableData: any[] =[];
   allOwner: any[] = [];
   legalbtn: boolean = false;
   upi: boolean = false;
@@ -31,7 +33,7 @@ export class HouseOwnerRegistrationComponent {
   noOfLegalParties: any;
   page: number = 1;
   count: number = 0;
-  tableSize: number = 7;
+  tableSize: number = 25;
   tableSizes: any = [3, 6, 9, 12];
   distControl = new FormControl();
   pinControl = new FormControl();
@@ -44,7 +46,7 @@ export class HouseOwnerRegistrationComponent {
   pinLegalHeirFilteredOptions: Observable<PincodeDropdownList[]>;
   isDisableAddButton: boolean = false;
   uploadGovtIdProofFileName:string = '';
-  constructor(private ngxLoader: NgxUiLoaderService, private formBuilder: FormBuilder, private route: Router, public portalServ: PortalServiceService, private httpClient: HttpClient, public vldChkLst: ValidatorchklistService) { }
+  constructor(private ngxLoader: NgxUiLoaderService, private formBuilder: FormBuilder, private route: Router, public portalServ: PortalServiceService, private httpClient: HttpClient, public vldChkLst: ValidatorchklistService,private excelService: ExcelService) { }
   ngOnInit(): void {
     this.getAllOwner();
     this.getAllStateList()
@@ -213,9 +215,11 @@ export class HouseOwnerRegistrationComponent {
     let param = {};
     // this.ngxLoader.start();
     this.portalServ.getAllOwner(param).subscribe(res => {
+      this.tableData = res.data;
       this.allOwner = res.data;
-      console.log(res);
-
+      console.log(this.allOwner);
+      this.duplicateTableData = res.data;
+    
     });
   }
   getLegalHeirDistirct(event:any, array?:any,index?: any) {
@@ -1052,6 +1056,18 @@ if(value === '') {
     return 'false'
   }
 
-
+  exportAsXLSX(): void {
+    debugger;
+    let removeColumnData = ['ownerId','stateId'];
+    let Heading =[
+      [ "Owner Name","State","House Owner Name","Phone no","Address","Govt ID	","ID Proof Address	","Account Number	","IFSC Code","PAN Card	","Payment Mode	","UPI Id/linked Mob. No.	","QR Code	","Status","Start Date",]  
+    ];
+    removeColumnData.forEach(e => {
+      this.duplicateTableData.forEach(element => {
+        delete element[e]
+   });
+ });
+    this.excelService.exportAsExcelFile(this.duplicateTableData, 'houseOwnerregistration',Heading);
+  }
 
 }

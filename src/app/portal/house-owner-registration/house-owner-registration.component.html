@@ -864,7 +864,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let item of allOwner | paginate
+                    <tr *ngFor="let item of tableData | paginate
                     : {
                         itemsPerPage: tableSize,
                         currentPage: page,
@@ -923,6 +923,9 @@
         <div class="d-flex justify-content-center">
             <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
             </pagination-controls>
+            <button class="btn btn-primary form-save-btn" (click)="exportAsXLSX()">
+                Export To Excel
+            </button>
         </div>
 
 

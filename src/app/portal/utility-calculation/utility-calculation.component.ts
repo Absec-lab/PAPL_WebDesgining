@@ -279,7 +279,8 @@ export class UtilityCalculationComponent implements OnInit {
         alert("calculation saved successfully")
          // alert("calculation saved successfully")
       })
-        this.utilityCalculation.reset;
+        this.utilityCalculation.reset();
+        window.location.reload();
 
      } else {
       this.markFormGroupTouched(this.utilityCalculation);

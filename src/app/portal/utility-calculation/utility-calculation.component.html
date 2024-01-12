@@ -55,7 +55,7 @@
                         <label for="state" class="form-label">House Id <span class="text-danger">*</span></label>
                         <select class="form-select" aria-label="Default select example" required formControlName="houseId" id="houseId">
                             <option selected >Choose HouseId... </option>
-                            <option *ngFor="let house of activeHouse" [value]="house.houseId">{{house.houseId}}</option>
+                            <option *ngFor="let house of activeHouse" [value]="house.houseId">{{house.houseName}}</option>
                            
                         </select>
                         <div *ngIf="utilityCalculation.get('houseId')?.hasError('required') && utilityCalculation.get('houseId')?.touched" style="color: red;">
@@ -285,7 +285,7 @@
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">State</th>
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">SBU</th>
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Plant</th>
-                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">House ID</th>
+                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">House Name</th>
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">HR EXP</th>
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">MISC EXP</th>
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">ELE EXP</th>
@@ -303,7 +303,7 @@
                         <td>{{ item.stateName }}</td>
                         <td>{{ item.locationName}}</td>
                         <td>{{ item.plantName}}</td>
-                        <td>{{ item.fkHouseId }}</td>
+                        <td>{{ item.houseName }}</td>
                         <td>{{ item.hrExpenseAmount }}</td>
                         <td>{{ item.miscExpenseAmount }}</td>
                         <td>{{ item.eleExpenseAmount }}</td>

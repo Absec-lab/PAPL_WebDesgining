@@ -5,6 +5,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { ValidatorchklistService } from '../serviceapi/validatorchklist.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import Swal from 'sweetalert2';
+import { ExcelService } from '../serviceapi/excel.service';
 
 @Component({
   selector: 'app-home-registration',
@@ -13,6 +14,8 @@ import Swal from 'sweetalert2';
 })
 export class HouseRegistrationComponent implements OnInit {
   updatebtn: boolean = false;
+  tableData: any = [];
+  duplicateTableData: any[] =[];
   stateDtails: any;
   houseRegistrationForm!: FormGroup;
   stateForm!: FormGroup;
@@ -26,9 +29,13 @@ export class HouseRegistrationComponent implements OnInit {
   currentDate: Date = new Date();
   houseId: any = '';
   mapId: any = '';
+  page: number = 1;
+  count: number = 0;
+  tableSize: number = 7;
+  tableSizes: any = [3, 6, 9, 12];
   errorMessageForHouseMapping: any = '';
 
-  constructor(private portalService: PortalServiceService, private formBuilder: FormBuilder, public vldChkLst: ValidatorchklistService, private ngxLoader: NgxUiLoaderService) {
+  constructor(private portalService: PortalServiceService, private formBuilder: FormBuilder, public vldChkLst: ValidatorchklistService, private ngxLoader: NgxUiLoaderService, private excelService: ExcelService) {
 
   }
 
@@ -39,10 +46,10 @@ export class HouseRegistrationComponent implements OnInit {
 
     this.houseRegistrationForm = this.formBuilder.group({
       ownerName: [0, [Validators.required, Validators.min(1)]],
-      houseName: ['', Validators.required,Validators.pattern('^[1-9]{1,2}$')],
+      houseName: ['', Validators.required],
       noOfRooms: ['', [Validators.required, Validators.pattern('^[1-9]{1,2}$')]],
-      electricBill: ['', Validators.required,Validators.pattern('^[1-9]{1,2}$')],
-      waterBill: ['', Validators.required,Validators.pattern('^[1-9]{1,2}$')],
+      electricBill: ['', Validators.required],
+      waterBill: ['', Validators.required],
       address: ['', Validators.required],
       address2: [''],
       district: ['', Validators.required],
@@ -154,6 +161,9 @@ export class HouseRegistrationComponent implements OnInit {
         this.allHouseDetails = res
         this.ngxLoader.stop();
         console.log(this.allHouseDetails)
+        console.log("tabledata", res)
+        this.tableData = res.data;
+        this.duplicateTableData = res.data;
       })
   }
 
@@ -191,7 +201,15 @@ export class HouseRegistrationComponent implements OnInit {
       })
 
   }
-
+ onTableDataChange(event: any) {
+    this.page = event;
+    this.getAllHouseDetailList();
+  }
+  onTableSizeChange(event: any): void {
+    this.tableSize = event.target.value;
+    this.page = 1;
+    this.getAllHouseDetailList();
+  }
 
 
   validateData() {
@@ -481,5 +499,18 @@ export class HouseRegistrationComponent implements OnInit {
   onClick() {
     // Your button click logic here
     alert('Deleted Successfully!!');
+  }
+  exportAsXLSX(): void {
+    debugger;
+    let removeColumnData = ['aggreTypeCode','aggreTypeId','createdBy','isActive','updatedBy','updatedDate'];
+    let Heading =[
+      [ "End Date","Agreement Type","Start Date","Created Date","Description"]  
+    ];
+    removeColumnData.forEach(e => {
+      this.duplicateTableData.forEach(element => {
+        delete element[e]
+   });
+ });
+    this.excelService.exportAsExcelFile(this.duplicateTableData, 'agreementtype',Heading);
   }
 }

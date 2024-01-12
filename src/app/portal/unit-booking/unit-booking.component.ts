@@ -179,7 +179,7 @@ export class UnitBookingComponent implements OnInit {
 
   getEmployeeDetails() {
 
-    this.portalService.get("PAPL/getAllEmployee")
+    this.portalService.get("PAPL/getEmployeeFachingDetails?housing_status=true")
     .pipe(takeUntil(this.destroy$))
     .subscribe((res)=>{
       this.allemployeeDetails = res
@@ -211,6 +211,7 @@ postBooking() {
     console.log(res)
     alert("booking succcesfull")
     this.employeeForm.reset();
+    this.unitBookingSearch();
     this.ngOnInit()
   })
 }

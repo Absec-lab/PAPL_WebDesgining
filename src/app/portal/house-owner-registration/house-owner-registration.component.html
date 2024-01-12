@@ -31,7 +31,7 @@
                             <label for="state" class="form-label">House Owner Name<span
                                     class="text-danger">*</span></label>
                             <input type="text" name="ownerName" id="ownerName" formControlName="ownerName"
-                                maxlength="50" class="form-control" (input)="vldChkLst.allowAlphaWithSpace($event)" />
+                                maxlength="100" class="form-control" (input)="vldChkLst.allowAlphaWithSpace($event)" />
 
                             <div class="error-message"
                                 *ngIf="houseRegistrationForm.get('ownerName')?.invalid && houseRegistrationForm.get('ownerName')?.touched">

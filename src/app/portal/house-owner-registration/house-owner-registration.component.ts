@@ -565,7 +565,9 @@ export class HouseOwnerRegistrationComponent {
       }
     });
   }
-
+  scrollToTop(): void {
+    window.scrollTo(0, 0);
+  }
   ownerRegistration() {
    
     let errFlag = 0;
@@ -688,6 +690,7 @@ console.log('Data',data)
       linkMobile: item.upiPhoneNo,
       qrCode: item.uploadQuarCodeAdds,
     })
+    this.scrollToTop();
   }
 
   validateLegalData() {

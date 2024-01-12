@@ -205,6 +205,7 @@ export class AgreementTypeMasterComponent {
     this.aggreStDate = aggreStDate.split('T')[0];
     this.aggrementTypeDesc = description;
     this.aggreEdDate = aggreEdDate.split('T')[0];
+    this.scrollToTop();
   }
   updateAgreementType() {
     let vSts = this.validateData();
@@ -262,6 +263,9 @@ export class AgreementTypeMasterComponent {
 
     }
   }
+  scrollToTop(): void {
+    window.scrollTo(0, 0);
+  }
   exportAsXLSX(): void {
     debugger;
     let removeColumnData = ['aggreTypeCode','aggreTypeId','createdBy','isActive','updatedBy','updatedDate'];
@@ -275,4 +279,5 @@ export class AgreementTypeMasterComponent {
  });
     this.excelService.exportAsExcelFile(this.duplicateTableData, 'agreementtype',Heading);
   }
+  
 }

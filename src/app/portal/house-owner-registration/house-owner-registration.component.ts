@@ -46,6 +46,7 @@ export class HouseOwnerRegistrationComponent {
   pinLegalHeirFilteredOptions: Observable<PincodeDropdownList[]>;
   isDisableAddButton: boolean = false;
   uploadGovtIdProofFileName:string = '';
+  uploadQrCodeFileName:string = '';
   constructor(private ngxLoader: NgxUiLoaderService, private formBuilder: FormBuilder, private route: Router, public portalServ: PortalServiceService, private httpClient: HttpClient, public vldChkLst: ValidatorchklistService,private excelService: ExcelService) { }
   ngOnInit(): void {
     this.getAllOwner();
@@ -54,7 +55,7 @@ export class HouseOwnerRegistrationComponent {
     this.houseRegistrationForm = this.formBuilder.group({
       ownerId: [''],
       ownerName: ['', [Validators.required, CommonValidatorService.fullNameValidator]],
-      phone: ['', [Validators.required,CommonValidatorService.phonenovalid]],
+      phone: ['', [Validators.required,CommonValidatorService.phonenovalid,Validators.minLength]],
       email: ['', [Validators.required, CommonValidatorService.validateEmail]],
       idProofDoc: ['',Validators.required],
       idProofDocPrifix: [''],
@@ -72,7 +73,7 @@ export class HouseOwnerRegistrationComponent {
       pan: ['', [Validators.required, CommonValidatorService.validatePan]],
       panPic: ['',Validators.required],
       panNoPrifix: [''],
-      desc: [''],
+      desc: ['',[CommonValidatorService.noSpaceValidatorWithoutRequired]],
       upiId: ['', [Validators.required]],
       linkMobile: ['', [Validators.required]],
       qrCode: [''],
@@ -660,6 +661,8 @@ console.log('Data',data)
     console.log('idproof',item.idProofAddress)
     let splitAdressArr = item.idProofAddress.split('/');
     this.uploadGovtIdProofFileName = splitAdressArr[5];
+    let splitQrCodeArr = item.uploadQuarCodeAdds.split('/');
+    this.uploadQrCodeFileName = splitQrCodeArr[5];
     this.updatebtn = true;
     this.descripinput = true;
     this.paymentmode(item.paymtMode == 'string' ? 2 : item.paymtMode, 'owner')
@@ -753,6 +756,10 @@ console.log('Data',data)
       if(this.uploadGovtIdProofFileName !== '') {
         this.houseRegistrationForm.get('idProofDoc')?.clearValidators();
         this.houseRegistrationForm.get('idProofDoc')?.updateValueAndValidity();
+      }
+      if(this.uploadQrCodeFileName !== '') {
+        this.houseRegistrationForm.get('qrCode')?.clearValidators();
+        this.houseRegistrationForm.get('qrCode')?.updateValueAndValidity();
       }
     if(this.legalheirarray.valid && this.houseRegistrationForm.valid) {
       let data = {
@@ -870,6 +877,7 @@ if(value === '') {
         this.houseRegistrationForm.controls['accHolName'].setValidators([Validators.required,CommonValidatorService.noSpaceValidator]);
         this.houseRegistrationForm.controls['accHolName'].updateValueAndValidity();
 
+
         this.houseRegistrationForm.controls['accounNum'].setValidators([Validators.required]);
         this.houseRegistrationForm.controls['accounNum'].updateValueAndValidity();
 
@@ -957,10 +965,10 @@ if(value === '') {
         this.legalheading = true;
         this.legalbank = true;
         this.legalupi = false;
-        this.legalheirarray.controls[index].controls['accountHolderName'].setValidators([Validators.required]);
+        this.legalheirarray.controls[index].controls['accountHolderName'].setValidators([Validators.required,CommonValidatorService.noSpaceValidator]);
         this.legalheirarray.controls[index].controls['accountHolderName'].updateValueAndValidity();
 
-        this.legalheirarray.controls[index].controls['bankAccountNo'].setValidators([Validators.required]);
+        this.legalheirarray.controls[index].controls['bankAccountNo'].setValidators([Validators.required,Validators.minLength]);
         this.legalheirarray.controls[index].controls['bankAccountNo'].updateValueAndValidity();
 
         this.legalheirarray.controls[index].controls['ifscCode'].setValidators([Validators.required,CommonValidatorService.ifsccodevalid]);

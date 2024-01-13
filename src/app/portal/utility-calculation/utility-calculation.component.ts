@@ -269,6 +269,7 @@ export class UtilityCalculationComponent implements OnInit {
       this.portalService.post("PAPL/calculate",data)
       .pipe(takeUntil(this.destroy$))
       .subscribe(res=> {
+        alert(res)
         this.ngxLoader.stop();     
         //console.log(res);
         Swal.fire({

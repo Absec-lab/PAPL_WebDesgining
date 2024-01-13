@@ -60,11 +60,11 @@
                                 autocomplete="off" />
                             <div class="error-message"
                                 *ngIf="houseRegistrationForm.get('phone')?.invalid && houseRegistrationForm.get('phone')?.touched">
-                                <!-- <div *ngIf="houseRegistrationForm.get('phone')?.hasError('required')">Phone Number is
+                                <div *ngIf="houseRegistrationForm.get('phone')?.hasError('required')">Phone Number is
                                     required.
-                                </div> -->
-                                <div *ngIf="houseRegistrationForm.get('phone')?.hasError('minlength')">Phone Number is
-                                    required.
+                                </div>
+                                <div *ngIf="houseRegistrationForm.get('phone')?.hasError('minlength')">Phone Number should be 10 digits.
+                                    
                                 </div>
                                 <div *ngIf="houseRegistrationForm.get('phone')?.hasError('phonenoformat')">Phone Number isn't
                                     valid.
@@ -139,8 +139,7 @@
                                 formControlName="add2" />
                                 <div class="error-message"
                                 *ngIf="houseRegistrationForm.get('add2')?.invalid && houseRegistrationForm.get('add2')?.touched">
-                                <div *ngIf="houseRegistrationForm.get('add2')?.hasError('cannotContainSpaceWithoutRequired')">Address 2 is
-                                    required space.</div>
+                                <div *ngIf="houseRegistrationForm.get('add2')?.hasError('cannotContainSpaceWithoutRequired')">Space isn't allowed.</div>
                             </div>
                         </div>
                     </div>
@@ -241,7 +240,11 @@
                                 <label for="state" class="form-label">Description<span
                                         class="text-danger"></span></label>
                                         <textarea formControlName="desc" class="form-control" rows="4" cols="50">
-                                        </textarea>         
+                                        </textarea> 
+                                        <div class="error-message"
+                                        *ngIf="houseRegistrationForm.get('desc')?.invalid && houseRegistrationForm.get('desc')?.touched">
+                                        <div *ngIf="houseRegistrationForm.get('desc')?.hasError('cannotContainSpaceWithoutRequired')">Space isn't allowed.</div>
+                                    </div>        
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-8" *ngIf="legalheir" style="margin-top: 28px">
@@ -282,12 +285,16 @@
                                 <label for="state" class="form-label">Account Number<span
                                         class="text-danger">*</span></label>
                                         <input type="text" class="form-control" maxlength="17"
-                                        formControlName="accounNum" (input)="vldChkLst.allowNumericDigits($event)">
+                                        formControlName="accounNum" minlength="9">
                                         <div class="error-message"
                                         *ngIf="houseRegistrationForm.get('accounNum')?.invalid && houseRegistrationForm.get('accounNum')?.touched">
                                         <div *ngIf="houseRegistrationForm.get('accounNum')?.hasError('required')">Account Number is required.
                                         </div>
+                                        <div *ngIf="houseRegistrationForm.get('accounNum')?.hasError('minlength')">Account Number should be
+                                            9 digits.
+                                        </div>
                                     </div>
+                                   
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-4">
@@ -366,7 +373,8 @@
                         <div class="col-sm-6 col-md-4">
                             <div class="form-group">
                                 <label for="state" class="form-label">Upload QR Code<span
-                                        class="text-danger">*</span></label>
+                                        class="text-danger">*</span>
+                                        <a style="padding-left: 15px;pointer-events: none;" href="">{{uploadQrCodeFileName}}</a></label>
                                         <input type="file" name="" id="" class="form-control" accept="image/*,.pdf"
                                         (change)="onImageChange($event, 'qrCode')">
                                         <div style="color: red;" *ngIf="houseRegistrationForm.get('qrCode')?.hasError('required') && houseRegistrationForm.get('qrCode')?.touched">
@@ -692,6 +700,8 @@
                                               *ngIf="legalheirarray.controls[i].get('accountHolderName')?.invalid && legalheirarray.controls[i].get('accountHolderName')?.touched">
                                               <div *ngIf="legalheirarray.controls[i].get('accountHolderName')?.hasError('required')">Account Holder Name Is Required.
                                               </div>
+                                              <div *ngIf="legalheirarray.controls[i].get('accountHolderName')?.hasError('cannotContainSpace')">Space isn't allowed.
+                                            </div>
                                           </div>
                                         </div>
                                     </div>
@@ -700,10 +710,12 @@
                                             <label for="state" class="form-label">Account Number<span
                                                     class="text-danger">*</span></label>
                                             <input type="text" formControlName="bankAccountNo" name="bankAccountNo"
-                                                id="bankAccountNo" class="form-control">
+                                                id="bankAccountNo" class="form-control" maxlength="17" minlength="9">
                                                 <div class="error-message"
                                                 *ngIf="legalheirarray.controls[i].get('bankAccountNo')?.invalid && legalheirarray.controls[i].get('bankAccountNo')?.touched">
                                                 <div *ngIf="legalheirarray.controls[i].get('bankAccountNo')?.hasError('required')">Account Number Is Required.
+                                                </div>
+                                                <div *ngIf="legalheirarray.controls[i].get('bankAccountNo')?.hasError('minlength')">Account Number should be 9 digits.
                                                 </div>
                                             </div>
                                         </div>

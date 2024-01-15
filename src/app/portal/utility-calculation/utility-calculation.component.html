@@ -95,7 +95,7 @@
                 <div class="row pt-4" style=" padding-left: 3%;">
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
-                            <label for="state" class="form-label">Misc Expense<span class="text-danger">*</span></label>
+                            <label for="state" class="form-label">Misc Expense</label>
                             <input type="text" name="" id="" class="form-control" formControlName="miscExp"  maxlength="8" (input)="validateService.allowNumericDigits($event)">
                             <!-- <div *ngIf="utilityCalculation.get('miscExp')?.hasError('required') && utilityCalculation.get('miscExp')?.touched" style="color: red;">
                                 Misc Expense is required.
@@ -104,7 +104,7 @@
                     </div>
                     <div class="col-sm-6 col-md-4  ">
                         <div class="form-group">
-                            <label for="state" class="form-label">Bill Upload<span class="text-danger">*</span></label>
+                            <label for="state" class="form-label">Bill Upload</label>
                              <!-- Hidden input to store file value  -->
                           <input type="file" class="form-control"  accept="image/*,.pdf" (change)="onImageChange($event, 'miscBill')">
                           <!-- <div *ngIf="utilityCalculation.get('miscBill')?.hasError('required') && utilityCalculation.get('miscBill')?.touched" style="color: red;">
@@ -117,7 +117,7 @@
                     </div>
                     <div class="col-sm-6 col-md-4  ">
                         <div class="form-group">
-                            <label for="state" class="form-label">Receipt Upload<span class="text-danger">*</span></label>
+                            <label for="state" class="form-label">Receipt Upload</label>
                              <!-- Hidden input to store file value  -->
                           <input type="file" class="form-control"  accept="image/*,.pdf" (change)="onImageChange($event, 'miscrecept')">
                           <!-- <div *ngIf="utilityCalculation.get('miscrecept')?.hasError('required') && utilityCalculation.get('miscrecept')?.touched" style="color: red;">
@@ -132,7 +132,7 @@
                     <hr class="my-3">
                     <div class="col-sm-6 col-md-4 ">
                         <div class="form-group">
-                            <label for="state" class="form-label">HR Expense<span class="text-danger">*</span></label>
+                            <label for="state" class="form-label">HR Expense</label>
                             <input type="text" name="" id="" class="form-control" required formControlName="hrexp"  maxlength="8" (input)="validateService.allowNumericDigits($event)">
                             <!-- <div *ngIf="utilityCalculation.get('hrexp')?.hasError('required') && utilityCalculation.get('hrexp')?.touched" style="color: red;">
                                 HR Expense is required.
@@ -141,7 +141,7 @@
                     </div>
                     <div class="col-sm-6 col-md-4  ">
                         <div class="form-group">
-                            <label for="state" class="form-label">Bill Upload<span class="text-danger">*</span></label>
+                            <label for="state" class="form-label">Bill Upload</label>
                              <!-- Hidden input to store file value  -->
                           <input type="file" class="form-control"  accept="image/*,.pdf" (change)="onImageChange($event, 'hrbill')">
                           <!-- <div *ngIf="utilityCalculation.get('hrbill')?.hasError('required') && utilityCalculation.get('hrbill')?.touched" style="color: red;">
@@ -156,7 +156,7 @@
                     
                       <div class="col-sm-6 col-md-4">
                         <div class="form-group">
-                          <label for="state" class="form-label">Receipt Upload<span class="text-danger">*</span></label>
+                          <label for="state" class="form-label">Receipt Upload</label>
                            <!-- Hidden input to store file value  -->
                           <input type="file"  class="form-control" accept="image/*,.pdf" (change)="onImageChange($event, 'hrrecept')">
                           <!-- <div *ngIf="utilityCalculation.get('hrrecept')?.hasError('required') && utilityCalculation.get('hrrecept')?.touched" style="color: red;">

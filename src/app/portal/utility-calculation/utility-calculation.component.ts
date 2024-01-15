@@ -269,7 +269,6 @@ export class UtilityCalculationComponent implements OnInit {
       this.portalService.post("PAPL/calculate",data)
       .pipe(takeUntil(this.destroy$))
       .subscribe(res=> {
-        alert(res)
         this.ngxLoader.stop();     
         //console.log(res);
         Swal.fire({
@@ -284,7 +283,7 @@ export class UtilityCalculationComponent implements OnInit {
         window.location.reload();
 
      } else {
-      this.markFormGroupTouched(this.utilityCalculation);
+      //this.markFormGroupTouched(this.utilityCalculation);
       this.markFormArrayControlsTouched(this.electric);
       this.markFormArrayControlsTouched(this.water);
       this.scrollToTop();

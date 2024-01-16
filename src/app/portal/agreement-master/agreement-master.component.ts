@@ -23,7 +23,7 @@ export class AgreementMasterComponent {
     this.getAllOwner();
     this.getAllAgreementType();
     this.getAllAgreement();
-    this.getallhouse()
+    // this.getallhouse()
   }
   tableData: any = [];
   duplicateTableData: any[] =[];
@@ -150,12 +150,23 @@ export class AgreementMasterComponent {
 
   }
 
-  getplant(aggreSbu: any) {
+  getPlant(aggreSbu: any) {
     this.ngxLoader.start();
     this.portalServ.get('PAPL/get/plant/by/' + aggreSbu)
       .subscribe(res => {
         console.log(res);
         this.allPlant = res
+        this.ngxLoader.stop();
+
+      })
+  }
+
+  getHouse(OwnerId: any) {
+    this.ngxLoader.start();
+    this.portalServ.get('PAPL/get/House/by/?ownerId='+ OwnerId )
+      .subscribe(res => {
+        console.log(res);
+        this.allOwner = res
         this.ngxLoader.stop();
 
       })
@@ -234,16 +245,7 @@ export class AgreementMasterComponent {
     });
   }
 
-  getallhouse() {
-    this.portalServ.get("PAPL/getAllHouse")
-      .subscribe((res: any) => {
-
-        this.getallhouseList = res
-
-
-        console.log(res);
-      })
-  }
+ 
   validateData() {
     let vSts = true;
     if (!this.vldChkLst.selectDropdownWithoutAlert(this.aggreState)) {
@@ -357,7 +359,7 @@ export class AgreementMasterComponent {
         this.aggreId = aggreId;
 
         this.getSbu(stateId);
-        this.getplant(sbuId);
+        this.getPlant(sbuId);
         window.scrollTo({ top: 0, behavior: 'smooth' });
     
   }
@@ -597,6 +599,16 @@ export class AgreementMasterComponent {
  });
     this.excelService.exportAsExcelFile(this.duplicateTableData, 'agreementmaster',Heading);
   }
+  gethouse() {
+    alert('hi');
+    this.ngxLoader.start();
+    this.portalServ.get('PAPL/get/House/by/' + 1)
+      .subscribe(res => {
+        console.log(res);
+        this.allOwner = res
+        this.ngxLoader.stop();
 
+      })
+  }
 
 }

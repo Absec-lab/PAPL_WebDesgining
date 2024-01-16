@@ -160,6 +160,8 @@ export class AgreementTypeMasterComponent {
     });
 
   }
+
+  
   deleteAgreementType(aggreTypeId: any = 0) {
     Swal.fire({
       //icon: 'warning',

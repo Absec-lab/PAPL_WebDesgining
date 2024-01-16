@@ -124,7 +124,7 @@ export class HouseRegistrationComponent implements OnInit {
 
   addstate() {
     const stateGroup = this.formBuilder.group({
-      stateId: [0, [Validators.required, Validators.min(1)]],
+      stateId: [this.stateId],
       sbuId: [0, [Validators.required, Validators.min(1)]],
       plantId: [0, [Validators.required, Validators.min(1)]],
       mapId: [0, [Validators.required, Validators.min(1)]],
@@ -167,6 +167,8 @@ export class HouseRegistrationComponent implements OnInit {
       })
   }
 
+
+
   // Update your component code
   getSubonStateChange(event: any, index: number) {
     this.activeSBU = [];
@@ -201,6 +203,10 @@ export class HouseRegistrationComponent implements OnInit {
       })
 
   }
+
+
+
+
  onTableDataChange(event: any) {
     this.page = event;
     this.getAllHouseDetailList();

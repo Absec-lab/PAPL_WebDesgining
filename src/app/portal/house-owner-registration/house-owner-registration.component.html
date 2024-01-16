@@ -197,11 +197,11 @@
                         </div>
                     </div>
                     <div class="col-sm-6 col-md-4">
-                        <label for="state" class="form-label">Bank  Details<span class="text-danger">*</span></label>
+                        <label for="state" class="form-label">Payment mode<span class="text-danger">*</span></label>
                         <select class="form-select" (change)="paymentmode($event, 'owner')"
                             aria-label="Default select example" formControlName="paymode" name="paymtMode"
                             id="paymtMode">
-                            <option value="">Choose Bank  Details...</option>
+                            <option value="">Choose Payment mode...</option>
                             <option [value]="1" routerLink="">
                                 Bank AC
                             </option>
@@ -646,12 +646,12 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-md-4">
-                                        <label for="state" class="form-label">Bank  Details<span
+                                        <label for="state" class="form-label">Payment mode<span
                                                 class="text-danger">*</span></label>
                                         <select formControlName="paymtMode" class="form-select"
                                             aria-label="Default select example" required
                                             (change)="paymentmode($event, 'legal',i)">
-                                            <option selected>Choose Bank  Details...</option>
+                                            <option selected>Choose Payment mode...</option>
                                             <option value="1" routerLink="">Bank AC</option>
                                             <option value="2">Cash</option>
                                             <option value="3" routerLink="">BHIM UPI</option>

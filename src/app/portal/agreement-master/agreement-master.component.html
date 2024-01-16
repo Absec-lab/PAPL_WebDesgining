@@ -43,7 +43,7 @@
                     <div class="form-group">
                         <label  class="form-label">Plant<span class="text-danger">*</span></label>
                         <select class="form-select" aria-label="Default select example" [(ngModel)]="aggrePlant"
-                            name="aggrePlant">
+                            name="aggrePlant" (change)="getOwner(aggrePlant)" >
                             <option value="0">Choose Plant... </option>
                             <option *ngFor="let item of allPlant; let i = index" [value]="item.plantId">
                                 {{item.plantName}} ({{item.shortCode}})</option>
@@ -60,7 +60,7 @@
                             name="aggreOwner" (change)="getHouse(aggreOwner)">
                             <option value="0">Choose Owner... </option>
                             <option *ngFor="let item of allOwner; let i = index" [value]="item.ownerId" >
-                                {{item.ownerName}} </option>
+                                {{item.ownerId}} </option>
                         </select>
                         <div class="text-danger">{{ errorMessages.aggreOwner }}</div>
 

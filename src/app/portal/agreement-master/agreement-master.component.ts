@@ -161,12 +161,23 @@ export class AgreementMasterComponent {
       })
   }
 
-  getHouse(OwnerId: any) {
+  getOwner(aggrePlant: any) {
     this.ngxLoader.start();
-    this.portalServ.get('PAPL/get/House/by/?ownerId='+ OwnerId )
+    this.portalServ.get('PAPL/get/owner/by/{PlantId}?plant_id=3')
       .subscribe(res => {
         console.log(res);
         this.allOwner = res
+        this.ngxLoader.stop();
+
+      })
+  }
+
+  getHouse(OwnerId: any) {
+    this.ngxLoader.start();
+    this.portalServ.get('PAPL/get/House/by/{ownerId}?ownerId=362' )
+      .subscribe(res => {
+        console.log(res);
+        this.getallhouseList = res
         this.ngxLoader.stop();
 
       })

@@ -60,7 +60,7 @@
                             name="aggreOwner" (change)="getHouse(aggreOwner)">
                             <option value="0">Choose Owner... </option>
                             <option *ngFor="let item of allOwner; let i = index" [value]="item.ownerId" >
-                                {{item.ownerId}} </option>
+                                {{item.ownerName}} </option>
                         </select>
                         <div class="text-danger">{{ errorMessages.aggreOwner }}</div>
 

@@ -186,7 +186,7 @@
                                 <option [value]="plant.plantId" *ngFor="let plant of activePlant[i]">{{ plant.plantName
                                     }}</option>
                             </select>
-                            <div *ngIf="stateArray.controls[i].get('plantId')?.invalid && stateArray.controls[i].get('plantId')?.touched"
+                            <div *ngIf="stateArray.controls[i].get('plantId')?.undefind && stateArray.controls[i].get('plantId')?.invalid && stateArray.controls[i].get('plantId')?.touched"
                                 class="error-message">
                                 <div *ngIf="stateArray.controls[i].get('plantId')?.hasError('min')">
                                     Select Plant.</div>

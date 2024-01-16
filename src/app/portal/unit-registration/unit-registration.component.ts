@@ -36,6 +36,7 @@ export class UnitRegistrationComponent {
   unitId: any;
   activeHouse: any = [];
   plantId: any;
+  ownerId: any;
   unitRegisterForm!: FormGroup;
 
   updatebtn: boolean = false;
@@ -142,19 +143,34 @@ export class UnitRegistrationComponent {
       });
   }
 
-  getHouseByPlantId(event: any) {
+  getownerByPlantId(event: any) {
    // this.ngxLoader.start();
-    this.activeHouse = [];
+    this.allOwner = [];
     const selectedPlantId = event.target.value;
     this.plantId = selectedPlantId;
 
-    this.portalServ.get(`PAPL/get/house/by/${selectedPlantId}`)
+    this.portalServ.get('PAPL/get/owner/by/{PlantId}?plant_id='+selectedPlantId)
       .pipe(takeUntil(this.destroy$))
       .subscribe((res) => {
-        this.activeHouse = res;
+        this.allOwner = res;
         this.ngxLoader.stop();
       });
   }
+
+  getHouseByOwnerId(event: any) {
+    // this.ngxLoader.start();
+     //this.allHouses = [];
+     const selectedownerId = event.target.value;
+     this.ownerId = selectedownerId;
+ 
+     this.portalServ.get('PAPL/get/House/by/{ownerId}?ownerId='+selectedownerId )
+       .pipe(takeUntil(this.destroy$))
+       .subscribe((res) => {
+         this.activeHouse = res;
+         this.ngxLoader.stop();
+       });
+   }
+
   onTableDataChange(event: any) {
     this.page = event;
     this.getAllUnit();

@@ -163,7 +163,7 @@ export class AgreementMasterComponent {
 
   getOwner(aggrePlant: any) {
     this.ngxLoader.start();
-    this.portalServ.get('PAPL/get/owner/by/{PlantId}?plant_id=3')
+    this.portalServ.get('PAPL/get/owner/by/{PlantId}?plant_id='+aggrePlant)
       .subscribe(res => {
         console.log(res);
         this.allOwner = res
@@ -174,7 +174,7 @@ export class AgreementMasterComponent {
 
   getHouse(OwnerId: any) {
     this.ngxLoader.start();
-    this.portalServ.get('PAPL/get/House/by/{ownerId}?ownerId=362' )
+    this.portalServ.get('PAPL/get/House/by/{ownerId}?ownerId='+OwnerId )
       .subscribe(res => {
         console.log(res);
         this.getallhouseList = res

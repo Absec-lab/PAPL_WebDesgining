@@ -241,7 +241,7 @@ export class HouseRegistrationComponent implements OnInit {
         vSts = true;
       } else {
         formControl.control?.markAsTouched();
-        vSts = true;//validation issues need to fixed 
+        vSts = false;//validation issues need to fixed 
 
         // Focus on the first invalid input field
         if (formControl.control) {
@@ -261,9 +261,6 @@ export class HouseRegistrationComponent implements OnInit {
         break;
       }
     }
-
-
-
     if (!vSts) {
       this.errorMessageForHouseMapping = "Kindly fill the all the field for House Registration"
     }
@@ -277,7 +274,7 @@ export class HouseRegistrationComponent implements OnInit {
     let vSts =this.validateData();
     console.log(vSts);
     console.log(this.houseRegistrationForm.valid);
-    // console.log(this.stateArray.valid);
+     //console.log(this.houseRegistrationForm.value.plantId);
     if (vSts) {
       let data = {
         "ownerId": this.houseRegistrationForm.value.ownerName,

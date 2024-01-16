@@ -49,7 +49,7 @@
                     <div class="form-group">
                         <label class="form-label">Plant<span class="text-danger">*</span></label>
                         <select class="form-select" formControlName="plantId" id="plantId"
-                            aria-label="Default select example" (change)="getHouseByPlantId($event)">
+                            aria-label="Default select example" (change)="getownerByPlantId($event)">
                             <option value="0" selected>Choose Plant... </option>
                             <option [value]="plant.plantId" *ngFor="let plant of activePlant">{{plant.plantName}}
                             </option>
@@ -81,7 +81,7 @@
                         <div class="form-group">
                             <label class="form-label">Owner Name <span class="text-danger">*</span></label>
 
-                            <select class="form-select" formControlName="ownerId" aria-label="Default select example">
+                            <select class="form-select" formControlName="ownerId" aria-label="Default select example" (change)="getHouseByOwnerId($event)">
                                 <option value="0" selected>Choose Owner Name...</option>
                                 <option *ngFor="let item of allOwner; let i = index" [value]="item.ownerId">
                                     {{item.ownerName}} </option>

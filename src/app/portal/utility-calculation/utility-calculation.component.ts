@@ -236,7 +236,8 @@ export class UtilityCalculationComponent implements OnInit {
 
 
     postUtilityCalc() {
-     if(this.electric.valid && this.water.valid) {
+      debugger
+     if(this.utilityCalculation.valid && this.electric.valid && this.water.valid) {
       let data = {
         "utilityCalculationData": {
           "fkStateId": this.utilityCalculation.value.state,
@@ -428,7 +429,7 @@ export class UtilityCalculationComponent implements OnInit {
         });
         this. getAllUtilityCalc()
         alert("calculation saved successfully")
-         // alert("calculation saved successfully")
+         //alert("calculation saved successfully")
       })
         this.utilityCalculation.reset;
 

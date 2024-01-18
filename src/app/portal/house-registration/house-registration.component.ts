@@ -69,10 +69,18 @@ export class HouseRegistrationComponent implements OnInit {
 
   initFormValidators(): void {
     // Add validators for the stateForm controls as needed
+    // this.stateArray.controls.forEach((control: FormGroup) => {
+    //   control.get('stateId')?.setValidators([Validators.required, Validators.min(1)]);
+    //   control.get('sbuId')?.setValidators([Validators.required, Validators.min(1)]);
+    //   control.get('plantId')?.setValidators([Validators.required, Validators.min(1)]);
+    // });
     this.stateArray.controls.forEach((control: FormGroup) => {
-      control.get('stateId')?.setValidators([Validators.required, Validators.min(1)]);
-      control.get('sbuId')?.setValidators([Validators.required, Validators.min(1)]);
-      control.get('plantId')?.setValidators([Validators.required, Validators.min(1)]);
+      control.get('stateId')?.setValidators([Validators.required]);
+      control.get('stateId')?.updateValueAndValidity();
+      control.get('sbuId')?.setValidators([Validators.required]);
+      control.get('sbuId')?.updateValueAndValidity();
+      control.get('plantId')?.setValidators([Validators.required]);
+      control.get('plantId')?.updateValueAndValidity();
     });
   }
   dateTimeValidator(control: FormControl): { [key: string]: boolean } | null {
@@ -124,19 +132,36 @@ export class HouseRegistrationComponent implements OnInit {
 
   addstate() {
     const stateGroup = this.formBuilder.group({
-      stateId: [this.stateId],
-      sbuId: [0, [Validators.required, Validators.min(1)]],
-      plantId: [0, [Validators.required, Validators.min(1)]],
-      mapId: [0, [Validators.required, Validators.min(1)]],
-      houseId: [0, [Validators.required, Validators.min(1)]],
+      // stateId: [this.stateId],
+      // sbuId: [0, [Validators.required, Validators.min(1)]],
+      // plantId: [0, [Validators.required, Validators.min(1)]],
+      // mapId: [0, [Validators.required, Validators.min(1)]],
+      // houseId: [0, [Validators.required, Validators.min(1)]],
+      stateId: ['', [Validators.required]],
+      sbuId: ['', [Validators.required]],
+      plantId: ['', [Validators.required]],
+      mapId: ['', [Validators.required]],
+      houseId: ['', [Validators.required]],
     });
 
-    stateGroup.get('stateId')?.setValidators([Validators.required, Validators.min(1)]);
-    stateGroup.get('sbuId')?.setValidators([Validators.required, Validators.min(1)]);
-    stateGroup.get('plantId')?.setValidators([Validators.required, Validators.min(1)]);
-    stateGroup.get('mapId')?.setValidators([Validators.required, Validators.min(1)]);
-    stateGroup.get('houseId')?.setValidators([Validators.required, Validators.min(1)]);
+    // stateGroup.get('stateId')?.setValidators([Validators.required, Validators.min(1)]);
+    // stateGroup.get('sbuId')?.setValidators([Validators.required, Validators.min(1)]);
+    // stateGroup.get('plantId')?.setValidators([Validators.required, Validators.min(1)]);
+    // stateGroup.get('mapId')?.setValidators([Validators.required, Validators.min(1)]);
+    // stateGroup.get('houseId')?.setValidators([Validators.required, Validators.min(1)]);
+    stateGroup.get('stateId')?.setValidators([Validators.required]);
+    stateGroup.get('stateId')?.updateValueAndValidity();
+    stateGroup.get('sbuId')?.setValidators([Validators.required]);
+    stateGroup.get('sbuId')?.updateValueAndValidity();
 
+    stateGroup.get('plantId')?.setValidators([Validators.required]);
+    stateGroup.get('plantId')?.updateValueAndValidity();
+
+    stateGroup.get('mapId')?.setValidators([Validators.required]);
+    stateGroup.get('mapId')?.updateValueAndValidity();
+
+    stateGroup.get('houseId')?.setValidators([Validators.required]);
+    stateGroup.get('houseId')?.updateValueAndValidity();
     this.stateArray.push(stateGroup);
   }
 
@@ -272,6 +297,12 @@ export class HouseRegistrationComponent implements OnInit {
 
 
   registerHouse() {
+    this.stateArray.controls.forEach((control: FormGroup) => {
+      control.get('houseId')?.clearValidators();
+      control.get('houseId')?.updateValueAndValidity();
+      control.get('mapId')?.clearValidators();
+      control.get('mapId')?.updateValueAndValidity();
+    });
     let vSts =this.validateData();
     console.log(vSts);
     console.log(this.houseRegistrationForm.valid);
@@ -302,6 +333,7 @@ export class HouseRegistrationComponent implements OnInit {
           this.houseRegistrationForm.reset()
           this.stateArray.clear()
           this.addstate()
+          this.errorMessageForHouseMapping = '';
           Swal.fire({
             icon: 'success',
             text: 'Record Saved Successfully'

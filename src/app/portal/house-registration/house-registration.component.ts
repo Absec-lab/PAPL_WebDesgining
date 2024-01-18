@@ -219,6 +219,7 @@ export class HouseRegistrationComponent implements OnInit {
 
 
   validateData() {
+    debugger
     const formControls = [
       { control: this.houseRegistrationForm.get('ownerName'), name: "Owner Name" },
       { control: this.houseRegistrationForm.get('houseName'), name: "House Name" },

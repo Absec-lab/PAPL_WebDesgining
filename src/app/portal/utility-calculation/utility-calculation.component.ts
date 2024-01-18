@@ -27,10 +27,10 @@ export class UtilityCalculationComponent implements OnInit {
       houseId: ['',Validators.required],
       startDate: ['',Validators.required],
       endDate: ['',Validators.required],
-      miscExp:[''],
+      miscExp:['0.0'],
       miscBill:[''],
       miscrecept:[''],
-      hrexp:[''],
+      hrexp:['0.0'],
       hrbill:[''],
       hrrecept:[''],
       hrrecFileExt:[''],
@@ -270,7 +270,7 @@ export class UtilityCalculationComponent implements OnInit {
       this.portalService.post("PAPL/calculate",data)
       .pipe(takeUntil(this.destroy$))
       .subscribe(res=> {
-       
+       debugger;
         this.ngxLoader.stop();     
         console.log('data',res);
         Swal.fire({

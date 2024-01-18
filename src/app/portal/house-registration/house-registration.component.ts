@@ -196,7 +196,7 @@ export class HouseRegistrationComponent implements OnInit {
 
   // Update your component code
   getSubonStateChange(event: any, index: number) {
-    this.activeSBU = [];
+    //this.activeSBU = [];
     const selectedStateId = event.target.value;
     this.stateId = selectedStateId;
 

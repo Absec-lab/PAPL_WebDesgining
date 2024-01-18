@@ -277,6 +277,7 @@ export class UtilityCalculationComponent implements OnInit {
           icon: 'success',
           text: 'Calculation Saved Successfully'
         });
+        window.location.reload();
         this. getAllUtilityCalc()
         alert("calculation saved successfully")
          // alert("calculation saved successfully")

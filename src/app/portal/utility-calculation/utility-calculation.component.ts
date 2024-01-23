@@ -27,10 +27,10 @@ export class UtilityCalculationComponent implements OnInit {
       houseId: ['',Validators.required],
       startDate: ['',Validators.required],
       endDate: ['',Validators.required],
-      miscExp:['0.0'],
+      miscExp:[''],
       miscBill:[''],
       miscrecept:[''],
-      hrexp:['0.0'],
+      hrexp:[''],
       hrbill:[''],
       hrrecept:[''],
       hrrecFileExt:[''],
@@ -236,7 +236,14 @@ export class UtilityCalculationComponent implements OnInit {
 
 
     postUtilityCalc() {
-      debugger
+      if(this.utilityCalculation.value.hrexp==null){
+        this.utilityCalculation.get('hrexp')?.setValue('0.0');
+        alert(this.utilityCalculation.value.hrexp);
+      }
+      if(this.utilityCalculation.value.miscExp==null){
+        this.utilityCalculation.get('miscExp')?.setValue('0.0');
+         alert(this.utilityCalculation.value.miscExp);
+      }
      if(this.utilityCalculation.valid && this.electric.valid && this.water.valid) {
       let data = {
         "utilityCalculationData": {

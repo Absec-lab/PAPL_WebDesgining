@@ -236,11 +236,11 @@ export class UtilityCalculationComponent implements OnInit {
 
 
     postUtilityCalc() {
-      if(this.utilityCalculation.value.hrexp==null){
+      if(this.utilityCalculation.value.hrexp==""){
         this.utilityCalculation.get('hrexp')?.setValue('0.0');
         alert(this.utilityCalculation.value.hrexp);
       }
-      if(this.utilityCalculation.value.miscExp==null){
+      if(this.utilityCalculation.value.miscExp==""){
         this.utilityCalculation.get('miscExp')?.setValue('0.0');
          alert(this.utilityCalculation.value.miscExp);
       }

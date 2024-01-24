@@ -218,7 +218,7 @@ export class UtilityCalculationComponent implements OnInit {
         reader.readAsDataURL(file);
       }
     }
-    console.log(this.utilityCalculation);
+    //console.log(this.utilityCalculation);
     
   }
 
@@ -236,15 +236,7 @@ export class UtilityCalculationComponent implements OnInit {
 
 
     postUtilityCalc() {
-      if(this.utilityCalculation.value.hrexp==""){
-        this.utilityCalculation.get('hrexp')?.setValue('0.0');
-        alert(this.utilityCalculation.value.hrexp);
-      }
-      if(this.utilityCalculation.value.miscExp==""){
-        this.utilityCalculation.get('miscExp')?.setValue('0.0');
-         alert(this.utilityCalculation.value.miscExp);
-      }
-     if(this.utilityCalculation.valid && this.electric.valid && this.water.valid) {
+      if(this.utilityCalculation.valid && this.electric.valid && this.water.valid) {
       let data = {
         "utilityCalculationData": {
           "fkStateId": this.utilityCalculation.value.state,
@@ -257,29 +249,46 @@ export class UtilityCalculationComponent implements OnInit {
           
         },
         "utilityCalculationHRExpenseDto": {
-          "hrExpenseAmt":  this.utilityCalculation.value.hrexp,
+          "hrExpenseAmt":  "0.0",
           "hrBillDoc":  this.utilityCalculation.value.hrbill,
           "hrrecDoc":  this.utilityCalculation.value.hrrecept,
           "recFileExt":this.utilityCalculation.value.hrrecFileExt ,
           "billFileExt":this.utilityCalculation.value.hrbillFileExt,
         },
         "utilityCalculationMiscDto": {
-          "miscExpenseAmt":  this.utilityCalculation.value.miscExp,
+          "miscExpenseAmt":  "0.0",
           "miscBillDoc": this.utilityCalculation.value.miscBill,
           "miscRecDoc":  this.utilityCalculation.value.miscrecept,
           "billFileExt": this.utilityCalculation.value.misbillFileExt,
           "recFileExt":this.utilityCalculation.value.misrecFileExt,
         },
-        "utilityCalculationElectricDto": this.electric.value,
-        "utilityCalculationWaterDto":this.water.value,
+       "utilityCalculationElectricDto": this.electric.value,
+       "utilityCalculationWaterDto":this.water.value,
+      //  "utilityCalculationElectricDto": [
+      //   {
+      //     "eleExpenseAmt": this.electric.value.eleExpenseAmt,
+      //     "eleBillDoc": "iVBORw0KGgoAAAANSUhEUgAAAzgAAAMACAYAAADopcJCAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA",
+      //   "eleRecDoc": "iVBORw0KGgoAAAANSUhEUgAAAzgAAAMACAYAAADopcJCAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAA",
+      //   "billFileExt": ".png",
+      //     "recFileExt": ".png"
+      //   }
+      // ],
+      // "utilityCalculationWaterDto": [
+      //   {
+      //     "waterExpenseAmount": this.water.value.waterExpenseAmount,    
+      //     "waterBilldoc": "iVBORw0KGgoAAAANSUhEUgAAAzgAAAMACAYAAADopcJCAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJ",
+      //   "waterRecDoc": "iVBORw0KGgoAAAANSUhEUgAAAzgAAAMACAYAAADopcJCAAAAAXNSR0IArs4c6QAAAARnQU1BAA",
+      //   "billFileExt": ".png",
+      //     "recFileExt": ".png"
+      //   }
+      // ]
       }
-      console.log(data)
+      //console.log(data)
       this.portalService.post("PAPL/calculate",data)
       .pipe(takeUntil(this.destroy$))
       .subscribe(res=> {
-       debugger;
         this.ngxLoader.stop();     
-        console.log('data',res);
+        //console.log('data',res);
         Swal.fire({
           icon: 'success',
           text: 'Calculation Saved Successfully'

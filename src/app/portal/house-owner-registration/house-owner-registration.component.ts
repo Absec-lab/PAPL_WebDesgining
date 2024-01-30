@@ -33,7 +33,7 @@ export class HouseOwnerRegistrationComponent {
   noOfLegalParties: any;
   page: number = 1;
   count: number = 0;
-  tableSize: number = 25;
+  tableSize: number = 10;
   tableSizes: any = [3, 6, 9, 12];
   distControl = new FormControl();
   pinControl = new FormControl();

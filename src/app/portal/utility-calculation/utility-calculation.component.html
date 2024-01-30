@@ -298,7 +298,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let item of tableData; let i = index">
+                    <tr *ngFor="let item of tableData | paginate
+                    : {
+                        itemsPerPage: tableSize,
+                        currentPage: page,
+                        totalItems: count
+                      }; let i = index">
                         <td>{{ i+1 }}</td>
                         <td>{{ item.stateName }}</td>
                         <td>{{ item.locationName}}</td>
@@ -333,6 +338,13 @@
                 </tbody>
             </table>
         </div>
+        <div class="d-flex justify-content-center">
+            <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+            </pagination-controls>
+            <button class="btn btn-primary form-save-btn" (click)="exportAsXLSX()">
+                Export To Excel
+              </button>
+        </div> 
     </div>
 </section>
 <app-footer></app-footer>

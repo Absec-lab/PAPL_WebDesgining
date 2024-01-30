@@ -5,6 +5,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { ValidatorchklistService } from '../serviceapi/validatorchklist.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import Swal from 'sweetalert2';
+import { ExcelService } from '../serviceapi/excel.service';
 
 @Component({
   selector: 'app-utility-calculation',
@@ -13,9 +14,15 @@ import Swal from 'sweetalert2';
 })
 export class UtilityCalculationComponent implements OnInit {
   utilityCalculation!: FormGroup;
+  tableData: any = [];
+  duplicateTableData: any[] =[];
+  page: number = 1;
+  count: number = 0;
+  tableSize: number = 10;
+  tableSizes: any = [3, 6, 9, 12];
   stateDtails: any = [];
   updatebtn: boolean = false;
-  constructor(private ngxLoader: NgxUiLoaderService, public validateService: ValidatorchklistService, private portalService: PortalServiceService,private formBuilder: FormBuilder) { }
+  constructor(private ngxLoader: NgxUiLoaderService, public validateService: ValidatorchklistService, private portalService: PortalServiceService,private formBuilder: FormBuilder ,private excelService: ExcelService) { }
 
 
   ngOnInit(): void {
@@ -141,7 +148,7 @@ export class UtilityCalculationComponent implements OnInit {
   
 
 
-  tableData:any
+  
   onClick() {
     // Your button click logic here
     alert('Deleted Successfully!!');
@@ -150,12 +157,22 @@ export class UtilityCalculationComponent implements OnInit {
     // Your button click logic here
     alert('Save Successfully!!');
   }
-
+  onTableDataChange(event: any) {
+    this.page = event;
+    this.getAllUtilityCalc();
+  }
+  onTableSizeChange(event: any): void {
+    this.tableSize = event.target.value;
+    this.page = 1;
+    this.getAllUtilityCalc();
+  }
   getAllUtilityCalc() {
     this.portalService.get('PAPL/getAllUtilityCalculation')
     .subscribe(res => {
+      this.getAllUtilityCalc = res.data;
       this.tableData = res.data
-      console.log( this.tableData )
+      console.log( this.getAllUtilityCalc )
+      this.duplicateTableData = res.data;
     })
   }
 
@@ -287,7 +304,7 @@ export class UtilityCalculationComponent implements OnInit {
       this.portalService.post("PAPL/calculate",data)
       .pipe(takeUntil(this.destroy$))
       .subscribe(res=> {
-        this.ngxLoader.stop();     
+        //this.ngxLoader.stop();     
         //console.log('data',res);
         Swal.fire({
           icon: 'success',
@@ -295,11 +312,11 @@ export class UtilityCalculationComponent implements OnInit {
         });
         window.location.reload();
         this. getAllUtilityCalc()
-        alert("calculation saved successfully")
+        // alert("calculation saved successfully")
          // alert("calculation saved successfully")
       })
-        this.utilityCalculation.reset();
-        window.location.reload();
+        // this.utilityCalculation.reset();
+        // window.location.reload();
 
      } else {
       //this.markFormGroupTouched(this.utilityCalculation);
@@ -307,7 +324,7 @@ export class UtilityCalculationComponent implements OnInit {
       this.markFormArrayControlsTouched(this.water);
       this.scrollToTop();
      // alert("Please Enter Required fields !")
-     }
+     }                                   
     }
 
     markFormGroupTouched(formGroup: FormGroup) {
@@ -545,7 +562,19 @@ export class UtilityCalculationComponent implements OnInit {
             //     this.getAllHouseDetailList();
         
             //  }); 
-      
+            exportAsXLSX(): void {
+              debugger;
+              let removeColumnData = ['unitId','houseId','locationId','plantId','stateId',''];
+              let Heading =[
+                [ "State","SBU","Plant","House Name	","HR EXP	","MISC EXP","ELE EXP	","WTR EXP	","Start Date	","End Date","Created Date"]  
+              ];
+              removeColumnData.forEach(e => {
+                this.duplicateTableData.forEach(element => {
+                  delete element[e]
+             });
+           });
+              this.excelService.exportAsExcelFile(this.duplicateTableData, 'utilityCalculation',Heading);
+            }
     }
 
     

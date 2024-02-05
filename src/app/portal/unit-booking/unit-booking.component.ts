@@ -5,6 +5,11 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ValidatorchklistService } from '../serviceapi/validatorchklist.service';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import Swal from 'sweetalert2';
+import { FormControl } from '@angular/forms';
+
+// Import NgModel
+import { NgModel } from '@angular/forms';
+
 
 @Component({
   selector: 'app-unit-booking',
@@ -12,6 +17,10 @@ import Swal from 'sweetalert2';
   styleUrls: ['../../common.css','./unit-booking.component.css']
 })
 export class UnitBookingComponent implements OnInit {
+
+  periodValue: string | undefined;
+  startDate: string | undefined;
+  endDate: string | undefined;
 
   employeeForm!: FormGroup;
   stateDtails: any = [];
@@ -56,6 +65,7 @@ export class UnitBookingComponent implements OnInit {
       selectPeriod:[''],
       plantName:['',Validators.required],
       serviceOrder:[''],
+      endDate: [''],
       
     });
 
@@ -188,6 +198,7 @@ export class UnitBookingComponent implements OnInit {
   }
 
 postBooking() {
+ 
   let data =  {
     "houseId":this.houseId,
     "unitId":this.unitId,
@@ -205,15 +216,22 @@ postBooking() {
 }
 
   console.log(data);
+
+  
+
+
   
   this.portalService.post("PAPL/UnitBooking",data)
-  .subscribe((res)=>{
-    console.log(res)
-    alert("booking succcesfull")
+  .subscribe((res) => {
+    console.log(res);
+    Swal.fire({
+      icon: "success",
+      text: "Booking successful",
+    });
     this.employeeForm.reset();
     this.unitBookingSearch();
-    this.ngOnInit()
-  })
+    this.ngOnInit();
+  });
 }
 
 markFormGroupTouched(formGroup: FormGroup) {
@@ -262,6 +280,27 @@ selectEmp(event: any) {
     // Your button click logic here
    // alert('Update Successfully!!');
     this.unitBookingSearch()
+  }
+
+  onStartDateChange() {
+    this.calculateEndDate();
+  }
+  
+  onPeriodChange() {
+    this.calculateEndDate();
+  }
+  
+  calculateEndDate() {
+    const startDate = this.employeeForm.get('bookStartDate')?.value;
+    const periodValue = this.employeeForm.get('selectPeriod')?.value;
+  
+    if (startDate && periodValue) {
+      const startDateObj = new Date(startDate);
+      const periodValueNum = parseInt(periodValue, 10);
+      startDateObj.setDate(startDateObj.getDate() + periodValueNum);
+      const endDate = startDateObj.toISOString().split('T')[0];
+      this.employeeForm.patchValue({ bkEndDate: endDate });
+    }
   }
 
   ngOnDestroy() {

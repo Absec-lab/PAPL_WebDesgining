@@ -12,17 +12,20 @@
             <div class="col-sm-6 col-md-4">
                 <div class="form-group">
                     <label class="form-label">Owner Name<span class="text-danger">*</span></label>
-                    <!-- <input type="text" name="" id="" class="form-control" required formControlName="ownerName"> -->
-                    <select formControlName="ownerName" class="form-select" aria-label="Default select example"
-                        required>
-                        <option value="0" selected>Choose Owner Name...</option>
-
-                        <option *ngFor="let owner of allOwner" [value]="owner.ownerId">{{ owner.ownerName }}</option>
-                    </select>
-                    <div *ngIf="houseRegistrationForm.get('ownerName')?.invalid && houseRegistrationForm.get('ownerName')?.touched"
+                    <ng-container *ngIf="!updatebtn; else showInputField">
+                        <select formControlName="ownerName" class="form-select" aria-label="Default select example" required>
+                            <option value="0" selected>Choose Owner Name...</option>
+                            <option *ngFor="let owner of allOwner" [value]="owner.ownerId">{{ owner.ownerName }}</option>
+                        </select>
+                    </ng-container>
+                    <ng-template #showInputField>
+                        <input type="text" name="" id="" class="form-control" formControlName="ownerName" maxlength="20">
+                    </ng-template>
+                    <div *ngIf="houseRegistrationForm.get('owner')?.invalid && houseRegistrationForm.get('owner')?.touched"
                         class="error-message">
-                        <div *ngIf="houseRegistrationForm.get('ownerName')?.hasError('min')">
-                            Select Owner Name.</div>
+                        <div *ngIf="houseRegistrationForm.get('owner')?.hasError('min')">
+                            Select Owner Name.
+                        </div>
                     </div>
                 </div>
             </div>

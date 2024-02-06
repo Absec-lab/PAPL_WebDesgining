@@ -45,7 +45,7 @@ export class UnitBookingComponent implements OnInit {
 
   private destroy$ = new Subject<void>();
   
-  constructor(private ngxLoader: NgxUiLoaderService, private portalService:PortalServiceService,private formBuilder: FormBuilder, public vldChkLst: ValidatorchklistService) {}
+  constructor(private fb: FormBuilder,private ngxLoader: NgxUiLoaderService, private portalService:PortalServiceService,private formBuilder: FormBuilder, public vldChkLst: ValidatorchklistService) {}
 
 
 
@@ -53,7 +53,7 @@ export class UnitBookingComponent implements OnInit {
     this.getAllStateList()
 
     this.employeeForm = this.formBuilder.group({
-      state: ['',Validators.required],
+      state: ['Choose State...',Validators.required],
       sbuId: ['',Validators.required],
       plantId: ['',Validators.required],
       empId: ['',Validators.required],

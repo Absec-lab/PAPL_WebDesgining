@@ -351,7 +351,7 @@ export class HouseRegistrationComponent implements OnInit {
     this.updatebtn = true;
     console.log(item);
     this.houseRegistrationForm.patchValue({
-      ownerName: item.ownerId,
+      ownerName: item.ownerName,
       houseName: item.houseName,
       noOfRooms: item.noOfUnits,
       electricBill: item.noOfEleBills,

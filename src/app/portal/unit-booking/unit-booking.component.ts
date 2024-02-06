@@ -189,7 +189,7 @@ export class UnitBookingComponent implements OnInit {
 
   getEmployeeDetails() {
 
-    this.portalService.get("PAPL/getEmployeeFachingDetails?housing_status=true")
+    this.portalService.get(`/PAPL/getEmployeeFachingDetails?state_id=${this.stateId}&location_id=${this.sbuId}&plant_id=${this.plantId}`)
     .pipe(takeUntil(this.destroy$))
     .subscribe((res)=>{
       this.allemployeeDetails = res

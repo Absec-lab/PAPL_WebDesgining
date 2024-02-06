@@ -424,7 +424,7 @@ export class HouseRegistrationComponent implements OnInit {
         let data = {
           "houseId": this.houseId,
           "mapId": this.mapId,
-          "ownerId": this.houseRegistrationForm.value.ownerName,
+          "ownerId": this.houseRegistrationForm.value.ownerId,
           "houseName": this.houseRegistrationForm.value.houseName,
           "address": this.houseRegistrationForm.value.address,
           "address2": this.houseRegistrationForm.value.address2,

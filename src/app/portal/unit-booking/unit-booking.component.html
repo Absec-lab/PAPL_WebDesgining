@@ -93,7 +93,7 @@
                     <td>{{ i+1}}</td>
                     <td>{{ item.houseName }}</td>
                     <td>{{ item.unitNo }}</td>
-                    <td>{{ item.booked }}</td>
+                    <td  (click)="showBookedData( item.booked)">{{ item.booked }}</td>
                     <td>{{ item.available}}</td>
                     <td>
 

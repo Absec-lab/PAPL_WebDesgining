@@ -6,6 +6,8 @@ import { ValidatorchklistService } from '../serviceapi/validatorchklist.service'
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import Swal from 'sweetalert2';
 import { FormControl } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+
 
 // Import NgModel
 import { NgModel } from '@angular/forms';
@@ -45,7 +47,7 @@ export class UnitBookingComponent implements OnInit {
 
   private destroy$ = new Subject<void>();
   
-  constructor(private fb: FormBuilder,private ngxLoader: NgxUiLoaderService, private portalService:PortalServiceService,private formBuilder: FormBuilder, public vldChkLst: ValidatorchklistService) {}
+  constructor(private http:HttpClient,private fb: FormBuilder,private ngxLoader: NgxUiLoaderService, private portalService:PortalServiceService,private formBuilder: FormBuilder, public vldChkLst: ValidatorchklistService) {}
 
 
 
@@ -189,7 +191,7 @@ export class UnitBookingComponent implements OnInit {
 
   getEmployeeDetails() {
 
-    this.portalService.get("PAPL/getEmployeeFachingDetails?housing_status=true")
+    this.portalService.get(`/PAPL/getEmployeeFachingDetails?state_id=${this.stateId}&location_id=${this.sbuId}&plant_id=${this.plantId}`)
     .pipe(takeUntil(this.destroy$))
     .subscribe((res)=>{
       this.allemployeeDetails = res
@@ -308,6 +310,56 @@ selectEmp(event: any) {
     this.destroy$.complete();
   }
 
+  showBookedData( booked: number) {
+    const apiUrl =` http://206.189.142.35:9090/PAPL/getEmployeebookedDetails?booked=${booked}`;
+  
+    this.http.get(apiUrl)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        (response: any) => {
+          const data = response; 
+          console.log(data[0],"bookedData");
+          if (response && response.length > 0) {
+            const data = response[0]; 
+            Swal.fire({
+              title:` Data for ${ data.houseName}`,
+              html: `
+                <div style="text-align: left;">
+                <p><strong>StateName:</strong> ${data.stateName}</p>
+                <p><strong>SBU Name:</strong> ${data.locationName}</p>
+                <p><strong>Plant Name:</strong> ${data.plantName}</p>
+                  <p><strong>House Name:</strong> ${ data.houseName}</p>
+                  <p><strong>Room No:</strong> ${ data.unitNo}</p>
+                  <p><strong>Employee Id:</strong> ${data.empId}</p>
+                  <p><strong>Employee Name:</strong> ${data.empName}</p>
+                  <p><strong>Mobile No:</strong> ${data.mobileNo}</p>
+                  <p><strong>So:</strong> ${data.so}</p>
+                  <p><strong>Email Id:</strong> ${data.emailId}</p>
+                </div>
+              `,
+              // icon: 'info'
+            });
+          } else {
+            console.error('Invalid response format:', response);
+            Swal.fire({
+              title: 'Data Not Available',
+              // text: 'Invalid response format',
+              icon: 'error'
+            });
+          }
+        },
+        (error) => {
+          console.error('Error fetching data:', error);
+          Swal.fire({
+            title: 'Error',
+            text: 'Failed to fetch data from the API',
+            icon: 'error'
+          });
+        }
+      );
+  }
+
+  
 }
 
   

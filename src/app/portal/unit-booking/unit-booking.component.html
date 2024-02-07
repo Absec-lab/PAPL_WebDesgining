@@ -93,7 +93,7 @@
                     <td>{{ i+1}}</td>
                     <td>{{ item.houseName }}</td>
                     <td>{{ item.unitNo }}</td>
-                    <td>{{ item.booked }}</td>
+                    <td  (click)="showBookedData( item.booked)">{{ item.booked }}</td>
                     <td>{{ item.available}}</td>
                     <td>
 
@@ -128,7 +128,7 @@
                         <div class="ms-5 d-flex-2">
                             <select   formControlName="empId" class="form-select date " aria-label="Default select example" required  (change)="selectEmp($event)">
                                 <option selected> Choose Employee ...</option>
-                                <option *ngFor="let emp of allemployeeDetails" [value]="emp.empId" >{{emp.empId}}</option>
+                                <option *ngFor="let emp of allemployeeDetails" [value]="emp.paplId" >{{emp.paplId}}</option>
                             </select>
                         </div>
                     </div>

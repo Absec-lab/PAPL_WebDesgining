@@ -65,9 +65,9 @@ export class UtilityCalculationComponent implements OnInit {
 
   addelectric() {
     const stateGroup = this.formBuilder.group({
-      eleExpenseAmt: ["", Validators.required],
-      eleBillDoc: ["", Validators.required],
-      eleRecDoc: ["", Validators.required],
+      eleExpenseAmt: [""],
+      eleBillDoc: [""],
+      eleRecDoc: [""],
       billFileExt: [""],
       recFileExt: [""],
     });
@@ -85,9 +85,9 @@ export class UtilityCalculationComponent implements OnInit {
 
   addwater() {
     const stateGroup = this.formBuilder.group({
-      waterExpenseAmount: ["", Validators.required],
-      waterBilldoc: ["", Validators.required],
-      waterRecDoc: ["", Validators.required],
+      waterExpenseAmount: [""],
+      waterBilldoc: [""],
+      waterRecDoc: [""],
       billFileExt: [""],
       recFileExt: [""],
     });
@@ -110,7 +110,7 @@ export class UtilityCalculationComponent implements OnInit {
   stateId: any;
   getSubonStateChange(event: any) {
     this.activeSBU = [];
-    const selectedStateId = event.target.value;
+    const selectedStateId = 1//event.target.value;
     this.stateId = selectedStateId;
 
     this.portalService
@@ -125,7 +125,7 @@ export class UtilityCalculationComponent implements OnInit {
   sbuId: any;
   getPlantOnSubChange(event: any) {
     this.activePlant = [];
-    const selectedSublocation = event.target.value;
+    const selectedSublocation = 1//event.target.value;
     this.sbuId = selectedSublocation;
 
     this.portalService
@@ -140,7 +140,7 @@ export class UtilityCalculationComponent implements OnInit {
   plantId: any;
   getHouseByPlantId(event: any) {
     this.activeHouse = [];
-    const selectedPlantId = event.target.value;
+    const selectedPlantId = 1//event.target.value;
     this.plantId = selectedPlantId;
 
     this.portalService
@@ -259,9 +259,7 @@ export class UtilityCalculationComponent implements OnInit {
 
   postUtilityCalc() {
     if (
-      this.utilityCalculation.valid &&
-      this.electric.valid &&
-      this.water.valid
+      this.utilityCalculation.valid 
     ) {
       let data = {
         utilityCalculationData: {
@@ -274,14 +272,14 @@ export class UtilityCalculationComponent implements OnInit {
           createdDate: "",
         },
         utilityCalculationHRExpenseDto: {
-          hrExpenseAmt: "0.0",
+          hrExpenseAmt: this.utilityCalculation.value.hrexp,
           hrBillDoc: this.utilityCalculation.value.hrbill,
           hrrecDoc: this.utilityCalculation.value.hrrecept,
           recFileExt: this.utilityCalculation.value.hrrecFileExt,
           billFileExt: this.utilityCalculation.value.hrbillFileExt,
         },
         utilityCalculationMiscDto: {
-          miscExpenseAmt: "0.0",
+          miscExpenseAmt: this.utilityCalculation.value.miscExp,
           miscBillDoc: this.utilityCalculation.value.miscBill,
           miscRecDoc: this.utilityCalculation.value.miscrecept,
           billFileExt: this.utilityCalculation.value.misbillFileExt,
@@ -328,8 +326,8 @@ export class UtilityCalculationComponent implements OnInit {
       // window.location.reload();
     } else {
       //this.markFormGroupTouched(this.utilityCalculation);
-      this.markFormArrayControlsTouched(this.electric);
-      this.markFormArrayControlsTouched(this.water);
+      //this.markFormArrayControlsTouched(this.electric);
+      //this.markFormArrayControlsTouched(this.water);
       this.scrollToTop();
       // alert("Please Enter Required fields !")
     }
@@ -374,28 +372,27 @@ export class UtilityCalculationComponent implements OnInit {
       houseId: item.fkHouseId,
       startDate: item.startDate,
       endDate: item.endDate,
-      hrexp: item.hrExpenseAmount,
+      // hrexp:item.hrExpenseAmt,
+      // miscExp: item.miscExpenseAmount,
+      // eleExpenseAmt: item.eleExpenseAmount,
+      // waterExpenseAmount: item.waterExpenseAmount,
+      hrexp:item.hrExpenseAmount,
       miscExp: item.miscExpenseAmount,
       eleExpenseAmt: item.eleExpenseAmount,
       waterExpenseAmount: item.waterExpenseAmount,
-
-      //miscExp:item.miscExpenseAmount,
-      // miscBill:item.miscExpenseAmount,
-      // miscrecept:item.miscrecept,
-      //hrexp:item.hrExpenseAmount,
-      // hrbill:item.eleExpenseAmount,
-      // hrrecept:item.hrrecept,
-      // hrrecFileExt:item.hrrecFileExt,
-      // hrbillFileExt:item.hrbillFileExt,
-      // misbillFileExt:item.misbillFileExt,
-      // misrecFileExt:item.item.misrecFileExt,
-      // electricbill: this.formBuilder.array([]),
+      
+      
+      //miscBill:item.miscExpenseAmount,
+      //miscrecept:item.miscrecept,
+      //hrbill:item.eleExpenseAmount,
+      //hrrecept:item.hrrecept,
+      //hrrecFileExt:item.hrrecFileExt,
+      //hrbillFileExt:item.hrbillFileExt,
+      //misbillFileExt:item.misbillFileExt,
+      //misrecFileExt:item.item.misrecFileExt,
+      //electricbill: this.formBuilder.array([]),
       //waterbill: this.formBuilder.array([]),
     });
-
-    while (this.electric.length !== 0) {
-      this.electric.removeAt(0);
-    }
 
     setTimeout(() => {
       this.getSubonStateChange(item.fkStateId);

@@ -96,7 +96,7 @@
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             <label for="state" class="form-label">Misc Expense</label>
-                            <input type="text" name="" id="" class="form-control" formControlName="miscExp"  maxlength="8" value="0">
+                            <input type="text" name="" id="" class="form-control" formControlName="miscExp"  maxlength="8">
                             <!-- <div *ngIf="utilityCalculation.get('miscExp')?.hasError('required') && utilityCalculation.get('miscExp')?.touched" style="color: red;">
                                 Misc Expense is required.
                               </div> -->
@@ -133,7 +133,7 @@
                     <div class="col-sm-6 col-md-4 ">
                         <div class="form-group">
                             <label for="state" class="form-label">HR Expense</label>
-                            <input type="text" name="" id="" class="form-control" formControlName="hrexp"  maxlength="8" (input)="validateService.allowNumericDigits($event) "value="0 ">
+                            <input type="text" name="" id="" class="form-control" formControlName="hrexp"  maxlength="8" (input)="validateService.allowNumericDigits($event)">
                             <!-- <div *ngIf="utilityCalculation.get('hrexp')?.hasError('required') && utilityCalculation.get('hrexp')?.touched" style="color: red;">
                                 HR Expense is required.
                               </div> -->
@@ -170,91 +170,95 @@
                       
                     <hr class="my-3">
                     <div class="row" formArrayName="electricbill">
-                        <div class="row" *ngFor="let stateGroup of water.controls; let i = index" [formGroupName]="i"> 
-                            <div class=" col-md-3">
-                                <div class="form-group">
-                                    <label for="electricBill" class="form-label">Electric Bill Expense</label>
-                                    <input type="text" id="electricBill" class="form-control" required formControlName="eleExpenseAmt"  maxlength="8" (input)="validateService.allowNumericDigits($event)">
-                                    
-                                </div>
-                            </div>
-                            <div class=" col-md-4">
-                                <div class="form-group">
-                                    <label for="billUpload" class="form-label">Bill Upload</label>
-                                    <!-- Hidden input to store file value  -->
-                                    <input type="file"  class="form-control" accept="image/*,.pdf" (change)="onImageChange($event, 'eleBillDoc','electricbill', i)">
-                                    
-                                        <!-- Visible input to display file name  -->
-                                        <!-- <input type="text" readonly class="form-control" (click)="fileInputbillupload.click()" formControlName="billupload" > -->
-                                </div>
-                            </div>
-                            <div class=" col-md-3">
-                                <div class="form-group">
-                                            <label for="receiptUpload" class="form-label">Receipt Upload</label>
-                                            <!-- Hidden input to store file value  -->
-                                        <input type="file" class="form-control"  accept="image/*,.pdf" (change)="onImageChange($event, 'eleRecDoc','electricbill', i)">
-                                        
-                                    <!-- Visible input to display file name  -->
-                                    <!-- <input type="text" readonly class="form-control" (click)="fileInputreceiptupload.click()" formControlName="receiptupload" > -->
-                                </div>
+                        <div class="row" *ngFor="let stateGroup of electric.controls; let i = index" [formGroupName]="i"> 
+                        <div class=" col-md-3">
+                          <div class="form-group">
+                            <label for="electricBill" class="form-label">Electric Bill Expense<span class="text-danger">*</span></label>
+                            <input type="text" id="electricBill" class="form-control" formControlName="eleExpenseAmt"  maxlength="8" (input)="validateService.allowNumericDigits($event)">
                             
-                            </div>
-                            <div class="col-md-2 btn-icon">
-                                <button class="btn btn-danger btn-sm" *ngIf="i>0" (click)=" removeelectric(i)">
-                                    <i class="fa-solid fa-trash-alt"></i>
-                                </button>
-                                <button (click)=" addelectric()" type="button" class="btn btn-primary m-1 btn-sm"> <i class="fa-solid fa-plus"></i></button>
-                            </div>
+                          </div>
+                        </div>
+                        <div class=" col-md-4">
+                          <div class="form-group">
+                            <label for="billUpload" class="form-label">Bill Upload<span class="text-danger">*</span></label>
+                             <!-- Hidden input to store file value  -->
+                          <input type="file"  class="form-control" accept="image/*,.pdf" (change)="onImageChange($event, 'eleBillDoc','electricbill', i)">
+                          
+                          <!-- Visible input to display file name  -->
+                         <!-- <input type="text" readonly class="form-control" (click)="fileInputbillupload.click()" formControlName="billupload" > -->
+                          </div>
+                        </div>
+                        <div class=" col-md-3">
+                          <div class="form-group">
+                            <label for="receiptUpload" class="form-label">Receipt Upload<span class="text-danger">*</span></label>
+                             <!-- Hidden input to store file value  -->
+                          <input type="file" class="form-control"  accept="image/*,.pdf" (change)="onImageChange($event, 'eleRecDoc','electricbill', i)">
+                          
+                          <!-- Visible input to display file name  -->
+                         <!-- <input type="text" readonly class="form-control" (click)="fileInputreceiptupload.click()" formControlName="receiptupload" > -->
+                          </div>
+                          
+                        </div>
+                        <div class="col-md-2 btn-icon">
+                          <button class="btn btn-danger btn-sm" *ngIf="i>0" (click)=" removeelectric(i)">
+                            <i class="fa-solid fa-trash-alt"></i>
+                          </button>
+                          <button (click)=" addelectric()" type="button" class="btn btn-primary m-1 btn-sm"> <i class="fa-solid fa-plus"></i></button>
+                        </div>
                       </div>
                     </div>
                       
                     <hr class="my-3">
-                    <div class="row" formArrayName="waterbill"> 
-                        <div class="row" *ngFor="let stateGroup of water.controls; let i = index" [formGroupName]="i">
-                            <div class="col-sm-6 col-md-3">
-                                <div class="form-group">
-                                    <label for="state" class="form-label">Water Bill Expense</label>
-                                    <input type="text" name="" id="" class="form-control" required formControlName="waterExpenseAmount"  maxlength="8" (input)="validateService.allowNumericDigits($event)">
-                                    
-                                    
+                        <div class="row" formArrayName="waterbill"> 
+                            <div class="row" *ngFor="let stateGroup of water.controls; let i = index" [formGroupName]="i">
+                                <div class="col-sm-6 col-md-3">
+                                    <div class="form-group">
+                                        <label for="state" class="form-label">Water Bill Expense<span class="text-danger">*</span></label>
+                                        <input type="text" name="" id="" class="form-control" formControlName="waterExpenseAmount" maxlength="8" (input)="validateService.allowNumericDigits($event)">
+                                        
+                                        
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-6 col-md-4  ">
-                                <div class="form-group">
-                                    <label for="state" class="form-label">Bill Upload</label>
-                                    <!-- Hidden input to store file value  -->
-                                <input type="file" class="form-control"  accept="image/*,.pdf" (change)="onImageChange($event, 'waterBilldoc','waterbill',i)">
-                                
-                                <!-- Visible input to display file name  -->
-                                <!-- <input type="text" readonly class="form-control" (click)="fileInputwaterbillupload.click()" formControlName="waterbillupload" > -->
+                                <div class="col-sm-6 col-md-4  ">
+                                    <div class="form-group">
+                                        <label for="state" class="form-label">Bill Upload<span class="text-danger">*</span></label>
+                                        <!-- Hidden input to store file value  -->
+                                    <input type="file" class="form-control"  accept="image/*,.pdf" (change)="onImageChange($event, 'waterBilldoc','waterbill',i)">
+                                    <div style="color: red;" *ngIf="water.controls[i].get('waterBilldoc')?.hasError('required') && water.controls[i].get('waterBilldoc')?.touched">
+                                        Water Bill Upload is Mandatory.
+                                    </div>
+                                    <!-- Visible input to display file name  -->
+                                    <!-- <input type="text" readonly class="form-control" (click)="fileInputwaterbillupload.click()" formControlName="waterbillupload" > -->
+                                    </div>
+                
                                 </div>
-            
-                            </div>
     
-                            <div class="col-sm-6 col-md-3  ">
-                                <div class="form-group">
-                                    <label for="state" class="form-label">Receipt Upload</label>
-                                    <!-- Hidden input to store file value  -->
-                                <input type="file" class="form-control"  accept="image/*,.pdf" (change)="onImageChange($event, 'waterRecDoc','waterbill', i)">
-                                
-                                <!-- Visible input to display file name  -->
-                                <!-- <input type="text" readonly class="form-control" (click)="waterreceiptupload.click()" formControlName="waterreceiptupload" > -->
+                                <div class="col-sm-6 col-md-3  ">
+                                    <div class="form-group">
+                                        <label for="state" class="form-label">Receipt Upload<span class="text-danger">*</span></label>
+                                        <!-- Hidden input to store file value  -->
+                                    <input type="file" class="form-control"  accept="image/*,.pdf" (change)="onImageChange($event, 'waterRecDoc','waterbill', i)">
+                                    <div style="color: red;" *ngIf="water.controls[i].get('waterRecDoc')?.hasError('required') && water.controls[i].get('waterRecDoc')?.touched">
+                                        Receipt Upload is Mandatory.
+                                    </div>
+                                    <!-- Visible input to display file name  -->
+                                    <!-- <input type="text" readonly class="form-control" (click)="waterreceiptupload.click()" formControlName="waterreceiptupload" > -->
+                                    </div>
+                
                                 </div>
-            
+                                <div class="col-md-2 btn-icon" >
+                                    <button class="btn btn-danger btn-sm" *ngIf="i>0" (click)="removewater(i)">
+                                    <i class="fa-solid fa-trash-alt" ></i>
+                                    </button>
+                                    <button type="button" class="btn btn-primary m-1 btn-sm" (click)="addwater()"> <i class="fa-solid fa-plus" ></i></button>
+                                </div>
                             </div>
-                            <div class="col-md-2 btn-icon" >
-                                <button class="btn btn-danger btn-sm" *ngIf="i>0" (click)="removewater(i)">
-                                <i class="fa-solid fa-trash-alt" ></i>
-                                </button>
-                                <button type="button" class="btn btn-primary m-1 btn-sm" (click)="addwater()"> <i class="fa-solid fa-plus" ></i></button>
-                            </div>
-                   </div>
-              </div>
+                        </div>
                  
                     
-                </div>
+                    </div>
 
-            </div>
+                </div>
             <div class="mt-4 d-flex justify-content-end">
                 <button *ngIf="!updatebtn" class="btn btn-primary form-save-btn" (click)="postUtilityCalc()">
                     Save

@@ -300,7 +300,7 @@
                         <td>{{ item.stateName }}</td>
                         <td>{{ item.locationName}}</td>
                         <td>{{ item.plantName}}</td>
-                        <td (click)="showHouseData(item.houseName, item.fkHouseId)">{{ item.houseName }}</td>
+                        <td (click)="showHouseData(item.houseName, item.fkHouseId) "  style="cursor: pointer; color: blue; text-decoration: underline;" >{{ item.houseName }}</td>
                         <td>{{ item.hrExpenseAmount }}</td>
                         <td>{{ item.miscExpenseAmount }}</td>
                         <td>{{ item.eleExpenseAmount }}</td>

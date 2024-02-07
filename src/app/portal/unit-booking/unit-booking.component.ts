@@ -310,54 +310,53 @@ selectEmp(event: any) {
     this.destroy$.complete();
   }
 
-  showBookedData( booked: number) {
-    const apiUrl =` http://206.189.142.35:9090/PAPL/getEmployeebookedDetails?booked=${booked}`;
-  
+  showBookedData(booked: number,unitNo:number,houseName:string) {
+    const apiUrl = `http://206.189.142.35:9090/PAPL/getEmployeebookedDetails?booked=${booked}&unit_no=${unitNo}&house_name=${houseName}`;
+
     this.http.get(apiUrl)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        (response: any) => {
-          const data = response; 
-          console.log(data[0],"bookedData");
-          if (response && response.length > 0) {
-            const data = response[0]; 
-            Swal.fire({
-              title:` Data for ${ data.houseName}`,
-              html: `
-                <div style="text-align: left;">
-                <p><strong>StateName:</strong> ${data.stateName}</p>
-                <p><strong>SBU Name:</strong> ${data.locationName}</p>
-                <p><strong>Plant Name:</strong> ${data.plantName}</p>
-                  <p><strong>House Name:</strong> ${ data.houseName}</p>
-                  <p><strong>Room No:</strong> ${ data.unitNo}</p>
-                  <p><strong>Employee Id:</strong> ${data.empId}</p>
-                  <p><strong>Employee Name:</strong> ${data.empName}</p>
-                  <p><strong>Mobile No:</strong> ${data.mobileNo}</p>
-                  <p><strong>So:</strong> ${data.so}</p>
-                  <p><strong>Email Id:</strong> ${data.emailId}</p>
-                </div>
-              `,
-              // icon: 'info'
-            });
-          } else {
-            console.error('Invalid response format:', response);
-            Swal.fire({
-              title: 'Data Not Available',
-              // text: 'Invalid response format',
-              icon: 'error'
-            });
-          }
-        },
-        (error) => {
-          console.error('Error fetching data:', error);
-          Swal.fire({
-            title: 'Error',
-            text: 'Failed to fetch data from the API',
-            icon: 'error'
-          });
-        }
-      );
-  }
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(
+            (response: any) => { // Change the type to 'any'
+                console.log(response, "bookedData");
+                let content = ''; // Initialize empty content string
+
+                if (Array.isArray(response) && response.length > 0) {
+                    response.forEach((data: any) => {
+                        // Accumulate HTML content for each item
+                        content += `
+                            <div style="text-align: left;">
+                                <p><strong>House Name:</strong> ${data.houseName}</p>
+                                <p><strong>Room No:</strong> ${data.unitNo}</p>
+                                <p><strong>Employee Id:</strong> ${data.empId}</p>
+                                <p><strong>Employee Name:</strong> ${data.empName}</p>
+                                <p><strong>Mobile No:</strong> ${data.mobileNo}</p>
+                            </div>
+                            <hr>`;
+                    });
+                    Swal.fire({
+                        title: 'Booked Data',
+                        html: content,
+                        // icon: 'info'
+                    });
+                } else {
+                    console.error('Invalid response format:', response);
+                    Swal.fire({
+                        title: 'Data Not Available',
+                        // text: 'Invalid response format',
+                        icon: 'error'
+                    });
+                }
+            },
+            (error) => {
+                console.error('Error fetching data:', error);
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Failed to fetch data from the API',
+                    icon: 'error'
+                });
+            }
+        );
+}
 
   
 }

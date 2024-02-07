@@ -110,7 +110,7 @@ export class UtilityCalculationComponent implements OnInit {
   stateId: any;
   getSubonStateChange(event: any) {
     this.activeSBU = [];
-    const selectedStateId = 1//event.target.value;
+    const selectedStateId = event.target.value;
     this.stateId = selectedStateId;
 
     this.portalService
@@ -125,7 +125,7 @@ export class UtilityCalculationComponent implements OnInit {
   sbuId: any;
   getPlantOnSubChange(event: any) {
     this.activePlant = [];
-    const selectedSublocation = 1//event.target.value;
+    const selectedSublocation = event.target.value;
     this.sbuId = selectedSublocation;
 
     this.portalService
@@ -140,7 +140,7 @@ export class UtilityCalculationComponent implements OnInit {
   plantId: any;
   getHouseByPlantId(event: any) {
     this.activeHouse = [];
-    const selectedPlantId = 1//event.target.value;
+    const selectedPlantId = event.target.value;
     this.plantId = selectedPlantId;
 
     this.portalService

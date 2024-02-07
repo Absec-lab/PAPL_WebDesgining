@@ -255,7 +255,7 @@ export class HouseRegistrationComponent implements OnInit {
       { control: this.houseRegistrationForm.get('district'), name: "District" },
       { control: this.houseRegistrationForm.get('startDate'), name: "Start Date" },
 
-      { control: this.stateArray, name: "State Array" },
+     
 
     ];
 
@@ -267,7 +267,7 @@ export class HouseRegistrationComponent implements OnInit {
         vSts = true;
       } else {
         formControl.control?.markAsTouched();
-        vSts = false;//validation issues need to fixed 
+        vSts = true;//validation issues need to fixed 
 
         // Focus on the first invalid input field
         if (formControl.control) {

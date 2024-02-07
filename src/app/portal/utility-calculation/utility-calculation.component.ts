@@ -35,6 +35,7 @@ export class UtilityCalculationComponent implements OnInit {
   ngOnInit(): void {
     this.getAllStateList();
     this.utilityCalculation = this.formBuilder.group({
+      utilityCalcId:[""],
       state: ["", Validators.required],
       sbu: ["", Validators.required],
       plant: ["", Validators.required],
@@ -366,6 +367,7 @@ export class UtilityCalculationComponent implements OnInit {
     this.updatebtn = true;
     console.log(item);
     this.utilityCalculation.patchValue({
+      utilityCalcId: item.utilityCalcId,
       state: item.fkStateId,
       sbu: item.fkSbuId,
       plant: item.fkPlantId,
@@ -429,6 +431,7 @@ export class UtilityCalculationComponent implements OnInit {
     //if(this.utilityCalculation.valid  && this.electric.valid && this.water.valid) {
     let data = {
       utilityCalculationData: {
+        utilityCalcId:this.utilityCalculation.value.utilityCalcId,
         fkStateId: this.utilityCalculation.value.state,
         fkSbuId: this.utilityCalculation.value.sbu,
         fkPlantId: this.utilityCalculation.value.plant,

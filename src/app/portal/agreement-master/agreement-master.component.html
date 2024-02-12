@@ -21,9 +21,7 @@
                                 {{item.stateName}}</option>
                         </select>
                         <div class="text-danger">{{ errorMessages.aggreState }}</div>
-
                     </div>
-
                 </div>
                 <div class="col-sm-6 col-md-4 ">
                     <div class="form-group">
@@ -35,9 +33,7 @@
                                 {{item.locationName}} ({{item.shortCode}})</option>
                         </select>
                         <div class="text-danger">{{ errorMessages.aggreSbu }}</div>
-
                     </div>
-
                 </div>
                 <div class="col-sm-6 col-md-4  ">
                     <div class="form-group">
@@ -49,9 +45,7 @@
                                 {{item.plantName}} ({{item.shortCode}})</option>
                         </select>
                         <div class="text-danger">{{ errorMessages.aggrePlant }}</div>
-
                     </div>
-
                 </div>
                 <div class="col-sm-6 col-md-4  ">
                     <div class="form-group">
@@ -63,12 +57,8 @@
                                 {{item.ownerName}} </option>
                         </select>
                         <div class="text-danger">{{ errorMessages.aggreOwner }}</div>
-
                     </div>
-
                 </div>
-
-
                 <div class="col-sm-6 col-md-4  ">
                     <div class="form-group">
                         <label  class="form-label">House Name<span class="text-danger">*</span></label>
@@ -77,13 +67,9 @@
                             <option value="0">Choose House...</option>
                             <option *ngFor="let list of getallhouseList; let i = index" [value]="list.houseId">
                                 {{list.houseName}}</option>
-
                         </select>
                         <div class="text-danger">{{ errorMessages.aggreHouse }}</div>
-
                     </div>
-
-
                 </div>
                 <div class="col-sm-6 col-md-4  ">
                     <div class="form-group">
@@ -96,19 +82,15 @@
                             </option>
                         </select>
                         <div class="text-danger">{{ errorMessages.aggreAggrementType}}</div>
-
                     </div>
-
                 </div>
                 <div class="col-sm-6 col-md-4  ">
                     <div class="form-group">
                         <label  class="form-label">Agreement Upload<span class="text-danger">*</span></label>
-                        <input type="file" name="aggreUpload" id="aggreUpload" class="form-control" accept="image/*"
+                        <input type="file" name="aggreUpload" id="aggreUpload" class="form-control" accept="image/*,.pdf"
                             (change)="selectFiles($event)">
                             <div *ngIf="errorMessages.aggreUpload" class="text-danger">{{ errorMessages.aggreUpload }}</div>
-
                     </div>
-
                 </div>
                 <div class="col-sm-6 col-md-4">
                     <div class="form-group">
@@ -116,7 +98,6 @@
                         <input type="text" name="aggreMonthlyRent" id="aggreMonthlyRent" class="form-control"
                             [(ngModel)]="aggreMonthlyRent" maxlength="6" (input)="vldChkLst.allowNumericDigits($event)" nonZeroOnly>
                         <div class="text-danger">{{ errorMessages.aggreMonthlyRent }}</div>
-
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
@@ -126,7 +107,6 @@
                         <input type="text" name="aggrePeriod" id="aggrePeriod" class="form-control"
                             (input)="vldChkLst.allowNumericDigits($event)" maxlength="2" [(ngModel)]="aggrePeriod" (input)="captureDate()">
                         <div class="text-danger">{{ errorMessages.aggrePeriod }}</div>
-
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
@@ -135,7 +115,6 @@
                         <input type="date" name="aggreStartDate" id="aggreStartDate" class="form-control"
                             [(ngModel)]="aggreStartDate" class="form-control" (input)="captureDate()">
                         <div class="text-danger">{{ errorMessages.aggreStartDate }}</div>
-
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
@@ -144,7 +123,6 @@
                         <input type="date" name="aggreEndDate" id="aggreEndDate" [(ngModel)]="aggreEndDate"
                             class="form-control" disabled>
                         <div class="text-danger">{{ errorMessages.aggreEndDate }}</div>
-
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4">
@@ -156,7 +134,6 @@
                                     [(ngModel)]="aggreElectricBill" (click)="getVal($event.target)" />
                                 <span class="switch-label" data-yes="YES" data-no="NO"></span>
                                 <span class="switch-handle"></span>
-
                             </label>
                         </div>
                         <div class="col-sm-6 col-md-4">
@@ -167,19 +144,10 @@
                                 <span class="switch-label" data-yes="YES" data-no="NO"></span>
                                 <span class="switch-handle"></span>
                             </label>
-
                         </div>
-
                     </div>
                 </div>
-
-
-
-
             </div>
-
-
-
             <div class="mt-4 d-flex justify-content-end">
                 <button class="btn btn-primary form-save-btn" (click)="saveAggreement()" *ngIf="aggreId==''">
                     Save
@@ -189,7 +157,6 @@
                 </button>
             </div>
         </form>
-
         <div class="" style=" position: relative; overflow-x: auto; overflow-y: auto; margin-top: 30px;">
             <table class="table w-full table-bordered table-striped">
                 <thead class="">
@@ -210,7 +177,6 @@
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Water Bill</th>
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">Created Date</th>
                         <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">Action</th>
-
                     </tr>
                 </thead>
                 <tbody>
@@ -229,7 +195,15 @@
                         <td>{{ item.aggreTypeName }}</td>
                         <td>{{ item.rent }}</td>
                         <td>{{ item.rentPeriod }}</td>
-                        <td>{{ item.aggreUpload }}</td>
+                        <!-- <td>{{ item.aggreUpload }}</td> -->
+                        <td>
+                            <div style="display: inline-flex; ">
+                                <button class="btn  btn-sm mx-2"
+                                    style="background-color: rgb(22, 133, 236);color: #faf7f7;" (click)="downloadImage(item.aggreUpload)">
+                                    <i class="fa fa-download"></i>
+                                </button>
+                            </div>
+                        </td>
                         <td>{{ item.rentStartDt | date: 'MM/dd/yyyy'}}</td>
                         <td>{{ item.rentEndDt | date: 'MM/dd/yyyy'}}</td>
                         <td>{{ item.withElectricBill }}</td>
@@ -242,7 +216,6 @@
                                     style="background-color: rgb(22, 133, 236);color: #faf7f7;">
                                     <i class="fa-solid fa-edit"></i>
                                 </button>
-
                                 <button class="btn btn-danger btn-sm mx-2" (click)="deleteAgreement(item.aggreId)">
                                     <i class="fa-solid fa-trash-alt"></i>
                                 </button>
@@ -250,7 +223,6 @@
                         </td>
                     </tr>
                 </tbody>
-
             </table>
         </div>
         <br>

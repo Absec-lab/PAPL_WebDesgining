@@ -801,6 +801,20 @@ export class HouseOwnerRegistrationComponent {
     }
     return vStss;
   }
+  downloadImage(url: string): void {
+    fetch(url)
+        .then(response => response.blob())
+        .then(blob => {
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'downloaded_file';  // Set the desired file name
+            link.click();
+            URL.revokeObjectURL(link.href);  // Clean up resources
+        })
+        .catch(error => console.error('Error fetching image:', error));
+}
+
+
 
   updateowner() {
     debugger;

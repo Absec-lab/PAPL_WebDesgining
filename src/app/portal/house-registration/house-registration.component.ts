@@ -15,7 +15,7 @@ import { ExcelService } from '../serviceapi/excel.service';
 export class HouseRegistrationComponent implements OnInit {
   updatebtn: boolean = false;
   tableData: any = [];
-  duplicateTableData: any[] =[];
+  duplicateTableData: any[] = [];
   stateDtails: any;
   houseRegistrationForm!: FormGroup;
   stateForm!: FormGroup;
@@ -129,6 +129,19 @@ export class HouseRegistrationComponent implements OnInit {
   get stateArray(): any {
     return this.stateForm.get('stateSub') as FormArray;
   }
+  getPreviousRowValues(index: number): any {
+    if (index > 0) {
+      const previousRow = this.stateArray.at(index - 1).value;
+      return {
+        stateId: previousRow.stateId,
+        sbuId: previousRow.sbuId,
+        plantId: previousRow.plantId,
+        mapId: previousRow.mapId,
+        houseId: previousRow.houseId,
+      };
+    }
+    return {};
+  }
 
   addstate() {
     const stateGroup = this.formBuilder.group({
@@ -162,8 +175,16 @@ export class HouseRegistrationComponent implements OnInit {
 
     stateGroup.get('houseId')?.setValidators([Validators.required]);
     stateGroup.get('houseId')?.updateValueAndValidity();
+    const previousValues = this.getPreviousRowValues(this.stateArray.length);
+  stateGroup.patchValue(previousValues); // Use patchValue to set the previous values
+
+  Object.keys(stateGroup.controls).forEach(controlName => {
+    stateGroup.get(controlName)?.updateValueAndValidity();
+  });
     this.stateArray.push(stateGroup);
   }
+  // Inside your component class
+
 
   removeState(index: number) {
     this.stateArray.removeAt(index);
@@ -218,7 +239,7 @@ export class HouseRegistrationComponent implements OnInit {
     // this.activePlant = [];
     const selectedSublocation = event.target.value;
     this.sbuId = selectedSublocation;
-   // this.ngxLoader.start();
+    // this.ngxLoader.start();
     this.portalService.get(`PAPL/get/plant/by/${selectedSublocation}`)
       .pipe(takeUntil(this.destroy$))
       .subscribe((res) => {
@@ -232,7 +253,7 @@ export class HouseRegistrationComponent implements OnInit {
 
 
 
- onTableDataChange(event: any) {
+  onTableDataChange(event: any) {
     this.page = event;
     this.getAllHouseDetailList();
   }
@@ -255,7 +276,7 @@ export class HouseRegistrationComponent implements OnInit {
       { control: this.houseRegistrationForm.get('district'), name: "District" },
       { control: this.houseRegistrationForm.get('startDate'), name: "Start Date" },
 
-     
+
 
     ];
 
@@ -303,10 +324,10 @@ export class HouseRegistrationComponent implements OnInit {
       control.get('mapId')?.clearValidators();
       control.get('mapId')?.updateValueAndValidity();
     });
-    let vSts =this.validateData();
+    let vSts = this.validateData();
     console.log(vSts);
     console.log(this.houseRegistrationForm.valid);
-     //console.log(this.houseRegistrationForm.value.plantId);
+    //console.log(this.houseRegistrationForm.value.plantId);
     if (vSts) {
       let data = {
         "ownerId": this.houseRegistrationForm.value.ownerName,
@@ -324,7 +345,7 @@ export class HouseRegistrationComponent implements OnInit {
       }
       console.log(data);
       console.log(this.stateArray.value)
-     // this.ngxLoader.start();
+      // this.ngxLoader.start();
       this.portalService.post("PAPL/addHouses", data)
         .subscribe((res) => {
           this.ngxLoader.stop();
@@ -419,7 +440,7 @@ export class HouseRegistrationComponent implements OnInit {
     console.log(this.houseRegistrationForm.valid);
     console.log(this.stateArray.valid);
     if (vSts) {
-      if (this.stateId!==null && this.sbuId!==null && this.houseId !== null && this.mapId !== null) {
+      if (this.stateId !== null && this.sbuId !== null && this.houseId !== null && this.mapId !== null) {
 
         let data = {
           "houseId": this.houseId,
@@ -457,7 +478,7 @@ export class HouseRegistrationComponent implements OnInit {
               text: 'Record Updated Successfully'
             }).then(() => {
               window.location.reload();
-  
+
             });
             this.updatebtn = false;
 
@@ -538,15 +559,15 @@ export class HouseRegistrationComponent implements OnInit {
   }
   exportAsXLSX(): void {
     debugger;
-    let removeColumnData = ['aggreTypeCode','aggreTypeId','createdBy','isActive','updatedBy','updatedDate'];
-    let Heading =[
-      [ "End Date","Agreement Type","Start Date","Created Date","Description"]  
+    let removeColumnData = ['aggreTypeCode', 'aggreTypeId', 'createdBy', 'isActive', 'updatedBy', 'updatedDate'];
+    let Heading = [
+      ["End Date", "Agreement Type", "Start Date", "Created Date", "Description"]
     ];
     removeColumnData.forEach(e => {
       this.duplicateTableData.forEach(element => {
         delete element[e]
-   });
- });
-    this.excelService.exportAsExcelFile(this.duplicateTableData, 'agreementtype',Heading);
+      });
+    });
+    this.excelService.exportAsExcelFile(this.duplicateTableData, 'agreementtype', Heading);
   }
 }

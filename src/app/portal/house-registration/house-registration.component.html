@@ -13,13 +13,16 @@
                 <div class="form-group">
                     <label class="form-label">Owner Name<span class="text-danger">*</span></label>
                     <ng-container *ngIf="!updatebtn; else showInputField">
-                        <select formControlName="ownerName" class="form-select" aria-label="Default select example" required>
+                        <select formControlName="ownerName" class="form-select" aria-label="Default select example"
+                            required>
                             <option value="0" selected>Choose Owner Name...</option>
-                            <option *ngFor="let owner of allOwner" [value]="owner.ownerId">{{ owner.ownerName }}</option>
+                            <option *ngFor="let owner of allOwner" [value]="owner.ownerId">{{ owner.ownerName }}
+                            </option>
                         </select>
                     </ng-container>
                     <ng-template #showInputField>
-                        <input type="text" name="" id="" class="form-control" formControlName="ownerName" maxlength="20">
+                        <input type="text" name="" id="" class="form-control" formControlName="ownerName"
+                            maxlength="20">
                     </ng-template>
                     <div *ngIf="houseRegistrationForm.get('owner')?.invalid && houseRegistrationForm.get('owner')?.touched"
                         class="error-message">
@@ -45,8 +48,9 @@
             <div class="col-sm-6 col-md-4">
                 <div class="form-group">
                     <label class="form-label">No Of Rooms<span class="text-danger">*</span></label>
-                    <input type="text" name="" id="" class="form-control" required formControlName="noOfRooms"ng-pattern="/(^0$)|(^[1-9]\d{0,8}$)/" 
-                        maxlength="2" (input)="vldChkLst.allowNumericDigits($event)">
+                    <input type="text" name="" id="" class="form-control" required formControlName="noOfRooms"
+                        ng-pattern="/(^0$)|(^[1-9]\d{0,8}$)/" maxlength="2"
+                        (input)="vldChkLst.allowNumericDigits($event)">
                     <div *ngIf="houseRegistrationForm.get('noOfRooms')?.invalid && houseRegistrationForm.get('noOfRooms')?.touched"
                         class="error-message">
                         No Of Rooms is required and should be numeric.
@@ -92,8 +96,7 @@
             <div class="col-sm-6 col-md-4">
                 <div class="form-group">
                     <label class="form-label">Address 2<span class="text-danger"></span></label>
-                    <input type="text" name="" id="" class="form-control" formControlName="address2"
-                        maxlength="35">
+                    <input type="text" name="" id="" class="form-control" formControlName="address2" maxlength="35">
                 </div>
             </div>
             <div class="col-sm-6 col-md-4">
@@ -167,10 +170,10 @@
 
                             </div> -->
                             <div class="error-message"
-                            *ngIf="stateArray.controls[i].get('stateId')?.invalid && stateArray.controls[i].get('stateId')?.touched">
-                            <div *ngIf="stateArray.controls[i].get('stateId')?.hasError('required')"> Select State.
+                                *ngIf="stateArray.controls[i].get('stateId')?.invalid && stateArray.controls[i].get('stateId')?.touched">
+                                <div *ngIf="stateArray.controls[i].get('stateId')?.hasError('required')"> Select State.
+                                </div>
                             </div>
-                        </div>
                         </div>
                         <div class="col-sm-6 col-md-4 py-2">
                             <label for="state" class="form-label">SBU<span class="text-danger">*</span></label>
@@ -186,10 +189,10 @@
                                     Select SBU.</div>
                             </div> -->
                             <div class="error-message"
-                            *ngIf="stateArray.controls[i].get('sbuId')?.invalid && stateArray.controls[i].get('sbuId')?.touched">
-                            <div *ngIf="stateArray.controls[i].get('sbuId')?.hasError('required')">  Select SBU.
+                                *ngIf="stateArray.controls[i].get('sbuId')?.invalid && stateArray.controls[i].get('sbuId')?.touched">
+                                <div *ngIf="stateArray.controls[i].get('sbuId')?.hasError('required')"> Select SBU.
+                                </div>
                             </div>
-                        </div>
                         </div>
                         <div class="col-sm-6 col-md-2 py-2">
                             <label for="state" class="form-label">Plant<span class="text-danger">*</span></label>
@@ -205,12 +208,12 @@
                                     Select Plant.</div>
                             </div> -->
                             <div class="error-message"
-                            *ngIf="stateArray.controls[i].get('plantId')?.invalid && stateArray.controls[i].get('plantId')?.touched">
-                            <div *ngIf="stateArray.controls[i].get('plantId')?.hasError('required')"> Select Plant.
+                                *ngIf="stateArray.controls[i].get('plantId')?.invalid && stateArray.controls[i].get('plantId')?.touched">
+                                <div *ngIf="stateArray.controls[i].get('plantId')?.hasError('required')"> Select Plant.
+                                </div>
                             </div>
                         </div>
-                        </div>
-                        <div class="col-1 py-2" style="    margin-top: 31px;">
+                        <div class="col-2 py-2" style="    margin-top: 31px;">
                             <button class="btn btn-danger btn-sm" *ngIf="i>0" (click)="removeState(i)">
                                 <i class="fa-solid fa-trash-alt"></i>
                             </button>
@@ -245,7 +248,7 @@
                     <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">SBU</th>
                     <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Plant</th>
                     <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">Owner Name</th>
-                     <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">House Name</th> 
+                    <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">House Name</th>
                     <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">No of Units</th>
                     <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">No of Electric Bills</th>
                     <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">No of Water Bills</th>
@@ -256,8 +259,8 @@
                 </tr>
             </thead>
             <tbody>
-            
-                     <tr *ngFor="let item of allHouseDetails | paginate
+
+                <tr *ngFor="let item of allHouseDetails | paginate
                     : {
                         itemsPerPage: tableSize,
                         currentPage: page,
@@ -294,11 +297,11 @@
         </table>
     </div>
     <div class="d-flex justify-content-center">
-            <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
-            </pagination-controls>
-            <button class="btn btn-primary form-save-btn" (click)="exportAsXLSX()">
-                Export To Excel
-              </button>
-        </div>  
+        <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+        </pagination-controls>
+        <button class="btn btn-primary form-save-btn" (click)="exportAsXLSX()">
+            Export To Excel
+        </button>
+    </div>
 </section>
 <app-footer></app-footer>

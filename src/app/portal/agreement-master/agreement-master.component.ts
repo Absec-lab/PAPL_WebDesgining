@@ -447,6 +447,41 @@ export class AgreementMasterComponent {
       });
     }
   }
+  downloadImage(url: string): void {
+  // Create a hidden anchor element
+  const anchor = document.createElement('a');
+  anchor.style.display = 'none';
+
+  // Fetch the image as a blob
+  fetch(url)
+    .then(response => response.blob())
+    .then(blob => {
+      // Create a FileReader to read the blob as base64
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64data = reader.result as string;
+        
+        // You can use base64data as needed, for example, display it or send it to the server
+
+        // Set the anchor's href attribute with the base64 data
+        anchor.href = base64data;
+        // Set the anchor's download attribute to specify the file name
+        anchor.download = 'downloaded_file.png';
+        // Append the anchor to the body
+        document.body.appendChild(anchor);
+        // Trigger a click event to start the download
+        anchor.click();
+        // Remove the anchor from the body
+        document.body.removeChild(anchor);
+      };
+
+      // Read the blob as data URL (base64)
+      reader.readAsDataURL(blob);
+    })
+    .catch(error => console.error('Error fetching image:', error));
+}
+
+  
   updateAgreement() {
     let vSts = this.validateData();
     if (vSts) {

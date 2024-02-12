@@ -137,7 +137,7 @@ export class HouseRegistrationComponent implements OnInit {
       // plantId: [0, [Validators.required, Validators.min(1)]],
       // mapId: [0, [Validators.required, Validators.min(1)]],
       // houseId: [0, [Validators.required, Validators.min(1)]],
-      stateId: ['', [Validators.required]],
+      stateId: [this.stateId, [Validators.required]],
       sbuId: ['', [Validators.required]],
       plantId: ['', [Validators.required]],
       mapId: ['', [Validators.required]],

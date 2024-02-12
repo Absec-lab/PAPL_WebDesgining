@@ -96,9 +96,10 @@
                     <td (click)="showBookedData(item.booked,item.unitNo,item.houseName)"  style="cursor: pointer; color: blue; text-decoration: underline;">{{ item.booked }}</td>
                     <td>{{ item.available}}</td>
                     <td>
-
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#exampleModal" (click)=" getEmployeeDetails()">Book</button>
+                        data-bs-target="#exampleModal" (click)="getEmployeeDetails()"
+                        [disabled]="item.available < 1">Book</button>
+                    
 
                     </td>
                 </tr>

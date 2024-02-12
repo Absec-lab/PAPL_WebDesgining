@@ -656,18 +656,20 @@ console.log('Data',data)
   }
 
   editOwner(item: any) {
-    debugger;
-    console.log(item)
-    console.log('idproof',item.idProofAddress)
-    let splitAdressArr = item.idProofAddress.split('/');
+    // debugger;
+    console.log(item);
+    console.log("idproof", item.idProofAddress);
+    let splitAdressArr = item.idProofAddress.split("/");
     this.uploadGovtIdProofFileName = splitAdressArr[5];
-    let splitQrCodeArr = item.uploadQuarCodeAdds.split('/');
-    this.uploadQrCodeFileName = splitQrCodeArr[5];
+    if (item.uploadQuarCodeAdds) {
+      let splitQrCodeArr = item.uploadQuarCodeAdds.split("/");
+      this.uploadQrCodeFileName = splitQrCodeArr[5];
+    }
     this.updatebtn = true;
     this.descripinput = true;
-    this.paymentmode(item.paymtMode == 'string' ? 2 : item.paymtMode, 'owner')
-    this.getDistirct(item.stateId)
-    this.getPinCode(item.district)
+    this.paymentmode(item.paymtMode == "string" ? 2 : item.paymtMode, "owner");
+    this.getDistirct(item.stateId);
+    this.getPinCode(item.district);
     this.houseRegistrationForm.patchValue({
       ownerId: item.ownerId,
       ownerName: item.ownerName,
@@ -681,7 +683,7 @@ console.log('Data',data)
       state: item.stateId,
       dist: item.district,
       pin: item.pinCode,
-      paymode: item.paymtMode == 'string' ? 2 : item.paymtMode,
+      paymode: item.paymtMode == "string" ? 2 : item.paymtMode,
       status: item.isActive,
       accHolName: item.accountHolderName,
       accounNum: item.bankAccountNo,
@@ -692,7 +694,7 @@ console.log('Data',data)
       upiId: item.upiId,
       linkMobile: item.upiPhoneNo,
       qrCode: item.uploadQuarCodeAdds,
-    })
+    });
     this.scrollToTop();
   }
 

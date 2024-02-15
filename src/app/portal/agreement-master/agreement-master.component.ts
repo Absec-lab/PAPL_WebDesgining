@@ -448,39 +448,55 @@ export class AgreementMasterComponent {
     }
   }
   downloadImage(url: string): void {
-  // Create a hidden anchor element
-  const anchor = document.createElement('a');
-  anchor.style.display = 'none';
+    // Encode the URL
+    const encodedUrl = btoa(url);
+  
+    console.log(encodedUrl, "encodedUrl");
+  
+    const apiUrl = `http://206.189.142.35:9090/PAPL/downloadFile/${encodedUrl}`;
+  
+    console.log(apiUrl, "apiUrl");
+  
+    this.httpClient.get(apiUrl, { responseType: 'text' }).subscribe(
+      (base64EncodedData: string) => {
+        console.log(base64EncodedData, "base64EncodedData");
+        const jsonObject = JSON.parse(base64EncodedData);
+        const documentValue = jsonObject.document;
+  
+        const decodedData = atob(documentValue);
+        console.log(decodedData);
+  
+        const blob = new Blob([decodedData], { type: 'image/*' });
+  
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = jsonObject.fileName;
+        link.click();
+      },
+      (error) => {
+        // Handle errors
+        console.error('Error downloading image:', error);
+      }
+    );
+  }
+cancelAgreement() {
+  // Clear or reset the form fields as needed
+  this.aggreElectricBill = '';
+  this.aggreWaterBill = '';
+  this.aggreState = 0;
+  this.aggreSbu = 0;
+  this.aggreStartDate = '';
+  this.aggrePeriod = '';
+  this.aggreEndDate = '';
+  this.aggreMonthlyRent = '';
+  this.aggrePlant = 0;
+  this.aggreOwner = 0;
+  this.aggreAggrementType = 0;
+  this.aggreHouse = 0;
 
-  // Fetch the image as a blob
-  fetch(url)
-    .then(response => response.blob())
-    .then(blob => {
-      // Create a FileReader to read the blob as base64
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64data = reader.result as string;
-        
-        // You can use base64data as needed, for example, display it or send it to the server
-
-        // Set the anchor's href attribute with the base64 data
-        anchor.href = base64data;
-        // Set the anchor's download attribute to specify the file name
-        anchor.download = 'downloaded_file.png';
-        // Append the anchor to the body
-        document.body.appendChild(anchor);
-        // Trigger a click event to start the download
-        anchor.click();
-        // Remove the anchor from the body
-        document.body.removeChild(anchor);
-      };
-
-      // Read the blob as data URL (base64)
-      reader.readAsDataURL(blob);
-    })
-    .catch(error => console.error('Error fetching image:', error));
+  // Optionally, you can also reset the form itself
+  // this.yourForm.reset();
 }
-
   
   updateAgreement() {
     let vSts = this.validateData();

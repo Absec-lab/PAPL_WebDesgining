@@ -335,6 +335,8 @@ export class UnitRegistrationComponent {
   updateUnit(item: any) {
     window.scrollTo({ top: 0, behavior: "smooth" });
 
+    console.log(this.activeHouse,"soumya")
+
     this.updatebtn = true;
     console.log(item);
     this.unitRegisterForm.patchValue({

@@ -18,9 +18,10 @@
                         <div class="ms-3  d-flex-2  ">
                             <input type="hidden" name="aggreTypeId" id="aggreTypeId" [(ngModel)]="aggreTypeId">
                             <input type="text" name="aggrementType" id="aggrementType" [(ngModel)]="aggrementType"
-                                class="form-control box" (input)="vldChkLst.keyPressAlphanumeric($event)" maxlength="100">
+                                class="form-control box" (input)="vldChkLst.keyPressAlphanumeric($event)"
+                                maxlength="100">
                             <div class="text-danger">{{ errorMessages.aggrementType }}</div>
-                            
+
                         </div>
                     </div>
                 </div>
@@ -60,9 +61,10 @@
                         <div class="ms-3 d-flex-1  ">
                             <!-- <input type="text" name="aggrementTypeDesc" id="aggrementTypeDesc" class="form-control box"
                                 [(ngModel)]="aggrementTypeDesc"> -->
-                                <textarea name="aggrementTypeDesc" id="aggrementTypeDesc"  class="form-control" [(ngModel)]="aggrementTypeDesc" rows="4" cols="50" >
+                            <textarea name="aggrementTypeDesc" id="aggrementTypeDesc" class="form-control"
+                                [(ngModel)]="aggrementTypeDesc" rows="4" cols="50">
                                 </textarea>
-                                <div class="text-danger">{{ errorMessages.description }}</div>
+                            <div class="text-danger">{{ errorMessages.description }}</div>
                         </div>
                     </div>
                 </div>
@@ -79,64 +81,75 @@
                 <button class="btn btn-primary form-save-btn" (click)="updateAgreementType()" *ngIf="aggreTypeId!==''">
                     Update
                 </button>
+                <button class="btn mx-1 btn-danger form-save-btn" (click)="cancelUpdateAgreement()"
+                    *ngIf="aggreTypeId!==''">
+                    Cancel
+                </button>
+            </div>
+            <div class="mt-4 d-flex justify-content-end">
+                <button class="btn btn-primary form-save-btn" (click)="exportAsXLSX()">
+                    Export To Excel
+                </button>
             </div>
         </form>
+        <div class="" style="  margin-top: 30px;">
+            <div class="d-flex justify-content-end">
+                <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+                </pagination-controls>
+            </div>
+            <div class="" style=" position: relative; overflow-x: auto; overflow-y: auto; margin-top: 30px;">
+                <table class="table w-full table-bordered table-striped">
+                    <thead class="">
+                        <tr>
+                            <th style="background-color: rgba(0, 133, 159, 1); color: #faf7f7;">SL.NO</th>
+                            <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">Agreement Type</th>
+                            <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Description</th>
+                            <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Start Date</th>
+                            <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">End Date</th>
+                            <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Created Date</th>
+                            <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">Action</th>
 
-        <div class="" style=" position: relative; overflow-x: auto; overflow-y: auto; margin-top: 30px;">
-            <table class="table w-full table-bordered table-striped">
-                <thead class="">
-                    <tr>
-                        <th style="background-color: rgba(0, 133, 159, 1); color: #faf7f7;">SL.NO</th>
-                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">Agreement Type</th>
-                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Description</th>
-                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Start Date</th>
-                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">End Date</th>
-                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Created Date</th>
-                        <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">Action</th>
-
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let item of tableData | paginate
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of tableData | paginate
                     : {
                         itemsPerPage: tableSize,
                         currentPage: page,
                         totalItems: count
                       }; let i = index">
-                        <td>{{ i + 1 }}</td>
-                        <td>{{ item.aggreTypeName }}</td>
-                        <td>{{ item.description }}</td>
-                        <td>{{ item.aggreStDate | date: 'dd/MM/yyyy' }}</td>
-                        <td>{{ item.aggreEdDate | date: 'dd/MM/yyyy' }}</td>
-                        <td>{{ item.createdDate | date: 'dd/MM/yyyy' }}</td>
+                            <td>{{ i + 1 }}</td>
+                            <td>{{ item.aggreTypeName }}</td>
+                            <td>{{ item.description }}</td>
+                            <td>{{ item.aggreStDate | date: 'dd/MM/yyyy' }}</td>
+                            <td>{{ item.aggreEdDate | date: 'dd/MM/yyyy' }}</td>
+                            <td>{{ item.createdDate | date: 'dd/MM/yyyy' }}</td>
 
-                        <td>
-                            <div style="display: inline-flex;">
-                                <button class="btn btn-sm mx-2"
-                                    (click)="editAgreementType(item.aggreTypeId,item.aggreTypeName,item.aggreStDate,item.description,item.aggreEdDate)"
-                                    style="background-color: rgb(22, 133, 236); color: #faf7f7;">
-                                    <i class="fa-solid fa-edit"></i>
-                                </button>
+                            <td>
+                                <div style="display: inline-flex;">
+                                    <button class="btn btn-sm mx-2"
+                                        (click)="editAgreementType(item.aggreTypeId,item.aggreTypeName,item.aggreStDate,item.description,item.aggreEdDate)"
+                                        style="background-color: rgb(22, 133, 236); color: #faf7f7;">
+                                        <i class="fa-solid fa-edit"></i>
+                                    </button>
 
-                                <button class="btn btn-danger btn-sm mx-2"
-                                    (click)="deleteAgreementType(item.aggreTypeId)">
-                                    <i class="fa-solid fa-trash-alt"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
+                                    <button class="btn btn-danger btn-sm mx-2"
+                                        (click)="deleteAgreementType(item.aggreTypeId)">
+                                        <i class="fa-solid fa-trash-alt"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <br>
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-end">
             <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
             </pagination-controls>
-            <button class="btn btn-primary form-save-btn" (click)="exportAsXLSX()">
-                Export To Excel
-              </button>
-        </div>  
+        </div>
     </div>
 </section>
 <app-footer></app-footer>

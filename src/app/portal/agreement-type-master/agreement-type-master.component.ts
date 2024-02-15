@@ -14,12 +14,12 @@ import { ExcelService } from '../serviceapi/excel.service';
   styleUrls: ['../../common.css', './agreement-type-master.component.css']
 })
 export class AgreementTypeMasterComponent {
-  constructor(private ngxLoader: NgxUiLoaderService, private formBuilder: FormBuilder, private route: Router, public portalServ: PortalServiceService, private httpClient: HttpClient, public vldChkLst: ValidatorchklistService,private excelService: ExcelService) { }
+  constructor(private ngxLoader: NgxUiLoaderService, private formBuilder: FormBuilder, private route: Router, public portalServ: PortalServiceService, private httpClient: HttpClient, public vldChkLst: ValidatorchklistService, private excelService: ExcelService) { }
   ngOnInit(): void {
     this.getAllAgreementType();
   }
   tableData: any = [];
-  duplicateTableData: any[] =[];
+  duplicateTableData: any[] = [];
   aggrementType: any = '';
   aggreStDate: any = '';
   aggreEdDate: any = '';
@@ -109,40 +109,40 @@ export class AgreementTypeMasterComponent {
       };
       if (this.aggreStDate < this.aggreEdDate) {
         this.ngxLoader.start();
-      this.portalServ.addAgreementType(param).subscribe(res => {
-        this.ngxLoader.stop();
-        if (res.responseCode == 200 || res.responseCode == 201) {
-          this.aggreEdDate = '';
-          this.aggreStDate = '';
-          this.aggrementType = '';
-          this.aggrementTypeDesc = '';
-          Swal.fire({
-            icon: 'success',
-            text: 'Record Saved Successfully'
-          });
-          this.getAllAgreementType();
-        } else {
+        this.portalServ.addAgreementType(param).subscribe(res => {
+          this.ngxLoader.stop();
+          if (res.responseCode == 200 || res.responseCode == 201) {
+            this.aggreEdDate = '';
+            this.aggreStDate = '';
+            this.aggrementType = '';
+            this.aggrementTypeDesc = '';
+            Swal.fire({
+              icon: 'success',
+              text: 'Record Saved Successfully'
+            });
+            this.getAllAgreementType();
+          } else {
+            Swal.fire({
+              icon: 'error',
+              text: res.message
+            });
+          }
+
+        }, error => {
+          this.ngxLoader.stop();
           Swal.fire({
             icon: 'error',
-            text: res.message
+            text: 'Error in Data Insertion'
           });
-        }
-
-      }, error => {
-        this.ngxLoader.stop();
-        Swal.fire({
-          icon: 'error',
-          text: 'Error in Data Insertion'
         });
-      });
-        
+
       }
 
-      else{
+      else {
         this.errorMessages.aggreStDate = 'Start date can not be greater than end date.';
 
       }
-      
+
     }
   }
   getAllAgreementType() {
@@ -161,7 +161,7 @@ export class AgreementTypeMasterComponent {
 
   }
 
-  
+
   deleteAgreementType(aggreTypeId: any = 0) {
     Swal.fire({
       //icon: 'warning',
@@ -209,6 +209,21 @@ export class AgreementTypeMasterComponent {
     this.aggreEdDate = aggreEdDate.split('T')[0];
     this.scrollToTop();
   }
+  cancelUpdateAgreement() {
+    // Reset form fields or perform any other necessary actions
+    this.aggreEdDate = '';
+    this.aggreStDate = '';
+    this.aggrementType = '';
+    this.aggrementTypeDesc = '';
+    this.aggreTypeId = '';
+
+    // Optionally, you can clear any error messages
+    this.errorMessages.aggreStDate = '';
+
+    // Call a method to fetch or reset data as needed
+    this.getAllAgreementType();
+}
+
   updateAgreementType() {
     let vSts = this.validateData();
     if (vSts) {
@@ -270,16 +285,16 @@ export class AgreementTypeMasterComponent {
   }
   exportAsXLSX(): void {
     debugger;
-    let removeColumnData = ['aggreTypeCode','aggreTypeId','createdBy','isActive','updatedBy','updatedDate'];
-    let Heading =[
-      [ "End Date","Agreement Type","Start Date","Created Date","Description"]  
+    let removeColumnData = ['aggreTypeCode', 'aggreTypeId', 'createdBy', 'isActive', 'updatedBy', 'updatedDate'];
+    let Heading = [
+      ["End Date", "Agreement Type", "Start Date", "Created Date", "Description"]
     ];
     removeColumnData.forEach(e => {
       this.duplicateTableData.forEach(element => {
         delete element[e]
-   });
- });
-    this.excelService.exportAsExcelFile(this.duplicateTableData, 'agreementtype',Heading);
+      });
+    });
+    this.excelService.exportAsExcelFile(this.duplicateTableData, 'agreementtype', Heading);
   }
-  
+
 }

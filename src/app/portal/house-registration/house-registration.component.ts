@@ -129,9 +129,88 @@ export class HouseRegistrationComponent implements OnInit {
   get stateArray(): any {
     return this.stateForm.get('stateSub') as FormArray;
   }
-  getPreviousRowValues(index: number): any {
-    if (index > 0) {
-      const previousRow = this.stateArray.at(index - 1).value;
+  // getPreviousRowValues(index: number): any {
+  //   if (index > 0) {
+  //     const previousRow = this.stateArray.at(index - 1).value;
+  //     return {
+  //       stateId: previousRow.stateId,
+  //       sbuId: previousRow.sbuId,
+  //       plantId: previousRow.plantId,
+  //       mapId: previousRow.mapId,
+  //       houseId: previousRow.houseId,
+  //     };
+  //   }
+  //   return {};
+  // }
+
+  // addstate() {
+  //   const stateGroup = this.formBuilder.group({
+  //     // stateId: [this.stateId],
+  //     // sbuId: [0, [Validators.required, Validators.min(1)]],
+  //     // plantId: [0, [Validators.required, Validators.min(1)]],
+  //     // mapId: [0, [Validators.required, Validators.min(1)]],
+  //     // houseId: [0, [Validators.required, Validators.min(1)]],
+  //     stateId: [this.stateId, [Validators.required]],
+  //     sbuId: ['', [Validators.required]],
+  //     plantId: ['', [Validators.required]],
+  //     mapId: ['', [Validators.required]],
+  //     houseId: ['', [Validators.required]],
+  //   });
+
+  //   // stateGroup.get('stateId')?.setValidators([Validators.required, Validators.min(1)]);
+  //   // stateGroup.get('sbuId')?.setValidators([Validators.required, Validators.min(1)]);
+  //   // stateGroup.get('plantId')?.setValidators([Validators.required, Validators.min(1)]);
+  //   // stateGroup.get('mapId')?.setValidators([Validators.required, Validators.min(1)]);
+  //   // stateGroup.get('houseId')?.setValidators([Validators.required, Validators.min(1)]);
+  //   stateGroup.get('stateId')?.setValidators([Validators.required]);
+  //   stateGroup.get('stateId')?.updateValueAndValidity();
+  //   stateGroup.get('sbuId')?.setValidators([Validators.required]);
+  //   stateGroup.get('sbuId')?.updateValueAndValidity();
+
+  //   stateGroup.get('plantId')?.setValidators([Validators.required]);
+  //   stateGroup.get('plantId')?.updateValueAndValidity();
+
+  //   stateGroup.get('mapId')?.setValidators([Validators.required]);
+  //   stateGroup.get('mapId')?.updateValueAndValidity();
+
+  //   stateGroup.get('houseId')?.setValidators([Validators.required]);
+  //   stateGroup.get('houseId')?.updateValueAndValidity();
+  //   const previousValues = this.getPreviousRowValues(this.stateArray.length);
+  // stateGroup.patchValue(previousValues); // Use patchValue to set the previous values
+
+  // Object.keys(stateGroup.controls).forEach(controlName => {
+  //   stateGroup.get(controlName)?.updateValueAndValidity();
+  // });
+  //   this.stateArray.push(stateGroup);
+  // }
+
+  addstate() {
+  const stateGroup = this.formBuilder.group({
+    stateId: ['', [Validators.required]],
+    sbuId: ['', [Validators.required]],
+    plantId: ['', [Validators.required]],
+    mapId: ['', [Validators.required]],
+    houseId: ['', [Validators.required]],
+  });
+
+  // Set validators for each control
+  Object.keys(stateGroup.controls).forEach((controlName) => {
+    stateGroup.get(controlName)?.setValidators([Validators.required]);
+    stateGroup.get(controlName)?.updateValueAndValidity();
+  });
+
+  // Populate the new row with values from the previous row or empty values
+  const previousValues = this.getPreviousRowValues(this.stateArray.length);
+  stateGroup.patchValue(previousValues);
+
+  // Add the new row to the form array
+  this.stateArray.push(stateGroup);
+}
+
+  
+  getPreviousRowValues(rowIndex: number): any {
+    if (rowIndex > 0) {
+      const previousRow = this.stateArray.at(rowIndex - 1).value;
       return {
         stateId: previousRow.stateId,
         sbuId: previousRow.sbuId,
@@ -139,50 +218,20 @@ export class HouseRegistrationComponent implements OnInit {
         mapId: previousRow.mapId,
         houseId: previousRow.houseId,
       };
+    } else {
+      return {
+        stateId: '',
+        sbuId: '',
+        plantId: '',
+        mapId: '',
+        houseId: '',
+      }; // Return an object with empty values for the first row
     }
-    return {};
   }
+  
+  
+  
 
-  addstate() {
-    const stateGroup = this.formBuilder.group({
-      // stateId: [this.stateId],
-      // sbuId: [0, [Validators.required, Validators.min(1)]],
-      // plantId: [0, [Validators.required, Validators.min(1)]],
-      // mapId: [0, [Validators.required, Validators.min(1)]],
-      // houseId: [0, [Validators.required, Validators.min(1)]],
-      stateId: [this.stateId, [Validators.required]],
-      sbuId: ['', [Validators.required]],
-      plantId: ['', [Validators.required]],
-      mapId: ['', [Validators.required]],
-      houseId: ['', [Validators.required]],
-    });
-
-    // stateGroup.get('stateId')?.setValidators([Validators.required, Validators.min(1)]);
-    // stateGroup.get('sbuId')?.setValidators([Validators.required, Validators.min(1)]);
-    // stateGroup.get('plantId')?.setValidators([Validators.required, Validators.min(1)]);
-    // stateGroup.get('mapId')?.setValidators([Validators.required, Validators.min(1)]);
-    // stateGroup.get('houseId')?.setValidators([Validators.required, Validators.min(1)]);
-    stateGroup.get('stateId')?.setValidators([Validators.required]);
-    stateGroup.get('stateId')?.updateValueAndValidity();
-    stateGroup.get('sbuId')?.setValidators([Validators.required]);
-    stateGroup.get('sbuId')?.updateValueAndValidity();
-
-    stateGroup.get('plantId')?.setValidators([Validators.required]);
-    stateGroup.get('plantId')?.updateValueAndValidity();
-
-    stateGroup.get('mapId')?.setValidators([Validators.required]);
-    stateGroup.get('mapId')?.updateValueAndValidity();
-
-    stateGroup.get('houseId')?.setValidators([Validators.required]);
-    stateGroup.get('houseId')?.updateValueAndValidity();
-    const previousValues = this.getPreviousRowValues(this.stateArray.length);
-  stateGroup.patchValue(previousValues); // Use patchValue to set the previous values
-
-  Object.keys(stateGroup.controls).forEach(controlName => {
-    stateGroup.get(controlName)?.updateValueAndValidity();
-  });
-    this.stateArray.push(stateGroup);
-  }
   // Inside your component class
 
 
@@ -304,7 +353,6 @@ export class HouseRegistrationComponent implements OnInit {
             });
           }
         }
-
         break;
       }
     }
@@ -315,6 +363,58 @@ export class HouseRegistrationComponent implements OnInit {
     return vSts;
   }
 
+  // validateData() {
+  //   const formControls = [
+  //     { control: this.houseRegistrationForm.get('ownerName'), name: "Owner Name" },
+  //     { control: this.houseRegistrationForm.get('houseName'), name: "House Name" },
+  //     { control: this.houseRegistrationForm.get('noOfRooms'), name: "Number of Rooms" },
+  //     { control: this.houseRegistrationForm.get('electricBill'), name: "Electric Bill" },
+  //     { control: this.houseRegistrationForm.get('waterBill'), name: "Water Bill" },
+  //     { control: this.houseRegistrationForm.get('address'), name: "Address" },
+  //     { control: this.houseRegistrationForm.get('district'), name: "District" },
+  //     { control: this.houseRegistrationForm.get('startDate'), name: "Start Date" },
+  //   ];
+
+  //   let vSts = true;
+
+  //   for (const formControl of formControls) {
+  //     if (formControl.control?.valid) {
+  //       formControl.control.markAsTouched();
+  //     } else {
+  //       formControl.control?.markAsTouched();
+  //       vSts = false;
+
+  //       if (formControl.name === "House Name" && this.isHouseNameNotUnique()) {
+  //         this.errorMessageForHouseMapping = "House No/Name must be unique";
+  //       } else {
+  //         // Focus on the first invalid input field
+  //         if (formControl.control) {
+  //           const element = formControl.control?.parent?.getRawValue();
+  //           if (element) {
+  //             Object.keys(element).forEach(key => {
+  //               if (element[key] === formControl.control?.parent?.getRawValue()[key]) {
+  //                 const el = document.getElementsByName(key)[0];
+  //                 if (el) {
+  //                   el.focus();
+  //                 }
+  //               }
+  //             });
+  //           }
+  //         }
+  //         break;
+  //       }
+  //     }
+  //   }
+
+  //   return vSts;
+  // }
+
+  isHouseNameNotUnique(): boolean {
+    // Perform uniqueness check for House Name
+    const enteredHouseName = this.houseRegistrationForm.get('houseName')?.value;
+    const duplicateHouseName = this.allHouseDetails.some(house => house.houseName === enteredHouseName);
+    return duplicateHouseName;
+  }
 
 
   registerHouse() {
@@ -473,6 +573,7 @@ export class HouseRegistrationComponent implements OnInit {
             this.houseRegistrationForm.reset()
             this.stateArray.clear()
             this.addstate()
+
             Swal.fire({
               icon: 'success',
               text: 'Record Updated Successfully'

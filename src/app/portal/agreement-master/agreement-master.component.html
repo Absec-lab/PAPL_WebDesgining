@@ -59,18 +59,20 @@
                         <div class="text-danger">{{ errorMessages.aggreOwner }}</div>
                     </div>
                 </div>
+                
                 <div class="col-sm-6 col-md-4  ">
                     <div class="form-group">
                         <label  class="form-label">House Name<span class="text-danger">*</span></label>
                         <select class="form-select" aria-label="Default select example" [(ngModel)]="aggreHouse"
                             name="aggreHouse" >
                             <option value="0">Choose House...</option>
-                            <option *ngFor="let list of getallhouseList; let i = index" [value]="list.houseId">
-                                {{list.houseName}}</option>
+                            <option *ngFor="let item of getallHouse; let i = index" [value]="item.houseId">
+                                {{item.houseName}}</option>
                         </select>
                         <div class="text-danger">{{ errorMessages.aggreHouse }}</div>
                     </div>
                 </div>
+                
                 <div class="col-sm-6 col-md-4  ">
                     <div class="form-group">
                         <label  class="form-label">Agreement Type <span class="text-danger">*</span></label>

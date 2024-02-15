@@ -81,7 +81,7 @@ export class UnitRegistrationComponent {
       unitCapacity: ["", Validators.required],
       electBillPercent: ["", Validators.required],
       waterBillPercent: ["", Validators.required],
-      startDate: ["", Validators.required],
+      startDate: [""],
       endDate: [""],
     });
   }
@@ -91,10 +91,27 @@ export class UnitRegistrationComponent {
   }
 
   addunit() {
-    const unitGroup = this.createUnitGroup();
-    this.unitArray.push(unitGroup);
+    const lastUnitIndex = this.unitArray.length - 1;
+  
+    if (lastUnitIndex >= 0) {
+      const lastUnit = this.unitArray.at(lastUnitIndex);
+      if (lastUnit.valid) {
+        const unitGroup = this.createUnitGroup();
+        this.unitArray.push(unitGroup);
+      } else {
+        // Handle the case where the last unit is not valid (show an error message, etc.)
+        console.error("Last unit is not valid.");
+      }
+    } else {
+      // If no units are present, always add a new one
+      const unitGroup = this.createUnitGroup();
+      this.unitArray.push(unitGroup);
+    }
   }
-
+  
+ 
+  
+  
   removeUnit(index: number) {
     this.unitArray.removeAt(index);
   }

@@ -65,16 +65,42 @@ export class UtilityCalculationComponent implements OnInit {
   }
 
   addelectric() {
-    const stateGroup = this.formBuilder.group({
-      eleExpenseAmt: [""],
-      eleBillDoc: [""],
-      eleRecDoc: [""],
-      billFileExt: [""],
-      recFileExt: [""],
-    });
-
-    this.electric.push(stateGroup);
+    const lastElectricIndex = this.electric.length - 1;
+  
+    if (lastElectricIndex >= 0) {
+      const lastElectricGroup = this.electric.at(lastElectricIndex);
+      if (
+        lastElectricGroup.get('eleExpenseAmt')?.value !== '' ||
+        lastElectricGroup.get('eleBillDoc')?.value !== '' ||
+        lastElectricGroup.get('eleRecDoc')?.value !== ''
+      ) {
+        const newElectricGroup = this.formBuilder.group({
+          eleExpenseAmt: [''],
+          eleBillDoc: [''],
+          eleRecDoc: [''],
+          billFileExt: [''],
+          recFileExt: [''],
+        });
+  
+        this.electric.push(newElectricGroup);
+      } else {
+        // Handle the case where the last electric group is not filled (show an error message, etc.)
+        console.error('Last electric group is not filled.');
+      }
+    } else {
+      // If no electric groups are present, always add a new one
+      const newElectricGroup = this.formBuilder.group({
+        eleExpenseAmt: [''],
+        eleBillDoc: [''],
+        eleRecDoc: [''],
+        billFileExt: [''],
+        recFileExt: [''],
+      });
+  
+      this.electric.push(newElectricGroup);
+    }
   }
+  
 
   removeelectric(index: number) {
     this.electric.removeAt(index);
@@ -85,16 +111,40 @@ export class UtilityCalculationComponent implements OnInit {
   }
 
   addwater() {
-    const stateGroup = this.formBuilder.group({
-      waterExpenseAmount: [""],
-      waterBilldoc: [""],
-      waterRecDoc: [""],
-      billFileExt: [""],
-      recFileExt: [""],
-    });
-
-    this.water.push(stateGroup);
+    const lastWaterIndex = this.water.length - 1;
+  
+    if (lastWaterIndex >= 0) {
+      const lastWaterGroup = this.water.at(lastWaterIndex);
+      if (lastWaterGroup.get('waterExpenseAmount')?.value !== '' ||
+          lastWaterGroup.get('waterBilldoc')?.value !== '' ||
+          lastWaterGroup.get('waterRecDoc')?.value !== '') {
+        const newWaterGroup = this.formBuilder.group({
+          waterExpenseAmount: [''],
+          waterBilldoc: [''],
+          waterRecDoc: [''],
+          billFileExt: [''],
+          recFileExt: [''],
+        });
+  
+        this.water.push(newWaterGroup);
+      } else {
+        // Handle the case where the last water group is not filled (show an error message, etc.)
+        console.error("Last water group is not filled.");
+      }
+    } else {
+      // If no water groups are present, always add a new one
+      const newWaterGroup = this.formBuilder.group({
+        waterExpenseAmount: [''],
+        waterBilldoc: [''],
+        waterRecDoc: [''],
+        billFileExt: [''],
+        recFileExt: [''],
+      });
+  
+      this.water.push(newWaterGroup);
+    }
   }
+  
 
   removewater(index: number) {
     this.water.removeAt(index);

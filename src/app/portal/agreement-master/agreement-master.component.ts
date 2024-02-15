@@ -16,6 +16,7 @@ import { ExcelService } from '../serviceapi/excel.service';
 })
 export class AgreementMasterComponent {
   constructor(private ngxLoader: NgxUiLoaderService, private formBuilder: FormBuilder, private route: Router, public portalServ: PortalServiceService, private httpClient: HttpClient, public vldChkLst: ValidatorchklistService,private excelService: ExcelService) { }
+  
   ngOnInit(): void {
     this.getAllState();
     // this.getAllSbu();
@@ -49,7 +50,7 @@ export class AgreementMasterComponent {
   selectedCropFileNames: any = '';
   selectedCropFiles: any = [];
   cropPreviews: any = [];
-  getallhouseList: any = [];
+  getallHouse: any = [];
   page: number = 1;
   count: number = 0;
   tableSize: number = 10;
@@ -177,7 +178,7 @@ export class AgreementMasterComponent {
     this.portalServ.get('PAPL/get/House/by/{ownerId}?ownerId='+OwnerId )
       .subscribe(res => {
         console.log(res);
-        this.getallhouseList = res
+        this.getallHouse = res
         this.ngxLoader.stop();
 
       })
@@ -368,7 +369,6 @@ export class AgreementMasterComponent {
         this.aggreStartDate = rentStartDt.split('T')[0];
         this.aggreEndDate = rentEndDt.split('T')[0];
         this.aggreId = aggreId;
-
         this.getSbu(stateId);
         this.getPlant(sbuId);
         window.scrollTo({ top: 0, behavior: 'smooth' });

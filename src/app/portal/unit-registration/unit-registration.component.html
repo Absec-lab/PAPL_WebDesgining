@@ -68,10 +68,10 @@
             </div>
 
 
-        <!-- </form>
+        </form>
 
 
-        <form action="" [formGroup]="unitRegisterForm"> -->
+        <form action="" [formGroup]="unitRegisterForm">
             <div formArrayName="homereigster" class="row"
                 style="background-color: rgba(226, 242, 246, 1); padding: 5%; margin-bottom: 0.5cm;">
                 <div *ngFor="let unit of unitArray.controls; let i = index" [formGroupName]="i" class="row">
@@ -188,7 +188,7 @@
                     <div class="col-sm-6 col-md-2 button-container">
                         <button type="button" class="btn btn-danger btn-sm" *ngIf="i>0" (click)="removeUnit(i)"> <i
                                 class="fa-solid fa-trash-alt"></i></button>
-                        <button type="button" class="btn btn-primary m-1 btn-sm" (click)="addunit()"><i
+                        <button type="button" class="btn btn-primary m-1 btn-sm" (click)="addunit()" ><i
                                 class="fa-solid fa-plus"></i></button>
                     </div>
                 </div>

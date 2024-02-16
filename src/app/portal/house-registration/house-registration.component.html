@@ -233,10 +233,12 @@
             <button *ngIf="!updatebtn" class="btn btn-primary form-save-btn" (click)=" registerHouse()">
                 Save
             </button>
-            <button *ngIf="updatebtn" class="btn btn-primary form-save-btn" (click)=" updateHouseForm()">
+            <button *ngIf="updatebtn" class="btn btn-primary mx-1 px-4" (click)=" updateHouseForm()">
                 Update
             </button>
-
+            <button *ngIf="updatebtn" class="btn btn-danger mx-1 px-4 " (click)="cancelUpdate()">
+                Cancel
+              </button>
         </div>
         <div class="mt-4 d-flex justify-content-end">
             <button class="btn btn-primary form-save-btn" (click)="exportAsXLSX()">

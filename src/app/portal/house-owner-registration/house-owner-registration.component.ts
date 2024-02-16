@@ -841,7 +841,7 @@ downloadImage(url: string): void {
       const decodedData = atob(documentValue);
       console.log(decodedData)
 
-      const blob = new Blob([decodedData], { type: 'image/*' });
+      const blob = new Blob([decodedData], { type: 'image/jpeg' });
 
       const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);

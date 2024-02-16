@@ -398,6 +398,17 @@ export class UnitRegistrationComponent {
     this.unitId = item.unitId;
   }
 
+  cancelUpdate() {
+    // Reset the form and any related variables or arrays
+    this.unitRegisterForm.reset();
+    this.unitArray.clear();
+    this.addunit();
+  
+    // Reset the update flag if needed
+    this.updatebtn = false;
+  }
+  
+
   updateUnitForm() {
     if (this.unitArray.controls[0].valid) {
       let data = {

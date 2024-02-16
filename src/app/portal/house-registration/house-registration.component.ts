@@ -530,7 +530,16 @@ export class HouseRegistrationComponent implements OnInit {
     this.mapId = item.mapId;
   }
 
-
+  cancelUpdate() {
+    // Reset the form and any related variables or arrays
+    this.houseRegistrationForm.reset();
+    this.stateArray.clear();
+    this.addstate();
+  
+    // Reset the update flag if needed
+    this.updatebtn = false;
+  }
+  
 
   updateHouseForm() {
 

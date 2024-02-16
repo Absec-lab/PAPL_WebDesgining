@@ -263,9 +263,12 @@
                 <button *ngIf="!updatebtn" class="btn btn-primary form-save-btn" (click)="postUtilityCalc()">
                     Save
                 </button>
-                <button *ngIf="updatebtn" class="btn btn-primary form-save-btn" (click)=" updateUtilityCalc()">
+                <button *ngIf="updatebtn" class="btn btn-primary mx-1 px-4" (click)=" updateUtilityCalc()">
                     Update
                 </button>
+                <button *ngIf="updatebtn" class="btn btn-danger mx-1 px-4 " (click)="cancelUpdate()">
+                    Cancel
+                  </button>
             </div>
             <div class="mt-4 d-flex justify-content-end">
                 <button class="btn btn-primary form-save-btn" (click)="exportAsXLSX()">
@@ -273,7 +276,12 @@
                 </button>
             </div>
         </form>
-        <div class="" style=" position: relative; overflow-x: auto; overflow-y: auto; padding-top: 30px;">
+        <div class="d-flex justify-content-end mt-5">
+            <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+            </pagination-controls>
+            
+        </div> 
+        <div class="" style=" position: relative; overflow-x: auto; overflow-y: auto; padding-top: 10px;">
             <table class="table w-full table-bordered table-striped">
                 <thead class="">
                     <tr>
@@ -334,7 +342,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-end">
             <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
             </pagination-controls>
             

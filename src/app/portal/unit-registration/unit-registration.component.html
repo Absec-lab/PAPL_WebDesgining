@@ -24,9 +24,7 @@
                             <div *ngIf="unitRegisterForm.get('stateId')?.hasError('min')">
                                 Select Plant.</div>
                         </div>
-
                     </div>
-
                 </div>
                 <div class="col-sm-6 col-md-4 ">
                     <div class="form-group">
@@ -41,9 +39,7 @@
                             <div *ngIf="unitRegisterForm.get('sbuId')?.hasError('min')">
                                 Select Plant.</div>
                         </div>
-
                     </div>
-
                 </div>
                 <div class="col-sm-6 col-md-4  ">
                     <div class="form-group">
@@ -59,28 +55,18 @@
                             <div *ngIf="unitRegisterForm.get('plantId')?.hasError('min')">
                                 Select Plant.</div>
                         </div>
-
                     </div>
-
                 </div>
-
-
             </div>
-
-
         </form>
-
-
         <form action="" [formGroup]="unitRegisterForm">
             <div formArrayName="homereigster" class="row"
                 style="background-color: rgba(226, 242, 246, 1); padding: 5%; margin-bottom: 0.5cm;">
                 <div *ngFor="let unit of unitArray.controls; let i = index" [formGroupName]="i" class="row">
                     <!-- Form Control 1 (House Name) -->
-
                     <div class="col-sm-6 col-md-4">
                         <div class="form-group">
                             <label class="form-label">Owner Name <span class="text-danger">*</span></label>
-
                             <select class="form-select" formControlName="ownerId" aria-label="Default select example" (change)="getHouseByOwnerId($event)">
                                 <option value="0" selected>Choose Owner Name...</option>
                                 <option *ngFor="let item of allOwner; let i = index" [value]="item.ownerId">
@@ -198,9 +184,12 @@
                 <button *ngIf="!updatebtn" class="btn btn-primary form-save-btn" (click)="postUnit()">
                     Save
                 </button>
-                <button *ngIf="updatebtn" class="btn btn-primary form-save-btn" (click)=" updateUnitForm()">
+                <button *ngIf="updatebtn" class="btn btn-primary mx-1 px-4" (click)=" updateUnitForm()">
                     Update
                 </button>
+                <button *ngIf="updatebtn" class="btn btn-danger mx-1 px-4 " (click)="cancelUpdate()">
+                    Cancel
+                  </button>
             </div>
             <div class="mt-4 d-flex justify-content-end">
                 <button class="btn btn-primary form-save-btn" (click)="exportAsXLSX()">

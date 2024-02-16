@@ -476,7 +476,17 @@ export class UtilityCalculationComponent implements OnInit {
       }
     }, 4010);
   }
-
+  cancelUpdate() {
+    // Reset any form or related variables as needed
+    this.utilityCalculation.reset();
+    // Additional reset logic for electric and water forms if necessary
+    this.electric.reset();
+    this.water.reset();
+  
+    // Reset the update flag if needed
+    this.updatebtn = false;
+  }
+  
   updateUtilityCalc() {
     //if(this.utilityCalculation.valid  && this.electric.valid && this.water.valid) {
     let data = {

@@ -58,6 +58,7 @@ export class HouseOwnerRegistrationComponent {
   isDisableAddButton: boolean = false;
   uploadGovtIdProofFileName: string = "";
   uploadQrCodeFileName: string = "";
+  uploadPANFileName: string = '';
   constructor(
     private http: HttpClient,
     private ngxLoader: NgxUiLoaderService,
@@ -727,6 +728,8 @@ export class HouseOwnerRegistrationComponent {
       let splitQrCodeArr = item.uploadQuarCodeAdds.split("/");
       this.uploadQrCodeFileName = splitQrCodeArr[5];
     }
+    let splitPanCardArr = item.panCardAddress.split("/");
+    this.uploadPANFileName = splitPanCardArr[5]
     this.updatebtn = true;
     this.descripinput = true;
     this.paymentmode(item.paymtMode == "string" ? 2 : item.paymtMode, "owner");
@@ -857,14 +860,21 @@ downloadImage(url: string): void {
 
 
 cancelUpdate() {
-    // Implement any logic you need to handle canceling the update
-    this.updatebtn = false;
-    this.houseRegistrationForm.reset();
-    this.legalheirarray.controls.forEach((control: any) => {
-        control.reset();
-    });
-    this.legalbtnh = false;
+  // Implement any logic you need to handle canceling the update
+  this.updatebtn = false;
+  this.houseRegistrationForm.reset();
+  this.legalheirarray.controls.forEach((control: any) => {
+      control.reset();
+  });
+
+  // Reset file names
+  this.uploadQrCodeFileName = '';
+  this.uploadPANFileName = '';
+  this.uploadGovtIdProofFileName = '';
+
+  this.legalbtnh = false;
 }
+
 
 
 
@@ -888,6 +898,10 @@ cancelUpdate() {
     if (this.uploadQrCodeFileName !== "") {
       this.houseRegistrationForm.get("qrCode")?.clearValidators();
       this.houseRegistrationForm.get("qrCode")?.updateValueAndValidity();
+    }
+    if (this.uploadPANFileName !== "") {
+      this.houseRegistrationForm.get("panPic")?.clearValidators();
+      this.houseRegistrationForm.get("panPic")?.updateValueAndValidity();
     }
     if (this.legalheirarray.valid && this.houseRegistrationForm.valid) {
       let data = {

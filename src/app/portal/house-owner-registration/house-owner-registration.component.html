@@ -351,8 +351,10 @@
                         </div>
                         <div class="col-sm-6 col-md-4">
                             <div class="form-group">
-                                <label for="state" class="form-label">Upload PAN Card<span
-                                        class="text-danger">*</span></label>
+                                <label for="state" class="form-label">Upload PAN Card<span class="text-danger">*</span>
+                                    <a style="padding-left: 15px; pointer-events: none;"
+                                        href="">{{uploadPANFileName}}</a>
+                                </label>
                                 <input type="file" name="" id="" class="form-control" accept="image/*,.pdf"
                                     (change)="onImageChange($event, 'panPic')" formControlName="panPic">
                                 <!-- (change)="onImageChange($event, 'panPic')" formControlName="panPic" required> -->
@@ -362,6 +364,7 @@
                                 </div>
                             </div>
                         </div>
+
 
                     </div>
                     <!-- upi -->
@@ -412,17 +415,19 @@
                         </div>
                     </div>
                 </ng-container>
+            </div>
+            <div  style="background-color: rgba(226, 242, 246, 1); padding: 5%">
                 <!-- add-legal-heir -->
                 <div class="row" *ngIf="legalbtnh">
                     <div class="container" style="padding: 20px 0;">
                         <ul class="nav" id="" role="">
                             <li class="nav-item w-100" role="">
                                 <button class="nav-link active w-100 text-uppercase text-white" id="" style="
-                                background-color: rgba(0, 133, 159, 1);
-                                color: #faf7f7;
-                                font-weight: bold;
-                                text-align: left;
-                              " aria-controls="trip-tab-pane" aria-selected="true">
+                        background-color: rgba(0, 133, 159, 1);
+                        color: #faf7f7;
+                        font-weight: bold;
+                        text-align: left;
+                      " aria-controls="trip-tab-pane" aria-selected="true">
                                     Legal Heir Details
                                 </button>
                             </li>
@@ -454,6 +459,13 @@
                                 (change)="noOfLegalPartiesChange($event)" maxlength="1">
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="mt-5" style="background-color: rgba(226, 242, 246, 1); padding: 5%">
+                
+                <div class="row" *ngIf="legalbtnh">
+
+
                     <form action="" [formGroup]="legalheirForm">
                         <div class="container" formArrayName="legal">
                             <div class="container" *ngFor="let stateGroup of legalheirarray.controls; let i = index"
@@ -512,8 +524,8 @@
                                             <input type="email" formControlName="emailId" name="" id=""
                                                 class="form-control" required (oninput)="vldChkLst.validEmail($event)">
                                             <!-- <div style="color: red;" *ngIf="legalheirarray.controls[i].get('emailId')?.hasError('required') && legalheirarray.controls[i].get('emailId')?.touched">
-                                                    Email ID is required.
-                                                  </div> -->
+                                                Email ID is required.
+                                              </div> -->
                                             <div class="error-message"
                                                 *ngIf="legalheirarray.controls[i].get('emailId')?.invalid && legalheirarray.controls[i].get('emailId')?.touched">
                                                 <div
@@ -627,18 +639,18 @@
                                             <label for="state" class="form-label">District<span
                                                     class="text-danger">*</span></label>
                                             <!-- <select class="form-select" formControlName="district"
-                                                (change)="getPinCode($event,'array')"
-                                                aria-label="Default select example">
-                                                <option selected>Choose District... </option>
-                                                <option *ngFor="let dist of arrayDistList" [value]="dist.districtName">
-                                                    {{
-                                                    dist.districtName }}</option>
+                                            (change)="getPinCode($event,'array')"
+                                            aria-label="Default select example">
+                                            <option selected>Choose District... </option>
+                                            <option *ngFor="let dist of arrayDistList" [value]="dist.districtName">
+                                                {{
+                                                dist.districtName }}</option>
 
-                                            </select>
-                                            <div style="color: red;"
-                                                *ngIf="legalheirarray.controls[i].get('district')?.hasError('required') && legalheirarray.controls[i].get('district')?.touched">
-                                                District is required.
-                                            </div> -->
+                                        </select>
+                                        <div style="color: red;"
+                                            *ngIf="legalheirarray.controls[i].get('district')?.hasError('required') && legalheirarray.controls[i].get('district')?.touched">
+                                            District is required.
+                                        </div> -->
                                             <input type="text" placeholder="Choose District... " matInput
                                                 [formControl]="distLegalHeirControl" [matAutocomplete]="auto"
                                                 class="form-control" formControlName="district">
@@ -657,7 +669,7 @@
                                                 </div>
                                             </div>
                                             <!-- <input type="text" formControlName="district" name="" id=""
-                                                class="form-control" required> -->
+                                            class="form-control" required> -->
 
                                         </div>
                                     </div>
@@ -669,16 +681,16 @@
                                             <label for="state" class="form-label">PIN<span
                                                     class="text-danger">*</span></label>
                                             <!-- <select class="form-select" formControlName="pinCode"
-                                                aria-label="Default select example">
-                                                <option selected>Choose Pincode... </option>
-                                                <option *ngFor="let pin of arrayPincode" [value]="pin.pincode">{{
-                                                    pin.pincode }}</option>
+                                            aria-label="Default select example">
+                                            <option selected>Choose Pincode... </option>
+                                            <option *ngFor="let pin of arrayPincode" [value]="pin.pincode">{{
+                                                pin.pincode }}</option>
 
-                                            </select>
-                                            <div style="color: red;"
-                                                *ngIf="legalheirarray.controls[i].get('pinCode')?.hasError('required') && legalheirarray.controls[i].get('pinCode')?.touched">
-                                                Pincode is required.
-                                            </div> -->
+                                        </select>
+                                        <div style="color: red;"
+                                            *ngIf="legalheirarray.controls[i].get('pinCode')?.hasError('required') && legalheirarray.controls[i].get('pinCode')?.touched">
+                                            Pincode is required.
+                                        </div> -->
                                             <input type="text" placeholder="Choose Pincode..." matInput
                                                 [formControl]="pinLegalHeirControl" [matAutocomplete]="pinauto"
                                                 class="form-control" formControlName="pinCode">
@@ -698,7 +710,7 @@
                                                 </div>
                                             </div>
                                             <!-- <input type="text" formControlName="pinCode" name="" id=""
-                                                class="form-control" required maxlength="6"  (keyup)="vldChkLst.allowNumericDigits($event)"> -->
+                                            class="form-control" required maxlength="6"  (keyup)="vldChkLst.allowNumericDigits($event)"> -->
                                         </div>
                                     </div>
                                     <div class="col-sm-6 col-md-4">
@@ -915,12 +927,7 @@
                             </div>
                         </div>
                     </form>
-
-
-
                 </div>
-
-
             </div>
 
             <div class="mt-4 d-flex justify-content-end">
@@ -934,8 +941,8 @@
                     Cancel
                 </button>
             </div>
-            
-            
+
+
             <div class="mt-4 d-flex justify-content-end">
                 <button class="btn btn-primary form-save-btn" (click)="exportAsXLSX()">
                     Export To Excel

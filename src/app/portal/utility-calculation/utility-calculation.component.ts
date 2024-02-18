@@ -189,6 +189,8 @@ export class UtilityCalculationComponent implements OnInit {
   }
   activeHouse: any = [];
   plantId: any;
+  agreementEleWatData: any;
+  houseId:any;
   getHouseByPlantId(event: any) {
     this.activeHouse = [];
     const selectedPlantId = event.target.value;
@@ -202,7 +204,19 @@ export class UtilityCalculationComponent implements OnInit {
         // console.log("active plan", this.activeHouse)
       });
   }
+  getHouseEleWatData(event:any){
+    const selectedPlantId = event.target.value;
+    this.houseId = selectedPlantId;
 
+    this.portalService
+      .get(`PAPL/getAgreement/by/houseId/${selectedPlantId}`)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res) => {
+        this.agreementEleWatData = res;
+        console.log("dataaa",this.agreementEleWatData)
+        // console.log("active plan", this.activeHouse)
+      });
+  }
   onClick() {
     // Your button click logic here
     alert("Deleted Successfully!!");
@@ -490,6 +504,7 @@ export class UtilityCalculationComponent implements OnInit {
   updateUtilityCalc() {
     //if(this.utilityCalculation.valid  && this.electric.valid && this.water.valid) {
     let data = {
+      utilityCalcId:this.utilityCalculation.value.utilityCalcId,
       utilityCalculationData: {
         utilityCalcId:this.utilityCalculation.value.utilityCalcId,
         fkStateId: this.utilityCalculation.value.state,
@@ -519,7 +534,7 @@ export class UtilityCalculationComponent implements OnInit {
     };
     console.log(data);
     this.portalService
-      .post("PAPL/updatecalculation", data)
+      .put("PAPL/updatecalculation", data)
       .pipe(takeUntil(this.destroy$))
       .subscribe((res) => {
         this.ngxLoader.stop();
@@ -583,6 +598,7 @@ export class UtilityCalculationComponent implements OnInit {
       }
     });
   }
+
 
   //         Swal.fire({
   //           //icon: 'warning',

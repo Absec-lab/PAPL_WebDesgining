@@ -416,9 +416,9 @@
                     </div>
                 </ng-container>
             </div>
-            <div  style="background-color: rgba(226, 242, 246, 1); padding: 5%">
+            <div class="mt-2" *ngIf="legalbtnh" style="background-color: rgba(226, 242, 246, 1); padding:  0% 5% 0% 5%">
                 <!-- add-legal-heir -->
-                <div class="row" *ngIf="legalbtnh">
+                <div class="row" >
                     <div class="container" style="padding: 20px 0;">
                         <ul class="nav" id="" role="">
                             <li class="nav-item w-100" role="">
@@ -461,9 +461,9 @@
                     </div>
                 </div>
             </div>
-            <div class="mt-5" style="background-color: rgba(226, 242, 246, 1); padding: 5%">
+            <div class="mt-2" *ngIf="legalbtnh"style="background-color: rgba(226, 242, 246, 1); padding:5%">
                 
-                <div class="row" *ngIf="legalbtnh">
+                <div class="row" >
 
 
                     <form action="" [formGroup]="legalheirForm">

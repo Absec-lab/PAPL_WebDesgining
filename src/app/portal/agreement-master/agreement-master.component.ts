@@ -371,6 +371,7 @@ export class AgreementMasterComponent {
         this.aggreId = aggreId;
         this.getSbu(stateId);
         this.getPlant(sbuId);
+        this.getHouse(ownerId);
         window.scrollTo({ top: 0, behavior: 'smooth' });
     
   }

@@ -502,11 +502,11 @@ export class UtilityCalculationComponent implements OnInit {
   }
   
   updateUtilityCalc() {
-    //if(this.utilityCalculation.valid  && this.electric.valid && this.water.valid) {
+    // if(this.utilityCalculation.valid  && this.electric.valid && this.water.valid) {
     let data = {
-      utilityCalcId:this.utilityCalculation.value.utilityCalcId,
+      utilityCalcId: this.utilityCalculation.value.utilityCalcId,
       utilityCalculationData: {
-        utilityCalcId:this.utilityCalculation.value.utilityCalcId,
+        utilityCalcId: this.utilityCalculation.value.utilityCalcId,
         fkStateId: this.utilityCalculation.value.state,
         fkSbuId: this.utilityCalculation.value.sbu,
         fkPlantId: this.utilityCalculation.value.plant,
@@ -532,31 +532,31 @@ export class UtilityCalculationComponent implements OnInit {
       utilityCalculationElectricDto: this.electric.value,
       utilityCalculationWaterDto: this.water.value,
     };
+  
     console.log(data);
+  
     this.portalService
       .put("PAPL/updatecalculation", data)
       .pipe(takeUntil(this.destroy$))
       .subscribe((res) => {
         this.ngxLoader.stop();
-        //console.log(res);
+        // console.log(res);
         Swal.fire({
           icon: "success",
           text: "Utility Calculation Update Successfully",
         });
         this.getAllUtilityCalc();
         alert("calculation saved successfully");
-        //alert("calculation saved successfully")
       });
-    this.utilityCalculation.reset;
-
-    // } else {
-    // this.markFormGroupTouched(this.utilityCalculation);
-    //this.markFormArrayControlsTouched(this.electric);
-    // this.markFormArrayControlsTouched(this.water);
-    // this.scrollToTop();
-    // alert("Please Enter Required fields !")
-    //}
+  
+    // Reset the form after the update
+    this.utilityCalculation.reset();
+    this.electric.reset();
+    this.water.reset();
+  
+    this.updatebtn = false;
   }
+  
 
   removeUtilityCalc(id: any) {
     Swal.fire({

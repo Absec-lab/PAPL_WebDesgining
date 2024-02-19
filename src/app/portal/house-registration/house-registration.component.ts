@@ -6,6 +6,9 @@ import { ValidatorchklistService } from '../serviceapi/validatorchklist.service'
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import Swal from 'sweetalert2';
 import { ExcelService } from '../serviceapi/excel.service';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { startWith, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home-registration',
@@ -34,16 +37,30 @@ export class HouseRegistrationComponent implements OnInit {
   tableSize: number = 10;
   tableSizes: any = [3, 6, 9, 12];
   errorMessageForHouseMapping: any = '';
-
+  ownerNameControl = new FormControl();
+  filteredOwners: Observable<any[]>;
   constructor(private portalService: PortalServiceService, private formBuilder: FormBuilder, public vldChkLst: ValidatorchklistService, private ngxLoader: NgxUiLoaderService, private excelService: ExcelService) {
 
   }
-
+// Handle selection from the autocomplete list
+onOwnerNameSelected(event: MatAutocompleteSelectedEvent): void {
+  // Do something with the selected owner
+  console.log(event.option.value);
+}
+private _filterOwners(value: string): any[] {
+  const filterValue = value.toLowerCase();
+  return this.allOwner.filter(owner => owner.ownerName.toLowerCase().includes(filterValue));
+}
 
   ngOnInit(): void {
     this.getAllStateList()
     this.getAllHouseDetailList()
-
+    this.filteredOwners = this.ownerNameControl.valueChanges
+    .pipe(
+      startWith(''),
+      map(value => this._filterOwners(value))
+    );
+  
     this.houseRegistrationForm = this.formBuilder.group({
       ownerName: [0, [Validators.required, Validators.min(1)]],
       houseName: ['', Validators.required],
@@ -114,6 +131,7 @@ export class HouseRegistrationComponent implements OnInit {
     }
 
   }
+  
 
   getAllOwner() {
     //this.ngxLoader.start();

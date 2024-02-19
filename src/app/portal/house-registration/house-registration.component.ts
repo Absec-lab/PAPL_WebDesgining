@@ -6,6 +6,9 @@ import { ValidatorchklistService } from '../serviceapi/validatorchklist.service'
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import Swal from 'sweetalert2';
 import { ExcelService } from '../serviceapi/excel.service';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { startWith, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home-registration',
@@ -45,9 +48,9 @@ onOwnerNameSelected(event: MatAutocompleteSelectedEvent): void {
   console.log(event.option.value);
 }
 private _filterOwners(value: string): any[] {
-  const filterValue = value.toLowerCase();
-  return this.allOwner.filter(owner => owner.ownerName.toLowerCase().includes(filterValue));
-}
+    const filterValue = value.toLowerCase();
+    return this.allOwner.filter(owner => owner.ownerName.toLowerCase().includes(filterValue));
+  }
 
   ngOnInit(): void {
     this.getAllStateList()
@@ -431,7 +434,7 @@ private _filterOwners(value: string): any[] {
     return duplicateHouseName;
   }
 
-errorResponse:any
+
   registerHouse() {
     this.stateArray.controls.forEach((control: FormGroup) => {
       control.get('houseId')?.clearValidators();
@@ -478,14 +481,6 @@ errorResponse:any
 
           });
           // alert("House Registration succcesfull")
-        },
-        error=>{
-          this.errorResponse=error
-          console.log("Errorrrr",this.errorResponse)
-          Swal.fire({
-            icon: 'error',
-            text: this.errorResponse.error
-          })
         })
     }
   }

@@ -6,7 +6,6 @@ import { ValidatorchklistService } from '../serviceapi/validatorchklist.service'
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import Swal from 'sweetalert2';
 import { ExcelService } from '../serviceapi/excel.service';
-import { error } from 'console';
 
 @Component({
   selector: 'app-home-registration',
@@ -417,7 +416,7 @@ export class HouseRegistrationComponent implements OnInit {
     return duplicateHouseName;
   }
 
-errorResponse:any
+
   registerHouse() {
     this.stateArray.controls.forEach((control: FormGroup) => {
       control.get('houseId')?.clearValidators();
@@ -464,14 +463,6 @@ errorResponse:any
 
           });
           // alert("House Registration succcesfull")
-        },
-        error=>{
-          this.errorResponse=error
-          console.log("Errorrrr",this.errorResponse)
-          Swal.fire({
-            icon: 'error',
-            text: this.errorResponse.error
-          })
         })
     }
   }

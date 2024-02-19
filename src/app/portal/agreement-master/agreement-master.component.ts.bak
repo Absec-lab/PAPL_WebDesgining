@@ -672,14 +672,5 @@ cancelAgreement() {
 
       })
   }
-  houseResponseData:any;
-  getHouseData(){
-   
-    this.portalServ.get('PAPL/getHouseById/'+this.aggreHouse).subscribe(
-      res=>{
-        this.houseResponseData=res;
-        console.log("houseeee",this.houseResponseData);
-      }
-    );
-  }
+
 }

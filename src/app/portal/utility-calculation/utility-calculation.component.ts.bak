@@ -63,7 +63,7 @@ export class UtilityCalculationComponent implements OnInit {
   get electric(): FormArray {
     return this.utilityCalculation.get("electricbill") as FormArray;
   }
-disableElectricAddButton:boolean=false;
+
   addelectric() {
     const lastElectricIndex = this.electric.length - 1;
   
@@ -83,14 +83,6 @@ disableElectricAddButton:boolean=false;
         });
   
         this.electric.push(newElectricGroup);
-        if(this.agreementEleWatData!=null){
-          if(this.agreementEleWatData.house.noOfEleBills===this.electric.length){
-            this.disableElectricAddButton=false;
-          }
-          else{
-            this.disableElectricAddButton=true;
-          }
-        }
       } else {
         // Handle the case where the last electric group is not filled (show an error message, etc.)
         console.error('Last electric group is not filled.');
@@ -117,7 +109,7 @@ disableElectricAddButton:boolean=false;
   get water(): FormArray {
     return this.utilityCalculation.get("waterbill") as FormArray;
   }
-  disableWaterAddButton:boolean=false;
+
   addwater() {
     const lastWaterIndex = this.water.length - 1;
   
@@ -135,14 +127,6 @@ disableElectricAddButton:boolean=false;
         });
   
         this.water.push(newWaterGroup);
-        if(this.agreementEleWatData!=null){
-          if(this.agreementEleWatData.house.noOfWtrBills===this.water.length){
-            this.disableWaterAddButton=false;
-          }
-          else{
-            this.disableWaterAddButton=true;
-          }
-        }
       } else {
         // Handle the case where the last water group is not filled (show an error message, etc.)
         console.error("Last water group is not filled.");

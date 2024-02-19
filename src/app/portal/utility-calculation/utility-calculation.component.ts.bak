@@ -42,10 +42,10 @@ export class UtilityCalculationComponent implements OnInit {
       houseId: ["", Validators.required],
       startDate: ["", Validators.required],
       endDate: ["", Validators.required],
-      miscExp: ["0.0"],
+      miscExp: [""],
       miscBill: [""],
       miscrecept: [""],
-      hrexp: ["0.0"],
+      hrexp: [""],
       hrbill: [""],
       hrrecept: [""],
       hrrecFileExt: [""],
@@ -63,7 +63,7 @@ export class UtilityCalculationComponent implements OnInit {
   get electric(): FormArray {
     return this.utilityCalculation.get("electricbill") as FormArray;
   }
-disableElectricAddButton:boolean=false;
+
   addelectric() {
     const lastElectricIndex = this.electric.length - 1;
   
@@ -75,7 +75,7 @@ disableElectricAddButton:boolean=false;
         lastElectricGroup.get('eleRecDoc')?.value !== ''
       ) {
         const newElectricGroup = this.formBuilder.group({
-          eleExpenseAmt: ['0.0'],
+          eleExpenseAmt: [''],
           eleBillDoc: [''],
           eleRecDoc: [''],
           billFileExt: [''],
@@ -83,14 +83,6 @@ disableElectricAddButton:boolean=false;
         });
   
         this.electric.push(newElectricGroup);
-        if(this.agreementEleWatData!=null){
-          if(this.agreementEleWatData.house.noOfEleBills===this.electric.length){
-            this.disableElectricAddButton=false;
-          }
-          else{
-            this.disableElectricAddButton=true;
-          }
-        }
       } else {
         // Handle the case where the last electric group is not filled (show an error message, etc.)
         console.error('Last electric group is not filled.');
@@ -98,7 +90,7 @@ disableElectricAddButton:boolean=false;
     } else {
       // If no electric groups are present, always add a new one
       const newElectricGroup = this.formBuilder.group({
-        eleExpenseAmt: ['0.0'],
+        eleExpenseAmt: [''],
         eleBillDoc: [''],
         eleRecDoc: [''],
         billFileExt: [''],
@@ -117,7 +109,7 @@ disableElectricAddButton:boolean=false;
   get water(): FormArray {
     return this.utilityCalculation.get("waterbill") as FormArray;
   }
-  disableWaterAddButton:boolean=false;
+
   addwater() {
     const lastWaterIndex = this.water.length - 1;
   
@@ -127,7 +119,7 @@ disableElectricAddButton:boolean=false;
           lastWaterGroup.get('waterBilldoc')?.value !== '' ||
           lastWaterGroup.get('waterRecDoc')?.value !== '') {
         const newWaterGroup = this.formBuilder.group({
-          waterExpenseAmount: ['0.0'],
+          waterExpenseAmount: [''],
           waterBilldoc: [''],
           waterRecDoc: [''],
           billFileExt: [''],
@@ -135,14 +127,6 @@ disableElectricAddButton:boolean=false;
         });
   
         this.water.push(newWaterGroup);
-        if(this.agreementEleWatData!=null){
-          if(this.agreementEleWatData.house.noOfWtrBills===this.water.length){
-            this.disableWaterAddButton=false;
-          }
-          else{
-            this.disableWaterAddButton=true;
-          }
-        }
       } else {
         // Handle the case where the last water group is not filled (show an error message, etc.)
         console.error("Last water group is not filled.");
@@ -150,7 +134,7 @@ disableElectricAddButton:boolean=false;
     } else {
       // If no water groups are present, always add a new one
       const newWaterGroup = this.formBuilder.group({
-        waterExpenseAmount: ['0.0'],
+        waterExpenseAmount: [''],
         waterBilldoc: [''],
         waterRecDoc: [''],
         billFileExt: [''],
@@ -518,11 +502,11 @@ disableElectricAddButton:boolean=false;
   }
   
   updateUtilityCalc() {
-    // if(this.utilityCalculation.valid  && this.electric.valid && this.water.valid) {
+    //if(this.utilityCalculation.valid  && this.electric.valid && this.water.valid) {
     let data = {
-      utilityCalcId: this.utilityCalculation.value.utilityCalcId,
+      utilityCalcId:this.utilityCalculation.value.utilityCalcId,
       utilityCalculationData: {
-        utilityCalcId: this.utilityCalculation.value.utilityCalcId,
+        utilityCalcId:this.utilityCalculation.value.utilityCalcId,
         fkStateId: this.utilityCalculation.value.state,
         fkSbuId: this.utilityCalculation.value.sbu,
         fkPlantId: this.utilityCalculation.value.plant,
@@ -548,9 +532,7 @@ disableElectricAddButton:boolean=false;
       utilityCalculationElectricDto: this.electric.value,
       utilityCalculationWaterDto: this.water.value,
     };
-  
     console.log(data);
-  
     this.portalService
       .put("PAPL/updatecalculation", data)
       .pipe(takeUntil(this.destroy$))

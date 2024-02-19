@@ -34,30 +34,16 @@ export class HouseRegistrationComponent implements OnInit {
   tableSize: number = 10;
   tableSizes: any = [3, 6, 9, 12];
   errorMessageForHouseMapping: any = '';
-  ownerNameControl = new FormControl();
-  filteredOwners: Observable<any[]>;
+
   constructor(private portalService: PortalServiceService, private formBuilder: FormBuilder, public vldChkLst: ValidatorchklistService, private ngxLoader: NgxUiLoaderService, private excelService: ExcelService) {
 
   }
-// Handle selection from the autocomplete list
-onOwnerNameSelected(event: MatAutocompleteSelectedEvent): void {
-  // Do something with the selected owner
-  console.log(event.option.value);
-}
-private _filterOwners(value: string): any[] {
-  const filterValue = value.toLowerCase();
-  return this.allOwner.filter(owner => owner.ownerName.toLowerCase().includes(filterValue));
-}
+
 
   ngOnInit(): void {
     this.getAllStateList()
     this.getAllHouseDetailList()
-    this.filteredOwners = this.ownerNameControl.valueChanges
-    .pipe(
-      startWith(''),
-      map(value => this._filterOwners(value))
-    );
-  
+
     this.houseRegistrationForm = this.formBuilder.group({
       ownerName: [0, [Validators.required, Validators.min(1)]],
       houseName: ['', Validators.required],
@@ -128,7 +114,6 @@ private _filterOwners(value: string): any[] {
     }
 
   }
-  
 
   getAllOwner() {
     //this.ngxLoader.start();
@@ -431,7 +416,7 @@ private _filterOwners(value: string): any[] {
     return duplicateHouseName;
   }
 
-errorResponse:any
+
   registerHouse() {
     this.stateArray.controls.forEach((control: FormGroup) => {
       control.get('houseId')?.clearValidators();
@@ -478,14 +463,6 @@ errorResponse:any
 
           });
           // alert("House Registration succcesfull")
-        },
-        error=>{
-          this.errorResponse=error
-          console.log("Errorrrr",this.errorResponse)
-          Swal.fire({
-            icon: 'error',
-            text: this.errorResponse.error
-          })
         })
     }
   }

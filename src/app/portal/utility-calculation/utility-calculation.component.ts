@@ -42,10 +42,10 @@ export class UtilityCalculationComponent implements OnInit {
       houseId: ["", Validators.required],
       startDate: ["", Validators.required],
       endDate: ["", Validators.required],
-      miscExp: [""],
+      miscExp: ["0.0"],
       miscBill: [""],
       miscrecept: [""],
-      hrexp: [""],
+      hrexp: ["0.0"],
       hrbill: [""],
       hrrecept: [""],
       hrrecFileExt: [""],
@@ -75,7 +75,7 @@ disableElectricAddButton:boolean=false;
         lastElectricGroup.get('eleRecDoc')?.value !== ''
       ) {
         const newElectricGroup = this.formBuilder.group({
-          eleExpenseAmt: [''],
+          eleExpenseAmt: ['0.0'],
           eleBillDoc: [''],
           eleRecDoc: [''],
           billFileExt: [''],
@@ -98,7 +98,7 @@ disableElectricAddButton:boolean=false;
     } else {
       // If no electric groups are present, always add a new one
       const newElectricGroup = this.formBuilder.group({
-        eleExpenseAmt: [''],
+        eleExpenseAmt: ['0.0'],
         eleBillDoc: [''],
         eleRecDoc: [''],
         billFileExt: [''],
@@ -127,7 +127,7 @@ disableElectricAddButton:boolean=false;
           lastWaterGroup.get('waterBilldoc')?.value !== '' ||
           lastWaterGroup.get('waterRecDoc')?.value !== '') {
         const newWaterGroup = this.formBuilder.group({
-          waterExpenseAmount: [''],
+          waterExpenseAmount: ['0.0'],
           waterBilldoc: [''],
           waterRecDoc: [''],
           billFileExt: [''],
@@ -150,7 +150,7 @@ disableElectricAddButton:boolean=false;
     } else {
       // If no water groups are present, always add a new one
       const newWaterGroup = this.formBuilder.group({
-        waterExpenseAmount: [''],
+        waterExpenseAmount: ['0.0'],
         waterBilldoc: [''],
         waterRecDoc: [''],
         billFileExt: [''],
@@ -550,20 +550,21 @@ disableElectricAddButton:boolean=false;
     };
     console.log(data);
     this.portalService
-      .put("PAPL/updatecalculation", data)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((res) => {
-        this.ngxLoader.stop();
-        //console.log(res);
-        Swal.fire({
-          icon: "success",
-          text: "Utility Calculation Update Successfully",
-        });
+    .put("PAPL/updatecalculation", data)
+    .pipe(takeUntil(this.destroy$))
+    .subscribe((res) => {
+      this.ngxLoader.stop();
+      this.utilityCalculation.reset()
+      //console.log(res);
+      Swal.fire({
+        icon: "success",
+        text: "Utility Calculation Update Successfully",
+      }).then(() => {
+        window.location.reload();
         this.getAllUtilityCalc();
-        alert("calculation saved successfully");
-        //alert("calculation saved successfully")
-      });
-    this.utilityCalculation.reset;
+      });;
+              //alert("calculation saved successfully")
+    });
 
     // } else {
     // this.markFormGroupTouched(this.utilityCalculation);

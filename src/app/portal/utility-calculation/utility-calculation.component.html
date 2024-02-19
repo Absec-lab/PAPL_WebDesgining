@@ -149,10 +149,9 @@
                     <div class="col-sm-6 col-md-4 ">
                         <div class="form-group">
                             <label for="state" class="form-label">HR Expense</label>
-                            <input type="text" name="" id="" class="form-control" formControlName="hrexp" maxlength="8"
-                                (input)="validateService.allowNumericDigits($event)">
+                            <input type="text" name="" id="" class="form-control" formControlName="hrexp" maxlength="8">
                             <!-- <div *ngIf="utilityCalculation.get('hrexp')?.hasError('required') && utilityCalculation.get('hrexp')?.touched" style="color: red;">
-                                HR Expense is required.
+                                HR Expense is required. (input)="validateService.allowNumericDigits($event)"
                               </div> -->
                         </div>
                     </div>
@@ -198,8 +197,7 @@
                                     <label for="electricBill" class="form-label">Electric Bill Expense<span
                                             class="text-danger">*</span></label>
                                     <input type="text" id="electricBill" class="form-control"
-                                        formControlName="eleExpenseAmt" maxlength="8"
-                                        (input)="validateService.allowNumericDigits($event)">
+                                        formControlName="eleExpenseAmt" maxlength="8">
 
                                 </div>
                             </div>
@@ -248,8 +246,7 @@
                                     <label for="state" class="form-label">Water Bill Expense<span
                                             class="text-danger">*</span></label>
                                     <input type="text" name="" id="" class="form-control"
-                                        formControlName="waterExpenseAmount" maxlength="8"
-                                        (input)="validateService.allowNumericDigits($event)">
+                                        formControlName="waterExpenseAmount" maxlength="8">
 
 
                                 </div>

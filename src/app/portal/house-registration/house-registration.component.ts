@@ -39,6 +39,7 @@ export class HouseRegistrationComponent implements OnInit {
   errorMessageForHouseMapping: any = '';
   ownerNameControl = new FormControl();
   filteredOwners: Observable<any[]>;
+  searchInput: string = '';
   constructor(private portalService: PortalServiceService, private formBuilder: FormBuilder, public vldChkLst: ValidatorchklistService, private ngxLoader: NgxUiLoaderService, private excelService: ExcelService) {
 
   }
@@ -201,6 +202,7 @@ private _filterOwners(value: string): any[] {
   // });
   //   this.stateArray.push(stateGroup);
   // }
+  
 
   addstate() {
   const stateGroup = this.formBuilder.group({
@@ -218,34 +220,34 @@ private _filterOwners(value: string): any[] {
   });
 
   // Populate the new row with values from the previous row or empty values
-  const previousValues = this.getPreviousRowValues(this.stateArray.length);
-  stateGroup.patchValue(previousValues);
+  // const previousValues = this.getPreviousRowValues(this.stateArray.length);
+  // stateGroup.patchValue(previousValues);
 
   // Add the new row to the form array
   this.stateArray.push(stateGroup);
 }
 
   
-  getPreviousRowValues(rowIndex: number): any {
-    if (rowIndex > 0) {
-      const previousRow = this.stateArray.at(rowIndex - 1).value;
-      return {
-        stateId: previousRow.stateId,
-        sbuId: previousRow.sbuId,
-        plantId: previousRow.plantId,
-        mapId: previousRow.mapId,
-        houseId: previousRow.houseId,
-      };
-    } else {
-      return {
-        stateId: '',
-        sbuId: '',
-        plantId: '',
-        mapId: '',
-        houseId: '',
-      }; // Return an object with empty values for the first row
-    }
-  }
+  // getPreviousRowValues(rowIndex: number): any {
+  //   if (rowIndex > 0) {
+  //     const previousRow = this.stateArray.at(rowIndex - 1).value;
+  //     return {
+  //       stateId: previousRow.stateId,
+  //       sbuId: previousRow.sbuId,
+  //       plantId: previousRow.plantId,
+  //       mapId: previousRow.mapId,
+  //       houseId: previousRow.houseId,
+  //     };
+  //   } else {
+  //     return {
+  //       stateId: '',
+  //       sbuId: '',
+  //       plantId: '',
+  //       mapId: '',
+  //       houseId: '',
+  //     }; // Return an object with empty values for the first row
+  //   }
+  // }
   
   
   

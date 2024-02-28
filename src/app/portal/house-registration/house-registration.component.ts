@@ -738,6 +738,15 @@ private _filterOwners(value: string): any[] {
         delete element[e]
       });
     });
-    this.excelService.exportAsExcelFile(this.duplicateTableData, 'agreementtype', Heading);
+    let requiredArray = this.duplicateTableData.map((t: any) => {
+      return {
+        "Agreement Type": t.aggreTypeName ? t.aggreTypeName : "",
+        "Created Date": t.createdDate ? t.createdDate : "",
+        "End Date": t.aggreEdDate ? t.aggreEdDate : "",
+        "Start Date": t.aggreStDate ? t.aggreStDate : "",
+        Description: t.description ? t.description : "",
+      };
+    });
+    this.excelService.exportAsExcelFile(requiredArray, 'agreementtype', Heading);
   }
 }

@@ -53,8 +53,8 @@ export class UnitRegistrationComponent {
   plantId: any;
   ownerId: any;
   unitRegisterForm!: FormGroup;
-  startDate: string = ''; 
-  endDate: string = ''; 
+  startDate: string = "";
+  endDate: string = "";
 
   updatebtn: boolean = false;
 
@@ -93,7 +93,7 @@ export class UnitRegistrationComponent {
 
   addunit() {
     const lastUnitIndex = this.unitArray.length - 1;
-  
+
     if (lastUnitIndex >= 0) {
       const lastUnit = this.unitArray.at(lastUnitIndex);
       if (lastUnit.valid) {
@@ -109,10 +109,7 @@ export class UnitRegistrationComponent {
       this.unitArray.push(unitGroup);
     }
   }
-  
- 
-  
-  
+
   removeUnit(index: number) {
     this.unitArray.removeAt(index);
   }
@@ -375,7 +372,7 @@ export class UnitRegistrationComponent {
   updateUnit(item: any) {
     window.scrollTo({ top: 0, behavior: "smooth" });
 
-    console.log(this.activeHouse,"soumya")
+    console.log(this.activeHouse, "soumya");
 
     this.updatebtn = true;
     console.log(item);
@@ -443,11 +440,10 @@ export class UnitRegistrationComponent {
     this.unitRegisterForm.reset();
     this.unitArray.clear();
     this.addunit();
-  
+
     // Reset the update flag if needed
     this.updatebtn = false;
   }
-  
 
   updateUnitForm() {
     if (this.unitArray.controls[0].valid) {
@@ -509,15 +505,6 @@ export class UnitRegistrationComponent {
     }
   }
   exportAsXLSX(): void {
-    let removeColumnData = [
-      "unitId",
-      "houseId",
-      "locationId",
-      "ownerId",
-      "plantId",
-      "stateId",
-      "",
-    ];
     let Heading = [
       [
         "House Name",
@@ -534,13 +521,26 @@ export class UnitRegistrationComponent {
         "Created Date",
       ],
     ];
-    removeColumnData.forEach((e) => {
-      this.duplicateTableData.forEach((element) => {
-        delete element[e];
-      });
+    let requiredArray = this.duplicateTableData.map((t: any) => {
+      return {
+        "House Name": t.houseName ? t.houseName : "",
+        "Owner Name": t.ownerName ? t.ownerName : "",
+        State: t.stateName ? t.stateName : "",
+        SBU: t.locationName ? t.locationName : "",
+        "Plant Name": t.plantName ? t.plantName : "",
+        "Room No": t.unitNo ? t.unitNo : "",
+        "Unit Capacity": t.unitCapacity ? t.unitCapacity : "",
+        "Electric Bill Percentage": t.noOfRoomsOnHouse
+          ? t.noOfRoomsOnHouse
+          : "",
+        "Water Bill Percentage": t.electBillPercent ? t.electBillPercent : "",
+        "Start Date": t.startDate ? t.startDate : "",
+        "End Date": t.endDate ? t.endDate : "",
+        "Created Date": t.createdDate ? t.createdDate : "",
+      };
     });
     this.excelService.exportAsExcelFile(
-      this.duplicateTableData,
+      requiredArray,
       "unitregistration",
       Heading
     );

@@ -1371,19 +1371,16 @@ export class HouseOwnerRegistrationComponent {
     let removeColumnData = ["ownerId", "stateId"];
     let Heading = [
       [
-        "Owner Name",
         "State",
         "House Owner Name",
         "Phone no",
         "Address",
         "Govt ID	",
-        "ID Proof Address	",
         "Account Number	",
         "IFSC Code",
         "PAN Card	",
         "Payment Mode	",
         "UPI Id/linked Mob. No.	",
-        "QR Code	",
         "Status",
         "Start Date",
       ],
@@ -1393,8 +1390,26 @@ export class HouseOwnerRegistrationComponent {
         delete element[e];
       });
     });
+    let paymentMode=['Bank','Cash','UPI','UPI','UPI','UPI','UPI']
+    let statusDetails=['Active']
+    let requiredArray = this.duplicateTableData.map((t: any) => {
+      return {
+        "State":t.stateName?t.stateName:"",
+        "House Owner Name":t.ownerName?t.ownerName:"",
+        "Phone no":t.phoneNo?t.phoneNo:"",
+        "Address":t.address1?t.address1:"",
+        "Govt ID	":t.idProof?t.idProof:"",
+        "Account Number	":t.bankAccountNo?t.bankAccountNo:"",
+        "IFSC Code":t.ifscCode?t.ifscCode:"",
+        "PAN Card	":t.panNo?t.panNo:"",
+        "Payment Mode	":paymentMode[t.paymtMode]?paymentMode[t.paymtMode]:"",
+        "UPI Id/linked Mob. No.	":t.phoneNo?t.phoneNo:"",
+        "Status":t.isActive?t.isActive===1?'Active':'Inactive':"",
+        "Start Date":t.createdDate?t.createdDate:"",
+      };
+    });
     this.excelService.exportAsExcelFile(
-      this.duplicateTableData,
+      requiredArray,
       "houseOwnerregistration",
       Heading
     );

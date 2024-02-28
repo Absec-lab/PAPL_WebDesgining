@@ -714,18 +714,6 @@ export class AgreementMasterComponent {
     this.aggreEndDate = formattedDate;
   }
   exportAsXLSX(): void {
-    debugger;
-    let removeColumnData = [
-      "aggreAddr",
-      "aggreId",
-      "aggreTypeId",
-      "houseId",
-      "locationId",
-      "ownerId",
-      "plantId",
-      "stateId",
-      "",
-    ];
     let Heading = [
       [
         "Agreement Type",
@@ -743,13 +731,25 @@ export class AgreementMasterComponent {
         "Water Bill",
       ],
     ];
-    removeColumnData.forEach((e) => {
-      this.duplicateTableData.forEach((element) => {
-        delete element[e];
-      });
+    let requiredArray = this.duplicateTableData.map((t: any) => {
+      return {
+        "Agreement Type": t.aggreTypeName ? t.aggreTypeName : "",
+        "Created Date": t.createdDate ? t.createdDate : "",
+        "House Name": t.houseName ? t.houseName : "",
+        SBU: t.locationName ? t.locationName : "",
+        "Owner Name": t.ownerName ? t.ownerName : "",
+        "Plant Name": t.plantName ? t.plantName : "",
+        "Montly Rent": t.rent ? t.rent : "",
+        "End Date": t.rentEndDt ? t.rentEndDt : "",
+        "Agreement Period": t.rentPeriod ? t.rentPeriod : "",
+        "Start Date": t.rentStartDt ? t.rentStartDt : "",
+        State: t.stateName ? t.stateName : "",
+        "Electric Bill": t.withElectricBill ? t.withElectricBill : "FALSE",
+        "Water Bill": t.withWaterBill ? t.withWaterBill : "FALSE",
+      };
     });
     this.excelService.exportAsExcelFile(
-      this.duplicateTableData,
+      requiredArray,
       "agreementmaster",
       Heading
     );

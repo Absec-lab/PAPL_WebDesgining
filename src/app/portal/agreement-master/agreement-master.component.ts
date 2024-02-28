@@ -265,7 +265,6 @@ export class AgreementMasterComponent {
       (res) => {
         console.log(res);
         this.ngxLoader.stop();
-
         this.tableData = res.data;
         this.duplicateTableData = res.data;
       },

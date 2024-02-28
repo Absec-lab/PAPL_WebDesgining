@@ -280,7 +280,8 @@ disableElectricAddButton:boolean=false;
           const base64Content = imageDataUrl.split(",")[1];
           console.log(base64Content);
 
-          const fileExtension = this.getFileExtension(file.type);
+          // const fileExtension = this.getFileExtension(file.type); wrong approach for get file extension
+          const fileExtension = file.name.slice(file.name.lastIndexOf(".") + 1);
           const extn = "." + fileExtension;
 
           if (formArrName && index !== undefined) {

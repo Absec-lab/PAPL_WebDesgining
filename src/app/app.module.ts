@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DataTablesModule } from "angular-datatables";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NgxUiLoaderModule,
     FormsModule,
     ReactiveFormsModule,
+    DataTablesModule,
     BrowserAnimationsModule
   ],
   providers: [],

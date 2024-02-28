@@ -27,6 +27,8 @@ import { ExcelService } from "../serviceapi/excel.service";
   styleUrls: ["../../common.css", "./house-owner-registration.component.css"],
 })
 export class HouseOwnerRegistrationComponent {
+  dtOptions: DataTables.Settings = {};
+  allData: any = [];
   tableData: any = [];
   duplicateTableData: any[] = [];
   allOwner: any[] = [];
@@ -120,6 +122,44 @@ export class HouseOwnerRegistrationComponent {
 
       legal: this.formBuilder.array([]),
     });
+  }
+  trimString(s: any) {
+    var l = 0,
+      r = s.length - 1;
+    while (l < s.length && s[l] == " ") l++;
+    while (r > l && s[r] == " ") r -= 1;
+    return s.substring(l, r + 1);
+  }
+
+  compareObjects(o1: any, o2: any) {
+    var k = "";
+    for (k in o1) if (o1[k] != o2[k]) return false;
+    for (k in o2) if (o1[k] != o2[k]) return false;
+    return true;
+  }
+
+  itemExists(haystack: any, needle: any) {
+    for (var i = 0; i < haystack.length; i++)
+      if (this.compareObjects(haystack[i], needle)) return true;
+    return false;
+  }
+  searchGlobal(searchString: any) {
+    let toSearch = this.trimString(searchString.value); // trim it
+    if (toSearch.length) {
+      var results: any = this.allData.filter((o: any) => {
+        return Object.keys(o).some((k: any) => {
+          if (o[k]) {
+            return o[k]
+              .toString()
+              .toLowerCase()
+              ?.includes(toSearch.toLowerCase());
+          }
+        });
+      });
+      this.tableData = results;
+    } else {
+      this.tableData = this.allData;
+    }
   }
   noOfLegalPartiesChange(event: any) {
     debugger;
@@ -274,6 +314,7 @@ export class HouseOwnerRegistrationComponent {
     // this.ngxLoader.start();
     this.portalServ.getAllOwner(param).subscribe((res) => {
       this.tableData = res.data;
+      this.allData = res.data;
       this.allOwner = res.data;
       console.log(this.allOwner);
       this.duplicateTableData = res.data;
@@ -517,7 +558,11 @@ export class HouseOwnerRegistrationComponent {
           const imageDataUrl = e.target?.result as string;
           const base64Content = imageDataUrl.split(",")[1];
           // Determine file extension based on file type
-          const fileExtension = this.getFileExtension(file.type);
+          console.log(file);
+          console.log(file.name.slice(file.name.lastIndexOf(".") + 1));
+
+          // const fileExtension = this.getFileExtension(file.type);
+          const fileExtension = file.name.slice(file.name.lastIndexOf(".") + 1);
           const extn = "." + fileExtension;
 
           if (formControlName == "idProofDoc") {
@@ -825,8 +870,8 @@ export class HouseOwnerRegistrationComponent {
   //         .catch(error => console.error('Error fetching image:', error));
   // }
 
-  downloadBase64File(base64: any, fileName: any) {
-    const src = `data:image/png;base64,${base64}`;
+  downloadFile(base64: any, fileName: any) {
+    const src = `data:application/octet-stream;base64,${base64}`;
     const link = document.createElement("a");
     link.href = src;
     link.download = fileName;
@@ -846,7 +891,7 @@ export class HouseOwnerRegistrationComponent {
     this.http.get(apiUrl).subscribe(
       (base64EncodedData: any) => {
         console.log(base64EncodedData, "base64EncodedData");
-        this.downloadBase64File(
+        this.downloadFile(
           base64EncodedData.document,
           base64EncodedData.fileName
         );

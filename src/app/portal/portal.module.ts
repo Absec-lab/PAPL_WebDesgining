@@ -18,7 +18,7 @@ import { NgxPaginationModule } from "ngx-pagination";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { NonZeroOnlyInputDirective } from "./portaldirectives/non-zero-input.directive";
 import { ExcelService } from "./serviceapi/excel.service";
-
+import { DataTablesModule } from "angular-datatables";
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -41,6 +41,7 @@ import { ExcelService } from "./serviceapi/excel.service";
     ReactiveFormsModule,
     NgxPaginationModule,
     MatAutocompleteModule,
+    DataTablesModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

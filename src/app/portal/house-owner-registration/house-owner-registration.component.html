@@ -1,45 +1,74 @@
 <app-header></app-header>
 <section id="secondary-header" class="px-2 px-sm-0">
-    <div class="container d-flex align-items-center gap-2">
-        <a href="" class="primary-link fw-bold">Home</a>
-        <span>/</span>
-        <span>House Owner Registration</span>
-    </div>
+  <div class="container d-flex align-items-center gap-2">
+    <a href="" class="primary-link fw-bold">Home</a>
+    <span>/</span>
+    <span>House Owner Registration</span>
+  </div>
 </section>
 <section id="page-content" class="px-2 px-sm-0">
-    <div class="container">
+  <div class="container">
+    <ul class="nav" id="" role="">
+      <li class="nav-item w-100" role="">
+        <button
+          class="nav-link active w-100 text-uppercase text-white"
+          id=""
+          style="
+            background-color: rgba(0, 133, 159, 1);
+            color: #faf7f7;
+            font-weight: bold;
+            text-align: left;
+          "
+          aria-controls="trip-tab-pane"
+          aria-selected="true"
+        >
+          House Owner Details/ Legal Heir
+        </button>
+      </li>
+    </ul>
+    <form action="" [formGroup]="houseRegistrationForm">
+      <div style="background-color: rgba(226, 242, 246, 1); padding: 5%">
+        <!-- house-owner-registration -->
+        <div class="row">
+          <div class="col-sm-6 col-md-4">
+            <div class="form-group">
+              <label for="state" class="form-label"
+                >House Owner Name<span class="text-danger">*</span></label
+              >
+              <input
+                type="text"
+                name="ownerName"
+                id="ownerName"
+                formControlName="ownerName"
+                maxlength="100"
+                class="form-control"
+                (input)="vldChkLst.allowAlphaWithSpace($event)"
+              />
 
-        <ul class="nav" id="" role="">
-            <li class="nav-item w-100" role="">
-                <button class="nav-link active w-100 text-uppercase text-white" id="" style="
-                background-color: rgba(0, 133, 159, 1);
-                color: #faf7f7;
-                font-weight: bold;
-                text-align: left;
-              " aria-controls="trip-tab-pane" aria-selected="true">
-                    House Owner Details/ Legal Heir
-                </button>
-            </li>
-
-        </ul>
-        <form action="" [formGroup]="houseRegistrationForm">
-            <div style="background-color: rgba(226, 242, 246, 1); padding: 5%">
-                <!-- house-owner-registration -->
-                <div class="row">
-                    <div class="col-sm-6 col-md-4">
-                        <div class="form-group">
-                            <label for="state" class="form-label">House Owner Name<span
-                                    class="text-danger">*</span></label>
-                            <input type="text" name="ownerName" id="ownerName" formControlName="ownerName"
-                                maxlength="100" class="form-control" (input)="vldChkLst.allowAlphaWithSpace($event)" />
-
-                            <div class="error-message"
-                                *ngIf="houseRegistrationForm.get('ownerName')?.invalid && houseRegistrationForm.get('ownerName')?.touched">
-                                <div *ngIf="houseRegistrationForm.get('ownerName')?.hasError('required')">Owner name is
-                                    required.</div>
-                                <div *ngIf="houseRegistrationForm.get('ownerName')?.hasError('cannotContainSpace')">
-                                    Space not allowed</div>
-                                <!-- <div
+              <div
+                class="error-message"
+                *ngIf="
+                  houseRegistrationForm.get('ownerName')?.invalid &&
+                  houseRegistrationForm.get('ownerName')?.touched
+                "
+              >
+                <div
+                  *ngIf="
+                    houseRegistrationForm.get('ownerName')?.hasError('required')
+                  "
+                >
+                  Owner name is required.
+                </div>
+                <div
+                  *ngIf="
+                    houseRegistrationForm
+                      .get('ownerName')
+                      ?.hasError('cannotContainSpace')
+                  "
+                >
+                  Space not allowed
+                </div>
+                <!-- <div
                                     *ngIf="houseRegistrationForm.get('ownerName')?.hasError('fullNameContainsSpecialChars')">
                                     Owner name should
                                     not contain special characters or numbers.</div>
@@ -49,596 +78,1161 @@
                                 <div *ngIf="houseRegistrationForm.get('ownerName')?.hasError('fullNameTooSmall')">
                                     Owner name should
                                     contain more than 3 character. </div> -->
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4">
-                        <div class="form-group">
-                            <label for="state" class="form-label">Phone Number<span
-                                    class="text-danger">*</span></label>+91
-                            <input type="text" name="phoneNo" id="phoneNo" class="form-control" formControlName="phone"
-                                (keyup)="vldChkLst.allowNumericDigits($event)" minlength="10" maxlength="10"
-                                autocomplete="off" />
-                            <div class="error-message"
-                                *ngIf="houseRegistrationForm.get('phone')?.invalid && houseRegistrationForm.get('phone')?.touched">
-                                <div *ngIf="houseRegistrationForm.get('phone')?.hasError('required')">Phone Number is
-                                    required.
-                                </div>
-                                <div *ngIf="houseRegistrationForm.get('phone')?.hasError('minlength')">Phone Number
-                                    should be 10 digits.
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <div class="form-group">
+              <label for="state" class="form-label"
+                >Phone Number<span class="text-danger">*</span></label
+              >+91
+              <input
+                type="text"
+                name="phoneNo"
+                id="phoneNo"
+                class="form-control"
+                formControlName="phone"
+                (keyup)="vldChkLst.allowNumericDigits($event)"
+                minlength="10"
+                maxlength="10"
+                autocomplete="off"
+              />
+              <div
+                class="error-message"
+                *ngIf="
+                  houseRegistrationForm.get('phone')?.invalid &&
+                  houseRegistrationForm.get('phone')?.touched
+                "
+              >
+                <div
+                  *ngIf="
+                    houseRegistrationForm.get('phone')?.hasError('required')
+                  "
+                >
+                  Phone Number is required.
+                </div>
+                <div
+                  *ngIf="
+                    houseRegistrationForm.get('phone')?.hasError('minlength')
+                  "
+                >
+                  Phone Number should be 10 digits.
+                </div>
+                <div
+                  *ngIf="
+                    houseRegistrationForm
+                      .get('phone')
+                      ?.hasError('phonenoformat')
+                  "
+                >
+                  Phone Number isn't valid.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <div class="form-group">
+              <label for="state" class="form-label"
+                >Email ID<span class="text-danger">*</span></label
+              >
+              <input
+                type="email"
+                name="emailId"
+                id="emailId"
+                class="form-control"
+                (oninput)="vldChkLst.validEmail($event)"
+                formControlName="email"
+                autocomplete="off"
+              />
+              <div
+                class="error-message"
+                *ngIf="
+                  houseRegistrationForm.get('email')?.invalid &&
+                  houseRegistrationForm.get('email')?.touched
+                "
+              >
+                <div
+                  *ngIf="
+                    houseRegistrationForm.get('email')?.hasError('required')
+                  "
+                >
+                  Enter email address.
+                </div>
+                <div
+                  *ngIf="
+                    houseRegistrationForm.get('email')?.hasError('emailFormat')
+                  "
+                >
+                  Invalid email format.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <div class="form-group">
+              <label for="state" class="form-label"
+                >Upload Govt ID Proof<span class="text-danger">*</span>
+                <a style="padding-left: 15px; pointer-events: none" href="">{{
+                  uploadGovtIdProofFileName
+                }}</a></label
+              >
+              <input
+                type="file"
+                #fileInput
+                formControlName="idProofDoc"
+                name=""
+                id=""
+                class="form-control"
+                accept="image/*,.pdf,.png"
+                (change)="onImageChange($event, 'idProofDoc')"
+              />
+              <!-- <div style="color: red;" *ngIf="isfileuploaded">Govt ID Proof is yet to upload.</div> -->
+              <!-- (change)="onImageChange($event, 'idProofDoc')" formControlName="idProofDoc" required/> -->
+              <div
+                style="color: red"
+                *ngIf="
+                  houseRegistrationForm
+                    .get('idProofDoc')
+                    ?.hasError('required') &&
+                  houseRegistrationForm.get('idProofDoc')?.touched
+                "
+              >
+                Govt ID Proof is Mandatory.
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <div class="form-group">
+              <label for="state" class="form-label"
+                >Govt ID Proof<span class="text-danger">*</span></label
+              >
+              <input
+                type="text"
+                name="idProof"
+                id="idProof"
+                class="form-control"
+                formControlName="gIdproof"
+                (input)="vldChkLst.allowNumericDigitsWithAlpha($event)"
+                maxlength="12"
+              />
+              <div
+                class="error-message"
+                *ngIf="
+                  houseRegistrationForm.get('gIdproof')?.invalid &&
+                  houseRegistrationForm.get('gIdproof')?.touched
+                "
+              >
+                <div
+                  *ngIf="
+                    houseRegistrationForm.get('gIdproof')?.hasError('required')
+                  "
+                >
+                  Enter Id proof
+                </div>
+              </div>
+            </div>
+          </div>
 
-                                </div>
-                                <div *ngIf="houseRegistrationForm.get('phone')?.hasError('phonenoformat')">Phone Number
-                                    isn't
-                                    valid.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4">
-                        <div class="form-group">
-                            <label for="state" class="form-label">Email ID<span class="text-danger">*</span></label>
-                            <input type="email" name="emailId" id="emailId" class="form-control"
-                                (oninput)="vldChkLst.validEmail($event)" formControlName="email" autocomplete="off" />
-                            <div class="error-message"
-                                *ngIf="houseRegistrationForm.get('email')?.invalid && houseRegistrationForm.get('email')?.touched">
-                                <div *ngIf="houseRegistrationForm.get('email')?.hasError('required')">Enter email
-                                    address.
-                                </div>
-                                <div *ngIf="houseRegistrationForm.get('email')?.hasError('emailFormat')">Invalid email
-                                    format.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4">
-                        <div class="form-group">
-                            <label for="state" class="form-label">Upload Govt ID Proof<span class="text-danger">*</span>
-                                <a style="padding-left: 15px;pointer-events: none;"
-                                    href="">{{uploadGovtIdProofFileName}}</a></label>
-                            <input type="file" #fileInput formControlName="idProofDoc" name="" id=""
-                                class="form-control" accept="image/*,.pdf,.png"
-                                (change)="onImageChange($event, 'idProofDoc')" />
-                            <!-- <div style="color: red;" *ngIf="isfileuploaded">Govt ID Proof is yet to upload.</div> -->
-                            <!-- (change)="onImageChange($event, 'idProofDoc')" formControlName="idProofDoc" required/> -->
-                            <div style="color: red;"
-                                *ngIf="houseRegistrationForm.get('idProofDoc')?.hasError('required') && houseRegistrationForm.get('idProofDoc')?.touched">
-                                Govt ID Proof is Mandatory.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4">
-                        <div class="form-group">
-                            <label for="state" class="form-label">Govt ID Proof<span
-                                    class="text-danger">*</span></label>
-                            <input type="text" name="idProof" id="idProof" class="form-control"
-                                formControlName="gIdproof" (input)="vldChkLst.allowNumericDigitsWithAlpha($event)"
-                                maxlength="12" />
-                            <div class="error-message"
-                                *ngIf="houseRegistrationForm.get('gIdproof')?.invalid && houseRegistrationForm.get('gIdproof')?.touched">
-                                <div *ngIf="houseRegistrationForm.get('gIdproof')?.hasError('required')">Enter Id proof
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 col-md-4">
-                        <div class="form-group">
-                            <label for="state" class="form-label">Address 1<span class="text-danger">*</span></label>
-                            <input type="text" name="address1" id="address1" class="form-control"
-                                formControlName="add1" />
-                            <div class="error-message"
-                                *ngIf="houseRegistrationForm.get('add1')?.invalid && houseRegistrationForm.get('add1')?.touched">
-                                <div *ngIf="houseRegistrationForm.get('add1')?.hasError('required')">Address 1 is
-                                    required.
-                                </div>
-                                <div *ngIf="houseRegistrationForm.get('add1')?.hasError('cannotContainSpace')">Space not
-                                    allowed</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4">
-                        <div class="form-group">
-                            <label for="state" class="form-label">Address 2<span class="text-danger"></span></label>
-                            <input type="text" name="address2" id="address2" class="form-control"
-                                formControlName="add2" />
-                            <div class="error-message"
-                                *ngIf="houseRegistrationForm.get('add2')?.invalid && houseRegistrationForm.get('add2')?.touched">
-                                <div
-                                    *ngIf="houseRegistrationForm.get('add2')?.hasError('cannotContainSpaceWithoutRequired')">
-                                    Space isn't allowed.</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4">
-                        <div class="form-group">
-                            <label class="form-label">State<span class="text-danger">*</span></label>
-                            <select class="form-select" aria-label="Default select example" formControlName="state"
-                                (change)="getDistirct($event)">
-                                <option value="">Choose State... </option>
-                                <option *ngFor="let state of stateDtails" [value]="state.stateId">{{ state.stateName }}
-                                </option>
-                            </select>
-                            <div class="error-message"
-                                *ngIf="houseRegistrationForm.get('state')?.invalid && houseRegistrationForm.get('state')?.touched">
-                                <div *ngIf="houseRegistrationForm.get('state')?.hasError('required')">State is required.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4">
-                        <div class="form-group">
-                            <label for="state" class="form-label">District<span class="text-danger">*</span></label>
-                            <!-- <input type="text" name="dist" id="dist" class="form-control" formControlName="dist"
+          <div class="col-sm-6 col-md-4">
+            <div class="form-group">
+              <label for="state" class="form-label"
+                >Address 1<span class="text-danger">*</span></label
+              >
+              <input
+                type="text"
+                name="address1"
+                id="address1"
+                class="form-control"
+                formControlName="add1"
+              />
+              <div
+                class="error-message"
+                *ngIf="
+                  houseRegistrationForm.get('add1')?.invalid &&
+                  houseRegistrationForm.get('add1')?.touched
+                "
+              >
+                <div
+                  *ngIf="
+                    houseRegistrationForm.get('add1')?.hasError('required')
+                  "
+                >
+                  Address 1 is required.
+                </div>
+                <div
+                  *ngIf="
+                    houseRegistrationForm
+                      .get('add1')
+                      ?.hasError('cannotContainSpace')
+                  "
+                >
+                  Space not allowed
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <div class="form-group">
+              <label for="state" class="form-label"
+                >Address 2<span class="text-danger"></span
+              ></label>
+              <input
+                type="text"
+                name="address2"
+                id="address2"
+                class="form-control"
+                formControlName="add2"
+              />
+              <div
+                class="error-message"
+                *ngIf="
+                  houseRegistrationForm.get('add2')?.invalid &&
+                  houseRegistrationForm.get('add2')?.touched
+                "
+              >
+                <div
+                  *ngIf="
+                    houseRegistrationForm
+                      .get('add2')
+                      ?.hasError('cannotContainSpaceWithoutRequired')
+                  "
+                >
+                  Space isn't allowed.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <div class="form-group">
+              <label class="form-label"
+                >State<span class="text-danger">*</span></label
+              >
+              <select
+                class="form-select"
+                aria-label="Default select example"
+                formControlName="state"
+                (change)="getDistirct($event)"
+              >
+                <option value="">Choose State...</option>
+                <option
+                  *ngFor="let state of stateDtails"
+                  [value]="state.stateId"
+                >
+                  {{ state.stateName }}
+                </option>
+              </select>
+              <div
+                class="error-message"
+                *ngIf="
+                  houseRegistrationForm.get('state')?.invalid &&
+                  houseRegistrationForm.get('state')?.touched
+                "
+              >
+                <div
+                  *ngIf="
+                    houseRegistrationForm.get('state')?.hasError('required')
+                  "
+                >
+                  State is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <div class="form-group">
+              <label for="state" class="form-label"
+                >District<span class="text-danger">*</span></label
+              >
+              <!-- <input type="text" name="dist" id="dist" class="form-control" formControlName="dist"
                                 (input)="vldChkLst.allowAlpha($event)" /> -->
-                            <input type="text" placeholder="Choose District... " matInput [formControl]="distControl"
-                                [matAutocomplete]="auto" class="form-control" formControlName="dist">
-                            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                                <mat-option (onSelectionChange)="getPinCode($event)"
-                                    *ngFor="let option of distFilteredOptions | async" [value]="option.districtName">
-                                    {{option.districtName}}
-                                </mat-option>
-                            </mat-autocomplete>
-                            <div class="error-message"
-                                *ngIf="houseRegistrationForm.get('dist')?.invalid && houseRegistrationForm.get('dist')?.touched">
-                                <div *ngIf="houseRegistrationForm.get('dist')?.hasError('required')">District is
-                                    required.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4">
-                        <div class="form-group">
-                            <label for="state" class="form-label">PIN<span class="text-danger">*</span></label>
-                            <!-- <input type="text" name="pinCode" id="pinCode" class="form-control" formControlName="pin"
+              <input
+                type="text"
+                placeholder="Choose District... "
+                matInput
+                [formControl]="distControl"
+                [matAutocomplete]="auto"
+                class="form-control"
+                formControlName="dist"
+              />
+              <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                <mat-option
+                  (onSelectionChange)="getPinCode($event)"
+                  *ngFor="let option of distFilteredOptions | async"
+                  [value]="option.districtName"
+                >
+                  {{ option.districtName }}
+                </mat-option>
+              </mat-autocomplete>
+              <div
+                class="error-message"
+                *ngIf="
+                  houseRegistrationForm.get('dist')?.invalid &&
+                  houseRegistrationForm.get('dist')?.touched
+                "
+              >
+                <div
+                  *ngIf="
+                    houseRegistrationForm.get('dist')?.hasError('required')
+                  "
+                >
+                  District is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <div class="form-group">
+              <label for="state" class="form-label"
+                >PIN<span class="text-danger">*</span></label
+              >
+              <!-- <input type="text" name="pinCode" id="pinCode" class="form-control" formControlName="pin"
                                 (input)="vldChkLst.allowNumericDigits($event)" maxlength="6" /> -->
-                            <input type="text" placeholder="Choose Pincode..." matInput [formControl]="pinControl"
-                                [matAutocomplete]="pinauto" class="form-control" formControlName="pin">
-                            <mat-autocomplete autoActiveFirstOption #pinauto="matAutocomplete">
-                                <mat-option (onSelectionChange)="selectPinCode($event)"
-                                    *ngFor="let option of pinFilteredOptions | async" [value]="option.pincode">
-                                    {{option.pincode}}
-                                </mat-option>
-                            </mat-autocomplete>
-                            <div class="error-message"
-                                *ngIf="houseRegistrationForm.get('pin')?.invalid && houseRegistrationForm.get('pin')?.touched">
-                                <div *ngIf="houseRegistrationForm.get('pin')?.hasError('required')">Pincode is required.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4">
-                        <label for="state" class="form-label">Payment mode<span class="text-danger">*</span></label>
-                        <select class="form-select" (change)="paymentmode($event, 'owner')"
-                            aria-label="Default select example" formControlName="paymode" name="paymtMode"
-                            id="paymtMode">
-                            <option value="">Choose Payment mode...</option>
-                            <option [value]="1" routerLink="">
-                                Bank AC
-                            </option>
-                            <option [value]="2">Cash</option>
-                            <option [value]="3" routerLink="">
-                                BHIM UPI
-                            </option>
-                            <option [value]="4" routerLink="">
-                                Phone Pe
-                            </option>
-                            <option [value]="5" routerLink="">
-                                Paytm
-                            </option>
-                            <option [value]="6" routerLink="">
-                                Google Pay
-                            </option>
-                        </select>
-                        <div class="error-message"
-                            *ngIf="houseRegistrationForm.get('paymode')?.invalid && houseRegistrationForm.get('paymode')?.touched">
-                            <div *ngIf="houseRegistrationForm.get('paymode')?.hasError('required')">Paymode is required.
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6 col-md-4">
-                        <label for="state" class="form-label">Status<span class="text-danger">*</span></label>
-                        <select class="form-select" aria-label="Default select example" formControlName="status"
-                            (change)="showLegal($event)">
-                            <option value="1">Active</option>
-                            <option value="0" *ngIf="updatebtn">InActive</option>
-                        </select>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-6 col-md-4" *ngIf="descripinput">
-                            <div class="form-group">
-                                <label for="state" class="form-label">Description<span
-                                        class="text-danger"></span></label>
-                                <textarea formControlName="desc" class="form-control" rows="4" cols="50">
-                                        </textarea>
-                                <div class="error-message"
-                                    *ngIf="houseRegistrationForm.get('desc')?.invalid && houseRegistrationForm.get('desc')?.touched">
-                                    <div
-                                        *ngIf="houseRegistrationForm.get('desc')?.hasError('cannotContainSpaceWithoutRequired')">
-                                        Space isn't allowed.</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-8" *ngIf="legalheir" style="margin-top: 28px">
-                            <button class="btn btn-primary float-end" (click)="togglelegal()">Add Legal Heir</button>
-                        </div>
-                    </div>
+              <input
+                type="text"
+                placeholder="Choose Pincode..."
+                matInput
+                [formControl]="pinControl"
+                [matAutocomplete]="pinauto"
+                class="form-control"
+                formControlName="pin"
+              />
+              <mat-autocomplete
+                autoActiveFirstOption
+                #pinauto="matAutocomplete"
+              >
+                <mat-option
+                  (onSelectionChange)="selectPinCode($event)"
+                  *ngFor="let option of pinFilteredOptions | async"
+                  [value]="option.pincode"
+                >
+                  {{ option.pincode }}
+                </mat-option>
+              </mat-autocomplete>
+              <div
+                class="error-message"
+                *ngIf="
+                  houseRegistrationForm.get('pin')?.invalid &&
+                  houseRegistrationForm.get('pin')?.touched
+                "
+              >
+                <div
+                  *ngIf="houseRegistrationForm.get('pin')?.hasError('required')"
+                >
+                  Pincode is required.
                 </div>
-
-
-
-                <ng-container *ngIf="heading">
-                    <h5 class="mt-4 text-secondary">Bank Account Details of House Owner</h5>
-                    <hr class="my-1" />
-                    <!-- cash -->
-                    <div class="cash row pt-4 ">
-
-                    </div>
-                    <!-- bank-ac -->
-                    <div class=" bank-ac row pt-4" *ngIf="bank">
-                        <div class="col-sm-6 col-md-4">
-                            <div class="form-group">
-                                <label for="state" class="form-label">Account Holder Name<span
-                                        class="text-danger">*</span></label>
-                                <input type="text" maxlength="25" formControlName="accHolName" class="form-control"
-                                    (input)="vldChkLst.allowAlphaWithSpace($event)">
-                                <div class="error-message"
-                                    *ngIf="houseRegistrationForm.get('accHolName')?.invalid && houseRegistrationForm.get('accHolName')?.touched">
-                                    <div *ngIf="houseRegistrationForm.get('accHolName')?.hasError('required')">Account
-                                        Holder Name is required.
-                                    </div>
-                                    <div
-                                        *ngIf="houseRegistrationForm.get('accHolName')?.hasError('cannotContainSpace')">
-                                        Space not allowed</div>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-                            <div class="form-group">
-                                <label for="state" class="form-label">Account Number<span
-                                        class="text-danger">*</span></label>
-                                <input type="text" class="form-control" maxlength="17" formControlName="accounNum"
-                                    minlength="9">
-                                <div class="error-message"
-                                    *ngIf="houseRegistrationForm.get('accounNum')?.invalid && houseRegistrationForm.get('accounNum')?.touched">
-                                    <div *ngIf="houseRegistrationForm.get('accounNum')?.hasError('required')">Account
-                                        Number is required.
-                                    </div>
-                                    <div *ngIf="houseRegistrationForm.get('accounNum')?.hasError('minlength')">Account
-                                        Number should be
-                                        9 digits.
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-                            <div class="form-group">
-                                <label for="state" class="form-label">IFSC<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" maxlength="11" formControlName="ifsc"
-                                    (input)="vldChkLst.allowNumericDigitsWithAlpha($event)">
-                                <div class="error-message"
-                                    *ngIf="houseRegistrationForm.get('ifsc')?.invalid && houseRegistrationForm.get('ifsc')?.touched">
-                                    <div *ngIf="houseRegistrationForm.get('ifsc')?.hasError('required')">IFSC is
-                                        required.
-                                    </div>
-                                    <div *ngIf="houseRegistrationForm.get('ifsc')?.hasError('ifscformat')">IFSC is
-                                        invalid.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-                            <div class="form-group">
-                                <label for="state" class="form-label">PAN Card <span
-                                        class="text-danger">*</span></label>
-                                <input type="text" class="form-control" formControlName="pan" maxlength="12"
-                                    (input)="vldChkLst.allowNumericDigitsWithAlpha($event)">
-                                <div class="error-message"
-                                    *ngIf="houseRegistrationForm.get('pan')?.invalid && houseRegistrationForm.get('pan')?.touched">
-                                    <div *ngIf="houseRegistrationForm.get('pan')?.hasError('required')">PAN Card is
-                                        required.
-                                    </div>
-                                    <div *ngIf="houseRegistrationForm.get('pan')?.hasError('panFormat')">Invalid pan
-                                        number
-                                        format.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-                            <div class="form-group">
-                                <label for="state" class="form-label">Upload PAN Card<span class="text-danger">*</span>
-                                    <a style="padding-left: 15px; pointer-events: none;"
-                                        href="">{{uploadPANFileName}}</a>
-                                </label>
-                                <input type="file" name="" id="" class="form-control" accept="image/*,.pdf"
-                                    (change)="onImageChange($event, 'panPic')" formControlName="panPic">
-                                <!-- (change)="onImageChange($event, 'panPic')" formControlName="panPic" required> -->
-                                <div style="color: red;"
-                                    *ngIf="houseRegistrationForm.get('panPic')?.hasError('required') && houseRegistrationForm.get('panPic')?.touched">
-                                    PAN Card is Mandatory.
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-                    <!-- upi -->
-                    <div class="row pt-4" *ngIf="upi">
-                        <div class="col-sm-6 col-md-4">
-                            <div class="form-group">
-                                <label for="state" class="form-label">UPI ID<span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" formControlName="upiId" maxlength="20">
-                                <div class="error-message"
-                                    *ngIf="houseRegistrationForm.get('upiId')?.invalid && houseRegistrationForm.get('upiId')?.touched">
-                                    <div *ngIf="houseRegistrationForm.get('upiId')?.hasError('required')">UPI ID is
-                                        required.
-                                    </div>
-                                    <div *ngIf="houseRegistrationForm.get('upiId')?.hasError('upiformat')">UPI ID isn't
-                                        valid.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-                            <div class="form-group">
-                                <label for="state" class="form-label">Linked Mob._No<span
-                                        class="text-danger">*</span></label>
-                                <input type="text" class="form-control" (keyup)="vldChkLst.allowNumericDigits($event)"
-                                    formControlName="linkMobile" maxlength="10">
-                                <div class="error-message"
-                                    *ngIf="houseRegistrationForm.get('linkMobile')?.invalid && houseRegistrationForm.get('linkMobile')?.touched">
-                                    <div *ngIf="houseRegistrationForm.get('linkMobile')?.hasError('required')">Linked
-                                        Mob._No is required.
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="col-sm-6 col-md-4">
-                            <div class="form-group">
-                                <label for="state" class="form-label">Upload QR Code<span class="text-danger">*</span>
-                                    <a style="padding-left: 15px;pointer-events: none;"
-                                        href="">{{uploadQrCodeFileName}}</a></label>
-                                <input type="file" name="" id="" class="form-control" accept="image/*,.pdf"
-                                    (change)="onImageChange($event, 'qrCode')">
-                                <div style="color: red;"
-                                    *ngIf="houseRegistrationForm.get('qrCode')?.hasError('required') && houseRegistrationForm.get('qrCode')?.touched">
-                                    QR Code is Mandatory.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </ng-container>
+              </div>
             </div>
-            <div class="mt-2" *ngIf="legalbtnh" style="background-color: rgba(226, 242, 246, 1); padding:0 5% 0 5%">
-                <!-- add-legal-heir -->
-                <div class="row" >
-                    <div class="container" style="padding: 20px 0;">
-                        <ul class="nav" id="" role="">
-                            <li class="nav-item w-100" role="">
-                                <button class="nav-link active w-100 text-uppercase text-white" id="" style="
-                        background-color: rgba(0, 133, 159, 1);
-                        color: #faf7f7;
-                        font-weight: bold;
-                        text-align: left;
-                      " aria-controls="trip-tab-pane" aria-selected="true">
-                                    Legal Heir Details
-                                </button>
-                            </li>
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <label for="state" class="form-label"
+              >Payment mode<span class="text-danger">*</span></label
+            >
+            <select
+              class="form-select"
+              (change)="paymentmode($event, 'owner')"
+              aria-label="Default select example"
+              formControlName="paymode"
+              name="paymtMode"
+              id="paymtMode"
+            >
+              <option value="">Choose Payment mode...</option>
+              <option [value]="1" routerLink="">Bank AC</option>
+              <option [value]="2">Cash</option>
+              <option [value]="3" routerLink="">BHIM UPI</option>
+              <option [value]="4" routerLink="">Phone Pe</option>
+              <option [value]="5" routerLink="">Paytm</option>
+              <option [value]="6" routerLink="">Google Pay</option>
+            </select>
+            <div
+              class="error-message"
+              *ngIf="
+                houseRegistrationForm.get('paymode')?.invalid &&
+                houseRegistrationForm.get('paymode')?.touched
+              "
+            >
+              <div
+                *ngIf="
+                  houseRegistrationForm.get('paymode')?.hasError('required')
+                "
+              >
+                Paymode is required.
+              </div>
+            </div>
+          </div>
 
-                        </ul>
-                    </div>
-                    <div class="col-sm-6 col-md-4">
-                        <div class="form-group">
-                            <label for="state" class="form-label">Owner Name<span class="text-danger">*</span></label>
-                            <input type="text" name="name" id="" formControlName="ownerName" class="form-control"
-                                readonly>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4">
-                        <div class="form-group">
-                            <label for="state" class="form-label">Upload L.H. Certificate<span
-                                    class="text-danger">*</span></label>
-                            <input type="file" class="form-control" accept="image/*,.pdf"
-                                (change)="onImageChange($event, 'uploadlegalheir')">
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-md-4">
-                        <div class="form-group">
-                            <label for="state" class="form-label">No of Legal Parties<span
-                                    class="text-danger">*</span></label>
-                            <input type="text" name="noOfLegalParties" id="" class="form-control"
-                                [ngModelOptions]="{standalone: true}" [(ngModel)]="noOfLegalParties"
-                                (keyup)="vldChkLst.allowNumericDigitsWithoutZero($event)"
-                                (change)="noOfLegalPartiesChange($event)" maxlength="1">
-                        </div>
-                    </div>
+          <div class="col-sm-6 col-md-4">
+            <label for="state" class="form-label"
+              >Status<span class="text-danger">*</span></label
+            >
+            <select
+              class="form-select"
+              aria-label="Default select example"
+              formControlName="status"
+              (change)="showLegal($event)"
+            >
+              <option value="1">Active</option>
+              <option value="0" *ngIf="updatebtn">InActive</option>
+            </select>
+          </div>
+          <div class="row">
+            <div class="col-sm-6 col-md-4" *ngIf="descripinput">
+              <div class="form-group">
+                <label for="state" class="form-label"
+                  >Description<span class="text-danger"></span
+                ></label>
+                <textarea
+                  formControlName="desc"
+                  class="form-control"
+                  rows="4"
+                  cols="50"
+                >
+                </textarea>
+                <div
+                  class="error-message"
+                  *ngIf="
+                    houseRegistrationForm.get('desc')?.invalid &&
+                    houseRegistrationForm.get('desc')?.touched
+                  "
+                >
+                  <div
+                    *ngIf="
+                      houseRegistrationForm
+                        .get('desc')
+                        ?.hasError('cannotContainSpaceWithoutRequired')
+                    "
+                  >
+                    Space isn't allowed.
+                  </div>
                 </div>
+              </div>
             </div>
-            <div class="mt-2" *ngIf="legalbtnh" style="background-color: rgba(226, 242, 246, 1); padding: 5%">
-                
-                <div class="row" >
+            <div
+              class="col-sm-6 col-md-8"
+              *ngIf="legalheir"
+              style="margin-top: 28px"
+            >
+              <button class="btn btn-primary float-end" (click)="togglelegal()">
+                Add Legal Heir
+              </button>
+            </div>
+          </div>
+        </div>
 
+        <ng-container *ngIf="heading">
+          <h5 class="mt-4 text-secondary">
+            Bank Account Details of House Owner
+          </h5>
+          <hr class="my-1" />
+          <!-- cash -->
+          <div class="cash row pt-4"></div>
+          <!-- bank-ac -->
+          <div class="bank-ac row pt-4" *ngIf="bank">
+            <div class="col-sm-6 col-md-4">
+              <div class="form-group">
+                <label for="state" class="form-label"
+                  >Account Holder Name<span class="text-danger">*</span></label
+                >
+                <input
+                  type="text"
+                  maxlength="25"
+                  formControlName="accHolName"
+                  class="form-control"
+                  (input)="vldChkLst.allowAlphaWithSpace($event)"
+                />
+                <div
+                  class="error-message"
+                  *ngIf="
+                    houseRegistrationForm.get('accHolName')?.invalid &&
+                    houseRegistrationForm.get('accHolName')?.touched
+                  "
+                >
+                  <div
+                    *ngIf="
+                      houseRegistrationForm
+                        .get('accHolName')
+                        ?.hasError('required')
+                    "
+                  >
+                    Account Holder Name is required.
+                  </div>
+                  <div
+                    *ngIf="
+                      houseRegistrationForm
+                        .get('accHolName')
+                        ?.hasError('cannotContainSpace')
+                    "
+                  >
+                    Space not allowed
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-4">
+              <div class="form-group">
+                <label for="state" class="form-label"
+                  >Account Number<span class="text-danger">*</span></label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  maxlength="17"
+                  formControlName="accounNum"
+                  minlength="9"
+                />
+                <div
+                  class="error-message"
+                  *ngIf="
+                    houseRegistrationForm.get('accounNum')?.invalid &&
+                    houseRegistrationForm.get('accounNum')?.touched
+                  "
+                >
+                  <div
+                    *ngIf="
+                      houseRegistrationForm
+                        .get('accounNum')
+                        ?.hasError('required')
+                    "
+                  >
+                    Account Number is required.
+                  </div>
+                  <div
+                    *ngIf="
+                      houseRegistrationForm
+                        .get('accounNum')
+                        ?.hasError('minlength')
+                    "
+                  >
+                    Account Number should be 9 digits.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-4">
+              <div class="form-group">
+                <label for="state" class="form-label"
+                  >IFSC<span class="text-danger">*</span></label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  maxlength="11"
+                  formControlName="ifsc"
+                  (input)="vldChkLst.allowNumericDigitsWithAlpha($event)"
+                />
+                <div
+                  class="error-message"
+                  *ngIf="
+                    houseRegistrationForm.get('ifsc')?.invalid &&
+                    houseRegistrationForm.get('ifsc')?.touched
+                  "
+                >
+                  <div
+                    *ngIf="
+                      houseRegistrationForm.get('ifsc')?.hasError('required')
+                    "
+                  >
+                    IFSC is required.
+                  </div>
+                  <div
+                    *ngIf="
+                      houseRegistrationForm.get('ifsc')?.hasError('ifscformat')
+                    "
+                  >
+                    IFSC is invalid.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-4">
+              <div class="form-group">
+                <label for="state" class="form-label"
+                  >PAN Card <span class="text-danger">*</span></label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="pan"
+                  maxlength="12"
+                  (input)="vldChkLst.allowNumericDigitsWithAlpha($event)"
+                />
+                <div
+                  class="error-message"
+                  *ngIf="
+                    houseRegistrationForm.get('pan')?.invalid &&
+                    houseRegistrationForm.get('pan')?.touched
+                  "
+                >
+                  <div
+                    *ngIf="
+                      houseRegistrationForm.get('pan')?.hasError('required')
+                    "
+                  >
+                    PAN Card is required.
+                  </div>
+                  <div
+                    *ngIf="
+                      houseRegistrationForm.get('pan')?.hasError('panFormat')
+                    "
+                  >
+                    Invalid pan number format.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-4">
+              <div class="form-group">
+                <label for="state" class="form-label"
+                  >Upload PAN Card<span class="text-danger">*</span>
+                  <a style="padding-left: 15px; pointer-events: none" href="">{{
+                    uploadPANFileName
+                  }}</a>
+                </label>
+                <input
+                  type="file"
+                  name=""
+                  id=""
+                  class="form-control"
+                  accept="image/*,.pdf"
+                  (change)="onImageChange($event, 'panPic')"
+                  formControlName="panPic"
+                />
+                <!-- (change)="onImageChange($event, 'panPic')" formControlName="panPic" required> -->
+                <div
+                  style="color: red"
+                  *ngIf="
+                    houseRegistrationForm.get('panPic')?.hasError('required') &&
+                    houseRegistrationForm.get('panPic')?.touched
+                  "
+                >
+                  PAN Card is Mandatory.
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- upi -->
+          <div class="row pt-4" *ngIf="upi">
+            <div class="col-sm-6 col-md-4">
+              <div class="form-group">
+                <label for="state" class="form-label"
+                  >UPI ID<span class="text-danger">*</span></label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="upiId"
+                  maxlength="20"
+                />
+                <div
+                  class="error-message"
+                  *ngIf="
+                    houseRegistrationForm.get('upiId')?.invalid &&
+                    houseRegistrationForm.get('upiId')?.touched
+                  "
+                >
+                  <div
+                    *ngIf="
+                      houseRegistrationForm.get('upiId')?.hasError('required')
+                    "
+                  >
+                    UPI ID is required.
+                  </div>
+                  <div
+                    *ngIf="
+                      houseRegistrationForm.get('upiId')?.hasError('upiformat')
+                    "
+                  >
+                    UPI ID isn't valid.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-4">
+              <div class="form-group">
+                <label for="state" class="form-label"
+                  >Linked Mob._No<span class="text-danger">*</span></label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  (keyup)="vldChkLst.allowNumericDigits($event)"
+                  formControlName="linkMobile"
+                  maxlength="10"
+                />
+                <div
+                  class="error-message"
+                  *ngIf="
+                    houseRegistrationForm.get('linkMobile')?.invalid &&
+                    houseRegistrationForm.get('linkMobile')?.touched
+                  "
+                >
+                  <div
+                    *ngIf="
+                      houseRegistrationForm
+                        .get('linkMobile')
+                        ?.hasError('required')
+                    "
+                  >
+                    Linked Mob._No is required.
+                  </div>
+                </div>
+              </div>
+            </div>
 
-                    <form action="" [formGroup]="legalheirForm">
-                        <div class="container" formArrayName="legal">
-                            <div class="container" *ngFor="let stateGroup of legalheirarray.controls; let i = index"
-                                [formGroupName]="i">
-                                <div class="row">
-                                    <div class="col-sm-6 col-md-4">
-                                        <div class="form-group">
-                                            <label for="state" class="form-label">House Owner Name<span
-                                                    class="text-danger">*</span></label>
-                                            <input type="text" formControlName="ownerName" name="name" id="ownerName"
-                                                class="form-control" maxlength="30"
-                                                (keyup)="vldChkLst.blockspecialchar_first($event)" required>
-                                            <div class="error-message"
-                                                *ngIf="legalheirarray.controls[i].get('ownerName')?.invalid && legalheirarray.controls[i].get('ownerName')?.touched">
-                                                <div
-                                                    *ngIf="legalheirarray.controls[i].get('ownerName')?.hasError('required')">
-                                                    House Owner Name is required.
-                                                </div>
-                                                <div
-                                                    *ngIf="legalheirarray.controls[i].get('ownerName')?.hasError('fullNameContainsSpecialChars')">
-                                                    Full name should
-                                                    not contain special characters or numbers.
-                                                </div>
-                                                <div
-                                                    *ngIf="legalheirarray.controls[i].get('ownerName')?.hasError('fullNameTooLong')">
-                                                    Full
-                                                    name should
-                                                    contain less than 50 charcter.
-                                                </div>
-                                                <div
-                                                    *ngIf="legalheirarray.controls[i].get('ownerName')?.hasError('fullNameTooSmall')">
-                                                    Full name should
-                                                    contain more than 3 charcter.
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-sm-6 col-md-4">
-                                        <div class="form-group">
-                                            <label for="state" class="form-label">Phone Number<span
-                                                    class="text-danger">*</span></label>+91
-                                            <input type="text" formControlName="phoneNo" name="" id=""
-                                                class="form-control" (keyup)="vldChkLst.allowNumericDigits($event)"
-                                                minlength="10" maxlength="10" autocomplete="off" required>
-                                            <div style="color: red;"
-                                                *ngIf="legalheirarray.controls[i].get('phoneNo')?.hasError('required') && legalheirarray.controls[i].get('phoneNo')?.touched">
-                                                Phone number is required.
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 col-md-4">
-                                        <div class="form-group">
-                                            <label for="state" class="form-label">Email ID<span
-                                                    class="text-danger">*</span></label>
-                                            <input type="email" formControlName="emailId" name="" id=""
-                                                class="form-control" required (oninput)="vldChkLst.validEmail($event)">
-                                            <!-- <div style="color: red;" *ngIf="legalheirarray.controls[i].get('emailId')?.hasError('required') && legalheirarray.controls[i].get('emailId')?.touched">
+            <div class="col-sm-6 col-md-4">
+              <div class="form-group">
+                <label for="state" class="form-label"
+                  >Upload QR Code<span class="text-danger">*</span>
+                  <a style="padding-left: 15px; pointer-events: none" href="">{{
+                    uploadQrCodeFileName
+                  }}</a></label
+                >
+                <input
+                  type="file"
+                  name=""
+                  id=""
+                  class="form-control"
+                  accept="image/*,.pdf"
+                  (change)="onImageChange($event, 'qrCode')"
+                />
+                <div
+                  style="color: red"
+                  *ngIf="
+                    houseRegistrationForm.get('qrCode')?.hasError('required') &&
+                    houseRegistrationForm.get('qrCode')?.touched
+                  "
+                >
+                  QR Code is Mandatory.
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+      <div
+        class="mt-2"
+        *ngIf="legalbtnh"
+        style="background-color: rgba(226, 242, 246, 1); padding: 0 5% 0 5%"
+      >
+        <!-- add-legal-heir -->
+        <div class="row">
+          <div class="container" style="padding: 20px 0">
+            <ul class="nav" id="" role="">
+              <li class="nav-item w-100" role="">
+                <button
+                  class="nav-link active w-100 text-uppercase text-white"
+                  id=""
+                  style="
+                    background-color: rgba(0, 133, 159, 1);
+                    color: #faf7f7;
+                    font-weight: bold;
+                    text-align: left;
+                  "
+                  aria-controls="trip-tab-pane"
+                  aria-selected="true"
+                >
+                  Legal Heir Details
+                </button>
+              </li>
+            </ul>
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <div class="form-group">
+              <label for="state" class="form-label"
+                >Owner Name<span class="text-danger">*</span></label
+              >
+              <input
+                type="text"
+                name="name"
+                id=""
+                formControlName="ownerName"
+                class="form-control"
+                readonly
+              />
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <div class="form-group">
+              <label for="state" class="form-label"
+                >Upload L.H. Certificate<span class="text-danger"
+                  >*</span
+                ></label
+              >
+              <input
+                type="file"
+                class="form-control"
+                accept="image/*,.pdf"
+                (change)="onImageChange($event, 'uploadlegalheir')"
+              />
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-4">
+            <div class="form-group">
+              <label for="state" class="form-label"
+                >No of Legal Parties<span class="text-danger">*</span></label
+              >
+              <input
+                type="text"
+                name="noOfLegalParties"
+                id=""
+                class="form-control"
+                [ngModelOptions]="{ standalone: true }"
+                [(ngModel)]="noOfLegalParties"
+                (keyup)="vldChkLst.allowNumericDigitsWithoutZero($event)"
+                (change)="noOfLegalPartiesChange($event)"
+                maxlength="1"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="mt-2"
+        *ngIf="legalbtnh"
+        style="background-color: rgba(226, 242, 246, 1); padding: 5%"
+      >
+        <div class="row">
+          <form action="" [formGroup]="legalheirForm">
+            <div class="container" formArrayName="legal">
+              <div
+                class="container"
+                *ngFor="
+                  let stateGroup of legalheirarray.controls;
+                  let i = index
+                "
+                [formGroupName]="i"
+              >
+                <div class="row">
+                  <div class="col-sm-6 col-md-4">
+                    <div class="form-group">
+                      <label for="state" class="form-label"
+                        >House Owner Name<span class="text-danger"
+                          >*</span
+                        ></label
+                      >
+                      <input
+                        type="text"
+                        formControlName="ownerName"
+                        name="name"
+                        id="ownerName"
+                        class="form-control"
+                        maxlength="30"
+                        (keyup)="vldChkLst.blockspecialchar_first($event)"
+                        required
+                      />
+                      <div
+                        class="error-message"
+                        *ngIf="
+                          legalheirarray.controls[i].get('ownerName')
+                            ?.invalid &&
+                          legalheirarray.controls[i].get('ownerName')?.touched
+                        "
+                      >
+                        <div
+                          *ngIf="
+                            legalheirarray.controls[i]
+                              .get('ownerName')
+                              ?.hasError('required')
+                          "
+                        >
+                          House Owner Name is required.
+                        </div>
+                        <div
+                          *ngIf="
+                            legalheirarray.controls[i]
+                              .get('ownerName')
+                              ?.hasError('fullNameContainsSpecialChars')
+                          "
+                        >
+                          Full name should not contain special characters or
+                          numbers.
+                        </div>
+                        <div
+                          *ngIf="
+                            legalheirarray.controls[i]
+                              .get('ownerName')
+                              ?.hasError('fullNameTooLong')
+                          "
+                        >
+                          Full name should contain less than 50 charcter.
+                        </div>
+                        <div
+                          *ngIf="
+                            legalheirarray.controls[i]
+                              .get('ownerName')
+                              ?.hasError('fullNameTooSmall')
+                          "
+                        >
+                          Full name should contain more than 3 charcter.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 col-md-4">
+                    <div class="form-group">
+                      <label for="state" class="form-label"
+                        >Phone Number<span class="text-danger">*</span></label
+                      >+91
+                      <input
+                        type="text"
+                        formControlName="phoneNo"
+                        name=""
+                        id=""
+                        class="form-control"
+                        (keyup)="vldChkLst.allowNumericDigits($event)"
+                        minlength="10"
+                        maxlength="10"
+                        autocomplete="off"
+                        required
+                      />
+                      <div
+                        style="color: red"
+                        *ngIf="
+                          legalheirarray.controls[i]
+                            .get('phoneNo')
+                            ?.hasError('required') &&
+                          legalheirarray.controls[i].get('phoneNo')?.touched
+                        "
+                      >
+                        Phone number is required.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 col-md-4">
+                    <div class="form-group">
+                      <label for="state" class="form-label"
+                        >Email ID<span class="text-danger">*</span></label
+                      >
+                      <input
+                        type="email"
+                        formControlName="emailId"
+                        name=""
+                        id=""
+                        class="form-control"
+                        required
+                        (oninput)="vldChkLst.validEmail($event)"
+                      />
+                      <!-- <div style="color: red;" *ngIf="legalheirarray.controls[i].get('emailId')?.hasError('required') && legalheirarray.controls[i].get('emailId')?.touched">
                                                 Email ID is required.
                                               </div> -->
-                                            <div class="error-message"
-                                                *ngIf="legalheirarray.controls[i].get('emailId')?.invalid && legalheirarray.controls[i].get('emailId')?.touched">
-                                                <div
-                                                    *ngIf="legalheirarray.controls[i].get('emailId')?.hasError('required')">
-                                                    Enter emailId
-                                                    address.
-                                                </div>
-                                                <div
-                                                    *ngIf="legalheirarray.controls[i].get('emailId')?.hasError('emailFormat')">
-                                                    Invalid emailId
-                                                    format.
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6 col-md-4">
-                                        <div class="form-group">
-                                            <label for="state" class="form-label">Upload Govt ID Proof<span
-                                                    class="text-danger">*</span></label>
-                                            <input type="file" name="" id="" class="form-control" accept="image/*,.pdf"
-                                                (change)="onImageChange($event, 'idProofDoc', 'legal',i)"
-                                                formControlName="idProofDoc" required>
-                                            <div style="color: red;"
-                                                *ngIf="legalheirarray.controls[i].get('idProofDoc')?.hasError('required') && legalheirarray.controls[i].get('idProofDoc')?.touched">
-                                                Govt ID Proof is Mandatory.
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 col-md-4">
-                                        <div class="form-group">
-                                            <label for="state" class="form-label">Govt ID Proof<span
-                                                    class="text-danger">*</span></label>
-                                            <input type="text" name="" formControlName="idProof" class="form-control"
-                                                class="form-control" required maxlength="12"
-                                                (input)="vldChkLst.allowNumericDigitsWithAlpha($event)" />
-                                            <div class="error-message"
-                                                *ngIf="legalheirarray.controls[i].get('idProof')?.invalid && legalheirarray.controls[i].get('idProof')?.touched">
-                                                <div
-                                                    *ngIf="legalheirarray.controls[i].get('idProof')?.hasError('required')">
-                                                    Govt ID Proof is Mandatory.
-                                                </div>
-                                                <div
-                                                    *ngIf="legalheirarray.controls[i].get('idProof')?.hasError('cannotContainSpace')">
-                                                    Space isn't allowed
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                      <div
+                        class="error-message"
+                        *ngIf="
+                          legalheirarray.controls[i].get('emailId')?.invalid &&
+                          legalheirarray.controls[i].get('emailId')?.touched
+                        "
+                      >
+                        <div
+                          *ngIf="
+                            legalheirarray.controls[i]
+                              .get('emailId')
+                              ?.hasError('required')
+                          "
+                        >
+                          Enter emailId address.
+                        </div>
+                        <div
+                          *ngIf="
+                            legalheirarray.controls[i]
+                              .get('emailId')
+                              ?.hasError('emailFormat')
+                          "
+                        >
+                          Invalid emailId format.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6 col-md-4">
+                    <div class="form-group">
+                      <label for="state" class="form-label"
+                        >Upload Govt ID Proof<span class="text-danger"
+                          >*</span
+                        ></label
+                      >
+                      <input
+                        type="file"
+                        name=""
+                        id=""
+                        class="form-control"
+                        accept="image/*,.pdf"
+                        (change)="
+                          onImageChange($event, 'idProofDoc', 'legal', i)
+                        "
+                        formControlName="idProofDoc"
+                        required
+                      />
+                      <div
+                        style="color: red"
+                        *ngIf="
+                          legalheirarray.controls[i]
+                            .get('idProofDoc')
+                            ?.hasError('required') &&
+                          legalheirarray.controls[i].get('idProofDoc')?.touched
+                        "
+                      >
+                        Govt ID Proof is Mandatory.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 col-md-4">
+                    <div class="form-group">
+                      <label for="state" class="form-label"
+                        >Govt ID Proof<span class="text-danger">*</span></label
+                      >
+                      <input
+                        type="text"
+                        name=""
+                        formControlName="idProof"
+                        class="form-control"
+                        class="form-control"
+                        required
+                        maxlength="12"
+                        (input)="vldChkLst.allowNumericDigitsWithAlpha($event)"
+                      />
+                      <div
+                        class="error-message"
+                        *ngIf="
+                          legalheirarray.controls[i].get('idProof')?.invalid &&
+                          legalheirarray.controls[i].get('idProof')?.touched
+                        "
+                      >
+                        <div
+                          *ngIf="
+                            legalheirarray.controls[i]
+                              .get('idProof')
+                              ?.hasError('required')
+                          "
+                        >
+                          Govt ID Proof is Mandatory.
+                        </div>
+                        <div
+                          *ngIf="
+                            legalheirarray.controls[i]
+                              .get('idProof')
+                              ?.hasError('cannotContainSpace')
+                          "
+                        >
+                          Space isn't allowed
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
-                                    <div class="col-sm-6 col-md-4">
-                                        <div class="form-group">
-                                            <label for="state" class="form-label">Address 1<span
-                                                    class="text-danger">*</span></label>
-                                            <input type="text" formControlName="address1" name="" id=""
-                                                class="form-control" required>
-                                            <div class="error-message"
-                                                *ngIf="legalheirarray.controls[i].get('address1')?.invalid && legalheirarray.controls[i].get('address1')?.touched">
-                                                <div
-                                                    *ngIf="legalheirarray.controls[i].get('address1')?.hasError('required')">
-                                                    Address 1 is
-                                                    required.
-                                                </div>
-                                                <div
-                                                    *ngIf="legalheirarray.controls[i].get('address1')?.hasError('cannotContainSpace')">
-                                                    Address 1 is
-                                                    required space.</div>
-                                            </div>
+                  <div class="col-sm-6 col-md-4">
+                    <div class="form-group">
+                      <label for="state" class="form-label"
+                        >Address 1<span class="text-danger">*</span></label
+                      >
+                      <input
+                        type="text"
+                        formControlName="address1"
+                        name=""
+                        id=""
+                        class="form-control"
+                        required
+                      />
+                      <div
+                        class="error-message"
+                        *ngIf="
+                          legalheirarray.controls[i].get('address1')?.invalid &&
+                          legalheirarray.controls[i].get('address1')?.touched
+                        "
+                      >
+                        <div
+                          *ngIf="
+                            legalheirarray.controls[i]
+                              .get('address1')
+                              ?.hasError('required')
+                          "
+                        >
+                          Address 1 is required.
+                        </div>
+                        <div
+                          *ngIf="
+                            legalheirarray.controls[i]
+                              .get('address1')
+                              ?.hasError('cannotContainSpace')
+                          "
+                        >
+                          Address 1 is required space.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-sm-6 col-md-4">
-                                        <div class="form-group">
-                                            <label for="state" class="form-label">Address 2<span
-                                                    class="text-danger"></span></label>
-                                            <input type="text" name="" formControlName="address2" id=""
-                                                class="form-control">
-                                            <div class="error-message"
-                                                *ngIf="legalheirarray.controls[i].get('address2')?.invalid && legalheirarray.controls[i].get('address2')?.touched">
-                                                <div
-                                                    *ngIf="legalheirarray.controls[i].get('address2')?.hasError('cannotContainSpaceWithoutRequired')">
-                                                    Address 2 is
-                                                    required space.</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 col-md-4">
-                                        <div class="form-group">
-                                            <label for="state" class="form-label">State<span
-                                                    class="text-danger">*</span></label>
-                                            <select class="form-select" formControlName="stateId"
-                                                (change)="getLegalHeirDistirct($event, 'array',i)"
-                                                aria-label="Default select example">
-                                                <option value="">Choose State... </option>
-                                                <option *ngFor="let state of stateDtails" [value]="state.stateId">{{
-                                                    state.stateName }}</option>
-
-                                            </select>
-                                            <div style="color: red;"
-                                                *ngIf="legalheirarray.controls[i].get('stateId')?.hasError('required') && legalheirarray.controls[i].get('stateId')?.touched">
-                                                State is required.
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 col-md-4">
-                                        <div class="form-group">
-                                            <label for="state" class="form-label">District<span
-                                                    class="text-danger">*</span></label>
-                                            <!-- <select class="form-select" formControlName="district"
+                <div class="row">
+                  <div class="col-sm-6 col-md-4">
+                    <div class="form-group">
+                      <label for="state" class="form-label"
+                        >Address 2<span class="text-danger"></span
+                      ></label>
+                      <input
+                        type="text"
+                        name=""
+                        formControlName="address2"
+                        id=""
+                        class="form-control"
+                      />
+                      <div
+                        class="error-message"
+                        *ngIf="
+                          legalheirarray.controls[i].get('address2')?.invalid &&
+                          legalheirarray.controls[i].get('address2')?.touched
+                        "
+                      >
+                        <div
+                          *ngIf="
+                            legalheirarray.controls[i]
+                              .get('address2')
+                              ?.hasError('cannotContainSpaceWithoutRequired')
+                          "
+                        >
+                          Address 2 is required space.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 col-md-4">
+                    <div class="form-group">
+                      <label for="state" class="form-label"
+                        >State<span class="text-danger">*</span></label
+                      >
+                      <select
+                        class="form-select"
+                        formControlName="stateId"
+                        (change)="getLegalHeirDistirct($event, 'array', i)"
+                        aria-label="Default select example"
+                      >
+                        <option value="">Choose State...</option>
+                        <option
+                          *ngFor="let state of stateDtails"
+                          [value]="state.stateId"
+                        >
+                          {{ state.stateName }}
+                        </option>
+                      </select>
+                      <div
+                        style="color: red"
+                        *ngIf="
+                          legalheirarray.controls[i]
+                            .get('stateId')
+                            ?.hasError('required') &&
+                          legalheirarray.controls[i].get('stateId')?.touched
+                        "
+                      >
+                        State is required.
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 col-md-4">
+                    <div class="form-group">
+                      <label for="state" class="form-label"
+                        >District<span class="text-danger">*</span></label
+                      >
+                      <!-- <select class="form-select" formControlName="district"
                                             (change)="getPinCode($event,'array')"
                                             aria-label="Default select example">
                                             <option selected>Choose District... </option>
@@ -651,36 +1245,61 @@
                                             *ngIf="legalheirarray.controls[i].get('district')?.hasError('required') && legalheirarray.controls[i].get('district')?.touched">
                                             District is required.
                                         </div> -->
-                                            <input type="text" placeholder="Choose District... " matInput
-                                                [formControl]="distLegalHeirControl" [matAutocomplete]="auto"
-                                                class="form-control" formControlName="district">
-                                            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                                                <mat-option (onSelectionChange)="getLegalHeirPinCode($event,'array',i)"
-                                                    *ngFor="let option of distLegalHeirFilteredOptions | async"
-                                                    [value]="option.districtName">
-                                                    {{option.districtName}}
-                                                </mat-option>
-                                            </mat-autocomplete>
-                                            <div class="error-message"
-                                                *ngIf="legalheirarray.controls[i].get('district')?.invalid && legalheirarray.controls[i].get('district')?.touched">
-                                                <div
-                                                    *ngIf="legalheirarray.controls[i].get('district')?.hasError('required')">
-                                                    District is required.
-                                                </div>
-                                            </div>
-                                            <!-- <input type="text" formControlName="district" name="" id=""
+                      <input
+                        type="text"
+                        placeholder="Choose District... "
+                        matInput
+                        [formControl]="distLegalHeirControl"
+                        [matAutocomplete]="auto"
+                        class="form-control"
+                        formControlName="district"
+                      />
+                      <mat-autocomplete
+                        autoActiveFirstOption
+                        #auto="matAutocomplete"
+                      >
+                        <mat-option
+                          (onSelectionChange)="
+                            getLegalHeirPinCode($event, 'array', i)
+                          "
+                          *ngFor="
+                            let option of distLegalHeirFilteredOptions | async
+                          "
+                          [value]="option.districtName"
+                        >
+                          {{ option.districtName }}
+                        </mat-option>
+                      </mat-autocomplete>
+                      <div
+                        class="error-message"
+                        *ngIf="
+                          legalheirarray.controls[i].get('district')?.invalid &&
+                          legalheirarray.controls[i].get('district')?.touched
+                        "
+                      >
+                        <div
+                          *ngIf="
+                            legalheirarray.controls[i]
+                              .get('district')
+                              ?.hasError('required')
+                          "
+                        >
+                          District is required.
+                        </div>
+                      </div>
+                      <!-- <input type="text" formControlName="district" name="" id=""
                                             class="form-control" required> -->
+                    </div>
+                  </div>
+                </div>
 
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-sm-6 col-md-4">
-                                        <div class="form-group">
-                                            <label for="state" class="form-label">PIN<span
-                                                    class="text-danger">*</span></label>
-                                            <!-- <select class="form-select" formControlName="pinCode"
+                <div class="row">
+                  <div class="col-sm-6 col-md-4">
+                    <div class="form-group">
+                      <label for="state" class="form-label"
+                        >PIN<span class="text-danger">*</span></label
+                      >
+                      <!-- <select class="form-select" formControlName="pinCode"
                                             aria-label="Default select example">
                                             <option selected>Choose Pincode... </option>
                                             <option *ngFor="let pin of arrayPincode" [value]="pin.pincode">{{
@@ -691,374 +1310,721 @@
                                             *ngIf="legalheirarray.controls[i].get('pinCode')?.hasError('required') && legalheirarray.controls[i].get('pinCode')?.touched">
                                             Pincode is required.
                                         </div> -->
-                                            <input type="text" placeholder="Choose Pincode..." matInput
-                                                [formControl]="pinLegalHeirControl" [matAutocomplete]="pinauto"
-                                                class="form-control" formControlName="pinCode">
-                                            <mat-autocomplete autoActiveFirstOption #pinauto="matAutocomplete">
-                                                <mat-option (onSelectionChange)="selectLegalHeirPinCode($event,i)"
-                                                    *ngFor="let option of pinLegalHeirFilteredOptions | async"
-                                                    [value]="option.pincode">
-                                                    {{option.pincode}}
-                                                </mat-option>
-                                            </mat-autocomplete>
+                      <input
+                        type="text"
+                        placeholder="Choose Pincode..."
+                        matInput
+                        [formControl]="pinLegalHeirControl"
+                        [matAutocomplete]="pinauto"
+                        class="form-control"
+                        formControlName="pinCode"
+                      />
+                      <mat-autocomplete
+                        autoActiveFirstOption
+                        #pinauto="matAutocomplete"
+                      >
+                        <mat-option
+                          (onSelectionChange)="
+                            selectLegalHeirPinCode($event, i)
+                          "
+                          *ngFor="
+                            let option of pinLegalHeirFilteredOptions | async
+                          "
+                          [value]="option.pincode"
+                        >
+                          {{ option.pincode }}
+                        </mat-option>
+                      </mat-autocomplete>
 
-                                            <div class="error-message"
-                                                *ngIf="legalheirarray.controls[i].get('pinCode')?.invalid && legalheirarray.controls[i].get('pinCode')?.touched">
-                                                <div
-                                                    *ngIf="legalheirarray.controls[i].get('pinCode')?.hasError('required')">
-                                                    Pincode is required.
-                                                </div>
-                                            </div>
-                                            <!-- <input type="text" formControlName="pinCode" name="" id=""
+                      <div
+                        class="error-message"
+                        *ngIf="
+                          legalheirarray.controls[i].get('pinCode')?.invalid &&
+                          legalheirarray.controls[i].get('pinCode')?.touched
+                        "
+                      >
+                        <div
+                          *ngIf="
+                            legalheirarray.controls[i]
+                              .get('pinCode')
+                              ?.hasError('required')
+                          "
+                        >
+                          Pincode is required.
+                        </div>
+                      </div>
+                      <!-- <input type="text" formControlName="pinCode" name="" id=""
                                             class="form-control" required maxlength="6"  (keyup)="vldChkLst.allowNumericDigits($event)"> -->
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 col-md-4">
-                                        <label for="state" class="form-label">Payment mode<span
-                                                class="text-danger">*</span></label>
-                                        <select formControlName="paymtMode" class="form-select"
-                                            aria-label="Default select example" required
-                                            (change)="paymentmode($event, 'legal',i)">
-                                            <option selected>Choose Payment mode...</option>
-                                            <option value="1" routerLink="">Bank AC</option>
-                                            <option value="2">Cash</option>
-                                            <option value="3" routerLink="">BHIM UPI</option>
-                                            <option value="4" routerLink="">Phone Pe</option>
-                                            <option value="5" routerLink="">Paytm</option>
-                                            <option value="6" routerLink="">Google Pay</option>
-                                        </select>
-                                        <div style="color: red;"
-                                            *ngIf="legalheirarray.controls[i].get('paymtMode')?.hasError('required') && legalheirarray.controls[i].get('paymtMode')?.touched">
-                                            Payment Mode is required.
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 col-md-4  ">
-                                        <label for="state" class="form-label">Status (Legal heir)<span
-                                                class="text-danger">*</span></label>
-                                        <select formControlName="isActive" class="form-select"
-                                            aria-label="Default select example" required>
-                                            <option selected>Choose Status...</option>
-                                            <option value="1">Active</option>
-                                            <option value="0">InActive</option>
-
-
-                                        </select>
-                                    </div>
-                                </div>
-
-
-                                <ng-container *ngIf="legalheading">
-                                    <h5 class="mt-4 text-secondary">Bank Account Details of Legaal Heir</h5>
-                                    <hr class="my-1" />
-                                    <!-- cash -->
-                                    <div class="cash row pt-4 ">
-
-                                    </div>
-                                    <!-- bank-ac -->
-                                    <div class="bank-ac row pt-4" *ngIf="legalbank">
-                                        <div class="col-sm-6 col-md-4">
-                                            <div class="form-group">
-                                                <label for="state" class="form-label">Account Holder Name<span
-                                                        class="text-danger">*</span></label>
-                                                <input type="text" formControlName="accountHolderName"
-                                                    name="accountHolderName" id="accountHolderName"
-                                                    class="form-control">
-                                                <div class="error-message"
-                                                    *ngIf="legalheirarray.controls[i].get('accountHolderName')?.invalid && legalheirarray.controls[i].get('accountHolderName')?.touched">
-                                                    <div
-                                                        *ngIf="legalheirarray.controls[i].get('accountHolderName')?.hasError('required')">
-                                                        Account Holder Name Is Required.
-                                                    </div>
-                                                    <div
-                                                        *ngIf="legalheirarray.controls[i].get('accountHolderName')?.hasError('cannotContainSpace')">
-                                                        Space isn't allowed.
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 col-md-4">
-                                            <div class="form-group">
-                                                <label for="state" class="form-label">Account Number<span
-                                                        class="text-danger">*</span></label>
-                                                <input type="text" formControlName="bankAccountNo" name="bankAccountNo"
-                                                    id="bankAccountNo" class="form-control" maxlength="17"
-                                                    minlength="9">
-                                                <div class="error-message"
-                                                    *ngIf="legalheirarray.controls[i].get('bankAccountNo')?.invalid && legalheirarray.controls[i].get('bankAccountNo')?.touched">
-                                                    <div
-                                                        *ngIf="legalheirarray.controls[i].get('bankAccountNo')?.hasError('required')">
-                                                        Account Number Is Required.
-                                                    </div>
-                                                    <div
-                                                        *ngIf="legalheirarray.controls[i].get('bankAccountNo')?.hasError('minlength')">
-                                                        Account Number should be 9 digits.
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 col-md-4">
-                                            <div class="form-group">
-                                                <label for="state" class="form-label">IFSC<span
-                                                        class="text-danger">*</span></label>
-                                                <input type="text" formControlName="ifscCode" name="ifscCode"
-                                                    id="ifscCode" class="form-control">
-                                                <div class="error-message"
-                                                    *ngIf="legalheirarray.controls[i].get('ifscCode')?.invalid && legalheirarray.controls[i].get('ifscCode')?.touched">
-                                                    <div
-                                                        *ngIf="legalheirarray.controls[i].get('ifscCode')?.hasError('required')">
-                                                        IFSC Is Required.
-                                                    </div>
-                                                    <div
-                                                        *ngIf="legalheirarray.controls[i].get('ifscCode')?.hasError('ifscformat')">
-                                                        IFSC is invalid.
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 col-md-4">
-                                            <div class="form-group">
-                                                <label for="state" class="form-label">PAN Card <span
-                                                        class="text-danger">*</span></label>
-                                                <input type="text" formControlName="panNo" name="panNo" id="panNo"
-                                                    class="form-control">
-                                                <div class="error-message"
-                                                    *ngIf="legalheirarray.controls[i].get('panNo')?.invalid && legalheirarray.controls[i].get('panNo')?.touched">
-                                                    <div
-                                                        *ngIf="legalheirarray.controls[i].get('panNo')?.hasError('required')">
-                                                        PAN Card Is Required.
-                                                    </div>
-                                                    <div
-                                                        *ngIf="legalheirarray.controls[i].get('panNo')?.hasError('panFormat')">
-                                                        Invalid pan number
-                                                        format.
-                                                                  </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 col-md-4">
-                                            <div class="form-group">
-                                                <label for="state" class="form-label">Upload PAN Card<span
-                                                        class="text-danger">*</span></label>
-                                                <input type="file" name="" id="" class="form-control"
-                                                    accept="image/*,.pdf"
-                                                    (change)="onImageChange($event, 'panNoDoc', 'legal',i)"
-                                                    formControlName="panNoDoc" required>
-                                                <div style="color: red;"
-                                                    *ngIf="legalheirarray.controls[i].get('panNoDoc')?.hasError('required') && legalheirarray.controls[i].get('panNoDoc')?.touched">
-                                                    PAN Card is Mandatory.
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <!-- upi -->
-                                    <div class="row pt-4" *ngIf="legalupi">
-                                        <div class="col-sm-6 col-md-4">
-                                            <div class="form-group">
-                                                <label for="state" class="form-label">UPI ID<span
-                                                        class="text-danger">*</span></label>
-                                                <input formControlName="upiId" type="text" class="form-control">
-                                                <div class="error-message"
-                                                    *ngIf="legalheirarray.controls[i].get('upiId')?.invalid && legalheirarray.controls[i].get('upiId')?.touched">
-                                                    <div
-                                                        *ngIf="legalheirarray.controls[i].get('upiId')?.hasError('required')">
-                                                        UPI ID Is Required.
-                                                    </div>
-                                                    <div
-                                                        *ngIf="legalheirarray.controls[i].get('upiId')?.hasError('upiformat')">
-                                                        UPI ID isn't valid.
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6 col-md-4">
-                                            <div class="form-group">
-                                                <label for="state" class="form-label">Linked Mob._No<span
-                                                        class="text-danger">*</span></label>
-                                                <input type="text" formControlName="upiPhoneNo" class="form-control"
-                                                    maxlength="10" (keyup)="vldChkLst.allowNumericDigits($event)"
-                                                    minlength="10" autocomplete="off">
-                                                <div class="error-message"
-                                                    *ngIf="legalheirarray.controls[i].get('upiPhoneNo')?.invalid && legalheirarray.controls[i].get('upiPhoneNo')?.touched">
-                                                    <div
-                                                        *ngIf="legalheirarray.controls[i].get('upiPhoneNo')?.hasError('required')">
-                                                        Linked Mob._No Is Required.
-                                                    </div>
-                                                    <div
-                                                        *ngIf="legalheirarray.controls[i].get('upiPhoneNo')?.hasError('phonenoformat')">
-                                                        Phone Number isn't
-                                                        valid.
-                                                    </div>
-                                                    <div
-                                                        *ngIf="legalheirarray.controls[i].get('upiPhoneNo')?.hasError('minlength')">
-                                                        Phone Number should be 10 digits
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-                                        <div class="col-sm-6 col-md-4">
-                                            <div class="form-group">
-                                                <label for="state" class="form-label">Upload QR Code<span
-                                                        class="text-danger">*</span></label>
-                                                <input type="file" name="" id="" class="form-control"
-                                                    accept="image/*,.pdf"
-                                                    (change)="onImageChange($event, 'quarCodeDoc', 'legal',i)"
-                                                    formControlName="quarCodeDoc" required>
-                                                <div style="color: red;"
-                                                    *ngIf="legalheirarray.controls[i].get('quarCodeDoc')?.hasError('required') && legalheirarray.controls[i].get('quarCodeDoc')?.touched">
-                                                    QR Code is Mandatory.
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </ng-container>
-                                <div class="mt-4 d-flex justify-content-end" *ngIf="legalbtnh">
-                                    <button class="btn btn-danger " style="margin-right: 10px;" *ngIf="i>0"
-                                        (click)="removelegalform(i)">
-                                        <i class="fa-solid fa-trash-alt"></i>
-                                    </button>
-                                    <button *ngIf="isDisableAddButton" class="btn button btn-primary form-save-btn"
-                                        (click)=" addlegaleirform()">
-                                        +
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <div class="mt-4 d-flex justify-content-end">
-                <button *ngIf="!updatebtn" class="btn btn-primary form-save-btn" (click)="ownerRegistration()">
-                    Save
-                </button>
-                <button *ngIf="updatebtn" class="btn btn-primary mx-1 px-4 " (click)="updateowner()">
-                    Update
-                </button>
-                <button *ngIf="updatebtn" class="btn btn-danger mx-1  px-4" (click)="cancelUpdate()">
-                    Cancel
-                </button>
-            </div>
-
-
-            
-        </form>
-        
-
-        <div class="" style="  margin-top: 30px;">
-            <div class="d-flex justify-content-between align-items-center mt-5">
-                <div class="">
-                    <button class="btn btn-primary px-3 py-2" style="font-size: 13px;" (click)="exportAsXLSX()">
-                        Export To Excel
-                    </button>
-                </div>
-                <div class="d-flex  align-items-center">
-                    <div style="display: flex;">
-                        <input type="text" class="form-control" placeholder="Search" style="margin-right: 8px;">
-                        <div style="display: flex; align-items: center; padding: 0.375rem 0.75rem; font-size: 1rem; line-height: 1.5; color: #495057; background-color: #e9ecef; border: 1px solid #ced4da; border-radius: 0.25rem;">
-                            <i class="fa fa-search"></i>
-                        </div>
                     </div>
+                  </div>
+                  <div class="col-sm-6 col-md-4">
+                    <label for="state" class="form-label"
+                      >Payment mode<span class="text-danger">*</span></label
+                    >
+                    <select
+                      formControlName="paymtMode"
+                      class="form-select"
+                      aria-label="Default select example"
+                      required
+                      (change)="paymentmode($event, 'legal', i)"
+                    >
+                      <option selected>Choose Payment mode...</option>
+                      <option value="1" routerLink="">Bank AC</option>
+                      <option value="2">Cash</option>
+                      <option value="3" routerLink="">BHIM UPI</option>
+                      <option value="4" routerLink="">Phone Pe</option>
+                      <option value="5" routerLink="">Paytm</option>
+                      <option value="6" routerLink="">Google Pay</option>
+                    </select>
+                    <div
+                      style="color: red"
+                      *ngIf="
+                        legalheirarray.controls[i]
+                          .get('paymtMode')
+                          ?.hasError('required') &&
+                        legalheirarray.controls[i].get('paymtMode')?.touched
+                      "
+                    >
+                      Payment Mode is required.
+                    </div>
+                  </div>
+                  <div class="col-sm-6 col-md-4">
+                    <label for="state" class="form-label"
+                      >Status (Legal heir)<span class="text-danger"
+                        >*</span
+                      ></label
+                    >
+                    <select
+                      formControlName="isActive"
+                      class="form-select"
+                      aria-label="Default select example"
+                      required
+                    >
+                      <option selected>Choose Status...</option>
+                      <option value="1">Active</option>
+                      <option value="0">InActive</option>
+                    </select>
+                  </div>
                 </div>
-            </div>
-            <div class="" style="
-        position: relative;
-        overflow-x: auto;
-        overflow-y: auto;
-        margin-top: 10px;
-      ">
-                <table class="table w-full table-bordered table-striped">
-                    <thead class="">
-                        <tr>
-                            <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">SL.NO</th>
-                            <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">House Owner Name</th>
-                            <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Phone no</th>
-                            <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Address</th>
-                            <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">Govt ID</th>
-                            <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">ID Proof Address</th>
-                            <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Account Number</th>
-                            <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">IFSC Code</th>
-                            <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">PAN Card</th>
-                            <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Payment Mode</th>
-                            <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">UPI Id/linked Mob. No.
-                            </th>
-                            <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">QR Code</th>
-                            <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Status</th>
-                            <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Start Date</th>
-                            <!-- <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Created Date</th> -->
-                            <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">Action</th>
 
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let item of tableData | paginate
+                <ng-container *ngIf="legalheading">
+                  <h5 class="mt-4 text-secondary">
+                    Bank Account Details of Legaal Heir
+                  </h5>
+                  <hr class="my-1" />
+                  <!-- cash -->
+                  <div class="cash row pt-4"></div>
+                  <!-- bank-ac -->
+                  <div class="bank-ac row pt-4" *ngIf="legalbank">
+                    <div class="col-sm-6 col-md-4">
+                      <div class="form-group">
+                        <label for="state" class="form-label"
+                          >Account Holder Name<span class="text-danger"
+                            >*</span
+                          ></label
+                        >
+                        <input
+                          type="text"
+                          formControlName="accountHolderName"
+                          name="accountHolderName"
+                          id="accountHolderName"
+                          class="form-control"
+                        />
+                        <div
+                          class="error-message"
+                          *ngIf="
+                            legalheirarray.controls[i].get('accountHolderName')
+                              ?.invalid &&
+                            legalheirarray.controls[i].get('accountHolderName')
+                              ?.touched
+                          "
+                        >
+                          <div
+                            *ngIf="
+                              legalheirarray.controls[i]
+                                .get('accountHolderName')
+                                ?.hasError('required')
+                            "
+                          >
+                            Account Holder Name Is Required.
+                          </div>
+                          <div
+                            *ngIf="
+                              legalheirarray.controls[i]
+                                .get('accountHolderName')
+                                ?.hasError('cannotContainSpace')
+                            "
+                          >
+                            Space isn't allowed.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                      <div class="form-group">
+                        <label for="state" class="form-label"
+                          >Account Number<span class="text-danger"
+                            >*</span
+                          ></label
+                        >
+                        <input
+                          type="text"
+                          formControlName="bankAccountNo"
+                          name="bankAccountNo"
+                          id="bankAccountNo"
+                          class="form-control"
+                          maxlength="17"
+                          minlength="9"
+                        />
+                        <div
+                          class="error-message"
+                          *ngIf="
+                            legalheirarray.controls[i].get('bankAccountNo')
+                              ?.invalid &&
+                            legalheirarray.controls[i].get('bankAccountNo')
+                              ?.touched
+                          "
+                        >
+                          <div
+                            *ngIf="
+                              legalheirarray.controls[i]
+                                .get('bankAccountNo')
+                                ?.hasError('required')
+                            "
+                          >
+                            Account Number Is Required.
+                          </div>
+                          <div
+                            *ngIf="
+                              legalheirarray.controls[i]
+                                .get('bankAccountNo')
+                                ?.hasError('minlength')
+                            "
+                          >
+                            Account Number should be 9 digits.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                      <div class="form-group">
+                        <label for="state" class="form-label"
+                          >IFSC<span class="text-danger">*</span></label
+                        >
+                        <input
+                          type="text"
+                          formControlName="ifscCode"
+                          name="ifscCode"
+                          id="ifscCode"
+                          class="form-control"
+                        />
+                        <div
+                          class="error-message"
+                          *ngIf="
+                            legalheirarray.controls[i].get('ifscCode')
+                              ?.invalid &&
+                            legalheirarray.controls[i].get('ifscCode')?.touched
+                          "
+                        >
+                          <div
+                            *ngIf="
+                              legalheirarray.controls[i]
+                                .get('ifscCode')
+                                ?.hasError('required')
+                            "
+                          >
+                            IFSC Is Required.
+                          </div>
+                          <div
+                            *ngIf="
+                              legalheirarray.controls[i]
+                                .get('ifscCode')
+                                ?.hasError('ifscformat')
+                            "
+                          >
+                            IFSC is invalid.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                      <div class="form-group">
+                        <label for="state" class="form-label"
+                          >PAN Card <span class="text-danger">*</span></label
+                        >
+                        <input
+                          type="text"
+                          formControlName="panNo"
+                          name="panNo"
+                          id="panNo"
+                          class="form-control"
+                        />
+                        <div
+                          class="error-message"
+                          *ngIf="
+                            legalheirarray.controls[i].get('panNo')?.invalid &&
+                            legalheirarray.controls[i].get('panNo')?.touched
+                          "
+                        >
+                          <div
+                            *ngIf="
+                              legalheirarray.controls[i]
+                                .get('panNo')
+                                ?.hasError('required')
+                            "
+                          >
+                            PAN Card Is Required.
+                          </div>
+                          <div
+                            *ngIf="
+                              legalheirarray.controls[i]
+                                .get('panNo')
+                                ?.hasError('panFormat')
+                            "
+                          >
+                            Invalid pan number format.           
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                      <div class="form-group">
+                        <label for="state" class="form-label"
+                          >Upload PAN Card<span class="text-danger"
+                            >*</span
+                          ></label
+                        >
+                        <input
+                          type="file"
+                          name=""
+                          id=""
+                          class="form-control"
+                          accept="image/*,.pdf"
+                          (change)="
+                            onImageChange($event, 'panNoDoc', 'legal', i)
+                          "
+                          formControlName="panNoDoc"
+                          required
+                        />
+                        <div
+                          style="color: red"
+                          *ngIf="
+                            legalheirarray.controls[i]
+                              .get('panNoDoc')
+                              ?.hasError('required') &&
+                            legalheirarray.controls[i].get('panNoDoc')?.touched
+                          "
+                        >
+                          PAN Card is Mandatory.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- upi -->
+                  <div class="row pt-4" *ngIf="legalupi">
+                    <div class="col-sm-6 col-md-4">
+                      <div class="form-group">
+                        <label for="state" class="form-label"
+                          >UPI ID<span class="text-danger">*</span></label
+                        >
+                        <input
+                          formControlName="upiId"
+                          type="text"
+                          class="form-control"
+                        />
+                        <div
+                          class="error-message"
+                          *ngIf="
+                            legalheirarray.controls[i].get('upiId')?.invalid &&
+                            legalheirarray.controls[i].get('upiId')?.touched
+                          "
+                        >
+                          <div
+                            *ngIf="
+                              legalheirarray.controls[i]
+                                .get('upiId')
+                                ?.hasError('required')
+                            "
+                          >
+                            UPI ID Is Required.
+                          </div>
+                          <div
+                            *ngIf="
+                              legalheirarray.controls[i]
+                                .get('upiId')
+                                ?.hasError('upiformat')
+                            "
+                          >
+                            UPI ID isn't valid.
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                      <div class="form-group">
+                        <label for="state" class="form-label"
+                          >Linked Mob._No<span class="text-danger"
+                            >*</span
+                          ></label
+                        >
+                        <input
+                          type="text"
+                          formControlName="upiPhoneNo"
+                          class="form-control"
+                          maxlength="10"
+                          (keyup)="vldChkLst.allowNumericDigits($event)"
+                          minlength="10"
+                          autocomplete="off"
+                        />
+                        <div
+                          class="error-message"
+                          *ngIf="
+                            legalheirarray.controls[i].get('upiPhoneNo')
+                              ?.invalid &&
+                            legalheirarray.controls[i].get('upiPhoneNo')
+                              ?.touched
+                          "
+                        >
+                          <div
+                            *ngIf="
+                              legalheirarray.controls[i]
+                                .get('upiPhoneNo')
+                                ?.hasError('required')
+                            "
+                          >
+                            Linked Mob._No Is Required.
+                          </div>
+                          <div
+                            *ngIf="
+                              legalheirarray.controls[i]
+                                .get('upiPhoneNo')
+                                ?.hasError('phonenoformat')
+                            "
+                          >
+                            Phone Number isn't valid.
+                          </div>
+                          <div
+                            *ngIf="
+                              legalheirarray.controls[i]
+                                .get('upiPhoneNo')
+                                ?.hasError('minlength')
+                            "
+                          >
+                            Phone Number should be 10 digits
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-sm-6 col-md-4">
+                      <div class="form-group">
+                        <label for="state" class="form-label"
+                          >Upload QR Code<span class="text-danger"
+                            >*</span
+                          ></label
+                        >
+                        <input
+                          type="file"
+                          name=""
+                          id=""
+                          class="form-control"
+                          accept="image/*,.pdf"
+                          (change)="
+                            onImageChange($event, 'quarCodeDoc', 'legal', i)
+                          "
+                          formControlName="quarCodeDoc"
+                          required
+                        />
+                        <div
+                          style="color: red"
+                          *ngIf="
+                            legalheirarray.controls[i]
+                              .get('quarCodeDoc')
+                              ?.hasError('required') &&
+                            legalheirarray.controls[i].get('quarCodeDoc')
+                              ?.touched
+                          "
+                        >
+                          QR Code is Mandatory.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+                <div class="mt-4 d-flex justify-content-end" *ngIf="legalbtnh">
+                  <button
+                    class="btn btn-danger"
+                    style="margin-right: 10px"
+                    *ngIf="i > 0"
+                    (click)="removelegalform(i)"
+                  >
+                    <i class="fa-solid fa-trash-alt"></i>
+                  </button>
+                  <button
+                    *ngIf="isDisableAddButton"
+                    class="btn button btn-primary form-save-btn"
+                    (click)="addlegaleirform()"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="mt-4 d-flex justify-content-end">
+        <button
+          *ngIf="!updatebtn"
+          class="btn btn-primary form-save-btn"
+          (click)="ownerRegistration()"
+        >
+          Save
+        </button>
+        <button
+          *ngIf="updatebtn"
+          class="btn btn-primary mx-1 px-4"
+          (click)="updateowner()"
+        >
+          Update
+        </button>
+        <button
+          *ngIf="updatebtn"
+          class="btn btn-danger mx-1 px-4"
+          (click)="cancelUpdate()"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+
+    <div class="" style="margin-top: 30px">
+      <div class="d-flex justify-content-between align-items-center mt-5">
+        <div class="">
+          <button
+            class="btn btn-primary px-3 py-2"
+            style="font-size: 13px"
+            (click)="exportAsXLSX()"
+          >
+            Export To Excel
+          </button>
+        </div>
+        
+        <div class="d-flex align-items-center">
+          <div style="display: flex">
+            <input
+              type="text"
+              class="form-control"
+              pInputText
+              placeholder="Search"
+              (input)="searchGlobal($event.target)"
+              style="margin-right: 8px"
+            />
+            <div
+              style="
+                display: flex;
+                align-items: center;
+                padding: 0.375rem 0.75rem;
+                font-size: 1rem;
+                line-height: 1.5;
+                color: #495057;
+                background-color: #e9ecef;
+                border: 1px solid #ced4da;
+                border-radius: 0.25rem;
+              "
+            >
+              <i class="fa fa-search"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class=""
+        style="
+          position: relative;
+          overflow-x: auto;
+          overflow-y: auto;
+          margin-top: 10px;
+        "
+      >
+        <table
+          class="table w-full table-bordered table-striped"
+          id="maintable"
+          datatable
+          #dt
+        >
+          <thead class="">
+            <tr>
+              <th
+                style="background-color: rgba(0, 133, 159, 1); color: #faf7f7"
+              >
+                SL.NO
+              </th>
+              <th
+                style="background-color: rgba(0, 133, 159, 1); color: #faf7f7"
+              >
+                House Owner Name
+              </th>
+              <th
+                style="background-color: rgba(0, 133, 159, 1); color: #faf7f7"
+              >
+                Phone no
+              </th>
+              <th
+                style="background-color: rgba(0, 133, 159, 1); color: #faf7f7"
+              >
+                Address
+              </th>
+              <th
+                style="background-color: rgba(0, 133, 159, 1); color: #faf7f7"
+              >
+                Govt ID
+              </th>
+              <th
+                style="background-color: rgba(0, 133, 159, 1); color: #faf7f7"
+              >
+                ID Proof Address
+              </th>
+              <th
+                style="background-color: rgba(0, 133, 159, 1); color: #faf7f7"
+              >
+                Account Number
+              </th>
+              <th
+                style="background-color: rgba(0, 133, 159, 1); color: #faf7f7"
+              >
+                IFSC Code
+              </th>
+              <th
+                style="background-color: rgba(0, 133, 159, 1); color: #faf7f7"
+              >
+                PAN Card
+              </th>
+              <th
+                style="background-color: rgba(0, 133, 159, 1); color: #faf7f7"
+              >
+                Payment Mode
+              </th>
+              <th
+                style="background-color: rgba(0, 133, 159, 1); color: #faf7f7"
+              >
+                UPI Id/linked Mob. No.
+              </th>
+              <th
+                style="background-color: rgba(0, 133, 159, 1); color: #faf7f7"
+              >
+                QR Code
+              </th>
+              <th
+                style="background-color: rgba(0, 133, 159, 1); color: #faf7f7"
+              >
+                Status
+              </th>
+              <th
+                style="background-color: rgba(0, 133, 159, 1); color: #faf7f7"
+              >
+                Start Date
+              </th>
+              <!-- <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Created Date</th> -->
+              <th
+                style="background-color: rgba(0, 133, 159, 1); color: #faf7f7"
+              >
+                Action
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="
+                let item of tableData
+                  | paginate
                     : {
                         itemsPerPage: tableSize,
                         currentPage: page,
                         totalItems: count
-                      }; let i = index">
-                            <td>{{ i+1 }}</td>
-                            <td>{{ item.ownerName }}</td>
-                            <td>{{ item.phoneNo }}</td>
-                            <td>{{ item.address1}}</td>
-                            <td>{{ item.idProof }}</td>
-                            <!-- <td>{{item.idProofAddress }}</td> -->
-                            <td>
-                                <div style="display: inline-flex; ">
-                                    <button class="btn  btn-sm mx-2"
-                                        style="background-color: rgb(22, 133, 236);color: #faf7f7;"
-                                        (click)="downloadImage(item.idProofAddress)">
-                                        <i class="fa fa-download"></i>
-                                    </button>
-                                </div>
-                            </td>
-                            <td>{{ item.bankAccountNo }}</td>
-                            <td>{{ item.ifscCode}}</td>
-                            <td>{{ item.panNo }}</td>
-                            <td> {{ item.paymtMode == 1 ? 'Bank' : item.paymtMode == 2 ? 'Cash' : item.paymtMode == 3 ?
-                                'UPI' : 'UPI' }}</td>
-                            <td>{{ item.upiPhoneNo}}</td>
-                            <!-- <td>{{ item.uploadQuarCodeAdds }}</td> -->
-                            <td>
-                                <div style="display: inline-flex; ">
-                                    <button class="btn  btn-sm mx-2"
-                                        style="background-color: rgb(22, 133, 236);color: #faf7f7;"
-                                        (click)="downloadImage(item.uploadQuarCodeAdds)">
-                                        <i class="fa fa-download"></i>
-                                    </button>
-                                </div>
-                            </td>
-                            <td>{{ item.isActive == 1 ? 'Active' : 'InActive'}}</td>
-                            <td>{{ item.createdDate}}</td>
-                            <td>
-                                <div style="display: inline-flex; ">
-                                    <button class="btn  btn-sm mx-2" (click)="editOwner(item)"
-                                        style="background-color: rgb(22, 133, 236);color: #faf7f7;">
-                                        <i class="fa-solid fa-edit"></i>
-                                    </button>
+                      };
+                let i = index
+              "
+            >
+              <td>{{ i + 1 }}</td>
+              <td>{{ item.ownerName }}</td>
+              <td>{{ item.phoneNo }}</td>
+              <td>{{ item.address1 }}</td>
+              <td>{{ item.idProof }}</td>
+              <!-- <td>{{item.idProofAddress }}</td> -->
+              <td>
+                <div style="display: inline-flex">
+                  <button
+                    class="btn btn-sm mx-2"
+                    style="background-color: rgb(22, 133, 236); color: #faf7f7"
+                    (click)="downloadImage(item.idProofAddress)"
+                  >
+                    <i class="fa fa-download"></i>
+                  </button>
+                </div>
+              </td>
+              <td>{{ item.bankAccountNo }}</td>
+              <td>{{ item.ifscCode }}</td>
+              <td>{{ item.panNo }}</td>
+              <td>
+                {{
+                  item.paymtMode == 1
+                    ? "Bank"
+                    : item.paymtMode == 2
+                    ? "Cash"
+                    : item.paymtMode == 3
+                    ? "UPI"
+                    : "UPI"
+                }}
+              </td>
+              <td>{{ item.upiPhoneNo }}</td>
+              <!-- <td>{{ item.uploadQuarCodeAdds }}</td> -->
+              <td>
+                <div style="display: inline-flex">
+                  <button
+                    class="btn btn-sm mx-2"
+                    style="background-color: rgb(22, 133, 236); color: #faf7f7"
+                    (click)="downloadImage(item.uploadQuarCodeAdds)"
+                  >
+                    <i class="fa fa-download"></i>
+                  </button>
+                </div>
+              </td>
+              <td>{{ item.isActive == 1 ? "Active" : "InActive" }}</td>
+              <td>{{ item.createdDate }}</td>
+              <td>
+                <div style="display: inline-flex">
+                  <button
+                    class="btn btn-sm mx-2"
+                    (click)="editOwner(item)"
+                    style="background-color: rgb(22, 133, 236); color: #faf7f7"
+                  >
+                    <i class="fa-solid fa-edit"></i>
+                  </button>
 
-                                    <button class="btn btn-danger btn-sm mx-2 " (click)="deleteOwner(item.ownerId)">
-                                        <i class="fa-solid fa-trash-alt"></i>
-                                    </button>
-                                </div>
-
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-
-            </div>
-        </div>
-        <br>
-        <div class="d-flex justify-content-end">
-            <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
-            </pagination-controls>
-        </div>
-
-
+                  <button
+                    class="btn btn-danger btn-sm mx-2"
+                    (click)="deleteOwner(item.ownerId)"
+                  >
+                    <i class="fa-solid fa-trash-alt"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-
+    <br />
+    <div class="d-flex justify-content-end">
+      <pagination-controls
+        previousLabel="Prev"
+        nextLabel="Next"
+        (pageChange)="onTableDataChange($event)"
+      >
+      </pagination-controls>
+    </div>
+  </div>
 </section>
 <app-footer></app-footer>

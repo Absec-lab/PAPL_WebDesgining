@@ -32,6 +32,7 @@ export class UnitRegistrationComponent {
     private excelService: ExcelService
   ) {}
   tableData: any = [];
+  allData: any = [];
   duplicateTableData: any[] = [];
   page: number = 1;
   count: number = 0;
@@ -218,9 +219,48 @@ export class UnitRegistrationComponent {
     this.page = 1;
     this.getAllUnit();
   }
+  trimString(s: any) {
+    var l = 0,
+      r = s.length - 1;
+    while (l < s.length && s[l] == " ") l++;
+    while (r > l && s[r] == " ") r -= 1;
+    return s.substring(l, r + 1);
+  }
+
+  compareObjects(o1: any, o2: any) {
+    var k = "";
+    for (k in o1) if (o1[k] != o2[k]) return false;
+    for (k in o2) if (o1[k] != o2[k]) return false;
+    return true;
+  }
+
+  itemExists(haystack: any, needle: any) {
+    for (var i = 0; i < haystack.length; i++)
+      if (this.compareObjects(haystack[i], needle)) return true;
+    return false;
+  }
+  searchGlobal(searchString: any) {
+    let toSearch = this.trimString(searchString.value); // trim it
+    if (toSearch.length) {
+      var results: any = this.allData.filter((o: any) => {
+        return Object.keys(o).some((k: any) => {
+          if (o[k]) {
+            return o[k]
+              .toString()
+              .toLowerCase()
+              ?.includes(toSearch.toLowerCase());
+          }
+        });
+      });
+      this.tableData = results;
+    } else {
+      this.tableData = this.allData;
+    }
+  }
   getAllUnit() {
     this.portalServ.get("PAPL/getAllUnit").subscribe((res) => {
       this.tableData = res.data;
+      this.allData = res.data;
       this.allUnits = res.data;
       console.log(this.allUnits);
       this.duplicateTableData = res.data;

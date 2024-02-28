@@ -18,6 +18,7 @@ import { Observable } from 'rxjs';
 export class HouseRegistrationComponent implements OnInit {
   updatebtn: boolean = false;
   tableData: any = [];
+  allData: any = [];
   duplicateTableData: any[] = [];
   stateDtails: any;
   houseRegistrationForm!: FormGroup;
@@ -85,6 +86,44 @@ private _filterOwners(value: string): any[] {
     this.initFormValidators();
   }
 
+  trimString(s: any) {
+    var l = 0,
+      r = s.length - 1;
+    while (l < s.length && s[l] == " ") l++;
+    while (r > l && s[r] == " ") r -= 1;
+    return s.substring(l, r + 1);
+  }
+
+  compareObjects(o1: any, o2: any) {
+    var k = "";
+    for (k in o1) if (o1[k] != o2[k]) return false;
+    for (k in o2) if (o1[k] != o2[k]) return false;
+    return true;
+  }
+
+  itemExists(haystack: any, needle: any) {
+    for (var i = 0; i < haystack.length; i++)
+      if (this.compareObjects(haystack[i], needle)) return true;
+    return false;
+  }
+  searchGlobal(searchString: any) {
+    let toSearch = this.trimString(searchString.value); // trim it
+    if (toSearch.length) {
+      var results: any = this.allData.filter((o: any) => {
+        return Object.keys(o).some((k: any) => {
+          if (o[k]) {
+            return o[k]
+              .toString()
+              .toLowerCase()
+              ?.includes(toSearch.toLowerCase());
+          }
+        });
+      });
+      this.allHouseDetails = results;
+    } else {
+      this.allHouseDetails = this.allData;
+    }
+  }
   initFormValidators(): void {
     // Add validators for the stateForm controls as needed
     // this.stateArray.controls.forEach((control: FormGroup) => {
@@ -278,6 +317,7 @@ private _filterOwners(value: string): any[] {
         console.log(this.allHouseDetails)
         console.log("tabledata", res)
         this.tableData = res.data;
+        this.allData = res;
         this.duplicateTableData = res.data;
       })
   }

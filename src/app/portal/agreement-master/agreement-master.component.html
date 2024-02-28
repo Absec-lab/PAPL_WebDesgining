@@ -1,263 +1,539 @@
 <app-header></app-header>
 <section id="secondary-header">
-    <div class="container d-flex align-items-center gap-2">
-        <a href="" class="primary-link fw-bold">Home</a>
-        <span>/</span>
-        <span>Agreement Master</span>
-    </div>
+  <div class="container d-flex align-items-center gap-2">
+    <a href="" class="primary-link fw-bold">Home</a>
+    <span>/</span>
+    <span>Agreement Master</span>
+  </div>
 </section>
 <section id="page-content">
-    <div class="container">
-        <form action="">
-            <div class="row " style="background-color: rgba(226, 242, 246, 1); padding: 5%; margin-bottom: 0.5cm;">
-                <div class="col-sm-6 col-md-4  ">
-                    <div class="form-group">
-                        <label class="form-label">State<span class="text-danger">*</span></label>
-                        <input type="hidden" name="aggreId" id="aggreId" [(ngModel)]="aggreId">
-                        <select class="form-select" aria-label="Default select example" [(ngModel)]="aggreState"
-                            name="aggreState" (change)="getSbu(aggreState)">
-                            <option value="0">Choose State... </option>
-                            <option *ngFor="let item of allState; let i = index" [value]="item.stateId">
-                                {{item.stateName}}</option>
-                        </select>
-                        <div class="text-danger">{{ errorMessages.aggreState }}</div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 ">
-                    <div class="form-group">
-                        <label for="SBU" class="form-label">SBU<span class="text-danger">*</span></label>
-                        <select class="form-select" aria-label="Default select example" [(ngModel)]="aggreSbu"
-                            name="aggreSbu" (change)="getPlant(aggreSbu)">
-                            <option value="0">Choose SBU... </option>
-                            <option *ngFor="let item of allSbu; let i = index" [value]="item.locationId">
-                                {{item.locationName}} ({{item.shortCode}})</option>
-                        </select>
-                        <div class="text-danger">{{ errorMessages.aggreSbu }}</div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4  ">
-                    <div class="form-group">
-                        <label class="form-label">Plant<span class="text-danger">*</span></label>
-                        <select class="form-select" aria-label="Default select example" [(ngModel)]="aggrePlant"
-                            name="aggrePlant" (change)="getOwner(aggrePlant)">
-                            <option value="0">Choose Plant... </option>
-                            <option *ngFor="let item of allPlant; let i = index" [value]="item.plantId">
-                                {{item.plantName}} ({{item.shortCode}})</option>
-                        </select>
-                        <div class="text-danger">{{ errorMessages.aggrePlant }}</div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4  ">
-                    <div class="form-group">
-                        <label class="form-label">Owner Name<span class="text-danger">*</span></label>
-                        <select class="form-select" aria-label="Default select example" [(ngModel)]="aggreOwner"
-                            name="aggreOwner" (change)="getHouse(aggreOwner)">
-                            <option value="0">Choose Owner... </option>
-                            <option *ngFor="let item of allOwner; let i = index" [value]="item.ownerId">
-                                {{item.ownerName}} </option>
-                        </select>
-                        <div class="text-danger">{{ errorMessages.aggreOwner }}</div>
-                    </div>
-                </div>
-
-                <div class="col-sm-6 col-md-4  ">
-                    <div class="form-group">
-                        <label class="form-label">House Name<span class="text-danger">*</span></label>
-                        <select class="form-select" aria-label="Default select example" [(ngModel)]="aggreHouse"
-                            name="aggreHouse" (change)="getHouseData()">
-                            <option value="0">Choose House...</option>
-                            <option *ngFor="let item of getallHouse; let i = index" [value]="item.houseId">
-                                {{item.houseName}}</option>
-                        </select>
-                        <div class="text-danger">{{ errorMessages.aggreHouse }}</div>
-                    </div>
-                </div>
-
-                <div class="col-sm-6 col-md-4  ">
-                    <div class="form-group">
-                        <label class="form-label">Agreement Type <span class="text-danger">*</span></label>
-                        <select class="form-select" aria-label="Default select example" [(ngModel)]="aggreAggrementType"
-                            name="aggreAggrementType">
-                            <option value="0">Choose Agreement... </option>
-                            <option *ngFor="let item of getAllAgreementTypeData; let i = index"
-                                [value]="item.aggreTypeId">{{item.aggreTypeName}}
-                            </option>
-                        </select>
-                        <div class="text-danger">{{ errorMessages.aggreAggrementType}}</div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4  ">
-                    <div class="form-group">
-                        <label class="form-label">Agreement Upload<span class="text-danger">*</span></label>
-                        <input type="file" name="aggreUpload" id="aggreUpload" class="form-control"
-                            accept="image/*,.pdf" (change)="selectFiles($event)">
-                        <div *ngIf="errorMessages.aggreUpload" class="text-danger">{{ errorMessages.aggreUpload }}</div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4">
-                    <div class="form-group">
-                        <label class="form-label">Monthly Rent<span class="text-danger">*</span></label>
-                        <input type="text" name="aggreMonthlyRent" id="aggreMonthlyRent" class="form-control"
-                            [(ngModel)]="aggreMonthlyRent" maxlength="6" (input)="vldChkLst.allowNumericDigits($event)"
-                            nonZeroOnly>
-                        <div class="text-danger">{{ errorMessages.aggreMonthlyRent }}</div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4">
-                    <div class="form-group">
-                        <label class="form-label">Agreement Period (Months)<span class="text-danger">*</span></label>
-                        <input type="text" name="aggrePeriod" id="aggrePeriod" class="form-control"
-                            (input)="vldChkLst.allowNumericDigits($event)" maxlength="2" [(ngModel)]="aggrePeriod"
-                            (input)="captureDate()">
-                        <div class="text-danger">{{ errorMessages.aggrePeriod }}</div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4">
-                    <div class="form-group">
-                        <label class="form-label">Start Date<span class="text-danger">*</span></label>
-                        <input type="date" name="aggreStartDate" id="aggreStartDate" class="form-control"
-                            [(ngModel)]="aggreStartDate" class="form-control" (input)="captureDate()"
-                            [min]="houseResponseData ? houseResponseData.startDate : null" [max]="houseResponseData ? houseResponseData.endDate : null">
-                        <div class="text-danger">{{ errorMessages.aggreStartDate }}</div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4">
-                    <div class="form-group">
-                        <label class="form-label">End Date<span class="text-danger">*</span></label>
-                        <input type="date" name="aggreEndDate" id="aggreEndDate" [(ngModel)]="aggreEndDate"
-                            class="form-control" disabled [max]="houseResponseData ? houseResponseData.endDate : null">
-                        <div class="text-danger">{{ errorMessages.aggreEndDate }}</div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4">
-                    <div class="form-group  d-flex align-baseline gap-5 ">
-                        <div class="col-sm-6 col-md-4">
-                            <label class="form-label">Electric Bill</label>
-                            <label class="switch">
-                                <input class="switch-input" type="checkbox" name="aggreElectricBill"
-                                    [(ngModel)]="aggreElectricBill" (click)="getVal($event.target)" />
-                                <span class="switch-label" data-yes="YES" data-no="NO"></span>
-                                <span class="switch-handle"></span>
-                            </label>
-                        </div>
-                        <div class="col-sm-6 col-md-4">
-                            <label class="form-label">Water Bill</label>
-                            <label class="switch">
-                                <input class="switch-input" type="checkbox" name="aggreWaterBill"
-                                    [(ngModel)]="aggreWaterBill" (click)="getValaggreWaterBill($event.target)" />
-                                <span class="switch-label" data-yes="YES" data-no="NO"></span>
-                                <span class="switch-handle"></span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="mt-4 d-flex justify-content-end">
-                <button class="btn btn-primary form-save-btn" (click)="saveAggreement()" *ngIf="aggreId==''">
-                    Save
-                </button>
-                <div>
-                    <button class="btn mx-1 btn-primary px-4" (click)="updateAgreement()" *ngIf="aggreId!==''">
-                        Update
-                    </button>
-                </div>
-                <button class="btn mx-1 btn-danger px-4" (click)="cancelAgreement()" *ngIf="aggreId!==''">
-                    Cancel
-                </button>
-            </div>
-            
-        </form>
-        <div class="" style=" margin-top: 30px;">
-            <div class="d-flex justify-content-between align-items-center mt-5">
-                <div class="">
-                    <button class="btn btn-primary px-3 py-2" style="font-size: 13px;" (click)="exportAsXLSX()">
-                        Export To Excel
-                    </button>
-                </div>
-                <div class="d-flex  align-items-center">
-                    <div style="display: flex;">
-                        <input type="text" class="form-control" placeholder="Search" style="margin-right: 8px;">
-                        <div style="display: flex; align-items: center; padding: 0.375rem 0.75rem; font-size: 1rem; line-height: 1.5; color: #495057; background-color: #e9ecef; border: 1px solid #ced4da; border-radius: 0.25rem;">
-                            <i class="fa fa-search"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="" style=" position: relative; overflow-x: auto; overflow-y: auto; margin-top: 10px;">
-                <table class="table w-full table-bordered table-striped">
-                    <thead class="">
-                        <tr>
-                            <th style="background-color: rgba(0, 133, 159, 1); color:#faf7f7;">SL.NO</th>
-                            <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">State</th>
-                            <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">SBU</th>
-                            <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Plant</th>
-                            <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">Owner Name</th>
-                            <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">House Name</th>
-                            <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Agreement Type</th>
-                            <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">Monthly Rent</th>
-                            <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Agreement Period</th>
-                            <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Agreement Upload</th>
-                            <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Start Date</th>
-                            <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">End Date</th>
-                            <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Electric Bill</th>
-                            <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7;">Water Bill</th>
-                            <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">Created Date</th>
-                            <th style="background-color: rgba(0, 133, 159, 1);color: #faf7f7; ">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let item of tableData | paginate
-                        : {
-                            itemsPerPage: tableSize,
-                            currentPage: page,
-                            totalItems: count
-                          }; let i = index">
-                            <td>{{ i + 1 }}</td>
-                            <td>{{ item.stateName}}</td>
-                            <td>{{ item.locationName }}</td>
-                            <td>{{ item.plantName}}</td>
-                            <td>{{ item.ownerName }}</td>
-                            <td>{{item.houseName}}</td>
-                            <td>{{ item.aggreTypeName }}</td>
-                            <td>{{ item.rent }}</td>
-                            <td>{{ item.rentPeriod }}</td>
-                            <!-- <td>{{ item.aggreUpload }}</td> -->
-                            <td>
-                                <div style="display: inline-flex; ">
-                                    <button class="btn  btn-sm mx-2"
-                                        style="background-color: rgb(22, 133, 236);color: #faf7f7;"
-                                        (click)="downloadImage(item.aggreUpload)">
-                                        <i class="fa fa-download"></i>
-                                    </button>
-                                </div>
-                            </td>
-                            <td>{{ item.rentStartDt | date: 'MM/dd/yyyy'}}</td>
-                            <td>{{ item.rentEndDt | date: 'MM/dd/yyyy'}}</td>
-                            <td>{{ item.withElectricBill }}</td>
-                            <td>{{ item.withWaterBill }}</td>
-                            <td>{{ item.createdDate }}</td>
-                            <td>
-                                <div style="display: inline-flex;">
-                                    <button class="btn btn-sm mx-2"
-                                        (click)="editAgreement(item.aggreId,item.stateId,item.locationId,item.plantId,item.ownerId,item.houseId,item.aggreTypeId,item.rent,item.rentPeriod,item.rentStartDt,item.rentEndDt,item.withElectricBill,item.withWaterBill,item.aggreUpload)"
-                                        style="background-color: rgb(22, 133, 236);color: #faf7f7;">
-                                        <i class="fa-solid fa-edit"></i>
-                                    </button>
-                                    <button class="btn btn-danger btn-sm mx-2" (click)="deleteAgreement(item.aggreId)">
-                                        <i class="fa-solid fa-trash-alt"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+  <div class="container">
+    <form action="">
+      <div
+        class="row"
+        style="
+          background-color: rgba(226, 242, 246, 1);
+          padding: 5%;
+          margin-bottom: 0.5cm;
+        "
+      >
+        <div class="col-sm-6 col-md-4">
+          <div class="form-group">
+            <label class="form-label"
+              >State<span class="text-danger">*</span></label
+            >
+            <input
+              type="hidden"
+              name="aggreId"
+              id="aggreId"
+              [(ngModel)]="aggreId"
+            />
+            <select
+              class="form-select"
+              aria-label="Default select example"
+              [(ngModel)]="aggreState"
+              name="aggreState"
+              (change)="getSbu(aggreState)"
+            >
+              <option value="0">Choose State...</option>
+              <option
+                *ngFor="let item of allState; let i = index"
+                [value]="item.stateId"
+              >
+                {{ item.stateName }}
+              </option>
+            </select>
+            <div class="text-danger">{{ errorMessages.aggreState }}</div>
+          </div>
         </div>
-        <br>
-        <div class="d-flex justify-content-end">
-            <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
-            </pagination-controls>
+        <div class="col-sm-6 col-md-4">
+          <div class="form-group">
+            <label for="SBU" class="form-label"
+              >SBU<span class="text-danger">*</span></label
+            >
+            <select
+              class="form-select"
+              aria-label="Default select example"
+              [(ngModel)]="aggreSbu"
+              name="aggreSbu"
+              (change)="getPlant(aggreSbu)"
+            >
+              <option value="0">Choose SBU...</option>
+              <option
+                *ngFor="let item of allSbu; let i = index"
+                [value]="item.locationId"
+              >
+                {{ item.locationName }} ({{ item.shortCode }})
+              </option>
+            </select>
+            <div class="text-danger">{{ errorMessages.aggreSbu }}</div>
+          </div>
         </div>
+        <div class="col-sm-6 col-md-4">
+          <div class="form-group">
+            <label class="form-label"
+              >Plant<span class="text-danger">*</span></label
+            >
+            <select
+              class="form-select"
+              aria-label="Default select example"
+              [(ngModel)]="aggrePlant"
+              name="aggrePlant"
+              (change)="getOwner(aggrePlant)"
+            >
+              <option value="0">Choose Plant...</option>
+              <option
+                *ngFor="let item of allPlant; let i = index"
+                [value]="item.plantId"
+              >
+                {{ item.plantName }} ({{ item.shortCode }})
+              </option>
+            </select>
+            <div class="text-danger">{{ errorMessages.aggrePlant }}</div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-4">
+          <div class="form-group">
+            <label class="form-label"
+              >Owner Name<span class="text-danger">*</span></label
+            >
+            <select
+              class="form-select"
+              aria-label="Default select example"
+              [(ngModel)]="aggreOwner"
+              name="aggreOwner"
+              (change)="getHouse(aggreOwner)"
+            >
+              <option value="0">Choose Owner...</option>
+              <option
+                *ngFor="let item of allOwner; let i = index"
+                [value]="item.ownerId"
+              >
+                {{ item.ownerName }}
+              </option>
+            </select>
+            <div class="text-danger">{{ errorMessages.aggreOwner }}</div>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4">
+          <div class="form-group">
+            <label class="form-label"
+              >House Name<span class="text-danger">*</span></label
+            >
+            <select
+              class="form-select"
+              aria-label="Default select example"
+              [(ngModel)]="aggreHouse"
+              name="aggreHouse"
+              (change)="getHouseData()"
+            >
+              <option value="0">Choose House...</option>
+              <option
+                *ngFor="let item of getallHouse; let i = index"
+                [value]="item.houseId"
+              >
+                {{ item.houseName }}
+              </option>
+            </select>
+            <div class="text-danger">{{ errorMessages.aggreHouse }}</div>
+          </div>
+        </div>
+
+        <div class="col-sm-6 col-md-4">
+          <div class="form-group">
+            <label class="form-label"
+              >Agreement Type <span class="text-danger">*</span></label
+            >
+            <select
+              class="form-select"
+              aria-label="Default select example"
+              [(ngModel)]="aggreAggrementType"
+              name="aggreAggrementType"
+            >
+              <option value="0">Choose Agreement...</option>
+              <option
+                *ngFor="let item of getAllAgreementTypeData; let i = index"
+                [value]="item.aggreTypeId"
+              >
+                {{ item.aggreTypeName }}
+              </option>
+            </select>
+            <div class="text-danger">
+              {{ errorMessages.aggreAggrementType }}
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-4">
+          <div class="form-group">
+            <label class="form-label"
+              >Agreement Upload<span class="text-danger">*</span></label
+            >
+            <input
+              type="file"
+              name="aggreUpload"
+              id="aggreUpload"
+              class="form-control"
+              accept="image/*,.pdf"
+              (change)="selectFiles($event)"
+            />
+            <div *ngIf="errorMessages.aggreUpload" class="text-danger">
+              {{ errorMessages.aggreUpload }}
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-4">
+          <div class="form-group">
+            <label class="form-label"
+              >Monthly Rent<span class="text-danger">*</span></label
+            >
+            <input
+              type="text"
+              name="aggreMonthlyRent"
+              id="aggreMonthlyRent"
+              class="form-control"
+              [(ngModel)]="aggreMonthlyRent"
+              maxlength="6"
+              (input)="vldChkLst.allowNumericDigits($event)"
+              nonZeroOnly
+            />
+            <div class="text-danger">{{ errorMessages.aggreMonthlyRent }}</div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-4">
+          <div class="form-group">
+            <label class="form-label"
+              >Agreement Period (Months)<span class="text-danger"
+                >*</span
+              ></label
+            >
+            <input
+              type="text"
+              name="aggrePeriod"
+              id="aggrePeriod"
+              class="form-control"
+              (input)="vldChkLst.allowNumericDigits($event)"
+              maxlength="2"
+              [(ngModel)]="aggrePeriod"
+              (input)="captureDate()"
+            />
+            <div class="text-danger">{{ errorMessages.aggrePeriod }}</div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-4">
+          <div class="form-group">
+            <label class="form-label"
+              >Start Date<span class="text-danger">*</span></label
+            >
+            <input
+              type="date"
+              name="aggreStartDate"
+              id="aggreStartDate"
+              class="form-control"
+              [(ngModel)]="aggreStartDate"
+              class="form-control"
+              (input)="captureDate()"
+              [min]="houseResponseData ? houseResponseData.startDate : null"
+              [max]="houseResponseData ? houseResponseData.endDate : null"
+            />
+            <div class="text-danger">{{ errorMessages.aggreStartDate }}</div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-4">
+          <div class="form-group">
+            <label class="form-label"
+              >End Date<span class="text-danger">*</span></label
+            >
+            <input
+              type="date"
+              name="aggreEndDate"
+              id="aggreEndDate"
+              [(ngModel)]="aggreEndDate"
+              class="form-control"
+              disabled
+              [max]="houseResponseData ? houseResponseData.endDate : null"
+            />
+            <div class="text-danger">{{ errorMessages.aggreEndDate }}</div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-4">
+          <div class="form-group d-flex align-baseline gap-5">
+            <div class="col-sm-6 col-md-4">
+              <label class="form-label">Electric Bill</label>
+              <label class="switch">
+                <input
+                  class="switch-input"
+                  type="checkbox"
+                  name="aggreElectricBill"
+                  [(ngModel)]="aggreElectricBill"
+                  (click)="getVal($event.target)"
+                />
+                <span class="switch-label" data-yes="YES" data-no="NO"></span>
+                <span class="switch-handle"></span>
+              </label>
+            </div>
+            <div class="col-sm-6 col-md-4">
+              <label class="form-label">Water Bill</label>
+              <label class="switch">
+                <input
+                  class="switch-input"
+                  type="checkbox"
+                  name="aggreWaterBill"
+                  [(ngModel)]="aggreWaterBill"
+                  (click)="getValaggreWaterBill($event.target)"
+                />
+                <span class="switch-label" data-yes="YES" data-no="NO"></span>
+                <span class="switch-handle"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4 d-flex justify-content-end">
+        <button
+          class="btn btn-primary form-save-btn"
+          (click)="saveAggreement()"
+          *ngIf="aggreId == ''"
+        >
+          Save
+        </button>
+        <div>
+          <button
+            class="btn mx-1 btn-primary px-4"
+            (click)="updateAgreement()"
+            *ngIf="aggreId !== ''"
+          >
+            Update
+          </button>
+        </div>
+        <button
+          class="btn mx-1 btn-danger px-4"
+          (click)="cancelAgreement()"
+          *ngIf="aggreId !== ''"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+    <div class="" style="margin-top: 30px">
+      <div class="d-flex justify-content-between align-items-center mt-5">
+        <div class="">
+          <button
+            class="btn btn-primary px-3 py-2"
+            style="font-size: 13px"
+            (click)="exportAsXLSX()"
+          >
+            Export To Excel
+          </button>
+        </div>
+        <div class="d-flex align-items-center">
+          <div style="display: flex">
+            <input
+              type="text"
+              class="form-control"
+              (input)="searchGlobal($event.target)"
+              placeholder="Search"
+              style="margin-right: 8px"
+            />
+            <div
+              style="
+                display: flex;
+                align-items: center;
+                padding: 0.375rem 0.75rem;
+                font-size: 1rem;
+                line-height: 1.5;
+                color: #495057;
+                background-color: #e9ecef;
+                border: 1px solid #ced4da;
+                border-radius: 0.25rem;
+              "
+            >
+              <i class="fa fa-search"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class=""
+        style="
+          position: relative;
+          overflow-x: auto;
+          overflow-y: auto;
+          margin-top: 10px;
+        "
+      >
+        <table class="table w-full table-bordered table-striped">
+          <thead class="">
+            <tr>
+              <th
+                style="background-color: rgba(0, 133, 159, 1); color: #faf7f7"
+              >
+                SL.NO
+              </th>
+              <th
+                style="background-color: rgba(0, 133, 159, 1); color: #faf7f7"
+              >
+                State
+              </th>
+              <th
+                style="background-color: rgba(0, 133, 159, 1); color: #faf7f7"
+              >
+                SBU
+              </th>
+              <th
+                style="background-color: rgba(0, 133, 159, 1); color: #faf7f7"
+              >
+                Plant
+              </th>
+              <th
+                style="background-color: rgba(0, 133, 159, 1); color: #faf7f7"
+              >
+                Owner Name
+              </th>
+              <th
+                style="background-color: rgba(0, 133, 159, 1); color: #faf7f7"
+              >
+                House Name
+              </th>
+              <th
+                style="background-color: rgba(0, 133, 159, 1); color: #faf7f7"
+              >
+                Agreement Type
+              </th>
+              <th
+                style="background-color: rgba(0, 133, 159, 1); color: #faf7f7"
+              >
+                Monthly Rent
+              </th>
+              <th
+                style="background-color: rgba(0, 133, 159, 1); color: #faf7f7"
+              >
+                Agreement Period
+              </th>
+              <th
+                style="background-color: rgba(0, 133, 159, 1); color: #faf7f7"
+              >
+                Agreement Upload
+              </th>
+              <th
+                style="background-color: rgba(0, 133, 159, 1); color: #faf7f7"
+              >
+                Start Date
+              </th>
+              <th
+                style="background-color: rgba(0, 133, 159, 1); color: #faf7f7"
+              >
+                End Date
+              </th>
+              <th
+                style="background-color: rgba(0, 133, 159, 1); color: #faf7f7"
+              >
+                Electric Bill
+              </th>
+              <th
+                style="background-color: rgba(0, 133, 159, 1); color: #faf7f7"
+              >
+                Water Bill
+              </th>
+              <th
+                style="background-color: rgba(0, 133, 159, 1); color: #faf7f7"
+              >
+                Created Date
+              </th>
+              <th
+                style="background-color: rgba(0, 133, 159, 1); color: #faf7f7"
+              >
+                Action
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="
+                let item of tableData
+                  | paginate
+                    : {
+                        itemsPerPage: tableSize,
+                        currentPage: page,
+                        totalItems: count
+                      };
+                let i = index
+              "
+            >
+              <td>{{ i + 1 }}</td>
+              <td>{{ item.stateName }}</td>
+              <td>{{ item.locationName }}</td>
+              <td>{{ item.plantName }}</td>
+              <td>{{ item.ownerName }}</td>
+              <td>{{ item.houseName }}</td>
+              <td>{{ item.aggreTypeName }}</td>
+              <td>{{ item.rent }}</td>
+              <td>{{ item.rentPeriod }}</td>
+              <!-- <td>{{ item.aggreUpload }}</td> -->
+              <td>
+                <div style="display: inline-flex">
+                  <button
+                    class="btn btn-sm mx-2"
+                    style="background-color: rgb(22, 133, 236); color: #faf7f7"
+                    (click)="downloadImage(item.aggreUpload)"
+                  >
+                    <i class="fa fa-download"></i>
+                  </button>
+                </div>
+              </td>
+              <td>{{ item.rentStartDt | date : "MM/dd/yyyy" }}</td>
+              <td>{{ item.rentEndDt | date : "MM/dd/yyyy" }}</td>
+              <td>{{ item.withElectricBill }}</td>
+              <td>{{ item.withWaterBill }}</td>
+              <td>{{ item.createdDate }}</td>
+              <td>
+                <div style="display: inline-flex">
+                  <button
+                    class="btn btn-sm mx-2"
+                    (click)="
+                      editAgreement(
+                        item.aggreId,
+                        item.stateId,
+                        item.locationId,
+                        item.plantId,
+                        item.ownerId,
+                        item.houseId,
+                        item.aggreTypeId,
+                        item.rent,
+                        item.rentPeriod,
+                        item.rentStartDt,
+                        item.rentEndDt,
+                        item.withElectricBill,
+                        item.withWaterBill,
+                        item.aggreUpload
+                      )
+                    "
+                    style="background-color: rgb(22, 133, 236); color: #faf7f7"
+                  >
+                    <i class="fa-solid fa-edit"></i>
+                  </button>
+                  <button
+                    class="btn btn-danger btn-sm mx-2"
+                    (click)="deleteAgreement(item.aggreId)"
+                  >
+                    <i class="fa-solid fa-trash-alt"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
+    <br />
+    <div class="d-flex justify-content-end">
+      <pagination-controls
+        previousLabel="Prev"
+        nextLabel="Next"
+        (pageChange)="onTableDataChange($event)"
+      >
+      </pagination-controls>
+    </div>
+  </div>
 </section>
 <app-footer></app-footer>

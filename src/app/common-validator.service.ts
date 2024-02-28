@@ -39,7 +39,7 @@ export const CommonValidatorService = {
   },
 
   noSpaceValidator(control: AbstractControl): ValidationErrors | null {
-    debugger;
+    //debugger;
     const isWhitespace = (control && control?.value && control?.value.toString() || '').trim().length === 0;
     const isValid = !isWhitespace;
     if(!isValid){  
@@ -48,7 +48,7 @@ export const CommonValidatorService = {
     return null;
   },
    noSpaceValidatorWithoutRequired(control: AbstractControl): ValidationErrors | null {
-    debugger;
+    //debugger;
     const isWhitespace = control?.value != '' && (control && control?.value && control?.value.toString() || '').trim().length === 0;
     const isValid = !isWhitespace;
     if(!isValid){  
@@ -64,14 +64,14 @@ export const CommonValidatorService = {
     return null;
   },
   phonenovalid(control: AbstractControl): ValidationErrors | null {
-    debugger;
+    //debugger;
     if (control.value === '0000000000') {
       return { 'phonenoformat': true };
     }
     return null;
   },
   ifsccodevalid(control: AbstractControl): ValidationErrors | null {
-    debugger;
+    //debugger;
     const ifsccoderegx = /^[A-Z]{4}0[0-9]{6}$/;
     if(!ifsccoderegx.test(control.value)) {
       return { 'ifscformat': true };

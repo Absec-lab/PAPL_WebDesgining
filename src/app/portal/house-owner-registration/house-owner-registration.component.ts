@@ -806,8 +806,27 @@ export class HouseOwnerRegistrationComponent {
     }
     return vStss;
   }
+  //   downloadImage(url: string): void {
+
+  //     const encodedUrl = btoa(url);
+
+  //     console.log(encodedUrl, "encodedUrlencodedUrl")
+
+  //     console.log(url,"imageUrl")
+  //     fetch(url)
+  //         .then(response => response.blob())
+  //         .then(blob => {
+  //             const link = document.createElement('a');
+  //             link.href = URL.createObjectURL(blob);
+  //             link.download = 'downloaded_file';  // Set the desired file name
+  //             link.click();
+  //             URL.revokeObjectURL(link.href);  // Clean up resources
+  //         })
+  //         .catch(error => console.error('Error fetching image:', error));
+  // }
+
   downloadBase64File(base64: any, fileName: any) {
-    const src = `data:text/csv;base64,${base64}`;
+    const src = `data:image/png;base64,${base64}`;
     const link = document.createElement("a");
     link.href = src;
     link.download = fileName;
@@ -817,14 +836,32 @@ export class HouseOwnerRegistrationComponent {
   downloadImage(url: string): void {
     // Encode the URL
     const encodedUrl = btoa(url);
+
     console.log(encodedUrl, "encodedUrl");
+
     const apiUrl = `http://206.189.142.35:9090/PAPL/downloadFile/${encodedUrl}`;
+
+    console.log(apiUrl, "apiUrl");
+
     this.http.get(apiUrl).subscribe(
       (base64EncodedData: any) => {
+        console.log(base64EncodedData, "base64EncodedData");
         this.downloadBase64File(
           base64EncodedData.document,
           base64EncodedData.fileName
         );
+        // const jsonObject = JSON.parse(base64EncodedData);
+        // const documentValue = jsonObject.document;
+
+        // const decodedData = atob(documentValue);
+        // console.log(decodedData);
+
+        // const blob = new Blob([decodedData], { type: "image/jpeg" });
+
+        // // const link = document.createElement('a');
+        // // link.href = URL.createObjectURL(blob);
+        // // link.download = jsonObject.fileName;
+        // // link.click();
       },
       (error) => {
         // Handle errors

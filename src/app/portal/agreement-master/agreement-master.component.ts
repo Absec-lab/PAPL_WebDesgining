@@ -456,7 +456,7 @@ export class AgreementMasterComponent {
     }
   }
   downloadBase64File(base64: any, fileName: any) {
-    const src = `data:text/csv;base64,${base64}`;
+    const src = `data:image/png;base64,${base64}`;
     const link = document.createElement("a");
     link.href = src;
     link.download = fileName;

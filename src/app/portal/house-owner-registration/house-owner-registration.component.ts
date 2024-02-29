@@ -291,8 +291,8 @@ export class HouseOwnerRegistrationComponent {
   get legalheirarray(): any {
     return this.legalheirForm.get("legal") as FormArray;
   }
-
-  addlegaleirform() {
+  bankActive: any[] = [];
+  addlegaleirform(index?: any) {
     const legalform = this.formBuilder.group({
       prevOwonerId: [this.houseRegistrationForm.value.ownerId],
       ownerName: [
@@ -335,7 +335,11 @@ export class HouseOwnerRegistrationComponent {
     });
     console.log(typeof this.noOfLegalParties);
     console.log(this.noOfLegalParties);
-    this.legalheirarray.insert(0, legalform);
+    console.log(this.legalheirarray.length);
+    console.log(this.legalheirarray.value);
+    this.bankActive[index] = this.legalheirarray.value?.[index]?.paymtMode;
+    console.log("bankActive", this.bankActive);
+    this.legalheirarray.insert(this.legalheirarray.length, legalform);
     if (this.legalheirarray.length >= parseInt(this.noOfLegalParties)) {
       this.isDisableAddButton = false;
     } else {
@@ -1112,9 +1116,17 @@ export class HouseOwnerRegistrationComponent {
   legalheading = false;
   legalbank = false;
   legalupi = false;
+  enableDataForm: any = [
+    {
+      legalheading: false,
+      legalbank: false,
+      legalupi: false,
+    },
+  ];
+
   paymentmode(event: any, userType: string, index?: any) {
     console.log("image");
-    debugger;
+    console.log("index userType", index,userType);
     let value: any;
     //console.log(event, userType, typeof(event))
     if (typeof event === "number" || typeof event === "string") {
@@ -1242,6 +1254,12 @@ export class HouseOwnerRegistrationComponent {
     } else if (userType == "legal") {
       // For Bank AC
       if (value == "1") {
+        this.enableDataForm[index] = {
+          legalheading: true,
+          legalbank: true,
+          legalupi: false,
+        };
+        console.log(this.legalheirarray.controls[index].get("paymtMode").value);
         this.legalheading = true;
         this.legalbank = true;
         this.legalupi = false;
@@ -1306,6 +1324,11 @@ export class HouseOwnerRegistrationComponent {
       }
       // For Cash
       else if (value == "2") {
+        this.enableDataForm[index] = {
+          legalheading: false,
+          legalbank: false,
+          legalupi: false,
+        };
         this.legalheading = false;
         this.legalbank = false;
         this.legalupi = false;
@@ -1357,6 +1380,11 @@ export class HouseOwnerRegistrationComponent {
           .get("quarCodeDoc")
           ?.updateValueAndValidity();
       } else {
+        this.enableDataForm[index] = {
+          legalheading: true,
+          legalbank: false,
+          legalupi: true,
+        };
         this.legalheading = true;
         this.legalbank = false;
         this.legalupi = true;

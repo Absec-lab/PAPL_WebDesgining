@@ -1407,7 +1407,7 @@
                   </div>
                 </div>
 
-                <ng-container *ngIf="legalheading">
+                <ng-container *ngIf="enableDataForm[i]?.legalheading">
                   <h5 class="mt-4 text-secondary">
                     Bank Account Details of Legaal Heir
                   </h5>
@@ -1415,7 +1415,7 @@
                   <!-- cash -->
                   <div class="cash row pt-4"></div>
                   <!-- bank-ac -->
-                  <div class="bank-ac row pt-4" *ngIf="legalbank">
+                  <div class="bank-ac row pt-4" *ngIf="enableDataForm[i].legalbank">
                     <div class="col-sm-6 col-md-4">
                       <div class="form-group">
                         <label for="state" class="form-label"
@@ -1621,7 +1621,7 @@
                     </div>
                   </div>
                   <!-- upi -->
-                  <div class="row pt-4" *ngIf="legalupi">
+                  <div class="row pt-4" *ngIf="enableDataForm[i].legalupi">
                     <div class="col-sm-6 col-md-4">
                       <div class="form-group">
                         <label for="state" class="form-label"

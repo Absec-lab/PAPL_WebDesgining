@@ -78,6 +78,8 @@ export class AgreementMasterComponent {
   allState: any = [];
   allSbu: any = [];
   allPlant: any = [];
+  aggreAddr: any;
+  agreementDocPrefix: any;
   allOwner: any = [];
   getAllAgreementTypeData: any = [];
   aggreState: any = 0;
@@ -227,7 +229,7 @@ export class AgreementMasterComponent {
       .get("PAPL/get/House/by/{ownerId}?ownerId=" + OwnerId)
       .subscribe((res) => {
         console.log(res);
-        this.getallHouse = res;
+        this.getallHouse = res.filter((t: any) => t.isActive);
         this.ngxLoader.stop();
       });
   }
@@ -420,11 +422,44 @@ export class AgreementMasterComponent {
     this.getHouse(ownerId);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
+  onImageChange(event: any): void {
+    const inputElement = event.target as HTMLInputElement;
+
+    if (inputElement.files && inputElement.files.length > 0) {
+      const file = inputElement.files[0];
+
+      if (file) {
+        const reader = new FileReader();
+
+        reader.onload = (e) => {
+          const imageDataUrl = e.target?.result as string;
+          const base64Content = imageDataUrl.split(",")[1];
+          // Determine file extension based on file type
+          console.log(file);
+          console.log(file.name.slice(file.name.lastIndexOf(".") + 1));
+
+          // const fileExtension = this.getFileExtension(file.type);
+          const fileExtension = file.name.slice(file.name.lastIndexOf(".") + 1);
+          const extn = "." + fileExtension;
+          this.aggreAddr = base64Content;
+          this.agreementDocPrefix = extn;
+        };
+
+        if (file.type.startsWith("image/") || file.type === "application/pdf") {
+          reader.readAsDataURL(file);
+        } else {
+          console.error(
+            "Invalid file type. Please select an image or PDF file."
+          );
+        }
+      }
+    }
+  }
   saveAggreement() {
     let vSts = this.validateData();
     if (vSts) {
       let param = {
-        aggreAddr: "string",
+        agreementDoc: this.aggreAddr,
         aggreId: null,
         agreementType: {
           aggreTypeId: this.aggreAggrementType,
@@ -448,6 +483,7 @@ export class AgreementMasterComponent {
         state: {
           stateId: this.aggreState,
         },
+        agreementDocPrefix: this.agreementDocPrefix,
         withElectricBill: this.aggreElectricBill,
         withWaterBill: this.aggreWaterBill,
       };

@@ -21,16 +21,16 @@ import {
   PincodeDropdownList,
 } from "src/app/common/model/dropdown-list.model";
 import { ExcelService } from "../serviceapi/excel.service";
-import * as FileSaver from 'file-saver'
-import jsPDF from 'jspdf'; 
-import autoTable from 'jspdf-autotable'; 
+import * as FileSaver from "file-saver";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 @Component({
   selector: "app-home-owner-registration",
   templateUrl: "./house-owner-registration.component.html",
   styleUrls: ["../../common.css", "./house-owner-registration.component.css"],
 })
 export class HouseOwnerRegistrationComponent {
-  selectedProducts:any[]
+  selectedProducts: any[];
   dtOptions: DataTables.Settings = {};
   allData: any = [];
   tableData: any = [];
@@ -65,7 +65,7 @@ export class HouseOwnerRegistrationComponent {
   uploadGovtIdProofFileName: string = "";
   uploadQrCodeFileName: string = "";
   uploadPANFileName: string = "";
-  
+
   cols: any[];
 
   exportColumns: any[];
@@ -83,13 +83,20 @@ export class HouseOwnerRegistrationComponent {
     this.getAllOwner();
     this.getAllStateList();
     this.cols = [
-      { field: 'ownerName', header: 'ownerName', customExportHeader: 'Product Code' },
-      { field: 'phoneNo', header: 'phoneNo' },
-      { field: 'address1', header: 'address1' },
-      { field: 'idProof', header: 'idProof' }
-  ];
+      {
+        field: "ownerName",
+        header: "ownerName",
+        customExportHeader: "Product Code",
+      },
+      { field: "phoneNo", header: "phoneNo" },
+      { field: "address1", header: "address1" },
+      { field: "idProof", header: "idProof" },
+    ];
 
-  this.exportColumns = this.cols.map(col => ({title: col.header, dataKey: col.field}));
+    this.exportColumns = this.cols.map((col) => ({
+      title: col.header,
+      dataKey: col.field,
+    }));
     this.houseRegistrationForm = this.formBuilder.group({
       ownerId: [""],
       ownerName: [
@@ -139,42 +146,50 @@ export class HouseOwnerRegistrationComponent {
     });
   }
   exportExcel() {
-    import("xlsx").then(xlsx => {
-        const worksheet = xlsx.utils.json_to_sheet(this.tableData);
-        const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
-        const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
-        this.saveAsExcelFile(excelBuffer, "houser-owner");
+    import("xlsx").then((xlsx) => {
+      const worksheet = xlsx.utils.json_to_sheet(this.tableData);
+      const workbook = { Sheets: { data: worksheet }, SheetNames: ["data"] };
+      const excelBuffer: any = xlsx.write(workbook, {
+        bookType: "xlsx",
+        type: "array",
+      });
+      this.saveAsExcelFile(excelBuffer, "houser-owner");
     });
-}
+  }
   saveAsExcelFile(buffer: any, fileName: string): void {
-    let EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-    let EXCEL_EXTENSION = '.xlsx';
+    let EXCEL_TYPE =
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+    let EXCEL_EXTENSION = ".xlsx";
     const data: Blob = new Blob([buffer], {
-        type: EXCEL_TYPE
+      type: EXCEL_TYPE,
     });
-    FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
-}
-exportPdf() {
-  const head = [['ownerName', 'phoneNo', 'address1']];
-  const doc = new jsPDF('l', 'mm', 'a4');
-  autoTable(doc, { 
-    head: head, 
-    body: this.toPdfFormat(), 
-    didDrawCell: (data) => { }, 
-});
-  doc.save('house-owner.pdf');
-}
-toPdfFormat() { 
-  let data:any = []; 
-  for (var i = 0; i < this.tableData.length; i++) { 
-      data.push([ 
-          this.tableData[i].ownerName, 
-          this.tableData[i].phoneNo, 
-          this.tableData[i].address1, 
-      ]); 
-  } 
-  return data; 
-} 
+    FileSaver.saveAs(
+      data,
+      fileName + "_export_" + new Date().getTime() + EXCEL_EXTENSION
+    );
+  }
+  exportPdf() {
+    const head = [["SL no.", "ownerName", "phoneNo", "address"]];
+    const doc = new jsPDF("l", "mm", "a4");
+    autoTable(doc, {
+      head: head,
+      body: this.toPdfFormat(),
+      didDrawCell: (data) => {},
+    });
+    doc.save("house-owner.pdf");
+  }
+  toPdfFormat() {
+    let data: any = [];
+    for (var i = 0; i < this.tableData.length; i++) {
+      data.push([
+        i + 1,
+        this.tableData[i].ownerName,
+        this.tableData[i].phoneNo,
+        this.tableData[i].address1,
+      ]);
+    }
+    return data;
+  }
 
   trimString(s: any) {
     var l = 0,
@@ -197,14 +212,15 @@ toPdfFormat() {
     return false;
   }
   searchGlobal(searchString: any) {
-    let toSearch =searchString.value// this.trimString(); // trim it
+    let toSearch = searchString.value; // this.trimString(); // trim it
     if (toSearch.length) {
       var results: any = this.allData.filter((o: any) => {
         return Object.keys(o).some((k: any) => {
           if (o[k]) {
-            return o[k].toString().toLowerCase()?.includes(
-              toSearch.toLowerCase()
-            );
+            return o[k]
+              .toString()
+              .toLowerCase()
+              ?.includes(toSearch.toLowerCase());
           }
         });
       });

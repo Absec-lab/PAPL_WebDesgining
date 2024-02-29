@@ -19,6 +19,10 @@ import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { NonZeroOnlyInputDirective } from "./portaldirectives/non-zero-input.directive";
 import { ExcelService } from "./serviceapi/excel.service";
 import { DataTablesModule } from "angular-datatables";
+import { TableModule } from 'primeng/table';
+import { ButtonModule } from "primeng/button"
+import { TooltipModule } from 'primeng/tooltip';
+import { RippleModule } from 'primeng/ripple';
 @NgModule({
   declarations: [
     HeaderComponent,
@@ -41,7 +45,11 @@ import { DataTablesModule } from "angular-datatables";
     ReactiveFormsModule,
     NgxPaginationModule,
     MatAutocompleteModule,
-    DataTablesModule
+    DataTablesModule,
+    TableModule,
+    ButtonModule,
+    TooltipModule,
+    RippleModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

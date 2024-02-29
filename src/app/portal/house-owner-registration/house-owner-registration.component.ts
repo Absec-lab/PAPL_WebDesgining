@@ -21,12 +21,16 @@ import {
   PincodeDropdownList,
 } from "src/app/common/model/dropdown-list.model";
 import { ExcelService } from "../serviceapi/excel.service";
+import * as FileSaver from 'file-saver'
+import jsPDF from 'jspdf'; 
+import autoTable from 'jspdf-autotable'; 
 @Component({
   selector: "app-home-owner-registration",
   templateUrl: "./house-owner-registration.component.html",
   styleUrls: ["../../common.css", "./house-owner-registration.component.css"],
 })
 export class HouseOwnerRegistrationComponent {
+  selectedProducts:any[]
   dtOptions: DataTables.Settings = {};
   allData: any = [];
   tableData: any = [];
@@ -61,6 +65,10 @@ export class HouseOwnerRegistrationComponent {
   uploadGovtIdProofFileName: string = "";
   uploadQrCodeFileName: string = "";
   uploadPANFileName: string = "";
+  
+  cols: any[];
+
+  exportColumns: any[];
   constructor(
     private http: HttpClient,
     private ngxLoader: NgxUiLoaderService,
@@ -74,7 +82,14 @@ export class HouseOwnerRegistrationComponent {
   ngOnInit(): void {
     this.getAllOwner();
     this.getAllStateList();
+    this.cols = [
+      { field: 'ownerName', header: 'ownerName', customExportHeader: 'Product Code' },
+      { field: 'phoneNo', header: 'phoneNo' },
+      { field: 'address1', header: 'address1' },
+      { field: 'idProof', header: 'idProof' }
+  ];
 
+  this.exportColumns = this.cols.map(col => ({title: col.header, dataKey: col.field}));
     this.houseRegistrationForm = this.formBuilder.group({
       ownerId: [""],
       ownerName: [
@@ -123,6 +138,32 @@ export class HouseOwnerRegistrationComponent {
       legal: this.formBuilder.array([]),
     });
   }
+  exportExcel() {
+    import("xlsx").then(xlsx => {
+        const worksheet = xlsx.utils.json_to_sheet(this.tableData);
+        const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+        const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
+        this.saveAsExcelFile(excelBuffer, "houser-owner");
+    });
+}
+  saveAsExcelFile(buffer: any, fileName: string): void {
+    let EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+    let EXCEL_EXTENSION = '.xlsx';
+    const data: Blob = new Blob([buffer], {
+        type: EXCEL_TYPE
+    });
+    FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+}
+exportPdf() {
+  // import("jspdf").then(jsPDF => {
+  //     import("jspdf-autotable").then(x => {
+     
+  //     })
+  // })
+  const doc = new jsPDF('l', 'mm', 'a4');
+  autoTable(this.exportColumns, this.tableData);
+  doc.save('house-owner.pdf');
+}
   trimString(s: any) {
     var l = 0,
       r = s.length - 1;
@@ -144,15 +185,14 @@ export class HouseOwnerRegistrationComponent {
     return false;
   }
   searchGlobal(searchString: any) {
-    let toSearch = this.trimString(searchString.value); // trim it
+    let toSearch =searchString.value// this.trimString(); // trim it
     if (toSearch.length) {
       var results: any = this.allData.filter((o: any) => {
         return Object.keys(o).some((k: any) => {
           if (o[k]) {
-            return o[k]
-              .toString()
-              .toLowerCase()
-              ?.includes(toSearch.toLowerCase());
+            return o[k].toString().toLowerCase()?.includes(
+              toSearch.toLowerCase()
+            );
           }
         });
       });
@@ -1390,22 +1430,24 @@ export class HouseOwnerRegistrationComponent {
         delete element[e];
       });
     });
-    let paymentMode=['Bank','Cash','UPI','UPI','UPI','UPI','UPI']
-    let statusDetails=['Active']
+    let paymentMode = ["Bank", "Cash", "UPI", "UPI", "UPI", "UPI", "UPI"];
+    let statusDetails = ["Active"];
     let requiredArray = this.duplicateTableData.map((t: any) => {
       return {
-        "State":t.stateName?t.stateName:"",
-        "House Owner Name":t.ownerName?t.ownerName:"",
-        "Phone no":t.phoneNo?t.phoneNo:"",
-        "Address":t.address1?t.address1:"",
-        "Govt ID	":t.idProof?t.idProof:"",
-        "Account Number	":t.bankAccountNo?t.bankAccountNo:"",
-        "IFSC Code":t.ifscCode?t.ifscCode:"",
-        "PAN Card	":t.panNo?t.panNo:"",
-        "Payment Mode	":paymentMode[t.paymtMode]?paymentMode[t.paymtMode]:"",
-        "UPI Id/linked Mob. No.	":t.phoneNo?t.phoneNo:"",
-        "Status":t.isActive?t.isActive===1?'Active':'Inactive':"",
-        "Start Date":t.createdDate?t.createdDate:"",
+        State: t.stateName ? t.stateName : "",
+        "House Owner Name": t.ownerName ? t.ownerName : "",
+        "Phone no": t.phoneNo ? t.phoneNo : "",
+        Address: t.address1 ? t.address1 : "",
+        "Govt ID	": t.idProof ? t.idProof : "",
+        "Account Number	": t.bankAccountNo ? t.bankAccountNo : "",
+        "IFSC Code": t.ifscCode ? t.ifscCode : "",
+        "PAN Card	": t.panNo ? t.panNo : "",
+        "Payment Mode	": paymentMode[t.paymtMode]
+          ? paymentMode[t.paymtMode]
+          : "",
+        "UPI Id/linked Mob. No.	": t.phoneNo ? t.phoneNo : "",
+        Status: t.isActive ? (t.isActive === 1 ? "Active" : "Inactive") : "",
+        "Start Date": t.createdDate ? t.createdDate : "",
       };
     });
     this.excelService.exportAsExcelFile(

@@ -10,6 +10,10 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DataTablesModule } from "angular-datatables";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TableModule } from 'primeng/table';
+import { ButtonModule } from "primeng/button"
+import { TooltipModule } from 'primeng/tooltip';
+import { RippleModule } from 'primeng/ripple';
 @NgModule({
   declarations: [
     AppComponent
@@ -25,7 +29,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FormsModule,
     ReactiveFormsModule,
     DataTablesModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    TableModule,
+    ButtonModule,
+    TooltipModule,
+    RippleModule
   ],
   providers: [],
   bootstrap: [AppComponent]

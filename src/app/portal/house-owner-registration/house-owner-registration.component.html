@@ -1828,17 +1828,16 @@
         >
           <ng-template pTemplate="caption">
             <div class="d-flex align-items-center justify-content-between">
-              <div>
-                <!-- <button
-                  type="button"
-                  pButton
-                  pRipple
-                  icon="pi pi-file-excel"
-                  (click)="exportExcel()"
-                  class="p-button-success mr-2"
-                  pTooltip="XLS"
-                  tooltipPosition="bottom"
-                ></button> -->
+              <div class="d-flex">
+                <div class="mx-2">
+                  <button
+                    class="btn btn-primary px-3 py-2"
+                    style="font-size: 13px"
+                    (click)="exportPdf()"
+                  >
+                    Export To pdf
+                  </button>
+                </div>
                 <div class="">
                   <button
                     class="btn btn-primary px-3 py-2"

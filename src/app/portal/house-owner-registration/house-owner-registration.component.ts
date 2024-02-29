@@ -155,15 +155,27 @@ export class HouseOwnerRegistrationComponent {
     FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
 }
 exportPdf() {
-  // import("jspdf").then(jsPDF => {
-  //     import("jspdf-autotable").then(x => {
-     
-  //     })
-  // })
+  const head = [['ownerName', 'phoneNo', 'address1']];
   const doc = new jsPDF('l', 'mm', 'a4');
-  autoTable(this.exportColumns, this.tableData);
+  autoTable(doc, { 
+    head: head, 
+    body: this.toPdfFormat(), 
+    didDrawCell: (data) => { }, 
+});
   doc.save('house-owner.pdf');
 }
+toPdfFormat() { 
+  let data:any = []; 
+  for (var i = 0; i < this.tableData.length; i++) { 
+      data.push([ 
+          this.tableData[i].ownerName, 
+          this.tableData[i].phoneNo, 
+          this.tableData[i].address1, 
+      ]); 
+  } 
+  return data; 
+} 
+
   trimString(s: any) {
     var l = 0,
       r = s.length - 1;

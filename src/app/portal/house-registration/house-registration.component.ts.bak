@@ -314,7 +314,7 @@ export class HouseRegistrationComponent implements OnInit {
 
 
   validateData() {
-    debugger
+    //debugger
     const formControls = [
       { control: this.houseRegistrationForm.get('ownerName'), name: "Owner Name" },
       { control: this.houseRegistrationForm.get('houseName'), name: "House Name" },
@@ -668,7 +668,7 @@ export class HouseRegistrationComponent implements OnInit {
     alert('Deleted Successfully!!');
   }
   exportAsXLSX(): void {
-    debugger;
+    //debugger;
     let removeColumnData = ['aggreTypeCode', 'aggreTypeId', 'createdBy', 'isActive', 'updatedBy', 'updatedDate'];
     let Heading = [
       ["End Date", "Agreement Type", "Start Date", "Created Date", "Description"]

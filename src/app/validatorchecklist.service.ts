@@ -545,7 +545,7 @@ export class ValidatorchecklistService {
     }
 
     return true;
-    // debugger
+    // //debugger
     // var numPattern = new RegExp(/^[0-9a-zA-Z @.-/,]*$/);
     // var txtVal = event.target.value;
     // let space = txtVal.charAt(0);

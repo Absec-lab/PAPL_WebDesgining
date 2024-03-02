@@ -13,7 +13,7 @@ export class ExcelService {
   constructor() {}
 
   public exportAsExcelFile(json: any[], excelFileName: string,heading: string[][]): void {
-    debugger;
+    //debugger;
     const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(json,{skipHeader:true});
      XLSX.utils.sheet_add_json(worksheet,json,{skipHeader:true , origin: 'A2'});
      XLSX.utils.sheet_add_aoa(worksheet, heading);

@@ -662,7 +662,7 @@ disableElectricAddButton:boolean=false;
 
   //  });
   exportAsXLSX(): void {
-    debugger;
+    //debugger;
     let removeColumnData = [
       "unitId",
       "houseId",

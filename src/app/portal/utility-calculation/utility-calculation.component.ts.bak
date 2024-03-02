@@ -643,7 +643,7 @@ export class UtilityCalculationComponent implements OnInit {
 
   //  });
   exportAsXLSX(): void {
-    debugger;
+    //debugger;
     let removeColumnData = [
       "unitId",
       "houseId",

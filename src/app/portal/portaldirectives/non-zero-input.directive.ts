@@ -7,7 +7,7 @@ export class NonZeroOnlyInputDirective {
   constructor(private _el: ElementRef) { }
 
   @HostListener('input', ['$event']) onInputChange(event) {
-    debugger;
+    //debugger;
       const initalValue = this._el.nativeElement.value;
       if(parseInt(initalValue) > 0) {
         this._el.nativeElement.value = initalValue;

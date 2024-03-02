@@ -340,7 +340,7 @@ export class AgreementTypeMasterComponent {
     window.scrollTo(0, 0);
   }
   exportAsXLSX(): void {
-    debugger;
+    //debugger;
     let removeColumnData = [
       "aggreTypeCode",
       "aggreTypeId",

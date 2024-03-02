@@ -741,7 +741,7 @@ export class ValidatorchklistService {
     }
   }
   allowNumericDigitsWithoutZero(e: any) {	
-    debugger;
+    //debugger;
     let isValidEventValue = (e.target.value !== undefined || e.target.value.length === 1) 
     && (e.keyCode === 48)
 		if(/\D/g.test(e.target.value)) {

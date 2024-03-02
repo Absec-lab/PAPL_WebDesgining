@@ -15,6 +15,9 @@ import { ExcelService } from "../serviceapi/excel.service";
 import { MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
 import { startWith, map } from "rxjs/operators";
 import { Observable } from "rxjs";
+import autoTable from "jspdf-autotable";
+import jsPDF from "jspdf";
+import * as FileSaver from "file-saver";
 
 @Component({
   selector: "app-home-registration",
@@ -103,17 +106,16 @@ export class HouseRegistrationComponent implements OnInit {
 
   enableStateAddArrayOnclick() {
     Swal.fire({
-      title: 'Do you want to proceed ?',
-      icon: 'info',
-      confirmButtonText: 'Yes',
-      cancelButtonText:"Cancel"
+      title: "Do you want to proceed ?",
+      icon: "info",
+      confirmButtonText: "Yes",
+      cancelButtonText: "Cancel",
     }).then((result) => {
-      if (result['isConfirmed']){
+      if (result["isConfirmed"]) {
         this.enableAddStateArray = true;
         // Put your function here
       }
-    })
-   
+    });
   }
 
   trimString(s: any) {
@@ -293,6 +295,12 @@ export class HouseRegistrationComponent implements OnInit {
       mapId: ["", [Validators.required]],
       houseId: ["", [Validators.required]],
     });
+    if (index >= 0 && this.stateArray.controls[0]?.value?.stateId) {
+      this.onAddNewStateArray(
+        this.stateArray.controls[0]?.value?.stateId,
+        index
+      );
+    }
 
     // Set validators for each control
     Object.keys(stateGroup.controls).forEach((controlName) => {
@@ -357,13 +365,22 @@ export class HouseRegistrationComponent implements OnInit {
     });
   }
 
+  onAddNewStateArray(selectedStateId:any,index:any){
+    this.portalService
+    .get(`PAPL/get/sbu/by/${selectedStateId}`)
+    .pipe(takeUntil(this.destroy$))
+    .subscribe((res) => {
+      this.activeSBU[index+1] = res;
+      this.ngxLoader.stop();
+    });
+  }
   // Update your component code
   getSubonStateChange(event: any, index: number) {
     //this.activeSBU = [];
-    if (index > 0 && this.stateArray.controls[0]?.value?.stateId) {
-      return;
-    }
-    const selectedStateId = event.target.value;
+    // if (index <= 0 && !this.stateArray.controls[0]?.value?.stateId) {
+    //   return;
+    // }
+    const selectedStateId = event?.target?.value ? event?.target?.value : event;
     this.stateId = selectedStateId;
 
     // Use the index to target the specific form control
@@ -405,7 +422,7 @@ export class HouseRegistrationComponent implements OnInit {
   }
 
   validateData() {
-    debugger;
+    //debugger;
     const formControls = [
       {
         control: this.houseRegistrationForm.get("ownerName"),
@@ -765,7 +782,7 @@ export class HouseRegistrationComponent implements OnInit {
     alert("Deleted Successfully!!");
   }
   exportAsXLSX(): void {
-    debugger;
+    //debugger;
     let removeColumnData = [
       "aggreTypeCode",
       "aggreTypeId",
@@ -801,6 +818,51 @@ export class HouseRegistrationComponent implements OnInit {
       requiredArray,
       "agreementtype",
       Heading
+    );
+  }
+  exportPdf() {
+    const head = [["SL no.", "ownerName", "phoneNo", "address"]];
+    const doc = new jsPDF("l", "mm", "a4");
+    autoTable(doc, {
+      head: head,
+      body: this.toPdfFormat(),
+      didDrawCell: (data) => {},
+    });
+    doc.save("house-owner.pdf");
+  }
+  toPdfFormat() {
+    let data: any = [];
+    for (var i = 0; i < this.tableData.length; i++) {
+      data.push([
+        i + 1,
+        this.tableData[i].ownerName,
+        this.tableData[i].phoneNo,
+        this.tableData[i].address1,
+      ]);
+    }
+    return data;
+  }
+  exportExcel() {
+    import("xlsx").then((xlsx) => {
+      const worksheet = xlsx.utils.json_to_sheet(this.tableData);
+      const workbook = { Sheets: { data: worksheet }, SheetNames: ["data"] };
+      const excelBuffer: any = xlsx.write(workbook, {
+        bookType: "xlsx",
+        type: "array",
+      });
+      this.saveAsExcelFile(excelBuffer, "houser-owner");
+    });
+  }
+  saveAsExcelFile(buffer: any, fileName: string): void {
+    let EXCEL_TYPE =
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+    let EXCEL_EXTENSION = ".xlsx";
+    const data: Blob = new Blob([buffer], {
+      type: EXCEL_TYPE,
+    });
+    FileSaver.saveAs(
+      data,
+      fileName + "_export_" + new Date().getTime() + EXCEL_EXTENSION
     );
   }
 }

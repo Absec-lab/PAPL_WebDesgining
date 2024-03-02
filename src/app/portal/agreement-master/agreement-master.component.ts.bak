@@ -650,7 +650,7 @@ cancelAgreement() {
     this.aggreEndDate = formattedDate
   }
   exportAsXLSX(): void {
-    debugger;
+    //debugger;
     let removeColumnData = ['aggreAddr','aggreId','aggreTypeId','houseId','locationId','ownerId','plantId','stateId',''];
     let Heading =[
       [ "Agreement Type","Created Date","House Name","SBU","Owner Name","Plant Name","Montly Rent","End Date","Agreement Period","Start Date","State","Electric Bill","Water Bill"]  

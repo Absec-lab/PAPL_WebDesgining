@@ -230,7 +230,7 @@ export class HouseOwnerRegistrationComponent {
     }
   }
   noOfLegalPartiesChange(event: any) {
-    debugger;
+    //debugger;
     if (this.legalheirarray.length >= parseInt(event.target.value)) {
       this.isDisableAddButton = false;
     } else {
@@ -258,7 +258,7 @@ export class HouseOwnerRegistrationComponent {
     value: string,
     index: number
   ): DistrictDropdownList[] {
-    debugger;
+    //debugger;
     if (value === "" || value === null || value === undefined) {
       this.legalheirarray.controls[index].controls["district"].setValue("");
     }
@@ -271,7 +271,7 @@ export class HouseOwnerRegistrationComponent {
     value: string,
     index: number
   ): PincodeDropdownList[] {
-    debugger;
+    //debugger;
     if (value === "" || value === null || value === undefined) {
       this.legalheirarray.controls[index].controls["pinCode"].setValue("");
     }
@@ -393,7 +393,7 @@ export class HouseOwnerRegistrationComponent {
     });
   }
   getLegalHeirDistirct(event: any, array?: any, index?: any) {
-    debugger;
+    //debugger;
     console.log(event, typeof event);
     let checkEventValue = typeof event;
     if (checkEventValue !== "number" && event?.target?.value === "") {
@@ -440,7 +440,7 @@ export class HouseOwnerRegistrationComponent {
   }
 
   getLegalHeirPinCode(event: any, array?: any, index?: any) {
-    debugger;
+    //debugger;
     let checkEventValue = typeof event;
     if (checkEventValue !== "number" && event?.source?.value === "") {
       //this.pincodeList = [];
@@ -516,7 +516,7 @@ export class HouseOwnerRegistrationComponent {
   arrayDistList: DistrictDropdownList[];
   getDistirct(event: any, array?: any) {
     console.log(event, typeof event);
-    debugger;
+    //debugger;
     let checkEventValue = typeof event;
     if (checkEventValue !== "number" && event?.target?.value === "") {
       //this.allDistictList = [];
@@ -566,7 +566,7 @@ export class HouseOwnerRegistrationComponent {
   pincodeList: PincodeDropdownList[];
   arrayPincode: PincodeDropdownList[];
   getPinCode(event: any, array?: any) {
-    debugger;
+    //debugger;
     let checkEventValue = typeof event;
     if (checkEventValue !== "number" && event?.source?.value === "") {
       //this.pincodeList = [];
@@ -803,7 +803,7 @@ export class HouseOwnerRegistrationComponent {
         quarCodeDoc: this.houseRegistrationForm.value.qrCode,
         quarCodePrifix: this.houseRegistrationForm.value.quarCodePrifix,
       };
-      debugger;
+      //debugger;
       console.log("Data", data);
       this.ngxLoader.start();
       this.portalServ.post("PAPL/addOwners", data).subscribe((res) => {
@@ -836,7 +836,7 @@ export class HouseOwnerRegistrationComponent {
   }
 
   editOwner(item: any) {
-    // debugger;
+    // //debugger;
     console.log(item);
     console.log("idproof", item.idProofAddress);
     let splitAdressArr = item.idProofAddress.split("/");
@@ -1004,10 +1004,10 @@ export class HouseOwnerRegistrationComponent {
   }
 
   updateowner() {
-    debugger;
+    //debugger;
     // let valid = this.validateLegalData();
     // if (valid) {
-    // debugger
+    // //debugger
     // const invalid = [];
     // const controls = this.legalheirarray.controls[0].controls;
     // for (const name in controls) {
@@ -1067,7 +1067,7 @@ export class HouseOwnerRegistrationComponent {
           icon: "success",
           text: "House Owner Update succesfull",
         }).then((result: any) => {
-          debugger;
+          //debugger;
           console.log(res);
           this.getAllOwner();
           this.houseRegistrationForm.reset();
@@ -1126,7 +1126,7 @@ export class HouseOwnerRegistrationComponent {
 
   paymentmode(event: any, userType: string, index?: any) {
     console.log("image");
-    console.log("index userType", index,userType);
+    console.log("index userType", index, userType);
     let value: any;
     //console.log(event, userType, typeof(event))
     if (typeof event === "number" || typeof event === "string") {
@@ -1463,7 +1463,7 @@ export class HouseOwnerRegistrationComponent {
   }
 
   exportAsXLSX(): void {
-    debugger;
+    //debugger;
     let removeColumnData = ["ownerId", "stateId"];
     let Heading = [
       [

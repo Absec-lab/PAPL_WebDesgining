@@ -231,7 +231,7 @@ export class AgreementMasterComponent {
   getHouse(OwnerId: any) {
     this.ngxLoader.start();
     this.portalServ
-      .get("PAPL/get/House/by/{ownerId}?ownerId=" + OwnerId)
+      .get("PAPL/getAll/House/by/{ownerId}?ownerId=" + OwnerId)
       .subscribe((res) => {
         console.log(res);
         this.getallHouse = res.filter((t: any) => t.isActive);
@@ -859,7 +859,7 @@ export class AgreementMasterComponent {
   gethouse() {
     alert("hi");
     this.ngxLoader.start();
-    this.portalServ.get("PAPL/get/House/by/" + 1).subscribe((res) => {
+    this.portalServ.get("PAPL/getAll/House/by/" + 1).subscribe((res) => {
       console.log(res);
       this.allOwner = res;
       this.ngxLoader.stop();

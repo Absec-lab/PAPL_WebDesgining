@@ -203,6 +203,7 @@ export class UnitRegistrationComponent {
       .pipe(takeUntil(this.destroy$))
       .subscribe((res) => {
         this.activeHouse = res;
+        console.log("activeHouse :"+this.activeHouse);
         this.ngxLoader.stop();
       });
   }

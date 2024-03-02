@@ -1,4 +1,6 @@
 import { Component, OnInit } from "@angular/core";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 import {
   FormArray,
   FormBuilder,
@@ -15,8 +17,6 @@ import { ExcelService } from "../serviceapi/excel.service";
 import { MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
 import { startWith, map } from "rxjs/operators";
 import { Observable } from "rxjs";
-import autoTable from "jspdf-autotable";
-import jsPDF from "jspdf";
 import * as FileSaver from "file-saver";
 
 @Component({
@@ -27,6 +27,7 @@ import * as FileSaver from "file-saver";
 export class HouseRegistrationComponent implements OnInit {
   updatebtn: boolean = false;
   enableAddStateArray: boolean = false;
+  selectedProducts: any[];
   tableData: any = [];
   allData: any = [];
   duplicateTableData: any[] = [];
@@ -781,45 +782,8 @@ export class HouseRegistrationComponent implements OnInit {
     // Your button click logic here
     alert("Deleted Successfully!!");
   }
-  exportAsXLSX(): void {
-    //debugger;
-    let removeColumnData = [
-      "aggreTypeCode",
-      "aggreTypeId",
-      "createdBy",
-      "isActive",
-      "updatedBy",
-      "updatedDate",
-    ];
-    let Heading = [
-      [
-        "End Date",
-        "Agreement Type",
-        "Start Date",
-        "Created Date",
-        "Description",
-      ],
-    ];
-    removeColumnData.forEach((e) => {
-      this.duplicateTableData.forEach((element) => {
-        delete element[e];
-      });
-    });
-    let requiredArray = this.duplicateTableData.map((t: any) => {
-      return {
-        "Agreement Type": t.aggreTypeName ? t.aggreTypeName : "",
-        "Created Date": t.createdDate ? t.createdDate : "",
-        "End Date": t.aggreEdDate ? t.aggreEdDate : "",
-        "Start Date": t.aggreStDate ? t.aggreStDate : "",
-        Description: t.description ? t.description : "",
-      };
-    });
-    this.excelService.exportAsExcelFile(
-      requiredArray,
-      "agreementtype",
-      Heading
-    );
-  }
+
+
   exportPdf() {
     const head = [["SL no.", "ownerName", "phoneNo", "address"]];
     const doc = new jsPDF("l", "mm", "a4");

@@ -1,4 +1,6 @@
 import { Component, OnInit } from "@angular/core";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 import {
   FormArray,
   FormBuilder,
@@ -15,6 +17,7 @@ import { ExcelService } from "../serviceapi/excel.service";
 import { MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
 import { startWith, map } from "rxjs/operators";
 import { Observable } from "rxjs";
+import * as FileSaver from "file-saver";
 
 @Component({
   selector: "app-home-registration",
@@ -24,6 +27,7 @@ import { Observable } from "rxjs";
 export class HouseRegistrationComponent implements OnInit {
   updatebtn: boolean = false;
   enableAddStateArray: boolean = false;
+  selectedProducts: any[];
   tableData: any = [];
   allData: any = [];
   duplicateTableData: any[] = [];
@@ -764,6 +768,52 @@ export class HouseRegistrationComponent implements OnInit {
     // Your button click logic here
     alert("Deleted Successfully!!");
   }
+  exportPdf() {
+    const head = [["SL no.", "ownerName", "phoneNo", "address"]];
+    const doc = new jsPDF("l", "mm", "a4");
+    autoTable(doc, {
+      head: head,
+      body: this.toPdfFormat(),
+      didDrawCell: (data) => {},
+    });
+    doc.save("house-owner.pdf");
+  }
+  toPdfFormat() {
+    let data: any = [];
+    for (var i = 0; i < this.allHouseDetails.length; i++) {
+      data.push([
+        i + 1,
+        this.allHouseDetails[i].ownerName,
+        this.allHouseDetails[i].houseName,
+        this.allHouseDetails[i].address,
+      ]);
+    }
+    return data;
+  }
+  exportExcel() {
+    import("xlsx").then((xlsx) => {
+      const worksheet = xlsx.utils.json_to_sheet(this.allHouseDetails);
+      const workbook = { Sheets: { data: worksheet }, SheetNames: ["data"] };
+      const excelBuffer: any = xlsx.write(workbook, {
+        bookType: "xlsx",
+        type: "array",
+      });
+      this.saveAsExcelFile(excelBuffer, "houser-owner");
+    });
+  }
+  saveAsExcelFile(buffer: any, fileName: string): void {
+    let EXCEL_TYPE =
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+    let EXCEL_EXTENSION = ".xlsx";
+    const data: Blob = new Blob([buffer], {
+      type: EXCEL_TYPE,
+    });
+    FileSaver.saveAs(
+      data,
+      fileName + "_export_" + new Date().getTime() + EXCEL_EXTENSION
+    );
+  }
+  
   exportAsXLSX(): void {
     debugger;
     let removeColumnData = [
@@ -797,6 +847,7 @@ export class HouseRegistrationComponent implements OnInit {
         Description: t.description ? t.description : "",
       };
     });
+    
     this.excelService.exportAsExcelFile(
       requiredArray,
       "agreementtype",

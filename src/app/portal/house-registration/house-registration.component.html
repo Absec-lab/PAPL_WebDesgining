@@ -505,43 +505,7 @@
   </form>
 
   <div class="container" style="margin-top: 30px">
-    <div class="d-flex justify-content-between align-items-center mt-5">
-      <div class="">
-        <button
-          class="btn btn-primary px-3 py-2"
-          style="font-size: 13px"
-          (click)="exportAsXLSX()"
-        >
-          Export To Excel
-        </button>
-      </div>
-      <div class="d-flex align-items-center">
-        <div style="display: flex">
-          <input
-            type="text"
-            (input)="searchGlobal($event.target)"
-            class="form-control"
-            placeholder="Search"
-            style="margin-right: 8px"
-          />
-          <div
-            style="
-              display: flex;
-              align-items: center;
-              padding: 0.375rem 0.75rem;
-              font-size: 1rem;
-              line-height: 1.5;
-              color: #495057;
-              background-color: #e9ecef;
-              border: 1px solid #ced4da;
-              border-radius: 0.25rem;
-            "
-          >
-            <i class="fa fa-search"></i>
-          </div>
-        </div>
-      </div>
-    </div>
+   
     <div
       class="container"
       style="
@@ -551,8 +515,74 @@
         margin-top: 10px;
       "
     >
-      <table class="table w-full table-bordered table-striped">
-        <thead class="">
+      
+      <p-table
+      [value]="allHouseDetails"
+      class="table w-full table-bordered table-striped"
+      id="maintable"
+      [paginator]="true"
+      [rows]="5"
+      [showCurrentPageReport]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [globalFilterFields]="['ownerName', 'phoneNo', 'address1', 'idProof']"
+      #dt
+      selectionMode="multiple"
+      [(selection)]="selectedProducts"
+      [exportHeader]="'customExportHeader'"
+    >
+      <ng-template pTemplate="caption">
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="d-flex">
+            <div class="mx-2">
+              <button
+                class="btn btn-primary px-3 py-2"
+                style="font-size: 13px"
+                (click)="exportPdf()"
+              >
+                Export To pdf
+              </button>
+            </div>
+            <div class="">
+              <button
+                class="btn btn-primary px-3 py-2"
+                style="font-size: 13px"
+                (click)="exportExcel()"
+              >
+                Export To Excel
+              </button>
+            </div>
+          </div>
+          <div style="display: flex">
+            <input
+              type="text"
+              class="form-control"
+              pInputText
+              placeholder="Search"
+              (input)="
+                dt.filterGlobal($any($event.target).value, 'contains')
+              "
+              style="margin-right: 8px"
+            />
+            <div
+              style="
+                display: flex;
+                align-items: center;
+                padding: 0.375rem 0.75rem;
+                font-size: 1rem;
+                line-height: 1.5;
+                color: #495057;
+                background-color: #e9ecef;
+                border: 1px solid #ced4da;
+                border-radius: 0.25rem;
+              "
+            >
+              <i class="fa fa-search"></i>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header" class="">
+        
           <tr>
             <th style="background-color: rgba(0, 133, 159, 1); color: #faf7f7">
               SL.NO
@@ -591,19 +621,12 @@
               Action
             </th>
           </tr>
-        </thead>
-        <tbody>
+      
+      </ng-template>
+      <ng-template pTemplate="body" let-item let-i="rowIndex">
+       
           <tr
-            *ngFor="
-              let item of allHouseDetails
-                | paginate
-                  : {
-                      itemsPerPage: tableSize,
-                      currentPage: page,
-                      totalItems: count
-                    };
-              let i = index
-            "
+       
           >
             <td>{{ i + 1 }}</td>
             <td>{{ item.stateName }}</td>
@@ -637,8 +660,9 @@
               </div>
             </td>
           </tr>
-        </tbody>
-      </table>
+        
+      </ng-template>
+      </p-table>
     </div>
     <div class="d-flex justify-content-end">
       <pagination-controls

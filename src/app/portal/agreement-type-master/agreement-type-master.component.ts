@@ -7,7 +7,9 @@ import { Router } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
 import { ValidatorchklistService } from "./../serviceapi/validatorchklist.service";
 import { ExcelService } from "../serviceapi/excel.service";
-
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
+import * as FileSaver from "file-saver";
 @Component({
   selector: "app-agreement-type-master",
   templateUrl: "./agreement-type-master.component.html",
@@ -64,6 +66,7 @@ export class AgreementTypeMasterComponent {
       this.tableData = this.allData;
     }
   }
+  selectedProducts: any[];
   tableData: any = [];
   allData: any = [];
   duplicateTableData: any[] = [];
@@ -255,6 +258,97 @@ export class AgreementTypeMasterComponent {
       }
     });
   }
+  exportPdf() {
+
+    const head = [["SL no.", "ownerName", "phoneNo", "address"]];
+
+    const doc = new jsPDF("l", "mm", "a4");
+
+    autoTable(doc, {
+
+      head: head,
+
+      body: this.toPdfFormat(),
+
+      didDrawCell: (data) => {},
+
+    });
+
+    doc.save("house-owner.pdf");
+
+  }
+
+  toPdfFormat() {
+
+    let data: any = [];
+
+    for (var i = 0; i < this.tableData.length; i++) {
+
+      data.push([
+
+        i + 1,
+
+        this.tableData[i].ownerName,
+
+        this.tableData[i].phoneNo,
+
+        this.tableData[i].address1,
+
+      ]);
+
+    }
+
+    return data;
+
+  }
+
+  exportExcel() {
+
+    import("xlsx").then((xlsx) => {
+
+      const worksheet = xlsx.utils.json_to_sheet(this.tableData);
+
+      const workbook = { Sheets: { data: worksheet }, SheetNames: ["data"] };
+
+      const excelBuffer: any = xlsx.write(workbook, {
+
+        bookType: "xlsx",
+
+        type: "array",
+
+      });
+
+      this.saveAsExcelFile(excelBuffer, "houser-owner");
+
+    });
+
+  }
+
+  saveAsExcelFile(buffer: any, fileName: string): void {
+
+    let EXCEL_TYPE =
+
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+
+    let EXCEL_EXTENSION = ".xlsx";
+
+    const data: Blob = new Blob([buffer], {
+
+      type: EXCEL_TYPE,
+
+    });
+
+    FileSaver.saveAs(
+
+      data,
+
+      fileName + "_export_" + new Date().getTime() + EXCEL_EXTENSION
+
+    );
+
+  }
+
+  
   editAgreementType(
     aggreTypeId: any,
     aggreTypeName: any,
@@ -358,6 +452,7 @@ export class AgreementTypeMasterComponent {
         "Description",
       ],
     ];
+ 
     let requiredArray = this.duplicateTableData.map((t: any) => {
       return {
         "Agreement Type": t.aggreTypeName ? t.aggreTypeName : "",
@@ -372,6 +467,8 @@ export class AgreementTypeMasterComponent {
         delete element[e];
       });
     });
+    
+  
     this.excelService.exportAsExcelFile(
       requiredArray,
       "agreementtype",

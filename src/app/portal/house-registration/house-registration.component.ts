@@ -281,7 +281,6 @@ export class HouseRegistrationComponent implements OnInit {
   addstate(index?: any) {
     if (index >= 0 && !this.stateArray.controls[0]?.value?.stateId) {
       Swal.fire("select state");
-
       return;
     }
     const stateGroup = this.formBuilder.group({
@@ -344,10 +343,13 @@ export class HouseRegistrationComponent implements OnInit {
     this.stateArray.removeAt(index);
   }
 
-  getAllStateList() {
+  getAllStateList(data?: any) {
     // this.ngxLoader.start();
-    this.portalService.get("PAPL/getAllState").subscribe((res) => {
+    this.portalService.get("PAPL/getAllState").subscribe(async (res) => {
       this.stateDtails = res;
+      if (data) {
+        await this.getSubonStateChange(data.stateId, 0, data);
+      }
       this.ngxLoader.stop();
       //console.log(res)
     });
@@ -366,41 +368,49 @@ export class HouseRegistrationComponent implements OnInit {
     });
   }
 
-  onAddNewStateArray(selectedStateId:any,index:any){
+  onAddNewStateArray(selectedStateId: any, index: any) {
     this.portalService
-    .get(`PAPL/get/sbu/by/${selectedStateId}`)
-    .pipe(takeUntil(this.destroy$))
-    .subscribe((res) => {
-      this.activeSBU[index+1] = res;
-      this.ngxLoader.stop();
-    });
+      .get(`PAPL/get/sbu/by/${selectedStateId}`)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res) => {
+        this.activeSBU[index + 1] = res;
+        this.ngxLoader.stop();
+      });
   }
   // Update your component code
-  getSubonStateChange(event: any, index: number) {
+  async getSubonStateChange(event: any, index: number, data?: any) {
     //this.activeSBU = [];
     // if (index <= 0 && !this.stateArray.controls[0]?.value?.stateId) {
     //   return;
     // }
     const selectedStateId = event?.target?.value ? event?.target?.value : event;
-    this.stateId = selectedStateId;
-
+    // this.stateId = selectedStateId;
     // Use the index to target the specific form control
-    const stateGroup = this.stateArray.at(index);
-    this.stateArray;
     // this.ngxLoader.start();
     this.portalService
       .get(`PAPL/get/sbu/by/${selectedStateId}`)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((res) => {
+      .subscribe(async (res) => {
         this.activeSBU[index] = res;
+        if (data) {
+     
+          const stateGroup = this.stateArray.at(0);
+          stateGroup.patchValue({
+            stateId: data.stateId,
+            sbuId: data.sbuId,
+          });
+          await this.getPlantOnSubChange(data.sbuId, 0, data);
+        }
         this.ngxLoader.stop();
       });
   }
 
-  getPlantOnSubChange(event: any, index: number) {
+  getPlantOnSubChange(event: any, index: number, data?: any) {
     // this.activePlant = [];
-    const selectedSublocation = event.target.value;
-    this.sbuId = selectedSublocation;
+    const selectedSublocation = event?.target?.value
+      ? event?.target?.value
+      : event;
+    // this.sbuId =selectedSublocation ;
     // this.ngxLoader.start();
     this.portalService
       .get(`PAPL/get/plant/by/${selectedSublocation}`)
@@ -408,7 +418,27 @@ export class HouseRegistrationComponent implements OnInit {
       .subscribe((res) => {
         this.activePlant[index] = res;
         this.ngxLoader.stop();
-        // console.log("active plan", this.activePlant)
+        console.log("active plan", this.activePlant);
+        if (data) {
+          if (selectedSublocation) {
+           
+            setTimeout(() => {
+              const stateGroup = this.stateArray.at(0);
+              stateGroup.patchValue({
+                sbuId: data.sbuId,
+              });
+            }, 100);
+            setTimeout(() => {
+              const stateGroup = this.stateArray.at(0);
+              stateGroup.patchValue({
+                plantId: data.plantId,
+                mapId: data.mapId,
+                houseId: data.houseId,
+              });
+            }, 200);
+
+          }
+        }
       });
   }
 
@@ -593,10 +623,12 @@ export class HouseRegistrationComponent implements OnInit {
     }
   }
 
-  updateHouse(item: any) {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    this.updatebtn = true;
+  async updateHouse(item: any) {
+    // window.scrollTo({ top: 0, behavior: "smooth" });
+    // this.houseRegistrationForm.
+    this.stateArray.reset();
     console.log(item);
+    this.updatebtn = true;
     this.houseRegistrationForm.patchValue({
       ownerName: item.ownerName,
       houseName: item.houseName,
@@ -611,43 +643,34 @@ export class HouseRegistrationComponent implements OnInit {
       endDate: item.endDate,
     });
 
-    while (this.stateArray.length !== 0) {
+    this.addstate();
+    if (this.stateArray.length !== 0) {
       this.stateArray.removeAt(0);
     }
+    await this.getAllStateList(item);
 
-    this.addstate();
-    const stateGroup = this.stateArray.at(0);
-    stateGroup.patchValue({
-      stateId: item.stateId,
-      sbuId: item.sbuId,
-      plantId: item.plantId,
-      mapId: item.mapId,
-      houseId: item.houseId,
-    });
+    //
 
-    setTimeout(() => {
-      this.getSubonStateChange(item.stateId, 0);
-      this.getPlantOnSubChange(item.sbuId, 0);
-    });
+    // stateGroup.patchValue({
+    //   stateId: item.stateId,
+    //   sbuId: item.sbuId,
+    //   plantId: item.plantId,
+    //   mapId: item.mapId,
+    //   houseId: item.houseId,
+    // });
 
-    setTimeout(() => {
-      const stateId = document.querySelectorAll("#stateId");
-      for (let i = 0; i < stateId.length; i++) {
-        stateId[i].dispatchEvent(new Event("change"));
-      }
-    }, 1010);
-    setTimeout(() => {
-      const sbuId = document.querySelectorAll("#sbuId");
-      for (let i = 0; i < sbuId.length; i++) {
-        sbuId[i].dispatchEvent(new Event("change"));
-      }
-    }, 2010);
-    setTimeout(() => {
-      const plantId = document.querySelectorAll("#plantId");
-      for (let i = 0; i < plantId.length; i++) {
-        plantId[i].dispatchEvent(new Event("change"));
-      }
-    }, 3010);
+    // const stateId = document.querySelectorAll("#stateId");
+    // for (let i = 0; i < stateId.length; i++) {
+    //   stateId[i].dispatchEvent(new Event("change"));
+    // }
+    // const sbuId = document.querySelectorAll("#sbuId");
+    // for (let i = 0; i < sbuId.length; i++) {
+    //   sbuId[i].dispatchEvent(new Event("change"));
+    // }
+    // const plantId = document.querySelectorAll("#plantId");
+    // for (let i = 0; i < plantId.length; i++) {
+    //   plantId[i].dispatchEvent(new Event("change"));
+    // }
 
     this.houseId = item.houseId;
     this.mapId = item.mapId;
@@ -782,7 +805,6 @@ export class HouseRegistrationComponent implements OnInit {
     // Your button click logic here
     alert("Deleted Successfully!!");
   }
-
 
   exportPdf() {
     const head = [["SL no.", "ownerName", "phoneNo", "address"]];

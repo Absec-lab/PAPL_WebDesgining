@@ -292,8 +292,8 @@ export class HouseRegistrationComponent implements OnInit {
       ],
       sbuId: ["", [Validators.required]],
       plantId: ["", [Validators.required]],
-      mapId: ["", [Validators.required]],
-      houseId: ["", [Validators.required]],
+      mapId: [""],
+      houseId: [""],
     });
     if (index >= 0 && this.stateArray.controls[0]?.value?.stateId) {
       this.onAddNewStateArray(
@@ -303,10 +303,10 @@ export class HouseRegistrationComponent implements OnInit {
     }
 
     // Set validators for each control
-    Object.keys(stateGroup.controls).forEach((controlName) => {
-      stateGroup.get(controlName)?.setValidators([Validators.required]);
-      stateGroup.get(controlName)?.updateValueAndValidity();
-    });
+    // Object.keys(stateGroup.controls).forEach((controlName) => {
+    //   stateGroup.get(controlName)?.setValidators([Validators.required]);
+    //   stateGroup.get(controlName)?.updateValueAndValidity();
+    // });
 
     // Populate the new row with values from the previous row or empty values
     // const previousValues = this.getPreviousRowValues(this.stateArray.length);
@@ -379,21 +379,13 @@ export class HouseRegistrationComponent implements OnInit {
   }
   // Update your component code
   async getSubonStateChange(event: any, index: number, data?: any) {
-    //this.activeSBU = [];
-    // if (index <= 0 && !this.stateArray.controls[0]?.value?.stateId) {
-    //   return;
-    // }
     const selectedStateId = event?.target?.value ? event?.target?.value : event;
-    // this.stateId = selectedStateId;
-    // Use the index to target the specific form control
-    // this.ngxLoader.start();
     this.portalService
       .get(`PAPL/get/sbu/by/${selectedStateId}`)
       .pipe(takeUntil(this.destroy$))
       .subscribe(async (res) => {
         this.activeSBU[index] = res;
         if (data) {
-     
           const stateGroup = this.stateArray.at(0);
           stateGroup.patchValue({
             stateId: data.stateId,
@@ -421,7 +413,6 @@ export class HouseRegistrationComponent implements OnInit {
         console.log("active plan", this.activePlant);
         if (data) {
           if (selectedSublocation) {
-           
             setTimeout(() => {
               const stateGroup = this.stateArray.at(0);
               stateGroup.patchValue({
@@ -436,7 +427,6 @@ export class HouseRegistrationComponent implements OnInit {
                 houseId: data.houseId,
               });
             }, 200);
-
           }
         }
       });
@@ -574,7 +564,21 @@ export class HouseRegistrationComponent implements OnInit {
     );
     return duplicateHouseName;
   }
-
+  validateAllFields(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach((field) => {
+      const control = formGroup.get(field);
+      if (control instanceof FormArray) {
+        control.markAsTouched();
+      }
+      if (control instanceof FormControl) {
+        control.markAsTouched({
+          onlySelf: true,
+        });
+      } else if (control instanceof FormGroup) {
+        this.validateAllFields(control);
+      }
+    });
+  }
   registerHouse() {
     this.stateArray.controls.forEach((control: FormGroup) => {
       control.get("houseId")?.clearValidators();
@@ -582,6 +586,11 @@ export class HouseRegistrationComponent implements OnInit {
       control.get("mapId")?.clearValidators();
       control.get("mapId")?.updateValueAndValidity();
     });
+    if (this.stateForm.invalid) {
+      this.validateAllFields(this.stateForm);
+      return;
+    }
+
     let vSts = this.validateData();
     console.log(vSts);
     console.log(this.houseRegistrationForm.valid);
@@ -601,25 +610,27 @@ export class HouseRegistrationComponent implements OnInit {
         endDate: this.houseRegistrationForm.value.endDate,
         houseRegistrationMapDto: this.stateArray.value,
       };
-      console.log(data);
-      console.log(this.stateArray.value);
-      // this.ngxLoader.start();
-      this.portalService.post("PAPL/addHouses", data).subscribe((res) => {
-        this.ngxLoader.stop();
-        console.log(res);
-        this.getAllHouseDetailList();
-        this.houseRegistrationForm.reset();
-        this.stateArray.clear();
-        this.addstate();
-        this.errorMessageForHouseMapping = "";
-        Swal.fire({
-          icon: "success",
-          text: "Record Saved Successfully",
-        }).then(() => {
-          window.location.reload();
-        });
-        // alert("House Registration succcesfull")
-      });
+      this.ngxLoader.start();
+      this.portalService.post("PAPL/addHouses", data).subscribe(
+        (res) => {
+          this.ngxLoader.stop();
+          this.getAllHouseDetailList();
+          this.houseRegistrationForm.reset();
+          this.stateArray.clear();
+          this.addstate();
+          this.errorMessageForHouseMapping = "";
+          Swal.fire({
+            icon: "success",
+            text: "Record Saved Successfully",
+          }).then(() => {
+            this.getAllHouseDetailList();
+          });
+        },
+        (error) => {
+          this.getAllHouseDetailList();
+          this.ngxLoader.stop();
+        }
+      );
     }
   }
 

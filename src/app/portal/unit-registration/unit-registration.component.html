@@ -84,7 +84,7 @@
                             <label class="form-label">House Name <span class="text-danger">*</span></label>
                             <select class="form-select" formControlName="houseId" id="houseId" aria-label="Default select example" (change)="updateDates($event)">
                                 <option value="0" selected>Choose House Name...</option>
-                                <option *ngFor="let house of activeHouse" [value]="house.houseId">{{house.house.houseName}}</option>
+                                <option *ngFor="let house of activeHouse" [value]="house.house.houseId">{{house.house.houseName}}</option>
                             </select>
                             <div class="text-danger"
                                 *ngIf="unitArray.controls[i].get('houseId')?.hasError('required') && unitArray.controls[i].get('houseId')?.touched">

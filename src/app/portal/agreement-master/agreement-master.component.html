@@ -126,7 +126,7 @@
               aria-label="Default select example"
               [(ngModel)]="aggreHouse"
               name="aggreHouse"
-              (change)="getHouseData()"
+              (change)="getHouseData($event.target)"
             >
               <option value="0">Choose House...</option>
               <option

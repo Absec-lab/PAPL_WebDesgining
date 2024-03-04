@@ -796,7 +796,16 @@ export class AgreementMasterComponent {
     );
   }
   exportPdf() {
-    const head = [["SL no.", "OwnerName	", "HouseName	", "AgreementType","MonthlyRent	","AgreementPeriod	"]];
+    const head = [
+      [
+        "SL no.",
+        "OwnerName	",
+        "HouseName	",
+        "AgreementType",
+        "MonthlyRent	",
+        "AgreementPeriod	",
+      ],
+    ];
     const doc = new jsPDF("l", "mm", "a4");
     autoTable(doc, {
       head: head,
@@ -804,8 +813,6 @@ export class AgreementMasterComponent {
       didDrawCell: (data) => {},
     });
     doc.save("aggrement-master.pdf");
-
-
   }
   toPdfFormat() {
     let data: any = [];
@@ -817,10 +824,7 @@ export class AgreementMasterComponent {
         this.tableData[i].agreementType,
         this.tableData[i].aggreMonthlyRent,
         this.tableData[i].aggrePeriod,
-       
-
       ]);
-
     }
     return data;
   }
@@ -834,7 +838,6 @@ export class AgreementMasterComponent {
       });
       this.saveAsExcelFile(excelBuffer, "houser-owner");
     });
-
   }
   saveAsExcelFile(buffer: any, fileName: string): void {
     let EXCEL_TYPE =
@@ -846,15 +849,8 @@ export class AgreementMasterComponent {
     FileSaver.saveAs(
       data,
       fileName + "_export_" + new Date().getTime() + EXCEL_EXTENSION
-
-
-
     );
-
-
-
   }
-
 
   gethouse() {
     alert("hi");
@@ -865,15 +861,15 @@ export class AgreementMasterComponent {
       this.ngxLoader.stop();
     });
   }
-  
+
   houseResponseData: any;
-  getHouseData() {
+  getHouseData(id: any) {
+    let requiredHouseId = id ? id : this.aggreHouse;
     this.portalServ
-      .get("PAPL/getHouseById/" + this.aggreHouse)
+      .get("PAPL/getHouseById/" + requiredHouseId)
       .subscribe((res) => {
         this.houseResponseData = res;
         console.log("houseeee", this.houseResponseData);
       });
-      
   }
 }

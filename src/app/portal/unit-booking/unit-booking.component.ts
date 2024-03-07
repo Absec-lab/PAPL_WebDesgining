@@ -304,8 +304,8 @@ export class UnitBookingComponent implements OnInit {
           this.employeeForm.patchValue({
             empName: employee.empName,
             mobileNo: employee.mobileNo,
-            plantName: employee.plantId,
-            serviceOrder: employee.so,
+            plantName: employee.plantName,
+            serviceOrder: employee.purchaseOrderName,
             emailId: employee.email,
           });
         }

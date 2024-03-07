@@ -1,6 +1,8 @@
 import { Component } from "@angular/core";
 import { PortalServiceService } from "./../serviceapi/portal-service.service";
 import { NgxUiLoaderService } from "ngx-ui-loader";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 import {
   AbstractControl,
   FormArray,
@@ -14,6 +16,7 @@ import { HttpClient } from "@angular/common/http";
 import { ValidatorchklistService } from "./../serviceapi/validatorchklist.service";
 import { Subject, takeUntil } from "rxjs";
 import { ExcelService } from "../serviceapi/excel.service";
+import * as FileSaver from "file-saver";
 @Component({
   selector: "app-unit-registration",
   templateUrl: "./unit-registration.component.html",
@@ -31,6 +34,7 @@ export class UnitRegistrationComponent {
     public vldChkLst: ValidatorchklistService,
     private excelService: ExcelService
   ) {}
+  selectedProducts: any[];
   tableData: any = [];
   allData: any = [];
   duplicateTableData: any[] = [];
@@ -73,7 +77,29 @@ export class UnitRegistrationComponent {
 
     this.addunit();
   }
-
+  exportExcel() {
+    import("xlsx").then((xlsx) => {
+      const worksheet = xlsx.utils.json_to_sheet(this.tableData);
+      const workbook = { Sheets: { data: worksheet }, SheetNames: ["data"] };
+      const excelBuffer: any = xlsx.write(workbook, {
+        bookType: "xlsx",
+        type: "array",
+      });
+      this.saveAsExcelFile(excelBuffer, "houser-owner");
+    });
+  }
+  saveAsExcelFile(buffer: any, fileName: string): void {
+    let EXCEL_TYPE =
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+    let EXCEL_EXTENSION = ".xlsx";
+    const data: Blob = new Blob([buffer], {
+      type: EXCEL_TYPE,
+    });
+    FileSaver.saveAs(
+      data,
+      fileName + "_export_" + new Date().getTime() + EXCEL_EXTENSION
+    );
+  }
   createUnitGroup(): FormGroup {
     return this.formBuilder.group({
       ownerId: [0, [Validators.required, Validators.min(1)]],
@@ -504,6 +530,44 @@ export class UnitRegistrationComponent {
       }
       console.log(this.unitArray.at(index).value.startDate);
     }
+  }
+  exportPdf() {
+    const head = [
+      [
+        "SL no.",
+        "House Name	",
+        "Room No	",
+        "Unit Capacity	",
+        "Elec. bill %	",
+        "Water bill %	",
+        "Start Date	",
+        "End Date	",
+        
+      ],
+    ];
+    const doc = new jsPDF("l", "mm", "a4");
+    autoTable(doc, {
+      head: head,
+      body: this.toPdfFormat(),
+      didDrawCell: (data) => {},
+    });
+    doc.save("Room-Registration.pdf");
+  }
+  toPdfFormat() {
+    let data: any = [];
+    for (var i = 0; i < this.tableData.length; i++) {
+      data.push([
+        i + 1,
+        this.tableData[i].houseName,
+        this.tableData[i].unitNo,
+        this.tableData[i].unitCapacity,
+        this.tableData[i].electBillPercent,
+        this.tableData[i].waterBillPercent,
+        this.tableData[i].startDate,
+        this.tableData[i].endDate,
+      ]);
+    }
+    return data;
   }
   exportAsXLSX(): void {
     let Heading = [

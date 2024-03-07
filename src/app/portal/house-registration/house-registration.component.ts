@@ -351,7 +351,6 @@ export class HouseRegistrationComponent implements OnInit {
         await this.getSubonStateChange(data.stateId, 0, data);
       }
       this.ngxLoader.stop();
-      //console.log(res)
     });
   }
 

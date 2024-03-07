@@ -610,14 +610,13 @@ export class HouseOwnerRegistrationComponent {
       this.houseRegistrationForm.controls["pin"].setValue(pinValue);
     }
   }
+  qrCodePrefix: any = "";
   onImageChange(
     event: any,
     formControlName: string,
     formArrName?: string,
     index?: number
   ): void {
-    console.log("formControlName", formControlName);
-
     const inputElement = event.target as HTMLInputElement;
 
     if (inputElement.files && inputElement.files.length > 0) {
@@ -632,8 +631,6 @@ export class HouseOwnerRegistrationComponent {
           // Determine file extension based on file type
           console.log(file);
           console.log(file.name.slice(file.name.lastIndexOf(".") + 1));
-
-          // const fileExtension = this.getFileExtension(file.type);
           const fileExtension = file.name.slice(file.name.lastIndexOf(".") + 1);
           const extn = "." + fileExtension;
 
@@ -642,18 +639,13 @@ export class HouseOwnerRegistrationComponent {
           } else if (formControlName == "panPic") {
             this.houseRegistrationForm.get("panNoPrifix")?.setValue(extn);
           } else if (formControlName == "qrCode") {
+            this.qrCodePrefix = extn;
+
             this.houseRegistrationForm.get("quarCodePrifix")?.setValue(extn);
           } else if (formControlName == "uploadlegalheir") {
             this.houseRegistrationForm.get("legalprifix")?.setValue(extn);
           }
           // Use base64Content and fileExtension as needed
-          console.log("Base64 Content:", base64Content);
-          console.log(
-            "File Extension:",
-            extn,
-            "form control",
-            this.houseRegistrationForm.value.idProofDocPrifix
-          );
 
           if (formArrName && index !== undefined) {
             // Update image value in a FormArray at a specific index
@@ -801,10 +793,10 @@ export class HouseOwnerRegistrationComponent {
         upiId: this.houseRegistrationForm.value.upiId,
         upiPhoneNo: this.houseRegistrationForm.value.linkMobile,
         quarCodeDoc: this.houseRegistrationForm.value.qrCode,
-        quarCodePrifix: this.houseRegistrationForm.value.quarCodePrifix,
+        quarCodePrifix: this.houseRegistrationForm.value.quarCodePrifix?this.houseRegistrationForm.value.quarCodePrifix: this.qrCodePrefix,
       };
       //debugger;
-      console.log("Data", data);
+      console.log("Data", this.houseRegistrationForm.value);
       this.ngxLoader.start();
       this.portalServ.post("PAPL/addOwners", data).subscribe((res) => {
         this.ngxLoader.stop();
@@ -967,18 +959,6 @@ export class HouseOwnerRegistrationComponent {
           base64EncodedData.document,
           base64EncodedData.fileName
         );
-        // const jsonObject = JSON.parse(base64EncodedData);
-        // const documentValue = jsonObject.document;
-
-        // const decodedData = atob(documentValue);
-        // console.log(decodedData);
-
-        // const blob = new Blob([decodedData], { type: "image/jpeg" });
-
-        // // const link = document.createElement('a');
-        // // link.href = URL.createObjectURL(blob);
-        // // link.download = jsonObject.fileName;
-        // // link.click();
       },
       (error) => {
         // Handle errors

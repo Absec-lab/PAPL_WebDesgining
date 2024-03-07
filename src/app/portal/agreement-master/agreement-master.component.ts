@@ -88,6 +88,7 @@ export class AgreementMasterComponent {
   allOwner: any = [];
   getAllAgreementTypeData: any = [];
   aggreState: any = 0;
+  splittedFileName: any = '';
   aggreSbu: any = 0;
   aggrePlant: any = 0;
   aggreOwner: any = 0;
@@ -229,12 +230,20 @@ export class AgreementMasterComponent {
   }
 
   getHouse(OwnerId: any) {
-    this.ngxLoader.start();
+    // this.ngxLoader.start();
     this.portalServ
       .get("PAPL/getAll/House/by/{ownerId}?ownerId=" + OwnerId)
       .subscribe((res) => {
         console.log(res);
-        this.getallHouse = res.filter((t: any) => t.isActive);
+        const currentDate = new Date();
+        this.getallHouse = res.filter((t: any) => {
+          console.log(
+            new Date(t.endDate) < currentDate,
+            currentDate,
+            t.endDate
+          );
+          return t.isActive && new Date(t.endDate) > currentDate;
+        });
         this.ngxLoader.stop();
       });
   }
@@ -405,9 +414,13 @@ export class AgreementMasterComponent {
     rentEndDt: any,
     withElectricBill: any,
     withWaterBill: any,
-    aggreUpload: any
+    aggreUpload: any,
+    aggreAddr:any
   ) {
+    console.log('aggreAddr',aggreAddr.split('/'))
+    console.log('aggreUpload',aggreUpload)
     window.scrollTo({ top: 0, behavior: "smooth" });
+    this.splittedFileName=aggreAddr.split('/')[aggreAddr.split('/').length-1]
     this.aggreState = stateId;
     this.aggreSbu = sbuId;
     this.aggrePlant = plantId;
@@ -429,21 +442,14 @@ export class AgreementMasterComponent {
   }
   onImageChange(event: any): void {
     const inputElement = event.target as HTMLInputElement;
-
     if (inputElement.files && inputElement.files.length > 0) {
       const file = inputElement.files[0];
-
       if (file) {
         const reader = new FileReader();
-
         reader.onload = (e) => {
           const imageDataUrl = e.target?.result as string;
           const base64Content = imageDataUrl.split(",")[1];
           // Determine file extension based on file type
-          console.log(file);
-          console.log(file.name.slice(file.name.lastIndexOf(".") + 1));
-
-          // const fileExtension = this.getFileExtension(file.type);
           const fileExtension = file.name.slice(file.name.lastIndexOf(".") + 1);
           const extn = "." + fileExtension;
           this.aggreAddr = base64Content;
@@ -864,7 +870,7 @@ export class AgreementMasterComponent {
 
   houseResponseData: any;
   getHouseData(id: any) {
-    let requiredHouseId = id ? id : this.aggreHouse;
+    let requiredHouseId = id?.value ? id?.value : this.aggreHouse;
     this.portalServ
       .get("PAPL/getHouseById/" + requiredHouseId)
       .subscribe((res) => {

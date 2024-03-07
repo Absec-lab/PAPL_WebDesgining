@@ -232,7 +232,7 @@ export class UnitBookingComponent implements OnInit {
       stateId: this.stateId,
       plantId: this.plantId,
       sbuId: this.sbuId,
-      so: this.employeeForm.get("serviceOrder")?.value,
+      so: this.slectedEmp?.so,
       empId: this.employeeForm.get("empId")?.value,
       empName: this.employeeForm.get("empName")?.value,
       emailId: this.employeeForm.get("emailId")?.value,
@@ -292,6 +292,7 @@ export class UnitBookingComponent implements OnInit {
     });
   }
 
+  slectedEmp:any
   selectEmp(event: any) {
     const empID = event.target.value;
     this.portalService
@@ -300,12 +301,14 @@ export class UnitBookingComponent implements OnInit {
       .subscribe((res) => {
         console.log(res);
         const employee = res[0]; // Move the assignment here
+        this.slectedEmp=res[0]
         if (employee) {
           this.employeeForm.patchValue({
             empName: employee.empName,
             mobileNo: employee.mobileNo,
             plantName: employee.plantName,
             serviceOrder: employee.purchaseOrderName,
+            so:employee.so,
             emailId: employee.email,
           });
         }
